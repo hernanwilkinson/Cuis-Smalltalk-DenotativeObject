@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3129] on 30 July 2017 at 11:32:28 am'!
-'Description Test support enhancement developed using DenotativeObject tools. Some fixes on debugger'!
-!provides: 'DenotativeObject' 1 4!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3129] on 30 July 2017 at 5:00:08 pm'!
+'Description Support for unknow variable - a lot of cleanup still needed'!
+!provides: 'DenotativeObject' 1 5!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
 	instanceVariableNames: ''
@@ -176,6 +176,62 @@ ObjectBuilder class
 messageText
 
 	^dividend printString, ' can not be divided by 0'! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 7/30/2017 16:58:30'!
+defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
+ 
+	| newClass |
+
+	newClass := DenotativeObject
+		subclass: anObjectName asSymbol
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: aDenotativeObjectBrowser selectedSystemCategoryName.
+		
+	^parser encoder
+		global: (Smalltalk associationAt: newClass name)
+		name: newClass name
+		! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 7/30/2017 16:53:03'!
+handleDenotativeObjectCreationIn: aDenotativeObjectBrowser
+
+	| alternatives labels actions lines caption choice |
+	
+	alternatives := parser possibleVariablesFor: name.
+
+	labels := OrderedCollection new.
+	actions := OrderedCollection new.
+	lines := OrderedCollection new.
+	
+	labels add: 'define new denotative object'.
+	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
+	labels add: 'declare global'.
+	actions add: [ parser declareGlobal: name ].
+
+	lines add: labels size.
+	alternatives do: [ :each |
+		labels add: each.
+		actions add: [ parser substituteVariable: each atInterval: interval ]].
+
+	lines add: labels size.
+	labels add: 'cancel'.
+
+	caption _ 'Unknown variable: ' , name , ' please correct, or cancel:'.
+	
+	choice _ (PopUpMenu labelArray: labels lines: lines) startUpWithCaption: caption.
+	
+	self resume: (actions at: choice ifAbsent: [ ]).
+			! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 7/30/2017 16:52:27'!
+handleForDenotativeObjectIn: aDenotativeObjectBrowser
+	
+	^name first isLowercase 
+		ifTrue: [ self pass ]
+		ifFalse: [ self handleDenotativeObjectCreationIn: aDenotativeObjectBrowser ]
+! !
 
 !TheWorldMenu methodsFor: '*DenotativeObject' stamp: 'HAW 7/29/2017 20:40:50'!
 buildWorldMenu
@@ -428,6 +484,14 @@ defineClass: defString notifying: aRequestor
 			(self confirm: aWarning printString) 
 				ifTrue: [ aWarning resume ]
 				ifFalse: [ aWarning return: nil ]].! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 16:52:01'!
+defineMessageFrom: aString notifying: aRequestor
+
+	^[ super defineMessageFrom: aString notifying: aRequestor ]
+		on: UndeclaredVariable 
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ]
+	! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/14/2017 20:46:27'!
 editorClassFor: textGetter
@@ -795,7 +859,7 @@ selection
 openOn: anObject
 	^ self openOn: anObject withLabel: anObject name! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 20:32:44'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 16:59:24'!
 acceptAndDebug
 	
 	self acceptContents ifFalse: [ ^false ].
