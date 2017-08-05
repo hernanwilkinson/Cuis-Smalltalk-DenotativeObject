@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3129] on 30 July 2017 at 5:00:08 pm'!
-'Description Support for unknow variable - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 5!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3129] on 5 August 2017 at 11:32:08 am'!
+'Description can redefine printOn: - inspector uses dnotative object debugger - a lot of cleanup still needed'!
+!provides: 'DenotativeObject' 1 6!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
 	instanceVariableNames: ''
@@ -402,7 +402,7 @@ debug
 		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 18:48:00'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/5/2017 11:30:53'!
 debug: aCompiledMethod receiver: anObject in: evalContext
 
 	| guineaPig debugger context |
@@ -442,8 +442,9 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 	debugger process: guineaPig context: context.
 	debugger openFullNoSuspendLabel: 'Debug it'.
 
-	[debugger interruptedContext method == aCompiledMethod]
-		whileFalse: [debugger originalSend]! !
+	[ [debugger originalSend.
+	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: 'Can not debug this'. ^self ] ] whileFalse.
+! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/14/2017 09:00:18'!
 debugMethodTest
@@ -485,12 +486,45 @@ defineClass: defString notifying: aRequestor
 				ifTrue: [ aWarning resume ]
 				ifFalse: [ aWarning return: nil ]].! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 16:52:01'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/1/2017 09:48:21'!
 defineMessageFrom: aString notifying: aRequestor
 
-	^[ super defineMessageFrom: aString notifying: aRequestor ]
+	| selectedMessageName selector category oldMessageList |
+
+	selectedMessageName _ self selectedMessageName.
+	oldMessageList _ self messageList.
+	selector _ self selectedClassOrMetaClass parserClass selectorFrom: aString.
+	(self metaClassIndicated
+		and: [ selector ~= #printOn: 
+		and: [(self selectedClassOrMetaClass includesSelector: selector) not
+		and: [Metaclass isScarySelector: selector]]])
+		ifTrue: ["A frist-time definition overlaps the protocol of Metaclasses"
+				(self confirm: (selector bold, ' is used in the existing system.
+Overriding it could cause serious problems.
+Is this really what you want to do?'))
+				ifFalse: [^nil]].
+			
+	[ selector _ self selectedClassOrMetaClass
+				compile: aString
+				classified: (category _ self selectedMessageCategoryName)
+				notifying: aRequestor ]
 		on: UndeclaredVariable 
-		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ]
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
+	
+	selector
+		ifNil: [^ nil].
+	selector ~~ selectedMessageName
+		ifTrue: [
+			category = ClassOrganizer nullCategory
+				ifTrue: [self changed: #classSelectionChanged.
+						self changed: #classList.
+						self messageCategoryListIndex: 1].
+			self setClassOrganizer.  "In case organization not cached"
+			(oldMessageList includes: selector)
+				ifFalse: [self changed: #messageList].
+			self messageListIndex: (self messageList indexOf: selector)].
+	^ selector
+	
 	! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/14/2017 20:46:27'!
@@ -542,6 +576,18 @@ want to REMOVE ', className, '?'.
 			self classListIndex: 0.
 			true].
 	^ result! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/1/2017 09:31:11'!
+removeSystemCategory
+
+	selectedSystemCategory ifNil: [^ self].
+	(self classList isEmpty or: [ self confirm: 'Are you sure you want to
+remove this system category 
+and all its objects?'])
+		ifTrue: [
+			systemOrganizer removeSystemCategory: selectedSystemCategory.
+			self systemCategoryListIndex: 0.
+			self changed: #systemCategoryList ]! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/14/2017 20:02:14'!
 runClassTests
@@ -823,6 +869,10 @@ baseFieldList
 
 	^ (Array with: 'self' with: 'all vars'), object class instVarNames ! !
 
+!DenotativeObjectInspector methodsFor: 'as yet unclassified' stamp: 'HAW 8/5/2017 10:37:42'!
+editorClassFor: textGetter
+	^DenotativeObjectSmalltalkEditor ! !
+
 !DenotativeObjectInspector methodsFor: 'as yet unclassified' stamp: 'HAW 7/13/2017 08:14:13'!
 replaceSelectionValue: anObject
 	"The receiver has a list of variables of its inspected object. One of these
@@ -907,42 +957,48 @@ browseIt
 		ifFalse:
 			[DenotativeObjectBrowserWindow browseAllImplementorsOf: aSymbol]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/21/2017 07:43:37'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/5/2017 11:27:49'!
 debug: aCompiledMethod receiver: anObject in: evalContext
 
 	| guineaPig debugger context |
 
 	debugger := DenotativeObjectDebugger new.
 	guineaPig := [
-		[ aCompiledMethod
+		[aCompiledMethod
 			valueWithReceiver: anObject
 			arguments: (evalContext ifNil: [ #() ] ifNotNil: [ { evalContext } ]).
-		debugger sendProceeds. ]
+		debugger sendProceeds.]
 			on: Error
-			do: [ :anError |
-				| activeProcess toDebugContext  |
+			do: [:anError |
+				self inform: anError printString.
+				debugger inStep 
+					ifTrue: [ anError pass ]
+					ifFalse: [
+						| activeProcess toDebugContext  |
 
-				debugger triggerEvent: #closeViews.
+						debugger triggerEvent: #closeViews.
 
-				activeProcess := Processor activeProcess.
-				debugger := DenotativeObjectDebugger new.
-				toDebugContext := thisContext.
-				[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-				toDebugContext isNil ifTrue: [ self error: 'can not debug' ].
-				debugger process: activeProcess context: toDebugContext.
-				debugger openFullNoSuspendLabel: (
-					(anError isKindOf: MessageNotUnderstood)
-						ifTrue: [ anError receiver printString, ' does not understand ', anError  message selector asString ]
-						ifFalse: [ anError messageText ]).
-				activeProcess suspend.
-				]
-	] newProcess name: 'debugIt'.
+						activeProcess := Processor activeProcess.
+						debugger := DenotativeObjectDebugger new.
+						toDebugContext := thisContext.
+						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
+						toDebugContext isNil 
+							ifTrue: [ anError pass ]
+							ifFalse: [
+								debugger process: activeProcess context: toDebugContext.
+								debugger openFullNoSuspendLabel: anError printString.
+								activeProcess suspend ]	
+						] ]
+	 ] newProcess name: 'debugIt'.
 	context := guineaPig suspendedContext.
 
 	debugger process: guineaPig context: context.
 	debugger openFullNoSuspendLabel: 'Debug it'.
-	[debugger interruptedContext method == aCompiledMethod]
-		whileFalse: [debugger send]! !
+
+	[ [debugger originalSend.
+	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: 'Can not debug this'. ^self ] ] whileFalse.
+
+	! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/21/2017 07:44:41'!
 evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
@@ -1374,7 +1430,7 @@ systemCatSingletonMenu
 
 	^self systemCategoryMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/1/2017 09:32:32'!
 systemCategoryMenu
 
 	| aMenu |
@@ -1383,6 +1439,8 @@ systemCategoryMenu
 	aMenu addList: #(
 		('fileOut'					fileOutSystemCategory				''		model)
 		('fileIn'					fileInSystemCategory				''		model)
+		-
+		('remove'					removeSystemCategory				''		model)
 		-
 		('Run tests (t)'				runSystemCategoryTests  	''	model)).
 
@@ -1859,12 +1917,12 @@ collaboratorNames: variablesDefinition in: aCategory
 
 	^self! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/28/2017 19:28:43'!
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/1/2017 09:50:38'!
 definitionOf: aMetaclass
 
 	^ String streamContents: [ :stream | | collaborators |
 		stream
-			print: aMetaclass soleInstance.
+			nextPutAll: aMetaclass soleInstance name.
 			
 		"Done this way to support rename of #create:collarobatorNames:in: - Hernan"
 		collaborators := Array 
