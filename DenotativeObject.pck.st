@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3129] on 5 August 2017 at 11:32:08 am'!
-'Description can redefine printOn: - inspector uses dnotative object debugger - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 6!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3129] on 6 August 2017 at 11:13:09 am'!
+'Description Issue #2 fixed and error message when creating object enhanced - a lot of cleanup still needed'!
+!provides: 'DenotativeObject' 1 7!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
 	instanceVariableNames: ''
@@ -457,10 +457,12 @@ debugMethodTest
 	test runCaseAsFailure.
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 19:49:58'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:11:18'!
 defineClass: defString notifying: aRequestor
 
-	^[[ | class |
+	^[[[ | class |
+	
+	self validateDefinitionString: defString.
 
 	class := Compiler
 				evaluate: defString
@@ -478,10 +480,15 @@ defineClass: defString notifying: aRequestor
 		on: Error
 		do: [ :anError | 
 			anError messageText = 'Class names must be capitalized' ifTrue: [ anError messageText: 'Object names must be capitalized' ].
-			self inform: 'Error creating object. ', anError printString.
+			self inform: anError printString.
 			anError return: false ]]
+		on: ParserNotification
+		do: [ :parserNotification |
+			self inform: self invalidDefinitionStringErrorDescription.
+			parserNotification return: false ]]
 		on: Warning
 		do: [ :aWarning |
+			self halt.
 			(self confirm: aWarning printString) 
 				ifTrue: [ aWarning resume ]
 				ifFalse: [ aWarning return: nil ]].! !
@@ -548,6 +555,16 @@ firstExperimentCategoryName
 	
 	^'First Experiment'! !
 
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:00:50'!
+invalidDefinitionStringErrorDescription
+
+	^'Invalid definition string'! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:09:34'!
+invalidObjectErrorDescription: name
+
+	^name, ' is not a denotative object'! !
+
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/19/2017 21:31:12'!
 isTest: aSelector
 
@@ -558,6 +575,12 @@ metaClassIndicated: trueOrFalse
 	"Indicate whether browsing instance or class messages."
 
 	^super metaClassIndicated: true! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:00:33'!
+objectNameInUseErrorDescription: denotativeObjectName
+
+	^denotativeObjectName bold , ' is used by another object or it is reserved by the system'
+! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 07:59:02'!
 removeClass
@@ -751,6 +774,41 @@ systemOrganizer: aSystemOrganizer
 	metaClassIndicated := true.
 	self setClassOrganizer.
 	self editSelection: #none.! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 10:58:37'!
+validateDefinitionString: defString
+
+	| defTokens |
+	
+	defTokens := defString findTokens: Character separators.
+	defTokens isEmpty ifTrue: [ self error: self invalidDefinitionStringErrorDescription ].
+	
+	defTokens first = ObjectBuilder name asString 
+		ifTrue: [ self validateObjectCreation: defTokens ]
+		ifFalse: [ self validateObjectRedefinition: defTokens ]! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:00:59'!
+validateObjectCreation: defTokens 
+
+	| denotativeObjectName nameIndex |
+	
+	nameIndex := defTokens findFirst: [ :token | token beginsWith: '#' ].
+	nameIndex = 0 ifTrue: [ self error: self invalidDefinitionStringErrorDescription ].
+	
+	denotativeObjectName := (defTokens at: nameIndex) copyWithoutAll: '#()'.	
+	(Smalltalk includesKey: denotativeObjectName asSymbol) 
+		ifTrue: [ self error: (self objectNameInUseErrorDescription: denotativeObjectName)]
+! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:09:16'!
+validateObjectRedefinition: defTokens 
+
+	| potentialDenotativeObject |
+	
+	potentialDenotativeObject :=Smalltalk classNamed: defTokens first asSymbol.
+	(potentialDenotativeObject is: #DenotativeObject) ifFalse: [ self error: (self invalidObjectErrorDescription: defTokens first)]
+
+		! !
 
 !DenotativeObjectBrowser class methodsFor: 'as yet unclassified' stamp: 'HAW 7/19/2017 21:31:18'!
 isTest: aSelector
