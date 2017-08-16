@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3129] on 6 August 2017 at 11:13:09 am'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3129] on 16 August 2017 at 7:28:34 am'!
 'Description Issue #2 fixed and error message when creating object enhanced - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 7!
+!provides: 'DenotativeObject' 1 8!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
 	instanceVariableNames: ''
@@ -119,6 +119,16 @@ TestCase subclass: #DenotativeObjectTestCase
 	category: 'DenotativeObject'!
 !classDefinition: 'DenotativeObjectTestCase class' category: #DenotativeObject!
 DenotativeObjectTestCase class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectRenameApplier category: #DenotativeObject!
+RenameClassApplier subclass: #DenotativeObjectRenameApplier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectRenameApplier class' category: #DenotativeObject!
+DenotativeObjectRenameApplier class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectRenameMethodApplier category: #DenotativeObject!
@@ -612,6 +622,12 @@ and all its objects?'])
 			self systemCategoryListIndex: 0.
 			self changed: #systemCategoryList ]! !
 
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/8/2017 19:50:32'!
+renameClass
+
+	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
+		(DenotativeObjectRenameApplier on: self for: aBehavior theNonMetaClass) value ].! !
+
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/14/2017 20:02:14'!
 runClassTests
 
@@ -660,7 +676,7 @@ runSystemCategoryTests
 			(DenotativeObjectProgessiveTestRunner for: suite) value ]]
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 18:50:47'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/8/2017 17:34:37'!
 send
 	
 	| receiver context stringToEval method debugger |
@@ -670,10 +686,10 @@ send
 	stringToEval := self stringToEvalSending: self selectedMessageName to: receiver onCancel: [^self].
 	debugger := nil.
 	[ method := self compile: stringToEval receiver: receiver in: context.
-	method ifNotNil: [ 
+	method ifNotNil: [[ 
 		[(method
 			valueWithReceiver: receiver
-			arguments: (context ifNil: [ #() ] ifNotNil: [ { context } ])) inspect]
+			arguments: (context ifNil: [ #() ] ifNotNil: [ { context } ]))]
 			on: Error
 			do: [ :anError |
 				self inform: anError printString.
@@ -695,7 +711,7 @@ send
 								debugger openFullNoSuspendLabel: anError printString.
 								activeProcess suspend ]	
 						] ]
-				]]
+				] fork. ]]
 		on: SyntaxErrorNotification 
 		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
 	! !
@@ -1826,6 +1842,13 @@ for: aCompiledMethod
 for: aClass test: aMethod
 
 	^self new initializeFor: aClass test: aMethod
+! !
+
+!DenotativeObjectRenameApplier methodsFor: 'as yet unclassified' stamp: 'HAW 8/8/2017 19:49:48'!
+openChangedMethods
+
+	changes ifNotEmpty: [ 
+		DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newClassName ]
 ! !
 
 !DenotativeObjectRenameMethodApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 7/13/2017 19:51:01'!
