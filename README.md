@@ -7,5 +7,3 @@ To use it, select the option "Open DenotativeBrowser" from the World Menu.
 
 # Dependencies
 The refactoring package must be install because the denotative browser allows refactorings to be executed. You can download the refactoring package from https://github.com/hernanwilkinson/Cuis-Smalltalk-Refactoring
-
-The change set 3089-CuisCore-HernanWilkinson-2017Jun03-20h55m-HAW.1.cs.st must be installed also.
