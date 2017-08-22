@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3129] on 16 August 2017 at 7:28:34 am'!
-'Description Issue #2 fixed and error message when creating object enhanced - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 8!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 22 August 2017 at 11:43:47 am'!
+'Description DenotativeObjectTheme - a lot of cleanup still needed'!
+!provides: 'DenotativeObject' 1 10!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
 	instanceVariableNames: ''
@@ -9,6 +9,16 @@ Workspace subclass: #DenotativeObjectWorkspace
 	category: 'DenotativeObject'!
 !classDefinition: 'DenotativeObjectWorkspace class' category: #DenotativeObject!
 DenotativeObjectWorkspace class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectMessageSet category: #DenotativeObject!
+MessageSet subclass: #DenotativeObjectMessageSet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectMessageSet class' category: #DenotativeObject!
+DenotativeObjectMessageSet class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectBrowser category: #DenotativeObject!
@@ -101,6 +111,26 @@ DebuggerWindow subclass: #DenotativeObjectDebuggerWindow
 DenotativeObjectDebuggerWindow class
 	instanceVariableNames: ''!
 
+!classDefinition: #DenotativeObjectInspectorWindow category: #DenotativeObject!
+InspectorWindow subclass: #DenotativeObjectInspectorWindow
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectInspectorWindow class' category: #DenotativeObject!
+DenotativeObjectInspectorWindow class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectTheme category: #DenotativeObject!
+Theme subclass: #DenotativeObjectTheme
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectTheme class' category: #DenotativeObject!
+DenotativeObjectTheme class
+	instanceVariableNames: ''!
+
 !classDefinition: #DenotativeObjectProgessiveTestRunner category: #DenotativeObject!
 ProgessiveTestRunner subclass: #DenotativeObjectProgessiveTestRunner
 	instanceVariableNames: ''
@@ -181,6 +211,15 @@ Object subclass: #ObjectBuilder
 ObjectBuilder class
 	instanceVariableNames: ''!
 
+
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/20/2017 10:39:10'!
+allIReplicants
+	self shouldBeImplemented.! !
+
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/20/2017 10:41:58'!
+allRealInstances
+	
+	^super allInstances ! !
 
 !ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 7/20/2017 20:00:43'!
 messageText
@@ -297,6 +336,24 @@ editorClass
 
 	^DenotativeObjectWorkspaceEditor ! !
 
+!DenotativeObjectMessageSet methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 21:56:59'!
+contents: aText notifying: aController
+
+	^[ super contents: aText notifying: aController ]
+		on: UndeclaredVariable 
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
+! !
+
+!DenotativeObjectMessageSet methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 21:57:20'!
+editorClassFor: textGetter
+
+	^DenotativeObjectSmalltalkEditor! !
+
+!DenotativeObjectMessageSet methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 22:00:50'!
+selectedSystemCategoryName
+
+	^selectedMessage ifNil: [ 'MessageList-Objects' ] ifNotNil: [ selectedMessage actualClass category ]! !
+
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 09:08:17'!
 acceptedStringOrText
 	"Depending on the current selection, different information is retrieved.
@@ -342,6 +399,39 @@ acceptedStringOrText
 			^ self selectedMessage].
 
 	self error: 'Browser internal error: unknown edit selection.'! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:55:13'!
+addDenotativeObject
+	
+	self withObjectNameDo: [ :objectName |
+		self addDenotativeObjectNamed: objectName inCategory: self selectedSystemCategoryName ]! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:54:40'!
+addDenotativeObjectInCategory
+	
+	| definitionString |
+	
+	self withObjectNameDo: [ :objectName |
+		self withCategoryNameDo: [ :categoryName |
+			definitionString := 'ObjectBuilder create: #', objectName, ' collaboratorNames: '''' in: ''', categoryName, ''''.
+			self defineClass: definitionString  notifying: nil ]]
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:54:29'!
+addDenotativeObjectNamed: objectName inCategory: categoryName
+	
+	| definitionString |
+	
+	definitionString := 'ObjectBuilder create: #', objectName, ' collaboratorNames: '''' in: ''', categoryName, ''''.
+	self defineClass: definitionString  notifying: nil 
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 14:44:22'!
+assertDoesNotExistObjectNamed: denotativeObjectName
+
+	(Smalltalk includesKey: denotativeObjectName asSymbol) 
+		ifTrue: [ self error: (self objectNameInUseErrorDescription: denotativeObjectName)]
+	! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 09:05:19'!
 classDefinitionText
@@ -398,22 +488,13 @@ copyClass
 			
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 08:58:30'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:00:09'!
 debug
 	
-	| receiver context stringToEval method |
-	
-	receiver := self doItReceiver.
-	context := self doItContext.
-	stringToEval := self stringToEvalSending: self selectedMessageName to: receiver onCancel: [^self].
-	[ method := self compile: stringToEval receiver: receiver in: context.
-	method ifNotNil: [ self debug: method receiver: receiver in: context]]
-		on: SyntaxErrorNotification 
-		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
-! !
+	self debugAndWithResultDo: [:result | ]! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/5/2017 11:30:53'!
-debug: aCompiledMethod receiver: anObject in: evalContext
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:57:23'!
+debug: aCompiledMethod receiver: anObject in: evalContext withResultDo: aBlock
 
 	| guineaPig debugger context |
 
@@ -424,7 +505,7 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 			valueWithReceiver: anObject
 			arguments: (evalContext ifNil: [ #() ] ifNotNil: [ { evalContext } ]).
 		debugger sendProceeds.
-		result inspect.]
+		aBlock value: result ]
 			on: Error
 			do: [:anError |
 				self inform: anError printString.
@@ -456,18 +537,37 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: 'Can not debug this'. ^self ] ] whileFalse.
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/14/2017 09:00:18'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:00:12'!
+debugAndInspect
+	
+	self debugAndWithResultDo: [:result | result inspect ]! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:00:01'!
+debugAndWithResultDo: aBlock
+	
+	| receiver context stringToEval method |
+	
+	receiver := self doItReceiver.
+	context := self doItContext.
+	stringToEval := self stringToEvalSending: self selectedMessageName to: receiver onCancel: [^self].
+	[ method := self compile: stringToEval receiver: receiver in: context.
+	method ifNotNil: [ self debug: method receiver: receiver in: context withResultDo: aBlock ]]
+		on: SyntaxErrorNotification 
+		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
+! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:33:10'!
 debugMethodTest
 
-	| test |
-
-	((currentCompiledMethod selector beginsWith: 'test') and: [ currentCompiledMethod numArgs isZero ]) ifFalse: [ ^false ].
-
-	test := DenotativeObjectTestCase for: currentCompiledMethod.
-	test runCaseAsFailure.
+	(self isTest: currentCompiledMethod selector)
+		ifTrue: [ 
+			| test |
+			test := DenotativeObjectTestCase for: currentCompiledMethod.
+			test runCaseAsFailure ]
+		ifFalse: [ self debug ]
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:11:18'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:01:54'!
 defineClass: defString notifying: aRequestor
 
 	^[[[ | class |
@@ -487,7 +587,7 @@ defineClass: defString notifying: aRequestor
 				self setClass: class selector: nil.
 				true ]
 		ifFalse: [ false ]]
-		on: Error
+		on: Error - MessageNotUnderstood 
 		do: [ :anError | 
 			anError messageText = 'Class names must be capitalized' ifTrue: [ anError messageText: 'Object names must be capitalized' ].
 			self inform: anError printString.
@@ -498,7 +598,6 @@ defineClass: defString notifying: aRequestor
 			parserNotification return: false ]]
 		on: Warning
 		do: [ :aWarning |
-			self halt.
 			(self confirm: aWarning printString) 
 				ifTrue: [ aWarning resume ]
 				ifFalse: [ aWarning return: nil ]].! !
@@ -651,16 +750,15 @@ runMessageCategoryTests
 
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/19/2017 21:27:31'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:34:40'!
 runMethodTest
 
-	| suite |
-
-	(self isTest: currentCompiledMethod selector) ifFalse: [ ^false ].
-
-	suite := TestSuite named: currentCompiledMethod methodClass soleInstance name, ' ', currentCompiledMethod selector asString.
-	suite addTest: (DenotativeObjectTestCase for: currentCompiledMethod).
-	(DenotativeObjectProgessiveTestRunner for: suite) value
+	(self isTest: currentCompiledMethod selector) 
+		ifTrue: [ | suite |
+			suite := TestSuite named: currentCompiledMethod methodClass soleInstance name, ' ', currentCompiledMethod selector asString.
+			suite addTest: (DenotativeObjectTestCase for: currentCompiledMethod).
+			(DenotativeObjectProgessiveTestRunner for: suite) value ]
+		ifFalse: [ self send ].
 	! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/14/2017 20:02:30'!
@@ -676,8 +774,18 @@ runSystemCategoryTests
 			(DenotativeObjectProgessiveTestRunner for: suite) value ]]
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/8/2017 17:34:37'!
-send
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:59:28'!
+send 
+
+	self sendAndWithResultDo: [ :result | ]! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:59:39'!
+sendAndInspect
+
+	self sendAndWithResultDo: [ :result | result inspect ]! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:52:47'!
+sendAndWithResultDo: aBlock
 	
 	| receiver context stringToEval method debugger |
 	
@@ -687,9 +795,11 @@ send
 	debugger := nil.
 	[ method := self compile: stringToEval receiver: receiver in: context.
 	method ifNotNil: [[ 
-		[(method
+		[| result |
+		result := method
 			valueWithReceiver: receiver
-			arguments: (context ifNil: [ #() ] ifNotNil: [ { context } ]))]
+			arguments: (context ifNil: [ #() ] ifNotNil: [ { context } ]).
+		aBlock value: result ]
 			on: Error
 			do: [ :anError |
 				self inform: anError printString.
@@ -803,7 +913,7 @@ validateDefinitionString: defString
 		ifTrue: [ self validateObjectCreation: defTokens ]
 		ifFalse: [ self validateObjectRedefinition: defTokens ]! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:00:59'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 14:44:07'!
 validateObjectCreation: defTokens 
 
 	| denotativeObjectName nameIndex |
@@ -811,10 +921,9 @@ validateObjectCreation: defTokens
 	nameIndex := defTokens findFirst: [ :token | token beginsWith: '#' ].
 	nameIndex = 0 ifTrue: [ self error: self invalidDefinitionStringErrorDescription ].
 	
-	denotativeObjectName := (defTokens at: nameIndex) copyWithoutAll: '#()'.	
-	(Smalltalk includesKey: denotativeObjectName asSymbol) 
-		ifTrue: [ self error: (self objectNameInUseErrorDescription: denotativeObjectName)]
-! !
+	denotativeObjectName := (defTokens at: nameIndex) copyWithoutAll: '#()'.
+	self assertDoesNotExistObjectNamed: denotativeObjectName.
+	! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:09:16'!
 validateObjectRedefinition: defTokens 
@@ -825,6 +934,28 @@ validateObjectRedefinition: defTokens
 	(potentialDenotativeObject is: #DenotativeObject) ifFalse: [ self error: (self invalidObjectErrorDescription: defTokens first)]
 
 		! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:53:35'!
+withCategoryNameDo: aBlock
+	
+	| categoryName |
+	
+	categoryName := FillInTheBlankMorph request: 'Enter category name' onCancel: [^self].
+	categoryName := categoryName withBlanksTrimmed.
+	categoryName isEmpty ifTrue: [ ^self inform: 'Category name can not be empty' ].
+	^aBlock value: categoryName ! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:53:41'!
+withObjectNameDo: aBlock
+	
+	| objectName |
+	
+	objectName := FillInTheBlankMorph request: 'Enter object name' onCancel: [^self].
+	objectName := objectName withBlanksTrimmed.
+	"This is just to provide a better error message - Hernan"
+	objectName isEmpty ifTrue: [ ^self inform: 'Name can not be empty' ].
+	(objectName includes: $ ) ifTrue: [ ^self inform: 'Name can not have spaces' ].
+	^aBlock value: objectName ! !
 
 !DenotativeObjectBrowser class methodsFor: 'as yet unclassified' stamp: 'HAW 7/19/2017 21:31:18'!
 isTest: aSelector
@@ -849,6 +980,19 @@ askForCategoryIn: aClass default: aString
 askForSuperclassOf: aClass upTo: aSuperclass toImplement: aSelector ifCancel: cancelBlock
 
 	^aClass! !
+
+!DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 19:06:38'!
+contents: aText notifying: aController
+
+	^[ super contents: aText notifying: aController ]
+		on: UndeclaredVariable 
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
+! !
+
+!DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 12:43:55'!
+editorClassFor: textGetter
+
+	^DenotativeObjectSmalltalkEditor ! !
 
 !DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 17:29:24'!
 inStep
@@ -900,6 +1044,11 @@ restart
 		on: Error
 		do: [ :anError | self inform: 'Can not continue debugging' ]
 	! !
+
+!DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 19:08:57'!
+selectedSystemCategoryName
+	
+	^self receiver ifNil: [ 'Debugger-Objects' ] ifNotNil: [ :receiver | receiver isBehavior ifTrue: [ receiver category ] ifFalse: [ receiver class category ]]! !
 
 !DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 09:26:41'!
 send
@@ -983,36 +1132,67 @@ selection
 openOn: anObject
 	^ self openOn: anObject withLabel: anObject name! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 16:59:24'!
-acceptAndDebug
-	
-	self acceptContents ifFalse: [ ^false ].
-	self codeProvider debug.
-	^true! !
+!DenotativeObjectInspector class methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:12:07'!
+openOn: anObject withLabel: label
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 20:35:58'!
-acceptAndDebug: aKeyboardEvent 
+	DenotativeObjectInspectorWindow open: (self inspect: anObject) label: label
 	
-	^self acceptAndDebug! !
+! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/19/2017 21:52:41'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:06:01'!
 acceptAndDebugTest
 
-	^self acceptAndWithMethodDo: [ :aPotencialTestMethod |
-		(self isTest: aPotencialTestMethod selector) ifTrue: [
-			(DenotativeObjectTestCase for: aPotencialTestMethod) debugAsFailureIfCanNot: [ PopUpMenu inform: TestCase canNotDebugMethodErrorDescription ]]]! !
+	^self acceptAndDebugTestOr: [ self codeProvider debug ]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 20:32:01'!
-acceptAndSend
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:05:50'!
+acceptAndDebugTestOr: aBlock
+
+	^self acceptAndWithMethodDo: [ :aPotencialTestMethod |
+		(self isTest: aPotencialTestMethod selector) 
+			ifTrue: [
+				(DenotativeObjectTestCase 
+					for: aPotencialTestMethod) 
+					debugAsFailureIfCanNot: [ PopUpMenu inform: TestCase canNotDebugMethodErrorDescription ]]
+			ifFalse: aBlock]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:06:19'!
+acceptDebugAndInspect
+
+	^self acceptAndDebugTestOr: [ self codeProvider debugAndInspect ]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:07:05'!
+acceptDebugAndInspect: aKeyboardEvent 
 	
-	self acceptContents ifFalse: [ ^false ].
-	self codeProvider send.
+	self acceptDebugAndInspect.
 	^true! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 20:33:31'!
-acceptAndSend: aKeyboardEvent 
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:51:34'!
+acceptSendAndInspect
 	
-	^self acceptAndSend! !
+	self acceptThenTestMethodAndSuite:  [ :aMethod | self testSuiteOf: aMethod methodClass ] orSendAndWithResultDo: [:result | result inspect ]
+! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:55:50'!
+acceptSendAndInspect: aKeyboardEvent 
+	
+	self acceptSendAndInspect.
+	^true! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:50:30'!
+acceptThenTestMethodAndSuite: aSuiteBuilder
+	
+	self acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: [:result | ]
+! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:50:11'!
+acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: aBlock
+	
+	self acceptAndWithMethodDo: [ :aPotencialTestMethod |
+		(self isTest: aPotencialTestMethod selector) 
+			ifTrue: [
+				self runAndDebuggIfNecessary: aPotencialTestMethod.
+				self runTestSuite: (aSuiteBuilder value: aPotencialTestMethod) ]
+			ifFalse: [ self codeProvider sendAndWithResultDo: aBlock ]]! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 06:23:19'!
 browseIt
@@ -1074,7 +1254,7 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 
 	! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 7/21/2017 07:44:41'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 13:07:13'!
 evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 	"Treat the current selection as an expression; evaluate it and return the result
 	3 +4
@@ -1088,7 +1268,7 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 				rcvr := provider doItReceiver.
 				ctxt := provider doItContext]
 		ifFalse: [rcvr := ctxt := nil].
-	[result := [
+	[result := [[
 		Compiler new
 			sourceStreamGetter: #selectionAsStream;		"Cuis specific. Do not remove!!"
 			evaluate: self selectionAsStream
@@ -1097,10 +1277,11 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 			notifying: self
 			ifFail: [^ failBlock value]
 			logged: true
-			profiled: doProfile.
-	]
+			profiled: doProfile.]
+		on: UndeclaredVariable 
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ]]
 		on: OutOfScopeNotification
-		do: [ :ex | ex resume: true].]
+		do: [ :ex | ex resume: true]]
 		on: Error
 		do: [ :anError |
 			| activeProcess context debugger |
@@ -1111,10 +1292,7 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 			[context notNil and: [(context receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ context := context sender ].
 			context isNil ifTrue: [ self error: 'can not debug' ].
 			debugger process: activeProcess context: context.
-			debugger openFullNoSuspendLabel: (
-					(anError isKindOf: MessageNotUnderstood)
-						ifTrue: [ anError receiver printString, ' does not understand ', anError  message selector asString ]
-						ifFalse: [ anError messageText ]).
+			debugger openFullNoSuspendLabel: anError printString.
 			activeProcess suspend.
 			].
 	morph formatAndStyleIfNeeded.		"Needed to re-shout workspaces, that might have new variables binded."
@@ -1204,7 +1382,7 @@ testSuiteOf: aDenotativeObject
 
 	^suite! !
 
-!DenotativeObjectSmalltalkEditor class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 20:35:31'!
+!DenotativeObjectSmalltalkEditor class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:54:07'!
 cmdShortcutsSpec
 	"
 	self initialize
@@ -1214,11 +1392,11 @@ cmdShortcutsSpec
 	^ super cmdShortcutsSpec,
 	
 	#(
-		#(		$e	#acceptAndSend:					'Saves method and sends message')
-		#(		$q	#acceptAndDebug:				'Saves method and debugs message')
+		#(		$e	#acceptSendAndInspect:					'')
+		#(		$q	#acceptDebugAndInspect:				'')
 	)! !
 
-!DenotativeObjectSmalltalkEditor class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 20:25:36'!
+!DenotativeObjectSmalltalkEditor class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:54:18'!
 initializeMenu
 	"
 	self initializeMenu
@@ -1243,16 +1421,20 @@ initializeMenu
 		{'Accept (s)'.									#acceptContents}.
 		{'Cancel (l)'.									#cancelEdits}.
 		#-.
-		{'Accept and Send (e)'.						#acceptAndSend}.
-		{'Accept and Debug (w)'.						#acceptAndDebug}.
-		#-.
-		{'Accept & Run Test in Class (t)'.				#acceptAndTest}.
-		{'Accept & Run Test in Category (y)'.		#acceptAndTestAll}.
-		{'Accept & Debug Test (r)'.					#acceptAndDebugTest}.
+		{'Accept and Send (t)'.				#acceptAndTest}.
+		{'Accept, Send and Inspect (e)'.				#acceptSendAndInspect}.
+		{'Accept and Debug (r)'.					#acceptAndDebugTest}.
+		{'Accept, Debug and Inspect (q)'.					#acceptDebugAndInspect}.
+		{'Accept and Run Test in Category (y)'.		#acceptAndTestAll}.
 		#-.
 		{'More...'.										#getMenu2}.
 	}.
 ! !
+
+!DenotativeObjectWorkspaceEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 18:58:29'!
+selectedSystemCategoryName
+	
+	^'Workspace-Objects'! !
 
 !DenotativeObjectWorkspaceEditor class methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 13:19:45'!
 initializeMenu
@@ -1321,6 +1503,16 @@ messageListMenu
 
 ! !
 
+!DenotativeObjectMessageSetWindow class methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 21:55:20'!
+openMessageList: messageList label: labelString autoSelect: autoSelectString
+
+	| messageSet |
+
+	messageSet _ DenotativeObjectMessageSet messageList: messageList.
+	messageSet autoSelectString: autoSelectString.
+	
+	^self open: messageSet label: labelString ! !
+
 !DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 11:29:15'!
 browseAllAccessesTo: aVar from: aClass
 
@@ -1388,22 +1580,23 @@ buildMorphicClassColumn
 
 	^column! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 07:35:21'!
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:54:36'!
 classListMenu
 
 	| aMenu |
 
 	aMenu := MenuMorph new defaultTarget: self.
 	aMenu addList: #(
+		('add object...'		addDenotativeObject     '' 	model)
+		('add object in categoy...'		addDenotativeObjectInCategory     '' 	model)
 		('inspect'						inspectIt)
-		-
-		('add variable...'				addInstVar)
-		('rename variable...'			renameInstVar)
-		('remove variable...'			removeInstVar)
-		-
 		('rename...'						renameClass	''		model)
 		('clone...'						copyClass		''		model)
 		('remove (x)'					removeClass	''		model)
+		-
+		('add colaborator...'				addInstVar)
+		('rename colaborator...'			renameInstVar)
+		('remove colaborator...'			removeInstVar)
 		-
 		('Run tests (t)'					runClassTests 	''	model)).
 	^ aMenu! !
@@ -1436,7 +1629,16 @@ inspectIt
 	
 	model selectedClass inspect! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 09:01:15'!
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:16:00'!
+messageListKey: aChar from: view
+
+	aChar = $e ifTrue: [^model sendAndInspect ].
+	aChar = $q ifTrue: [^model debugAndInspect ].
+	
+	^super messageListKey: aChar from: view
+	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:09:22'!
 messageListMenu
 
 	| aMenu |
@@ -1450,11 +1652,11 @@ messageListMenu
 			('rename'						renameMethod)
 			('remove (x)'					removeMessage)
 			-
-			('send'							send 						'' 	model)
-			('debug'						debug 					'' 	model)
-			-
-			('Run test (t)'					runMethodTest 		'' 	model)
-			('Debug test (r)'				debugMethodTest 	'' 	model)).
+			('send (t)'						runMethodTest 		'' 	model)
+			('send and inspect (e)'			sendAndInspect 		'' 	model)
+			('debug (r)'						debugMethodTest 	'' 	model)
+			('debug and inspect (q)'		debugAndInspect 		'' 	model)
+			).
 	^ aMenu
 ! !
 
@@ -1593,13 +1795,24 @@ browseSendersOf: aSymbol
 		label: label
 		autoSelect: aSymbol keywords first! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow class methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 12:46:32'!
 fullOnClass: aClass selector: aSelector
-	"Open a new full browser set to class."
 
+	"This is to be sure that we are going to browse a denotative object, if not we open
+	the classic browser. This is important because if in an inspector the Browse option on a no denotative object
+	is selected, then the denotative browser will be open for a no denotative object - Hernan"	
+	
+	(aClass theNonMetaClass is: #DenotativeObject)
+		ifTrue: [ self fullOnDenotativeObject: aClass selector: aSelector ]
+		ifFalse: [ BrowserWindow fullOnClass: aClass selector: aSelector ]! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:34:07'!
+fullOnDenotativeObject: aDenotativeObject selector: aSelector 
+		
 	| browser |
+	
 	browser := DenotativeObjectBrowser new.
-	browser setClass: aClass selector: aSelector.
+	browser setClass: aDenotativeObject selector: aSelector.
 	self open: browser label: browser labelString! !
 
 !DenotativeObjectBrowserWindow class methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 06:22:49'!
@@ -1661,6 +1874,20 @@ browseMethodFull
 	model selectedClassOrMetaClass ifNotNil: [ :myClass |
 		DenotativeObjectBrowserWindow fullOnClass: myClass selector: model selectedMessageName]! !
 
+!DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:38:47'!
+browseMethodFullIn: anInspector
+
+	anInspector selectedClassOrMetaClass ifNotNil: [ :denotativeObject |
+		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]
+	! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:38:21'!
+browseReceiver
+
+	self browseMethodFullIn: model receiverInspector
+
+! !
+
 !DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 11:25:20'!
 browseSendersOfMessages
 
@@ -1687,6 +1914,33 @@ buildLowerPanes
 
 	^codeAndButtons ! !
 
+!DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 12:27:01'!
+contextStackKey: aChar from: view
+	"Respond to a keystroke in the context list"
+
+	aChar == $e ifTrue: [^ model send].
+	aChar == $t ifTrue: [^ model stepIntoBlock].
+	aChar == $p ifTrue: [^ model proceed].
+	aChar == $r ifTrue: [^ model restart].
+	aChar == $w ifTrue: [^ model where].
+
+	^ self messageListKey: aChar from: view! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:36:39'!
+contextStackMenu
+	"Set up the menu appropriately for the context-stack-list, either shifted or unshifted as per the parameter provided"
+
+	| aMenu |
+	aMenu _ MenuMorph new defaultTarget: self.
+	aMenu addList: #(
+			('proceed (p)'					proceed 					'' 		model)
+			('restart (r)'					restart						''		model)
+			('into (e)'						send							''		model)
+			('over (t)'						stepIntoBlock						''		model)
+			('where (w)'					where						''		model)
+		).
+	^aMenu! !
+
 !DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/20/2017 18:25:21'!
 customButtonSpecs
 	"Answer an array of elements of the form wording, selector, help-message, that characterize the custom button row of a debugger."
@@ -1698,10 +1952,74 @@ customButtonSpecs
 		('Where'		where				'select current pc range')
 		('Create'		createMethod		'create method'))! !
 
+!DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:24:44'!
+inspectReceiverSelection
+
+	model receiverInspector selectionIndex = 0 ifTrue: [^ self flash].
+	^ model receiverInspector selection inspect! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 12:41:12'!
+messageListKey: aChar from: view
+
+	| sel class |
+
+	sel _ model selectedMessageName.
+	aChar == $m ifTrue: [  "These next two put up a type in if no message selected"
+		^ self useSelector: sel orGetSelectorAndSendQuery: #browseAllImplementorsOf: to: DenotativeObjectBrowserWindow ].
+	aChar == $n ifTrue: [
+		^ self useSelector: sel orGetSelectorAndSendQuery: #browseSendersOf: to: DenotativeObjectBrowserWindow ].
+
+	"The following require a class selection"
+	(class _ model selectedClassOrMetaClass) ifNil: [^ self ].
+	aChar == $b ifTrue: [^ DenotativeObjectBrowserWindow fullOnClass: class selector: sel].
+	aChar == $N ifTrue: [^ DenotativeObjectBrowserWindow browseReferencesTo: (Smalltalk bindingOf: class theNonMetaClass name)].
+
+	"The following require a method selection"
+	sel ifNotNil: [
+		aChar == $v ifTrue: [^ self browseVersions]]! !
+
 !DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 06:23:10'!
 optionalButtonTuples
 
 	^DenotativeObjectBrowserWindow optionalButtonTuples reject: [ :tuple | tuple third = #offerWhatToShowMenu ]! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:22:47'!
+receiverFieldListMenu
+
+
+	| aMenu |
+
+	aMenu _ MenuMorph new defaultTarget: self.
+
+	aMenu addList: #(
+		('inspect (i)'						inspectReceiverSelection)
+		('browse (b)'						browseReceiver)).
+		
+	^ aMenu! !
+
+!DenotativeObjectInspectorWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:17:35'!
+browseMethodFull
+
+	model selectedClassOrMetaClass ifNotNil: [ :denotativeObject |
+		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]! !
+
+!DenotativeObjectInspectorWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:15:27'!
+fieldListMenu
+
+	| aMenu |
+
+	aMenu _ MenuMorph new defaultTarget: self.
+
+	aMenu addList: #(
+		('inspect (i)'							inspectSelection)
+		('browse (b)'						browseMethodFull)).
+		
+	^ aMenu! !
+
+!DenotativeObjectTheme methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:42:56'!
+debugger
+
+	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
 
 !DenotativeObjectProgessiveTestRunner methodsFor: 'as yet unclassified' stamp: 'HAW 7/14/2017 19:58:26'!
 openTestResultWindow
@@ -1925,29 +2243,41 @@ for: aSelector in: aClass
 	^self new initializeFor: aSelector in: aClass
 	! !
 
-!DenotativeObject methodsFor: 'as yet unclassified' stamp: 'HAW 7/9/2017 11:54:41'!
-createObjectNamed: aName in: aCategory
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:59:04'!
+allReplicants
 
-	| anonymousClass |
+	| withAllReplicants allReplicants|
+	
+	withAllReplicants := self withAllReplicants.
+	allReplicants := withAllReplicants reject: [ :aDenotativeObject | aDenotativeObject theOriginalDenotativeObject == aDenotativeObject ].
+	
+	^allReplicants ! !
 
-	anonymousClass  := Class new.
-"	anonymousClass
-		superclass: sup
-		methodDict: md
-		format: ft
-		name: nm
-		organization: org
-		instVarNames: nilOrArray
-		classPool: pool
-		sharedPools: poolSet
-	"
-	anonymousClass new
-! !
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:47:27'!
+allReplicantsDetect: aBlock
 
-!DenotativeObject methodsFor: 'as yet unclassified' stamp: 'HAW 7/7/2017 10:02:27'!
-printOn: aStream
+	^self allReplicants detect: aBlock ! !
 
-	self class printOn: aStream ! !
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:47:43'!
+allReplicantsDetect: aBlock ifNone: noneBlock
+
+	^self allReplicants detect: aBlock ifNone: noneBlock! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:46:45'!
+allReplicantsDo: aBlock
+
+	^self allReplicants do: aBlock ! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:47:17'!
+allReplicantsSelect: aBlock
+
+	^self allReplicants select: aBlock ! !
+
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:16:30'!
+argumentNameSufix
+
+	^self theOriginalDenotativeObject name
+	! !
 
 !DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 19:28:09'!
 assert: aBooleanOrBlock
@@ -2023,6 +2353,28 @@ deny: aBoolean
 	self assert: aBoolean not
 			! !
 
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 11:08:03'!
+doesNotUnderstand: aMessage
+
+	"This redefinition is just to provide a message text to the exception without the 'class' part, so when shown in the debugger title or a 
+	message window, only the name of the denotative object appears
+	There are other alternatives to solve this as creating a new message to get the description as denotativeObjectPrintString, to handle 
+	the MessageNotUndertood in all places and set the messageText in the handler, etc., but this one looked like the least intrusive one,
+	the only problem it has is if Object>>doesNotUnderstand: changes this one should change too.
+	I thought about changing Object>>doesNotUnderstand: to send a message to get the messageText and by default do nothing, but 
+	again, that change is more intrusive... - Hernan"
+	
+	| exception resumeValue |
+	
+	(exception _ MessageNotUnderstood new)
+		message: aMessage;
+		receiver: self;
+		messageText: self printString , '>>' , aMessage selector asString.
+	resumeValue _ exception signal.
+	^exception reachedDefaultHandler
+		ifTrue: [ aMessage sentTo: self ]
+		ifFalse: [ resumeValue ]! !
+
 !DenotativeObject class methodsFor: 'accessing' stamp: 'HAW 7/14/2017 08:05:43'!
 fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
 
@@ -2074,6 +2426,25 @@ nextCloneNumber
 	
 	^CloneNumber! !
 
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:28:00'!
+replicantNamePrefix
+
+	^'a replicant of '! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:27:48'!
+replicate
+	"A replicant is a copy of myself. My replicants and I have our own state but we all share the same behaviour, hence a change of behaviour in any of us will hold for all.
+	
+	Replicants are anonymous"
+	
+	| replicant |
+	
+	replicant _ self class basicNew copyFrom: self.
+	replicant setName: self replicantNamePrefix , self name.
+	
+	^ replicant.
+	! !
+
 !DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/28/2017 19:28:50'!
 template: aSystemCategoryName
 
@@ -2094,6 +2465,41 @@ template: aSystemCategoryName
 				nextPutAll: (collaborators at: index);
 				newLine;
 				tab ]]! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 11:33:34'!
+theNoReplicantDenotativeObject 
+	
+	^self class soleInstance ! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:58:54'!
+theOriginalDenotativeObject 
+	
+	^self class soleInstance ! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:42:50'!
+withAllReplicants
+
+	^self class allRealInstances.! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:48:03'!
+withAllReplicantsDetect: aBlock
+
+	^self withAllReplicants detect: aBlock ! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:48:16'!
+withAllReplicantsDetect: aBlock ifNone: noneBlock
+
+	^self withAllReplicants detect: aBlock ifNone: noneBlock ! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:46:59'!
+withAllReplicantsDo: aBlock
+
+	^self withAllReplicants do: aBlock ! !
+
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:47:55'!
+withAllReplicantsSelect: aBlock
+
+	^self withAllReplicants select: aBlock ! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:11:52'!
 comparingStringBetween: actual and: expected
