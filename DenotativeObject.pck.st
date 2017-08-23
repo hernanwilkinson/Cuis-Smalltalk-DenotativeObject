@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 22 August 2017 at 11:43:47 am'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 23 August 2017 at 7:44:23 am'!
 'Description DenotativeObjectTheme - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 10!
+!provides: 'DenotativeObject' 1 11!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
 	instanceVariableNames: ''
@@ -220,6 +220,36 @@ allIReplicants
 allRealInstances
 	
 	^super allInstances ! !
+
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:05:08'!
+asMessage
+
+	^self asMessageWithAll: #()! !
+
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:05:36'!
+asMessageWith: aColaborator
+
+	^self asMessageWithAll: (Array with: aColaborator)! !
+
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:06:06'!
+asMessageWithAll: aColaborators
+
+	^Message selector: self arguments: aColaborators ! !
+
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:06:29'!
+sendTo: aReceiver
+
+	^self asMessage sendTo: aReceiver ! !
+
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:06:49'!
+sendTo: aReceiver with: aColaborator
+
+	^(self asMessageWith: aColaborator) sendTo: aReceiver ! !
+
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:07:01'!
+sendTo: aReceiver withAll: aColaborators
+
+	^(self asMessageWithAll: aColaborators) sendTo: aReceiver ! !
 
 !ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 7/20/2017 20:00:43'!
 messageText
@@ -2417,6 +2447,11 @@ longPrintOn: aStream limitedTo: sizeLimit indent: indent
 		 	newLine ]
 
 ! !
+
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 17:12:27'!
+methodNamed: aSelector
+
+	^self class compiledMethodAt: aSelector ! !
 
 !DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 21:56:31'!
 nextCloneNumber
