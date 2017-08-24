@@ -1,6 +1,7 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 23 August 2017 at 5:18:02 pm'!
-'Description DenotativeObjectTheme - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 12!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 24 August 2017 at 3:34:01 pm'!
+'Description Reification of colaborator - a lot of cleanup still needed'!
+!provides: 'DenotativeObject' 1 13!
+!requires: 'Refactoring' 1 23 nil!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
 	instanceVariableNames: ''
@@ -169,6 +170,16 @@ RefactoringApplier subclass: #DenotativeObjectRenameMethodApplier
 	category: 'DenotativeObject'!
 !classDefinition: 'DenotativeObjectRenameMethodApplier class' category: #DenotativeObject!
 DenotativeObjectRenameMethodApplier class
+	instanceVariableNames: ''!
+
+!classDefinition: #Colaborator category: #DenotativeObject!
+Object subclass: #Colaborator
+	instanceVariableNames: 'owner name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'Colaborator class' category: #DenotativeObject!
+Colaborator class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObject category: #DenotativeObject!
@@ -478,6 +489,12 @@ sendTo: aReceiver with: aColaborator
 sendTo: aReceiver withAll: aColaborators
 
 	^(self asMessageWithAll: aColaborators) sendTo: aReceiver ! !
+
+!CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 8/24/2017 11:19:34'!
+sourceCode
+
+	"This method is implemented because getSource is not so intuitive - Hernan"
+	^self getSource! !
 
 !ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 7/20/2017 20:00:43'!
 messageText
@@ -2367,6 +2384,54 @@ for: aSelector in: aClass
 	^self new initializeFor: aSelector in: aClass
 	! !
 
+!Colaborator methodsFor: 'initialization' stamp: 'HAW 8/24/2017 08:29:25'!
+initializeNamed: aName on: anObject
+
+	owner := anObject.
+	name := aName.
+	! !
+
+!Colaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
+printOn: aStream
+
+	aStream 
+		nextPutAll: name;
+		nextPutAll: ' at ';
+		print: owner! !
+
+!Colaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:30:32'!
+value
+
+	^owner instVarNamed: name! !
+
+!Colaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:31:24'!
+value: newValue
+
+	^owner instVarNamed: name put: newValue ! !
+
+!Colaborator class methodsFor: 'assertions' stamp: 'HAW 8/24/2017 08:27:17'!
+assert: aName isColaboratorOn: anObject
+
+	(anObject class definesInstanceVariableNamed: aName) ifFalse: [ self signal: aName isNotAColaboratorOn: anObject ]
+	 ! !
+
+!Colaborator class methodsFor: 'exceptions' stamp: 'HAW 8/24/2017 08:34:36'!
+colaboratorNamed: aName isNotDefinedIn: anObject
+
+	^'Colaborator named ', aName, ' is not defined in ', anObject printString ! !
+
+!Colaborator class methodsFor: 'instance creation' stamp: 'HAW 8/24/2017 08:22:38'!
+named: aName on: anObject
+
+	self assert: aName isColaboratorOn: anObject.
+	
+	^self new initializeNamed: aName on: anObject ! !
+
+!Colaborator class methodsFor: 'exceptions' stamp: 'HAW 8/24/2017 08:33:59'!
+signal: aName isNotAColaboratorOn: anObject
+
+	self error: (self colaboratorNamed: aName isNotDefinedIn: anObject)! !
+
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:59:04'!
 allReplicants
 
@@ -2440,6 +2505,11 @@ cloneNamed: copysNameString
 	
 	DenotativeObjectBrowser allInstancesDo: [ :browser | browser changed: #classList ].
 	^newClass ! !
+
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/24/2017 08:21:43'!
+colaboratorNamed: aName
+
+	^Colaborator named: aName on: self! !
 
 !DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 19:43:09'!
 collaboratorNames: variablesDefinition in: aCategory
