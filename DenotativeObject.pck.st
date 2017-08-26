@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 24 August 2017 at 3:34:01 pm'!
-'Description Reification of colaborator - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 13!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 26 August 2017 at 7:18:56 pm'!
+'Description Delegation support - a lot of cleanup still needed'!
+!provides: 'DenotativeObject' 1 14!
 !requires: 'Refactoring' 1 23 nil!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
@@ -718,31 +718,63 @@ acceptedStringOrText
 
 	self error: 'Browser internal error: unknown edit selection.'! !
 
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:16:58'!
+addChildDenotativeObject
+	
+	self withObjectNameDo: [ :objectName |
+		self withParentNameDo: [ :parentName |
+			self addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: self selectedSystemCategoryName ]]! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:15:55'!
+addChildDenotativeObjectInCategory
+	
+	self withObjectNameDo: [ :objectName |
+		self withParentNameDo: [ :parentName |
+			self withCategoryNameDo: [ :categoryName |
+				self addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName ]]]
+	! !
+
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:55:13'!
 addDenotativeObject
 	
 	self withObjectNameDo: [ :objectName |
 		self addDenotativeObjectNamed: objectName inCategory: self selectedSystemCategoryName ]! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:54:40'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:13:46'!
 addDenotativeObjectInCategory
-	
-	| definitionString |
 	
 	self withObjectNameDo: [ :objectName |
 		self withCategoryNameDo: [ :categoryName |
-			definitionString := 'ObjectBuilder create: #', objectName, ' collaboratorNames: '''' in: ''', categoryName, ''''.
-			self defineClass: definitionString  notifying: nil ]]
+			self addDenotativeObjectNamed: objectName inCategory: categoryName ]]
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:54:29'!
-addDenotativeObjectNamed: objectName inCategory: categoryName
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:05:53'!
+addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName
 	
-	| definitionString |
+	| definitionString colaborators |
+
+	colaborators := Array 
+		with: '#', objectName 
+		with: parentName
+		with: ''''''
+		with: '''', categoryName, ''''.
 	
-	definitionString := 'ObjectBuilder create: #', objectName, ' collaboratorNames: '''' in: ''', categoryName, ''''.
+	definitionString := String streamContents: [ :stream |
+		stream  nextPutAll:  ObjectBuilder name asString.		
+		#create:asChildOf:colaboratorNames:in: keywords withIndexDo: [ :keyword :index |
+			stream
+				space;
+				nextPutAll: keyword;
+				space;
+				nextPutAll: (colaborators at: index) ]].
+	
 	self defineClass: definitionString  notifying: nil 
 	! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:13:21'!
+addDenotativeObjectNamed: objectName inCategory: categoryName
+	
+	^self addDenotativeObjectNamed: objectName asChildOf: DenotativeObject name asString inCategory: categoryName ! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 14:44:22'!
 assertDoesNotExistObjectNamed: denotativeObjectName
@@ -758,14 +790,15 @@ classDefinitionText
 	
 	^(theClass := self selectedClassOrMetaClass) ifNil: [''] ifNotNil: [DenotativeObject definitionOf: theClass]! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/12/2017 23:17:59'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 17:35:54'!
 classList
 	"Answer an array of the class names of the selected category. Answer an
 	empty array if no selection exists."
 
 	^selectedSystemCategory
 		ifNil: [#()]
-		ifNotNil: [(systemOrganizer listAtCategoryNamed: selectedSystemCategory) select: [ :aClass | (Smalltalk classNamed: aClass) superclass = DenotativeObject ] ]! !
+		ifNotNil: [(systemOrganizer listAtCategoryNamed: selectedSystemCategory) select: [ :aClass | 
+				(Smalltalk classNamed: aClass) is: #DenotativeObject ] ]! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 13:32:34'!
 copyClass
@@ -791,7 +824,7 @@ debugMethodTest
 
 	^self debugDenotativeObjectMethodTest! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 15:01:54'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:09:17'!
 defineClass: defString notifying: aRequestor
 
 	^[[[ | class |
@@ -814,11 +847,14 @@ defineClass: defString notifying: aRequestor
 		on: Error - MessageNotUnderstood 
 		do: [ :anError | 
 			anError messageText = 'Class names must be capitalized' ifTrue: [ anError messageText: 'Object names must be capitalized' ].
+			anError messageText: (anError messageText copyReplaceAll: ' class' with: '').
+			anError messageText: (anError messageText copyReplaceAll: ' inherits from ' with: ' is child of ').
+			anError messageText: (anError messageText copyReplaceAll: ' subclass ' with: ' child ').
 			self inform: anError printString.
 			anError return: false ]]
-		on: ParserNotification
+		on: ParserNotification, UndeclaredVariableWarning 
 		do: [ :parserNotification |
-			self inform: self invalidDefinitionStringErrorDescription.
+			self inform: self invalidDefinitionErrorDescription.
 			parserNotification return: false ]]
 		on: Warning
 		do: [ :aWarning |
@@ -888,10 +924,10 @@ firstExperimentCategoryName
 	
 	^'First Experiment'! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:00:50'!
-invalidDefinitionStringErrorDescription
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:35:22'!
+invalidDefinitionErrorDescription
 
-	^'Invalid definition string'! !
+	^'Invalid definition'! !
 
 !DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/6/2017 11:09:34'!
 invalidObjectErrorDescription: name
@@ -1061,17 +1097,29 @@ withCategoryNameDo: aBlock
 	categoryName isEmpty ifTrue: [ ^self inform: 'Category name can not be empty' ].
 	^aBlock value: categoryName ! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:53:41'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:15:10'!
 withObjectNameDo: aBlock
+	
+	^self withObjectNameDo: aBlock label: 'Enter object name' 
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:14:49'!
+withObjectNameDo: aBlock label: aLabel
 	
 	| objectName |
 	
-	objectName := FillInTheBlankMorph request: 'Enter object name' onCancel: [^self].
+	objectName := FillInTheBlankMorph request: aLabel onCancel: [^self].
 	objectName := objectName withBlanksTrimmed.
 	"This is just to provide a better error message - Hernan"
 	objectName isEmpty ifTrue: [ ^self inform: 'Name can not be empty' ].
 	(objectName includes: $ ) ifTrue: [ ^self inform: 'Name can not have spaces' ].
 	^aBlock value: objectName ! !
+
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:15:23'!
+withParentNameDo: aBlock
+	
+	^self withObjectNameDo: aBlock label: 'Enter parent name' 
+! !
 
 !DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 20:20:49'!
 askForCategoryIn: aClass default: aString
@@ -1087,10 +1135,22 @@ askForCategoryIn: aClass default: aString
 						ifFalse: [categories at: index].
 	^ category isEmpty ifTrue: [aString] ifFalse: [category]! !
 
-!DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 20:01:32'!
+!DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:17:29'!
 askForSuperclassOf: aClass upTo: aSuperclass toImplement: aSelector ifCancel: cancelBlock
 
-	^aClass! !
+	| classes chosenClassIndex |
+
+	classes := aClass soleInstance withParents collect: [ :denotativeObject | denotativeObject class ].
+	classes size = 1 ifTrue: [ ^aClass ].
+	
+	chosenClassIndex := PopUpMenu
+		withCaption: 'Define #', aSelector, ' in which object?'
+		chooseFrom: (classes collect: [:c | c soleInstance name]).
+	chosenClassIndex = 0 ifTrue: [^ cancelBlock value].
+
+	^ classes at: chosenClassIndex
+
+	! !
 
 !DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 19:06:38'!
 contents: aText notifying: aController
@@ -1196,12 +1256,12 @@ stepIntoBlock
 	 	ifFalse: [ self resetContext: toDebugContext ]] ensure: [ inStep := false ].
 	! !
 
-!DenotativeObjectInspector methodsFor: 'as yet unclassified' stamp: 'HAW 7/12/2017 23:39:17'!
+!DenotativeObjectInspector methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 17:53:39'!
 baseFieldList
 	"Answer an Array consisting of 'self'
 	and the instance variable names of the inspected object."
 
-	^ (Array with: 'self' with: 'all vars'), object class instVarNames ! !
+	^ (Array with: 'self' with: 'all vars'), object colaboratorNames ! !
 
 !DenotativeObjectInspector methodsFor: 'as yet unclassified' stamp: 'HAW 8/5/2017 10:37:42'!
 editorClassFor: textGetter
@@ -1692,25 +1752,28 @@ buildMorphicClassColumn
 
 	^column! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 09:54:36'!
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:17:29'!
 classListMenu
 
 	| aMenu |
 
 	aMenu := MenuMorph new defaultTarget: self.
 	aMenu addList: #(
-		('add object...'		addDenotativeObject     '' 	model)
-		('add object in categoy...'		addDenotativeObjectInCategory     '' 	model)
-		('inspect'						inspectIt)
-		('rename...'						renameClass	''		model)
-		('clone...'						copyClass		''		model)
-		('remove (x)'					removeClass	''		model)
+		('add object...'						addDenotativeObject     						'' 	model)
+		('add object in categoy...'			addDenotativeObjectInCategory    		'' 	model)
+		('add child object...'				addChildDenotativeObject     				'' 	model)
+		('add child object in categoy...'	addChildDenotativeObjectInCategory     '' 	model)
+		-
+		('inspect'							inspectIt)
+		('rename...'							renameClass	''		model)
+		('clone...'							copyClass		''		model)
+		('remove (x)'						removeClass	''		model)
 		-
 		('add colaborator...'				addInstVar)
 		('rename colaborator...'			renameInstVar)
 		('remove colaborator...'			removeInstVar)
 		-
-		('Run tests (t)'					runClassTests 	''	model)).
+		('Run tests (t)'						runClassTests 	''	model)).
 	^ aMenu! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 06:22:49'!
@@ -2468,6 +2531,12 @@ argumentNameSufix
 	^self theOriginalDenotativeObject name
 	! !
 
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:07:32'!
+asChildOf: aParentDenotativeObject colaboratorNames: colaborators in: aCategory
+
+	^ObjectBuilder create: self name asChildOf: aParentDenotativeObject colaboratorNames: colaborators in: aCategory withBlanksTrimmed.
+	! !
+
 !DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 19:28:09'!
 assert: aBooleanOrBlock
 
@@ -2511,35 +2580,47 @@ colaboratorNamed: aName
 
 	^Colaborator named: aName on: self! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 19:43:09'!
-collaboratorNames: variablesDefinition in: aCategory
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:04:27'!
+colaboratorNames
 
-	| trimmedCategory |
+	| names |
+	
+	names := OrderedCollection new.
+	self withParentsDo: [ :aDenotativeObject | names addAllFirst: aDenotativeObject class instVarNames ].
+	
+	^names! !
 
-	trimmedCategory := aCategory withBlanksTrimmed.
-	self class instanceVariableNames: variablesDefinition.
-	self category: trimmedCategory.
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:07:52'!
+colaboratorNames: colaborators in: aCategory
 
-	^self! !
+	^self asChildOf: DenotativeObject colaboratorNames: colaborators in: aCategory ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/1/2017 09:50:38'!
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:07:21'!
 definitionOf: aMetaclass
 
-	^ String streamContents: [ :stream | | collaborators |
+	^ String streamContents: [ :stream | | selector colaborators |
 		stream
 			nextPutAll: aMetaclass soleInstance name.
-			
+	
 		"Done this way to support rename of #create:collarobatorNames:in: - Hernan"
-		collaborators := Array 
-			with: '''', aMetaclass instanceVariablesString, ''''
-			with: '''', aMetaclass category, ''''.
-		#collaboratorNames:in: keywords withIndexDo: [ :keyword :index |
+		colaborators := OrderedCollection new.
+		(aMetaclass soleInstance superclass is: #DenotativeObject) 
+			ifTrue: [ 
+				selector := #asChildOf:colaboratorNames:in:.
+				colaborators add: aMetaclass soleInstance superclass name ]
+			ifFalse: [ selector := #colaboratorNames:in: ].
+			
+		colaborators 
+			add: '''', aMetaclass instanceVariablesString, '''';
+			add: '''', aMetaclass category, ''''. 
+									
+		selector keywords withIndexDo: [ :keyword :index |
 			stream
 				newLine;
 				tab;
 				nextPutAll: keyword;
 				space;
-				nextPutAll: (collaborators at: index) ]]! !
+				nextPutAll: (colaborators at: index) ]]! !
 
 !DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 19:36:01'!
 deny: aBoolean
@@ -2584,18 +2665,25 @@ fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aB
 			nextPutAll: '!!' ]
 		! !
 
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:55:08'!
+hasNoParentErrorDescription
+
+	^self name, ' has no parent'! !
+
 !DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/12/2017 23:33:06'!
 inspectorClass
 
 	^DenotativeObjectInspector
 	! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 06:12:17'!
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 17:38:05'!
 is: aSymbol
 
 	"Return true only for subclasses - Hernan"
 	
-	^aSymbol = #DenotativeObject and: [ self ~= DenotativeObject ]! !
+	^aSymbol = #DenotativeObject 
+		and: [ self ~= DenotativeObject 
+		and: [ self inheritsFrom: DenotativeObject ]]! !
 
 !DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/12/2017 23:57:46'!
 longPrintOn: aStream limitedTo: sizeLimit indent: indent
@@ -2625,6 +2713,35 @@ nextCloneNumber
 	
 	^CloneNumber! !
 
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:58:28'!
+parent
+
+	^self parentIfNone: [ self signalHasNoParentError ]! !
+
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:58:16'!
+parentIfNone: aBlock
+
+	superclass = DenotativeObject ifTrue: [ ^aBlock value ].
+	
+	^ superclass ! !
+
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:02:41'!
+parents
+
+	| parents |
+	
+	parents := self allSuperclassesUpTo: DenotativeObject.
+	parents removeLast.
+	
+	^parents 
+	
+	! !
+
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:02:52'!
+parentsDo: aBlock
+
+	^self parents do: aBlock! !
+
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:28:00'!
 replicantNamePrefix
 
@@ -2644,7 +2761,12 @@ replicate
 	^ replicant.
 	! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/28/2017 19:28:50'!
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:54:54'!
+signalHasNoParentError 
+	
+	self error: self hasNoParentErrorDescription! !
+
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:06:32'!
 template: aSystemCategoryName
 
 	^String streamContents: [ :stream | | collaborators |
@@ -2657,7 +2779,7 @@ template: aSystemCategoryName
 			with: '#anObject'
 			with: ''''''
 			with: '''', aSystemCategoryName, ''''.
-		#create:collaboratorNames:in: keywords withIndexDo: [ :keyword :index |
+		#create:colaboratorNames:in: keywords withIndexDo: [ :keyword :index |
 			stream
 				nextPutAll: keyword;
 				space;
@@ -2699,6 +2821,21 @@ withAllReplicantsDo: aBlock
 withAllReplicantsSelect: aBlock
 
 	^self withAllReplicants select: aBlock ! !
+
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:02:02'!
+withParents
+
+	| withParents |
+	
+	withParents := self withAllSuperclassesUpTo: DenotativeObject.
+	withParents removeLast.
+	
+	^withParents ! !
+
+!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:00:24'!
+withParentsDo: aBlock
+
+	^self withParents do: aBlock! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:11:52'!
 comparingStringBetween: actual and: expected
@@ -3116,12 +3253,20 @@ test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 		signal: Error
 		withDescription: errorDescription ! !
 
-!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 19:43:14'!
-create: anObject collaboratorNames: variablesDefinition in: aCategory
+!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:04:04'!
+assertIsValidParent: aParentDenotativeObject
+	
+	(self isValidParent: aParentDenotativeObject) ifFalse: [ self signalInvalidParent: aParentDenotativeObject ]
+	! !
+
+!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:06:13'!
+create: anObject asChildOf: aParentDenotativeObject colaboratorNames: variablesDefinition in: aCategory
 
 	| newClass |
 
-	newClass := DenotativeObject
+	self assertIsValidParent: aParentDenotativeObject.
+	
+	newClass := aParentDenotativeObject 
 		subclass: anObject asSymbol
 		instanceVariableNames: ''
 		classVariableNames: ''
@@ -3131,3 +3276,25 @@ create: anObject collaboratorNames: variablesDefinition in: aCategory
 	newClass class instanceVariableNames: variablesDefinition.
 
 	^newClass ! !
+
+!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:06:40'!
+create: anObject colaboratorNames: variablesDefinition in: aCategory
+
+	^self create: anObject asChildOf: DenotativeObject colaboratorNames: variablesDefinition in: aCategory
+! !
+
+!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:03:49'!
+invalidParentErrorDescriptionFor: aParentDenotativeObject
+
+	^aParentDenotativeObject name, ' is not a valid parent'
+	! !
+
+!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:06:36'!
+isValidParent: aParentDenotativeObject
+
+	^aParentDenotativeObject = DenotativeObject or: [ aParentDenotativeObject is: #DenotativeObject ]! !
+
+!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:03:41'!
+signalInvalidParent: aParentDenotativeObject 
+
+	self error: (self invalidParentErrorDescriptionFor: aParentDenotativeObject)! !
