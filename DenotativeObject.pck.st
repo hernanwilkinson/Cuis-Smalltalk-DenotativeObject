@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 26 August 2017 at 7:18:56 pm'!
-'Description Delegation support - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 14!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3145] on 27 August 2017 at 10:14:33 pm'!
+'Description Delegation support thru parent psuedo variable  - a lot of cleanup still needed'!
+!provides: 'DenotativeObject' 1 15!
 !requires: 'Refactoring' 1 23 nil!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
@@ -50,6 +50,36 @@ Inspector subclass: #DenotativeObjectInspector
 	category: 'DenotativeObject'!
 !classDefinition: 'DenotativeObjectInspector class' category: #DenotativeObject!
 DenotativeObjectInspector class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectCompiler category: #DenotativeObject!
+Compiler subclass: #DenotativeObjectCompiler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectCompiler class' category: #DenotativeObject!
+DenotativeObjectCompiler class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectParser category: #DenotativeObject!
+Parser subclass: #DenotativeObjectParser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectParser class' category: #DenotativeObject!
+DenotativeObjectParser class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectEncoder category: #DenotativeObject!
+EncoderForV3PlusClosures subclass: #DenotativeObjectEncoder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectEncoder class' category: #DenotativeObject!
+DenotativeObjectEncoder class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectSmalltalkEditor category: #DenotativeObject!
@@ -460,6 +490,13 @@ allRealInstances
 	
 	^super allInstances ! !
 
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 22:06:25'!
+compilerClass
+
+	^(thisClass is: #DenotativeObject) 
+		ifTrue: [ DenotativeObjectCompiler ]
+		ifFalse: [ super compilerClass ]! !
+
 !Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:05:08'!
 asMessage
 
@@ -495,6 +532,14 @@ sourceCode
 
 	"This method is implemented because getSource is not so intuitive - Hernan"
 	^self getSource! !
+
+!CompiledMethod class methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 21:58:57'!
+headerFlagForEncoder: anEncoder
+	
+	(anEncoder class includesBehavior: PrimaryBytecodeSetEncoderClass) ifTrue: [^0].
+	(anEncoder class includesBehavior: SecondaryBytecodeSetEncoderClass) ifTrue: [^SmallInteger minVal].
+	
+	self error: 'The encoder is not one of the two installed bytecode sets'! !
 
 !ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 7/20/2017 20:00:43'!
 messageText
@@ -623,6 +668,35 @@ openDenotativeBrowser
 recalculateStringVersionForDenotativeObject
 	
 	stringVersion := classSymbol asString,' ', methodSymbol ! !
+
+!SHParserST80 methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 22:00:55'!
+reservedNamesDo: aBlock
+
+	#('self' 'super' 'true' 'false' 'nil' 'thisContext' 'parent') do: aBlock! !
+
+!SHParserST80 methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 22:01:11'!
+resolve: aString
+
+	(self isReservedName: aString) ifTrue: [^aString asSymbol].
+	"faster: 
+	aString = #self ifTrue: [ ^ #self ].
+	aString = #true ifTrue: [ ^ #true ].
+	aString = #false ifTrue: [ ^ #false ].
+	aString = #nil ifTrue: [ ^ #nil ].
+	aString = #super ifTrue: [ ^ #super ].
+	aString = #thisContext ifTrue: [ ^ #thisContext ]."
+
+	(self isBlockTempName: aString) ifTrue: [^#blockTempVar].
+	(self isBlockArgName: aString) ifTrue: [^#blockArg].
+	(self isMethodTempName: aString) ifTrue: [^#tempVar].
+	(self isMethodArgName: aString) ifTrue: [^#methodArg].
+	(self isInstVarName: aString) ifTrue: [^#instVar].
+	(self isWorkspaceVarName: aString) ifTrue: [^#workspaceVar].
+	Symbol hasInterned: aString ifTrue: [ :symbol |
+		(self isClassVarName: symbol) ifTrue: [ ^#classVar ].
+		(self isPoolConstantName: symbol) ifTrue: [ ^#poolConstant].
+		(self isGlobal: symbol) ifTrue: [^#globalVar]].
+	^self resolvePartial: aString! !
 
 !DenotativeObjectWorkspace methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 13:16:28'!
 editorClass
@@ -1309,6 +1383,24 @@ openOn: anObject withLabel: label
 	DenotativeObjectInspectorWindow open: (self inspect: anObject) label: label
 	
 ! !
+
+!DenotativeObjectCompiler class methodsFor: 'as yet unclassified' stamp: 'HAW 8/27/2017 20:06:02'!
+parserClass
+
+	^DenotativeObjectParser ! !
+
+!DenotativeObjectParser methodsFor: 'as yet unclassified' stamp: 'HAW 8/27/2017 20:14:07'!
+encoder
+	encoder ifNil: [encoder := DenotativeObjectEncoder new].
+	^encoder! !
+
+!DenotativeObjectEncoder methodsFor: 'as yet unclassified' stamp: 'HAW 8/27/2017 22:09:44'!
+initScopeAndLiteralTables
+
+	super initScopeAndLiteralTables.
+	scopeTable at: 'parent' put: (scopeTable at: 'super').
+	scopeTable removeKey: 'super'.
+	! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 11:06:01'!
 acceptAndDebugTest
@@ -2224,6 +2316,13 @@ fieldListMenu
 debugger
 
 	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
+
+!DenotativeObjectTheme methodsFor: 'as yet unclassified' stamp: 'HAW 8/27/2017 22:11:47'!
+pseudoVariables
+
+	^ (OrderedCollection withAll: super pseudoVariables) 
+		add: #parent;
+		asArray! !
 
 !DenotativeObjectProgessiveTestRunner methodsFor: 'as yet unclassified' stamp: 'HAW 7/14/2017 19:58:26'!
 openTestResultWindow
