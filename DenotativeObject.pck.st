@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3161] on 31 August 2017 at 4:39:23 pm'!
-'Description Many changes and better support for denotative object refactorings - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 17!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3168] on 7 September 2017 at 4:45:53 pm'!
+'Description Colaborator to Collaborator, isEqualTo:, one inspector, clone copies coll. - a lot of cleanup still needed'!
+!provides: 'DenotativeObject' 1 18!
 !requires: 'Refactoring' 1 24 nil!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
@@ -192,24 +192,24 @@ TestCase subclass: #DenotativeObjectRenameMethodApplierTest
 DenotativeObjectRenameMethodApplierTest class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectAddColaborator category: #DenotativeObject!
-AddInstanceVariable subclass: #DenotativeObjectAddColaborator
+!classDefinition: #DenotativeObjectAddCollaborator category: #DenotativeObject!
+AddInstanceVariable subclass: #DenotativeObjectAddCollaborator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectAddColaborator class' category: #DenotativeObject!
-DenotativeObjectAddColaborator class
+!classDefinition: 'DenotativeObjectAddCollaborator class' category: #DenotativeObject!
+DenotativeObjectAddCollaborator class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRemoveColaborator category: #DenotativeObject!
-RemoveInstanceVariable subclass: #DenotativeObjectRemoveColaborator
+!classDefinition: #DenotativeObjectRemoveCollaborator category: #DenotativeObject!
+RemoveInstanceVariable subclass: #DenotativeObjectRemoveCollaborator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectRemoveColaborator class' category: #DenotativeObject!
-DenotativeObjectRemoveColaborator class
+!classDefinition: 'DenotativeObjectRemoveCollaborator class' category: #DenotativeObject!
+DenotativeObjectRemoveCollaborator class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectRenameMethod category: #DenotativeObject!
@@ -222,24 +222,24 @@ RenameMethod subclass: #DenotativeObjectRenameMethod
 DenotativeObjectRenameMethod class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectAddColaboratorApplier category: #DenotativeObject!
-AddInstanceVariableApplier subclass: #DenotativeObjectAddColaboratorApplier
+!classDefinition: #DenotativeObjectAddCollaboratorApplier category: #DenotativeObject!
+AddInstanceVariableApplier subclass: #DenotativeObjectAddCollaboratorApplier
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectAddColaboratorApplier class' category: #DenotativeObject!
-DenotativeObjectAddColaboratorApplier class
+!classDefinition: 'DenotativeObjectAddCollaboratorApplier class' category: #DenotativeObject!
+DenotativeObjectAddCollaboratorApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRemoveColaboratorApplier category: #DenotativeObject!
-RemoveInstanceVariableApplier subclass: #DenotativeObjectRemoveColaboratorApplier
+!classDefinition: #DenotativeObjectRemoveCollaboratorApplier category: #DenotativeObject!
+RemoveInstanceVariableApplier subclass: #DenotativeObjectRemoveCollaboratorApplier
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectRemoveColaboratorApplier class' category: #DenotativeObject!
-DenotativeObjectRemoveColaboratorApplier class
+!classDefinition: 'DenotativeObjectRemoveCollaboratorApplier class' category: #DenotativeObject!
+DenotativeObjectRemoveCollaboratorApplier class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectRenameApplier category: #DenotativeObject!
@@ -252,14 +252,14 @@ RenameClassApplier subclass: #DenotativeObjectRenameApplier
 DenotativeObjectRenameApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRenameColaboratorApplier category: #DenotativeObject!
-RenameInstanceVariableApplier subclass: #DenotativeObjectRenameColaboratorApplier
+!classDefinition: #DenotativeObjectRenameCollaboratorApplier category: #DenotativeObject!
+RenameInstanceVariableApplier subclass: #DenotativeObjectRenameCollaboratorApplier
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectRenameColaboratorApplier class' category: #DenotativeObject!
-DenotativeObjectRenameColaboratorApplier class
+!classDefinition: 'DenotativeObjectRenameCollaboratorApplier class' category: #DenotativeObject!
+DenotativeObjectRenameCollaboratorApplier class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectRenameMethodApplier category: #DenotativeObject!
@@ -272,14 +272,14 @@ RenameMethodApplier subclass: #DenotativeObjectRenameMethodApplier
 DenotativeObjectRenameMethodApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #Colaborator category: #DenotativeObject!
-Object subclass: #Colaborator
+!classDefinition: #Collaborator category: #DenotativeObject!
+Object subclass: #Collaborator
 	instanceVariableNames: 'owner name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'Colaborator class' category: #DenotativeObject!
-Colaborator class
+!classDefinition: 'Collaborator class' category: #DenotativeObject!
+Collaborator class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObject category: #DenotativeObject!
@@ -322,6 +322,26 @@ Object subclass: #ObjectBuilder
 ObjectBuilder class
 	instanceVariableNames: ''!
 
+
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:51:46'!
+isEqualTo: aDenotativeObject
+
+	^self = aDenotativeObject ! !
+
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 16:39:46'!
+isIdenticalTo: aDenotativeObject
+
+	^self == aDenotativeObject ! !
+
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 16:39:34'!
+isNotEqualTo: aDenotativeObject
+
+	^ (self isEqualTo: aDenotativeObject) not! !
+
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 16:40:04'!
+isNotIdenticalTo: aDenotativeObject
+
+	^ (self isIdenticalTo: aDenotativeObject) not! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:08:04'!
 compile: aString receiver: receiver in: evalContext
@@ -568,30 +588,30 @@ asMessage
 
 	^self asMessageWithAll: #()! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:05:36'!
-asMessageWith: aColaborator
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:32:22'!
+asMessageWith: aCollaborator
 
-	^self asMessageWithAll: (Array with: aColaborator)! !
+	^self asMessageWithAll: (Array with: aCollaborator)! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:06:06'!
-asMessageWithAll: aColaborators
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:32:30'!
+asMessageWithAll: aCollaborators
 
-	^Message selector: self arguments: aColaborators ! !
+	^Message selector: self arguments: aCollaborators ! !
 
 !Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:06:29'!
 sendTo: aReceiver
 
 	^self asMessage sendTo: aReceiver ! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:06:49'!
-sendTo: aReceiver with: aColaborator
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:32:35'!
+sendTo: aReceiver with: aCollaborator
 
-	^(self asMessageWith: aColaborator) sendTo: aReceiver ! !
+	^(self asMessageWith: aCollaborator) sendTo: aReceiver ! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:07:01'!
-sendTo: aReceiver withAll: aColaborators
+!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:32:41'!
+sendTo: aReceiver withAll: aCollaborators
 
-	^(self asMessageWithAll: aColaborators) sendTo: aReceiver ! !
+	^(self asMessageWithAll: aCollaborators) sendTo: aReceiver ! !
 
 !CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 8/30/2017 18:19:32'!
 printTheNonMetaClassAndSelectorOn: aStream 
@@ -612,8 +632,8 @@ messageText
 
 	^dividend printString, ' can not be divided by 0'! !
 
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 16:17:31'!
-addColaboratorLabelsTo: labels andActionsTo: actions
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:23:55'!
+addCollaboratorLabelsTo: labels andActionsTo: actions
 
 	labels add: 'declare block-local temp'.
 	actions add: [ parser declareTemp: name at: #block ].
@@ -622,7 +642,7 @@ addColaboratorLabelsTo: labels andActionsTo: actions
 	actions add: [ parser declareTemp: name at: #method ].
 			
 	parser canDeclareInstanceVariable ifTrue: [
-		labels add: 'declare colaborator'.
+		labels add: 'declare collaborator'.
 		actions add: [ parser declareInstVar: name ]].
 	
 ! !
@@ -657,7 +677,7 @@ defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
 		name: newClass name
 		! !
 
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 16:14:40'!
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:24:02'!
 handleForDenotativeObjectIn: aDenotativeObjectBrowser
 
 	| alternatives labels actions lines caption choice |
@@ -668,7 +688,7 @@ handleForDenotativeObjectIn: aDenotativeObjectBrowser
 	lines := OrderedCollection new.
 
 	name first isLowercase
-		ifTrue: [ self addColaboratorLabelsTo: labels andActionsTo: actions ]
+		ifTrue: [ self addCollaboratorLabelsTo: labels andActionsTo: actions ]
 		ifFalse: [ self addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ].
 
 	lines add: labels size.
@@ -859,12 +879,12 @@ addDenotativeObjectInCategory
 			self addDenotativeObjectNamed: objectName inCategory: categoryName ]]
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:05:53'!
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 9/7/2017 15:30:59'!
 addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName
 	
-	| definitionString colaborators |
+	| definitionString collaborators |
 
-	colaborators := Array 
+	collaborators := Array 
 		with: '#', objectName 
 		with: parentName
 		with: ''''''
@@ -872,12 +892,12 @@ addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryN
 	
 	definitionString := String streamContents: [ :stream |
 		stream  nextPutAll:  ObjectBuilder name asString.		
-		#create:asChildOf:colaboratorNames:in: keywords withIndexDo: [ :keyword :index |
+		#create:asChildOf:collaboratorNames:in: keywords withIndexDo: [ :keyword :index |
 			stream
 				space;
 				nextPutAll: keyword;
 				space;
-				nextPutAll: (colaborators at: index) ]].
+				nextPutAll: (collaborators at: index) ]].
 	
 	self defineClass: definitionString  notifying: nil 
 	! !
@@ -1371,12 +1391,12 @@ stepIntoBlock
 	 	ifFalse: [ self resetContext: toDebugContext ]] ensure: [ inStep := false ].
 	! !
 
-!DenotativeObjectInspector methodsFor: 'as yet unclassified' stamp: 'HAW 8/30/2017 16:29:04'!
+!DenotativeObjectInspector methodsFor: 'as yet unclassified' stamp: 'HAW 9/7/2017 15:15:38'!
 baseFieldList
 	"Answer an Array consisting of 'self'
 	and the instance variable names of the inspected object."
 
-	^ (Array with: 'self' with: 'all colaborators'), object colaboratorNames ! !
+	^ (Array with: 'self' with: 'all collaborators'), object collaboratorNames ! !
 
 !DenotativeObjectInspector methodsFor: 'as yet unclassified' stamp: 'HAW 8/5/2017 10:37:42'!
 editorClassFor: textGetter
@@ -1817,11 +1837,11 @@ openMessageList: messageList label: labelString autoSelect: autoSelectString
 	
 	^self open: messageSet label: labelString ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/30/2017 18:13:53'!
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 9/7/2017 15:27:24'!
 addInstVar
-	
+
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		(DenotativeObjectAddColaboratorApplier on: self for: aClass) value ].! !
+		(DenotativeObjectAddCollaboratorApplier on: self for: aClass) value ].! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 11:29:15'!
 browseAllAccessesTo: aVar from: aClass
@@ -1829,11 +1849,14 @@ browseAllAccessesTo: aVar from: aClass
 	^self class browseAllAccessesTo: aVar from: aClass
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/30/2017 17:12:07'!
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 9/7/2017 15:43:17'!
 browseInstVarRefs
 
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		aClass chooseDefiningInstanceVariableAlphabeticallyWith: 'Colaborators' thenDo: [:aVar | self browseAllAccessesTo: aVar from: aClass]]! !
+		aClass 
+			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators' 
+			thenDo: [:aVar | self browseAllAccessesTo: aVar from: aClass]
+			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 06:22:49'!
 browseMessages
@@ -1891,7 +1914,7 @@ buildMorphicClassColumn
 
 	^column! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:17:29'!
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 9/7/2017 15:22:51'!
 classListMenu
 
 	| aMenu |
@@ -1908,9 +1931,9 @@ classListMenu
 		('clone...'							copyClass		''		model)
 		('remove (x)'						removeClass	''		model)
 		-
-		('add colaborator...'				addInstVar)
-		('rename colaborator...'			renameInstVar)
-		('remove colaborator...'			removeInstVar)
+		('add collaborator...'				addInstVar)
+		('rename collaborator...'			renameInstVar)
+		('remove collaborator...'			removeInstVar)
 		-
 		('Run tests (t)'						runClassTests 	''	model)).
 	^ aMenu! !
@@ -1980,11 +2003,11 @@ optionalButtonTuples
 	^self class optionalButtonTuples
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/30/2017 18:23:28'!
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 9/7/2017 15:29:23'!
 removeInstVar
 	
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		(DenotativeObjectRemoveColaboratorApplier on: self for: aClass) value ].! !
+		(DenotativeObjectRemoveCollaboratorApplier on: self for: aClass) value ].! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/22/2017 06:22:49'!
 removeMessage
@@ -2010,11 +2033,11 @@ removeSelector: messageName
 		setClassOrganizer.
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/30/2017 17:31:29'!
+!DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 9/7/2017 15:32:04'!
 renameInstVar
 	
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		(DenotativeObjectRenameColaboratorApplier on: self for: aClass) value ].! !
+		(DenotativeObjectRenameCollaboratorApplier on: self for: aClass) value ].! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'as yet unclassified' stamp: 'HAW 8/31/2017 16:35:54'!
 renameMethod
@@ -2151,7 +2174,7 @@ openBrowser
 
 	^ self open: browser label: browser defaultBrowserTitle! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'as yet unclassified' stamp: 'HAW 8/30/2017 17:11:16'!
+!DenotativeObjectBrowserWindow class methodsFor: 'as yet unclassified' stamp: 'HAW 9/7/2017 15:22:59'!
 optionalButtonTuples
 
 	"Answer a tuple buttons, in the format:
@@ -2166,7 +2189,7 @@ optionalButtonTuples
 	(11	'senders' 			browseSendersOfMessages	'browse senders of...')
 	(16	'implementors'		browseMessages				'browse implementors of...')
 	(12	'versions'			browseVersions					'browse versions')
-	(10	'colaborators'			browseInstVarRefs				'colaborator refs...')
+	(10	'collaborators'			browseInstVarRefs				'collaborator refs...')
 	(10	'show...'				offerWhatToShowMenu		'menu of what to show in lower pane')).
 
 	^ aList! !
@@ -2181,11 +2204,15 @@ sendersOf: aSymbol
 
 	^senders ! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 11:28:36'!
+!DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 9/7/2017 15:44:06'!
 browseInstVarRefs
 
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		aClass chooseDefiningInstanceVariableAlphabeticallyWith: 'Variables' thenDo: [:aVar | DenotativeObjectBrowserWindow browseAllAccessesTo: aVar from: aClass]]! !
+		aClass 
+			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators' 
+			thenDo: [:aVar | DenotativeObjectBrowserWindow browseAllAccessesTo: aVar from: aClass]
+			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]			
+		! !
 
 !DenotativeObjectDebuggerWindow methodsFor: 'as yet unclassified' stamp: 'HAW 7/30/2017 11:26:26'!
 browseMessages
@@ -2502,26 +2529,26 @@ test01ScopeOptionsAreTheSame
 		assert: DenotativeObjectRenameMethodApplier new scopeOptionLabels size
 		equals: DenotativeObjectRenameMethodApplier superclass new scopeOptionLabels size.! !
 
-!DenotativeObjectAddColaborator class methodsFor: 'exceptions' stamp: 'HAW 8/30/2017 18:07:43'!
+!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:21'!
 errorMessageForInvalidInstanceVariable: aName
 
-	^ '''' , aName , ''' is not a valid colaborator name'.! !
+	^ '''' , aName , ''' is not a valid collaborator name'.! !
 
-!DenotativeObjectAddColaborator class methodsFor: 'exceptions' stamp: 'HAW 8/30/2017 18:08:48'!
+!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:26'!
 errorMessageForNewInstanceVariable: aName alreadyDefinedInAll: classes
 
 	| denotativeObjects |
 	
 	denotativeObjects := classes collect: [:aClass | aClass theNonMetaClass ].
 	
-	^ 'Colaborator ''' , aName , ''' is already defined in ' , denotativeObjects asCommaStringAnd.! !
+	^ 'Collaborator ''' , aName , ''' is already defined in ' , denotativeObjects asCommaStringAnd.! !
 
-!DenotativeObjectAddColaborator class methodsFor: 'exceptions' stamp: 'HAW 8/30/2017 18:09:08'!
+!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:30'!
 newVariableCanNotBeEmptyErrorMessage
 	
-	^'New colaborator name can not be empty'! !
+	^'New collaborator name can not be empty'! !
 
-!DenotativeObjectAddColaborator class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 18:18:40'!
+!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 18:18:40'!
 warningMessageForNewVariable: newVariable willBeHiddenAtAll: methods
  
 	^String streamContents: [ :stream |
@@ -2530,7 +2557,7 @@ warningMessageForNewVariable: newVariable willBeHiddenAtAll: methods
 			nextPutAll: ' will be hidden at '.
 		methods asCommaStringAndPritingWith: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] ]! !
 
-!DenotativeObjectRemoveColaborator class methodsFor: 'exceptions' stamp: 'HAW 8/30/2017 18:24:55'!
+!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 8/30/2017 18:24:55'!
 errorMessageForInstanceVariable: aVariable isReferencedInAll: methods
 
 	^String streamContents: [ :stream |
@@ -2539,10 +2566,10 @@ errorMessageForInstanceVariable: aVariable isReferencedInAll: methods
 			nextPutAll: ' is referenced in '.
 		methods asCommaStringAndPritingWith: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] ]! !
 
-!DenotativeObjectRemoveColaborator class methodsFor: 'exceptions' stamp: 'HAW 8/30/2017 18:25:21'!
+!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
 errorMessageForInstanceVariable: aName notDefinedIn: aClass
 
-	^ 'Colaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
+	^ 'Collaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
 
 !DenotativeObjectRenameMethod class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
@@ -2619,26 +2646,25 @@ warningMessageForRedefinitionOfSystemMessageOf: aNewSelector
 	^aNewSelector, ' is defined in the core system. Overriding it can cause unexpected behavior.'
 	! !
 
-!DenotativeObjectAddColaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/30/2017 18:15:01'!
+!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:26:52'!
 createRefactoring
-		
-	^DenotativeObjectAddColaborator named: newInstanceVariable to: classToRefactor.
-	! !
 
-!DenotativeObjectAddColaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/30/2017 18:13:01'!
+	^ DenotativeObjectAddCollaborator named: newInstanceVariable to: classToRefactor.! !
+
+!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:22:34'!
 newVariableNameLabel
 	
-	^'Enter new colaborator name:'! !
+	^'Enter new collaborator name:'! !
 
-!DenotativeObjectRemoveColaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/30/2017 18:25:56'!
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:29:01'!
 createRefactoring
-		
-	^DenotativeObjectRemoveColaborator named: variableToRemove from: classToRefactor ! !
 
-!DenotativeObjectRemoveColaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/30/2017 18:22:56'!
+	^ DenotativeObjectRemoveCollaborator named: variableToRemove from: classToRefactor.! !
+
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:09'!
 selectVariableLabel
 	
-	^'Select colaborator to remove'! !
+	^'Select collaborator to remove'! !
 
 !DenotativeObjectRenameApplier methodsFor: 'as yet unclassified' stamp: 'HAW 8/8/2017 19:49:48'!
 openChangedMethods
@@ -2647,15 +2673,15 @@ openChangedMethods
 		DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newClassName ]
 ! !
 
-!DenotativeObjectRenameColaboratorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/30/2017 17:29:44'!
+!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/30/2017 17:29:44'!
 openChangedMethodsWhenChangesNotEmpty 
 
 	DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newInstanceVariable! !
 
-!DenotativeObjectRenameColaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/30/2017 17:27:38'!
+!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:14'!
 selectVariableLabel
 	
-	^'Select colaborator to rename'! !
+	^'Select collaborator to rename'! !
 
 !DenotativeObjectRenameMethodApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:24:09'!
 closeBrowser
@@ -2700,14 +2726,14 @@ value
 		showChanges
 		! !
 
-!Colaborator methodsFor: 'initialization' stamp: 'HAW 8/24/2017 08:29:25'!
+!Collaborator methodsFor: 'initialization' stamp: 'HAW 8/24/2017 08:29:25'!
 initializeNamed: aName on: anObject
 
 	owner := anObject.
 	name := aName.
 	! !
 
-!Colaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
+!Collaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
 printOn: aStream
 
 	aStream 
@@ -2715,38 +2741,38 @@ printOn: aStream
 		nextPutAll: ' at ';
 		print: owner! !
 
-!Colaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:30:32'!
+!Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:30:32'!
 value
 
 	^owner instVarNamed: name! !
 
-!Colaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:31:24'!
+!Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:31:24'!
 value: newValue
 
 	^owner instVarNamed: name put: newValue ! !
 
-!Colaborator class methodsFor: 'assertions' stamp: 'HAW 8/24/2017 08:27:17'!
-assert: aName isColaboratorOn: anObject
+!Collaborator class methodsFor: 'assertions' stamp: 'HAW 9/7/2017 15:25:47'!
+assert: aName isCollaboratorOn: anObject
 
-	(anObject class definesInstanceVariableNamed: aName) ifFalse: [ self signal: aName isNotAColaboratorOn: anObject ]
+	(anObject class definesInstanceVariableNamed: aName) ifFalse: [ self signal: aName isNotACollaboratorOn: anObject ]
 	 ! !
 
-!Colaborator class methodsFor: 'exceptions' stamp: 'HAW 8/24/2017 08:34:36'!
-colaboratorNamed: aName isNotDefinedIn: anObject
+!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:25:17'!
+collaboratorNamed: aName isNotDefinedIn: anObject
 
-	^'Colaborator named ', aName, ' is not defined in ', anObject printString ! !
+	^'Collaborator named ', aName, ' is not defined in ', anObject printString ! !
 
-!Colaborator class methodsFor: 'instance creation' stamp: 'HAW 8/24/2017 08:22:38'!
+!Collaborator class methodsFor: 'instance creation' stamp: 'HAW 9/7/2017 15:24:56'!
 named: aName on: anObject
 
-	self assert: aName isColaboratorOn: anObject.
+	self assert: aName isCollaboratorOn: anObject.
 	
 	^self new initializeNamed: aName on: anObject ! !
 
-!Colaborator class methodsFor: 'exceptions' stamp: 'HAW 8/24/2017 08:33:59'!
-signal: aName isNotAColaboratorOn: anObject
+!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:25:37'!
+signal: aName isNotACollaboratorOn: anObject
 
-	self error: (self colaboratorNamed: aName isNotDefinedIn: anObject)! !
+	self error: (self collaboratorNamed: aName isNotDefinedIn: anObject)! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:59:04'!
 allReplicants
@@ -2778,28 +2804,27 @@ allReplicantsSelect: aBlock
 
 	^self allReplicants select: aBlock ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 10:16:30'!
+!DenotativeObject class methodsFor: 'message handling' stamp: 'HAW 8/22/2017 10:16:30'!
 argumentNameSufix
 
 	^self theOriginalDenotativeObject name
 	! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:07:32'!
-asChildOf: aParentDenotativeObject colaboratorNames: colaborators in: aCategory
+!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 9/7/2017 15:30:31'!
+asChildOf: aParentDenotativeObject collaboratorNames: collaborators in: aCategory
 
-	^ObjectBuilder create: self name asChildOf: aParentDenotativeObject colaboratorNames: colaborators in: aCategory withBlanksTrimmed.
-	! !
+	^ ObjectBuilder create: self name asChildOf: aParentDenotativeObject collaboratorNames: collaborators in: aCategory withBlanksTrimmed.! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 19:28:09'!
+!DenotativeObject class methodsFor: 'asserting' stamp: 'HAW 7/29/2017 19:28:09'!
 assert: aBooleanOrBlock
 
 	aBooleanOrBlock value ifFalse: [self error: 'Assertion failed']
 			! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/30/2017 11:03:38'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:31:54'!
 assertCanReplicate
 	
-	self == self theOriginalDenotativeObject ifFalse: [ self signalCanNotReplicateReplicant ].
+	self isReplicant ifTrue: [ self signalCanNotReplicateReplicant ].
 ! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/30/2017 11:04:12'!
@@ -2807,12 +2832,12 @@ canNotReplicateReplicantErrorMessage
 
 	^ 'Cannot replicate a replicant' ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 21:58:44'!
+!DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 7/29/2017 21:58:44'!
 clone
 
 	^self cloneNamed: self name, self nextCloneNumber printString! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 22:00:19'!
+!DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 9/7/2017 16:24:40'!
 cloneNamed: copysNameString
 
 	| originalClass originalName copysName newDefinition newMetaDefinition newClass |
@@ -2835,17 +2860,18 @@ cloneNamed: copysNameString
 	newClass copyAllCategoriesFrom: originalClass.
 	newClass class copyAllCategoriesFrom: originalClass class.
 	originalClass hasComment ifTrue: [ newClass comment: originalClass comment ].	
-	
+	originalClass class instVarNames do: [ :anInstVarName | newClass instVarNamed: anInstVarName put: (originalClass instVarNamed: anInstVarName) ].
+
 	DenotativeObjectBrowser allInstancesDo: [ :browser | browser changed: #classList ].
 	^newClass ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/24/2017 08:21:43'!
-colaboratorNamed: aName
+!DenotativeObject class methodsFor: 'collaborators' stamp: 'HAW 9/7/2017 15:15:23'!
+collaboratorNamed: aName
 
-	^Colaborator named: aName on: self! !
+	^ Collaborator named: aName on: self.! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:04:27'!
-colaboratorNames
+!DenotativeObject class methodsFor: 'collaborators' stamp: 'HAW 9/7/2017 15:15:45'!
+collaboratorNames
 
 	| names |
 	
@@ -2854,27 +2880,27 @@ colaboratorNames
 	
 	^names! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:07:52'!
-colaboratorNames: colaborators in: aCategory
+!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 9/7/2017 15:30:36'!
+collaboratorNames: collaborators in: aCategory
 
-	^self asChildOf: DenotativeObject colaboratorNames: colaborators in: aCategory ! !
+	^self asChildOf: DenotativeObject collaboratorNames: collaborators in: aCategory ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:07:21'!
+!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 9/7/2017 15:30:52'!
 definitionOf: aMetaclass
 
-	^ String streamContents: [ :stream | | selector colaborators |
+	^ String streamContents: [ :stream | | selector collaborators |
 		stream
 			nextPutAll: aMetaclass soleInstance name.
 	
 		"Done this way to support rename of #create:collarobatorNames:in: - Hernan"
-		colaborators := OrderedCollection new.
+		collaborators := OrderedCollection new.
 		(aMetaclass soleInstance superclass is: #DenotativeObject) 
 			ifTrue: [ 
-				selector := #asChildOf:colaboratorNames:in:.
-				colaborators add: aMetaclass soleInstance superclass name ]
-			ifFalse: [ selector := #colaboratorNames:in: ].
+				selector := #asChildOf:collaboratorNames:in:.
+				collaborators add: aMetaclass soleInstance superclass name ]
+			ifFalse: [ selector := #collaboratorNames:in: ].
 			
-		colaborators 
+		collaborators 
 			add: '''', aMetaclass instanceVariablesString, '''';
 			add: '''', aMetaclass category, ''''. 
 									
@@ -2884,15 +2910,15 @@ definitionOf: aMetaclass
 				tab;
 				nextPutAll: keyword;
 				space;
-				nextPutAll: (colaborators at: index) ]]! !
+				nextPutAll: (collaborators at: index) ]]! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 19:36:01'!
+!DenotativeObject class methodsFor: 'asserting' stamp: 'HAW 7/29/2017 19:36:01'!
 deny: aBoolean
 
 	self assert: aBoolean not
 			! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/20/2017 11:08:03'!
+!DenotativeObject class methodsFor: 'error handling' stamp: 'HAW 8/20/2017 11:08:03'!
 doesNotUnderstand: aMessage
 
 	"This redefinition is just to provide a message text to the exception without the 'class' part, so when shown in the debugger title or a 
@@ -2919,7 +2945,7 @@ family
 
 	^self withAllReplicants ! !
 
-!DenotativeObject class methodsFor: 'accessing' stamp: 'HAW 7/14/2017 08:05:43'!
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 7/14/2017 08:05:43'!
 fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
 
 	super fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool.
@@ -2934,18 +2960,25 @@ fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aB
 			nextPutAll: '!!' ]
 		! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:55:08'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:55:08'!
 hasNoParentErrorDescription
 
 	^self name, ' has no parent'! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/12/2017 23:33:06'!
+!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 16:14:41'!
+inspect
+
+	^ self 
+		withCurrentInspectorWindowDo: [ :window | window isTopWindow ifTrue: [ window flash ] ifFalse: [ window activate ] ] 
+		ifNone: [ super inspect ]! !
+
+!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 15:03:13'!
 inspectorClass
 
-	^DenotativeObjectInspector
+	^(self is: #DenotativeObject) ifTrue: [ DenotativeObjectInspector ] ifFalse: [ super inspectorClass ]
 	! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 17:38:05'!
+!DenotativeObject class methodsFor: 'equality' stamp: 'HAW 8/26/2017 17:38:05'!
 is: aSymbol
 
 	"Return true only for subclasses - Hernan"
@@ -2954,12 +2987,23 @@ is: aSymbol
 		and: [ self ~= DenotativeObject 
 		and: [ self inheritsFrom: DenotativeObject ]]! !
 
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:32:32'!
+isReplicant
+
+	^self isTheOriginalDenotativeObject not
+	! !
+
 !DenotativeObject class methodsFor: 'replicants-family metaphor' stamp: 'HAW 8/30/2017 11:06:17'!
 isSiblingOf: aDenotativeObject
 
 	^self class = aDenotativeObject class! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/12/2017 23:57:46'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:32:50'!
+isTheOriginalDenotativeObject
+	
+	^ self == self theOriginalDenotativeObject ! !
+
+!DenotativeObject class methodsFor: 'printing' stamp: 'HAW 7/12/2017 23:57:46'!
 longPrintOn: aStream limitedTo: sizeLimit indent: indent
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  Limit is the length limit for each inst var."
 
@@ -2974,12 +3018,12 @@ longPrintOn: aStream limitedTo: sizeLimit indent: indent
 
 ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2017 17:12:27'!
+!DenotativeObject class methodsFor: 'methods' stamp: 'HAW 8/22/2017 17:12:27'!
 methodNamed: aSelector
 
 	^self class compiledMethodAt: aSelector ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 21:56:31'!
+!DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 7/29/2017 21:56:31'!
 nextCloneNumber
 
 	CloneNumber isNil ifTrue: [ CloneNumber := 0 ].
@@ -2992,19 +3036,19 @@ originalSibling
 
 	^self theOriginalDenotativeObject ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:58:28'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:58:28'!
 parent
 
 	^self parentIfNone: [ self signalHasNoParentError ]! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:58:16'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:58:16'!
 parentIfNone: aBlock
 
 	superclass = DenotativeObject ifTrue: [ ^aBlock value ].
 	
 	^ superclass ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:02:41'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:02:41'!
 parents
 
 	| parents |
@@ -3016,7 +3060,7 @@ parents
 	
 	! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:02:52'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:02:52'!
 parentsDo: aBlock
 
 	^self parents do: aBlock! !
@@ -3052,12 +3096,17 @@ signalCanNotReplicateReplicant
 
 	self error: self canNotReplicateReplicantErrorMessage! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:54:54'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:54:54'!
 signalHasNoParentError 
 	
 	self error: self hasNoParentErrorDescription! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:06:32'!
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 9/7/2017 16:44:18'!
+storeOn: aStream
+
+	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
+
+!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 9/7/2017 15:19:27'!
 template: aSystemCategoryName
 
 	^String streamContents: [ :stream | | collaborators |
@@ -3070,7 +3119,7 @@ template: aSystemCategoryName
 			with: '#anObject'
 			with: ''''''
 			with: '''', aSystemCategoryName, ''''.
-		#create:colaboratorNames:in: keywords withIndexDo: [ :keyword :index |
+		#create:collaboratorNames:in: keywords withIndexDo: [ :keyword :index |
 			stream
 				nextPutAll: keyword;
 				space;
@@ -3108,7 +3157,15 @@ withAllReplicantsSelect: aBlock
 
 	^self withAllReplicants select: aBlock ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:02:02'!
+!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 16:10:33'!
+withCurrentInspectorWindowDo: foundBlock ifNone: noneBlock
+		
+	^ DenotativeObjectInspectorWindow allInstances 
+		detect: [ :anInspectorWindow | anInspectorWindow model object == self ]
+		ifFound: foundBlock 
+		ifNone: noneBlock ! !
+
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:02:02'!
 withParents
 
 	| withParents |
@@ -3118,7 +3175,7 @@ withParents
 	
 	^withParents ! !
 
-!DenotativeObject class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:00:24'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:00:24'!
 withParentsDo: aBlock
 
 	^self withParents do: aBlock! !
@@ -3238,10 +3295,10 @@ that: actual isEqualTo: expected
  
 	self that: actual isEqualTo: expected description: (self comparingStringBetween: actual and: expected)! !
 
-!Assert class methodsFor: 'equality assertions' stamp: 'HAW 7/30/2017 10:39:37'!
+!Assert class methodsFor: 'equality assertions' stamp: 'HAW 9/7/2017 15:45:12'!
 that: actual isEqualTo: expected description: failureDescription 
 
-	self isTrue: actual = expected description: failureDescription ! !
+	self isTrue: (actual isEqualTo: expected) description: failureDescription ! !
 
 !Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/30/2017 10:27:44'!
 that: actual isIdenticalTo: expected
@@ -3259,10 +3316,10 @@ that: actual isNotEqualTo: expected
  
 	self that: actual isNotEqualTo: expected description: self defaultNotEqualsFaillureDescription ! !
 
-!Assert class methodsFor: 'equality assertions' stamp: 'HAW 7/30/2017 10:20:58'!
+!Assert class methodsFor: 'equality assertions' stamp: 'HAW 9/7/2017 15:45:32'!
 that: actual isNotEqualTo: expected description: failureDescription 
  
-	self isFalse: actual = expected description: failureDescription ! !
+	self isFalse: (actual isEqualTo: expected) description: failureDescription ! !
 
 !Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/30/2017 10:31:04'!
 that: actual isNotIdenticalTo: expected
@@ -3539,14 +3596,14 @@ test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 		signal: Error
 		withDescription: errorDescription ! !
 
-!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:04:04'!
+!ObjectBuilder class methodsFor: 'preconditions' stamp: 'HAW 8/26/2017 18:04:04'!
 assertIsValidParent: aParentDenotativeObject
 	
 	(self isValidParent: aParentDenotativeObject) ifFalse: [ self signalInvalidParent: aParentDenotativeObject ]
 	! !
 
-!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:06:13'!
-create: anObject asChildOf: aParentDenotativeObject colaboratorNames: variablesDefinition in: aCategory
+!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 9/7/2017 15:19:02'!
+create: anObject asChildOf: aParentDenotativeObject collaboratorNames: variablesDefinition in: aCategory
 
 	| newClass |
 
@@ -3563,24 +3620,24 @@ create: anObject asChildOf: aParentDenotativeObject colaboratorNames: variablesD
 
 	^newClass ! !
 
-!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 19:06:40'!
-create: anObject colaboratorNames: variablesDefinition in: aCategory
+!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 9/7/2017 15:19:38'!
+create: anObject collaboratorNames: variablesDefinition in: aCategory
 
-	^self create: anObject asChildOf: DenotativeObject colaboratorNames: variablesDefinition in: aCategory
+	^self create: anObject asChildOf: DenotativeObject collaboratorNames: variablesDefinition in: aCategory
 ! !
 
-!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:03:49'!
+!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:03:49'!
 invalidParentErrorDescriptionFor: aParentDenotativeObject
 
 	^aParentDenotativeObject name, ' is not a valid parent'
 	! !
 
-!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:06:36'!
+!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:06:36'!
 isValidParent: aParentDenotativeObject
 
 	^aParentDenotativeObject = DenotativeObject or: [ aParentDenotativeObject is: #DenotativeObject ]! !
 
-!ObjectBuilder class methodsFor: 'as yet unclassified' stamp: 'HAW 8/26/2017 18:03:41'!
+!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:03:41'!
 signalInvalidParent: aParentDenotativeObject 
 
 	self error: (self invalidParentErrorDescriptionFor: aParentDenotativeObject)! !
