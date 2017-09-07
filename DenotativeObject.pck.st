@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3168] on 7 September 2017 at 4:45:53 pm'!
-'Description Colaborator to Collaborator, isEqualTo:, one inspector, clone copies coll. - a lot of cleanup still needed'!
-!provides: 'DenotativeObject' 1 18!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3168] on 7 September 2017 at 4:48:47 pm'!
+'Description Colaborator to Collaborator, isEqualTo:, one inspector, clone copies coll., Assert changes - a lot of cleanup still needed'!
+!provides: 'DenotativeObject' 1 19!
 !requires: 'Refactoring' 1 24 nil!
 !classDefinition: #DenotativeObjectWorkspace category: #DenotativeObject!
 Workspace subclass: #DenotativeObjectWorkspace
@@ -3306,20 +3306,20 @@ that: actual isIdenticalTo: expected
 	self that: actual isIdenticalTo: expected description: self defaultIdenticalFailureDescription 
 ! !
 
-!Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/30/2017 10:28:49'!
+!Assert class methodsFor: 'identity assertions' stamp: 'HAW 9/7/2017 16:47:54'!
 that: actual isIdenticalTo: expected description: failureDescription
 
-	self isTrue: actual == expected description: failureDescription! !
+	self isTrue: (actual isIdenticalTo: expected) description: failureDescription! !
 
 !Assert class methodsFor: 'equality assertions' stamp: 'HAW 7/30/2017 10:21:19'!
 that: actual isNotEqualTo: expected
  
 	self that: actual isNotEqualTo: expected description: self defaultNotEqualsFaillureDescription ! !
 
-!Assert class methodsFor: 'equality assertions' stamp: 'HAW 9/7/2017 15:45:32'!
+!Assert class methodsFor: 'equality assertions' stamp: 'HAW 9/7/2017 16:48:27'!
 that: actual isNotEqualTo: expected description: failureDescription 
  
-	self isFalse: (actual isEqualTo: expected) description: failureDescription ! !
+	self isTrue: (actual isNotEqualTo: expected) description: failureDescription ! !
 
 !Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/30/2017 10:31:04'!
 that: actual isNotIdenticalTo: expected
@@ -3327,10 +3327,10 @@ that: actual isNotIdenticalTo: expected
 	self that: actual isNotIdenticalTo: expected description: self defaultNotIdenticalFailureDescription
 ! !
 
-!Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/30/2017 10:32:08'!
+!Assert class methodsFor: 'identity assertions' stamp: 'HAW 9/7/2017 16:48:15'!
 that: actual isNotIdenticalTo: expected description: failureDescription
 
-	self isFalse: actual == expected description: failureDescription ! !
+	self isTrue: (actual isNotIdenticalTo: expected) description: failureDescription ! !
 
 !AssertTest class methodsFor: 'support' stamp: 'HAW 7/30/2017 09:21:26'!
 shouldFail: aBlockClosure 
