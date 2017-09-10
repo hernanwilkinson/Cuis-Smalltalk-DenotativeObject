@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3168] on 10 September 2017 at 7:20:07 pm'!
-'Description Unique inspector per DO - clone copies collaborators - replicant fileout support - message rename scope - cmd+i to inspect DO - file out of everthing - categorize message menu - automatic test name generation - delegation protocol - reorganization of classes in different categories - categorizations of all messages '!
-!provides: 'DenotativeObject' 1 20!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3174] on 10 September 2017 at 8:06:18 pm'!
+'Description Inspecting error solved'!
+!provides: 'DenotativeObject' 1 21!
 !requires: 'Refactoring' 1 24 nil!
 !classDefinition: #DenotativeObjectWorkspace category: #'DenotativeObject-Tools'!
 Workspace subclass: #DenotativeObjectWorkspace
@@ -3193,11 +3193,11 @@ withAllReplicantsSelect: aBlock
 
 	^self withAllReplicants select: aBlock ! !
 
-!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 16:10:33'!
+!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/10/2017 20:05:03'!
 withCurrentInspectorWindowDo: foundBlock ifNone: noneBlock
 		
 	^ DenotativeObjectInspectorWindow allInstances 
-		detect: [ :anInspectorWindow | anInspectorWindow model object == self ]
+		detect: [ :anInspectorWindow | anInspectorWindow model ifNil: [ false ] ifNotNil: [ :model | model object == self ]]
 		ifFound: foundBlock 
 		ifNone: noneBlock ! !
 
