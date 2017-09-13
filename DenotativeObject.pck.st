@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3174] on 13 September 2017 at 4:43:13 pm'!
-'Description childResponsibility - better error message when creationg object - browser references of denotative object opens do message list'!
-!provides: 'DenotativeObject' 1 22!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3175] on 13 September 2017 at 4:46:39 pm'!
+'Description childResponsibility - better error message when creationg object - browser references of denotative object opens do message list - remove forgotten halt'!
+!provides: 'DenotativeObject' 1 23!
 !requires: 'Refactoring' 1 24 nil!
 !classDefinition: #DenotativeObjectWorkspace category: #'DenotativeObject-Tools'!
 Workspace subclass: #DenotativeObjectWorkspace
@@ -2198,11 +2198,11 @@ browseAllAccessesTo: aVar from: aClass
 		label: label
 		autoSelect: aVar ! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 9/13/2017 16:27:15'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 9/13/2017 16:46:19'!
 browseAllImplementorsOf: aSymbol
 
 	| implementors label |
-self halt.
+
 	implementors := (Smalltalk allImplementorsOf: aSymbol) select: [ :aMethodReference | aMethodReference actualClass inheritsFrom: DenotativeObject class ].
 	implementors do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
 
