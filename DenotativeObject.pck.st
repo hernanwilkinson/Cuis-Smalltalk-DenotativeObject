@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3174] on 10 September 2017 at 8:06:18 pm'!
-'Description Inspecting error solved'!
-!provides: 'DenotativeObject' 1 21!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3174] on 13 September 2017 at 4:43:13 pm'!
+'Description childResponsibility - better error message when creationg object - browser references of denotative object opens do message list'!
+!provides: 'DenotativeObject' 1 22!
 !requires: 'Refactoring' 1 24 nil!
 !classDefinition: #DenotativeObjectWorkspace category: #'DenotativeObject-Tools'!
 Workspace subclass: #DenotativeObjectWorkspace
@@ -951,6 +951,20 @@ classList
 		ifNotNil: [(systemOrganizer listAtCategoryNamed: selectedSystemCategory) select: [ :aClass | 
 				(Smalltalk classNamed: aClass) is: #DenotativeObject ] ]! !
 
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:05:55'!
+collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning
+	
+	^String streamContents: [:stream |
+		stream
+			nextPutAll: 'The collaborator ';
+			nextPutAll: anUndeclareVariableWarning variableName;
+			nextPutAll: ' is reference in ';
+			nextPutAll: anUndeclareVariableWarning classImplementingSelector theNonMetaClass name;
+			nextPutAll: '>>';
+			nextPutAll: anUndeclareVariableWarning selector;
+			newLine;
+			nextPutAll: 'Do you want to continue?' ]! !
+
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 7/22/2017 13:32:34'!
 copyClass
 
@@ -979,43 +993,57 @@ debugMethodTest
 defaultBrowserTitle
 	^ 'Denotative Object Browser'! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 19:09:17'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:02:36'!
 defineClass: defString notifying: aRequestor
 
-	^[[[ | class |
-	
-	self validateDefinitionString: defString.
-
-	class := Compiler
-				evaluate: defString
-				notifying: aRequestor
-				logged: true.
-				
-	(class isKindOf: Behavior)
-		ifTrue: [
-				self changed: #systemCategoryList.
-				self changed: #classList.
-				self changed: #clearUserEdits.
-				self setClass: class selector: nil.
-				true ]
-		ifFalse: [ false ]]
-		on: Error - MessageNotUnderstood 
-		do: [ :anError | 
-			anError messageText = 'Class names must be capitalized' ifTrue: [ anError messageText: 'Object names must be capitalized' ].
-			anError messageText: (anError messageText copyReplaceAll: ' class' with: '').
-			anError messageText: (anError messageText copyReplaceAll: ' inherits from ' with: ' is child of ').
-			anError messageText: (anError messageText copyReplaceAll: ' subclass ' with: ' child ').
-			self inform: anError printString.
-			anError return: false ]]
-		on: ParserNotification, UndeclaredVariableWarning 
-		do: [ :parserNotification |
-			self inform: self invalidDefinitionErrorDescription.
-			parserNotification return: false ]]
+	^[self defineClassWithoutHandlingWarning: defString notifying: aRequestor]		
 		on: Warning
 		do: [ :aWarning |
 			(self confirm: aWarning printString) 
 				ifTrue: [ aWarning resume ]
-				ifFalse: [ aWarning return: nil ]].! !
+				ifFalse: [ aWarning return: false ]].! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:54'!
+defineClassWihoutHandlingErrors: defString notifying: aRequestor 
+		
+ 	| class classCreated |
+	
+	self validateDefinitionString: defString.
+	class := Compiler evaluate: defString notifying: aRequestor logged: true.
+	
+	classCreated := class isKindOf: Behavior.
+	classCreated ifTrue: [ self newClassCreated: class ].
+	
+	^classCreated! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:06:31'!
+defineClassWithoutHandlingParseNotification: defString notifying: aRequestor 
+		
+	^[self defineClassWihoutHandlingErrors: defString notifying: aRequestor ]
+		on: Error - MessageNotUnderstood 
+		do: [ :anError | 
+			self filterErrorMessagesWithClassStringFrom: anError.
+			self inform: anError printString.
+			anError return: false ]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 15:57:26'!
+defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor 
+			
+	^[self defineClassWithoutHandlingParseNotification: defString notifying: aRequestor ]
+		on: ParserNotification 
+		do: [ :parserNotification |
+			self inform: self invalidDefinitionErrorDescription.
+			parserNotification return: false ]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:04:07'!
+defineClassWithoutHandlingWarning: defString notifying: aRequestor
+	
+	^[self defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor ]
+		on: UndeclaredVariableWarning 
+		do: [ :anUndeclareVariableWarning |
+			(self confirm: (self collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning)) 
+				ifTrue: [ anUndeclareVariableWarning resume ]
+				ifFalse: [ anUndeclareVariableWarning return: false ]]! !
 
 !DenotativeObjectBrowser methodsFor: 'message functions' stamp: 'HAW 8/1/2017 09:48:21'!
 defineMessageFrom: aString notifying: aRequestor
@@ -1074,6 +1102,14 @@ fileInSystemCategory
 		do: [:anError |
 			(PopUpMenu confirm: 'File ', anError messageText, ' does not exist. Try again?') ifTrue: [ anError retry ] ifFalse: [ anError return ]]! !
 
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:06:59'!
+filterErrorMessagesWithClassStringFrom: anError
+		
+	anError messageText = 'Class names must be capitalized' ifTrue: [ ^anError messageText: 'Object names must be capitalized' ].
+	anError messageText: (anError messageText copyReplaceAll: ' class' with: '').
+	anError messageText: (anError messageText copyReplaceAll: ' inherits from ' with: ' is child of ').
+	anError messageText: (anError messageText copyReplaceAll: ' subclass ' with: ' child ').! !
+
 !DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 7/22/2017 11:45:50'!
 firstExperimentCategoryName
 	
@@ -1094,6 +1130,16 @@ metaClassIndicated: trueOrFalse
 	"Indicate whether browsing instance or class messages."
 
 	^super metaClassIndicated: true! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:32'!
+newClassCreated: aClass
+	
+	self 
+		changed: #systemCategoryList;
+		changed: #classList;
+		changed: #clearUserEdits;
+		setClass: aClass selector: nil.
+! !
 
 !DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/6/2017 11:00:33'!
 objectNameInUseErrorDescription: denotativeObjectName
@@ -1208,13 +1254,13 @@ systemOrganizer: aSystemOrganizer
 	self setClassOrganizer.
 	self editSelection: #none.! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/6/2017 10:58:37'!
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 9/13/2017 15:11:23'!
 validateDefinitionString: defString
 
 	| defTokens |
 	
 	defTokens := defString findTokens: Character separators.
-	defTokens isEmpty ifTrue: [ self error: self invalidDefinitionStringErrorDescription ].
+	defTokens isEmpty ifTrue: [ self error: self invalidDefinitionErrorDescription ].
 	
 	defTokens first = ObjectBuilder name asString 
 		ifTrue: [ self validateObjectCreation: defTokens ]
@@ -1885,6 +1931,13 @@ browseAllAccessesTo: aVar from: aClass
 	^self class browseAllAccessesTo: aVar from: aClass
 ! !
 
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 14:40:52'!
+browseClassRefs
+
+	model selectedClassOrMetaClass ifNotNil: [ :selectedDenotativeObject | 
+		self class browseReferencesTo: (Smalltalk bindingOf: selectedDenotativeObject theNonMetaClass name) ]
+	! !
+
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:43:17'!
 browseInstVarRefs
 
@@ -2145,11 +2198,11 @@ browseAllAccessesTo: aVar from: aClass
 		label: label
 		autoSelect: aVar ! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 9/13/2017 16:27:15'!
 browseAllImplementorsOf: aSymbol
 
 	| implementors label |
-
+self halt.
 	implementors := (Smalltalk allImplementorsOf: aSymbol) select: [ :aMethodReference | aMethodReference actualClass inheritsFrom: DenotativeObject class ].
 	implementors do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
 
@@ -2857,6 +2910,16 @@ assertCanReplicate
 canNotReplicateReplicantErrorMessage
 
 	^ 'Cannot replicate a replicant' ! !
+
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 9/13/2017 16:16:32'!
+childResponsibility
+
+	self error: (self childResposibilityErrorDescriptionFor: thisContext sender selector)! !
+
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 9/13/2017 16:17:25'!
+childResposibilityErrorDescriptionFor: aSelector
+
+	^'Implementation of ', aSelector, ' is responsibility of my childs'! !
 
 !DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 7/29/2017 21:58:44'!
 clone
