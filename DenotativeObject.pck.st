@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3175] on 13 September 2017 at 4:46:39 pm'!
-'Description childResponsibility - better error message when creationg object - browser references of denotative object opens do message list - remove forgotten halt'!
-!provides: 'DenotativeObject' 1 23!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3175] on 14 September 2017 at 12:00:08 pm'!
+'Description childOf: - cmd+o to file out - sender/implementors fix on message list'!
+!provides: 'DenotativeObject' 1 24!
 !requires: 'Refactoring' 1 24 nil!
 !classDefinition: #DenotativeObjectWorkspace category: #'DenotativeObject-Tools'!
 Workspace subclass: #DenotativeObjectWorkspace
@@ -1931,12 +1931,23 @@ browseAllAccessesTo: aVar from: aClass
 	^self class browseAllAccessesTo: aVar from: aClass
 ! !
 
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:32:41'!
+browseAllImplementorsOf: aSelector
+
+	^self class browseAllImplementorsOf: aSelector
+! !
+
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 14:40:52'!
 browseClassRefs
 
 	model selectedClassOrMetaClass ifNotNil: [ :selectedDenotativeObject | 
 		self class browseReferencesTo: (Smalltalk bindingOf: selectedDenotativeObject theNonMetaClass name) ]
 	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:33:08'!
+browseImplementorsOfSelectedSelector
+
+	^model selectedMessageName ifNotNil: [:selector | self browseAllImplementorsOf: selector ] ! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:43:17'!
 browseInstVarRefs
@@ -1947,10 +1958,10 @@ browseInstVarRefs
 			thenDo: [:aVar | self browseAllAccessesTo: aVar from: aClass]
 			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:32:47'!
 browseMessages
 
-	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: self class! !
+	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: self ! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
 browseMethodFull
@@ -1964,12 +1975,17 @@ browseSendersOf: aSymbol
 
 	^self class browseSendersOf: aSymbol ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:27:46'!
 browseSendersOfMessages
 
 	self getSelectorAndSendQuery: #browseSendersOf: to: self class.
 
 	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:31:06'!
+browseSendersOfSelectedSelector
+
+	^model selectedMessageName ifNotNil: [:selector | self class browseSendersOf: selector ] ! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 8/23/2017 14:19:44'!
 buildLowerPanes
@@ -2003,16 +2019,17 @@ buildMorphicClassColumn
 
 	^column! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/10/2017 14:23:56'!
+!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/14/2017 11:53:31'!
 classListKey: aChar from: view 
 
 	aChar == $i ifTrue: [^ self inspectIt].
 	aChar == $x ifTrue: [^ model removeClass].
 	aChar == $t ifTrue: [^ model runClassTests ].
+	aChar == $o ifTrue: [ ^model fileOutClass ].
 	
 	^ self messageListKey: aChar from: view! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 14:18:25'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/14/2017 11:53:03'!
 classListMenu
 
 	| aMenu |
@@ -2024,7 +2041,7 @@ classListMenu
 		('add child object...'				addChildDenotativeObject     				'' 	model)
 		('add child object in categoy...'	addChildDenotativeObjectInCategory     '' 	model)
 		-
-		('fileOut'							fileOutClass		''		model)
+		('fileOut (o) '						fileOutClass		''		model)
 		-
 		('inspect (i)'						inspectIt)
 		('rename...'							renameClass	''		model)
@@ -2066,16 +2083,24 @@ inspectIt
 	
 	model selectedClass inspect! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/22/2017 11:16:00'!
+!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/13/2017 20:34:38'!
 messageListKey: aChar from: view
 
-	aChar = $e ifTrue: [^model sendAndInspect ].
-	aChar = $q ifTrue: [^model debugAndInspect ].
-	
-	^super messageListKey: aChar from: view
+	 model selectedMessageName ifNotNil: [ :selector |
+		aChar = $D ifTrue: [ ^ model toggleDiffing].
+		aChar = $m ifTrue: [ ^self browseAllImplementorsOf: selector ].
+		aChar = $n ifTrue: [ ^self browseSendersOf: selector ].
+		aChar = $o ifTrue: [ ^ model fileOutMessage].
+		aChar = $c ifTrue: [ ^ model copySelector].
+		aChar = $v ifTrue: [ ^ self browseVersions].
+		aChar = $x ifTrue: [ ^ model removeMessage].
+		aChar = $t ifTrue: [ ^ model runMethodTest].
+		aChar = $r ifTrue: [ ^ model debugMethodTest].
+		aChar = $e ifTrue: [ ^model sendAndInspect ].
+		aChar = $q ifTrue: [ ^model debugAndInspect ] ].
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 14:31:01'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/13/2017 20:29:47'!
 messageListMenu
 
 	| aMenu |
@@ -2083,10 +2108,10 @@ messageListMenu
 	aMenu := MenuMorph new defaultTarget: self.
 	aMenu addList:#(
 			-
-			('fileOut'						fileOutMessage		''	model)
+			('fileOut (o)'					fileOutMessage		''	model)
 			-
-			('senders of... (n)'				browseSendersOfMessages)
-			('implementors of... (m)'		browseMessages)
+			('senders of... (n)'				browseSendersOfSelectedSelector)
+			('implementors of... (m)'		browseImplementorsOfSelectedSelector)
 			('versions (v)'					browseVersions)
 			-
 			('rename'						renameMethod)
@@ -2156,22 +2181,30 @@ sendersOf: aSymbol
 
 	^self class sendersOf: aSymbol ! !
 
+!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/14/2017 11:58:39'!
+systemCatListKey: aChar from: view
+
+	aChar == $o ifTrue: [^ model fileOutSystemCategory].
+	
+	^ super systemCatListKey: aChar from: view
+! !
+
 !DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 7/22/2017 06:22:49'!
 systemCatSingletonMenu
 
 	^self systemCategoryMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/1/2017 09:32:32'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/14/2017 11:55:27'!
 systemCategoryMenu
 
 	| aMenu |
 	aMenu := MenuMorph new defaultTarget: self.
 
 	aMenu addList: #(
-		('fileOut'					fileOutSystemCategory				''		model)
-		('fileIn'					fileInSystemCategory				''		model)
+		('fileOut (o)'				fileOutSystemCategory				''		model)
+		('fileIn'						fileInSystemCategory				''		model)
 		-
-		('remove'					removeSystemCategory				''		model)
+		('remove (x)'				removeSystemCategory				''		model)
 		-
 		('Run tests (t)'				runSystemCategoryTests  	''	model)).
 
@@ -3085,6 +3118,12 @@ is: aSymbol
 	^aSymbol = #DenotativeObject 
 		and: [ self ~= DenotativeObject 
 		and: [ self inheritsFrom: DenotativeObject ]]! !
+
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 9/13/2017 18:27:46'!
+isChildOf: aParent
+
+	"We have to use #= instead of isEqualTo: becuase the last one can be redefined - Hernan"
+	^(self parentIfNone: [ ^false ]) = aParent! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:32:32'!
 isReplicant
