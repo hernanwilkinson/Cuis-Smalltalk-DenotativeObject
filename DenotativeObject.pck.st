@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 31 March 2018 at 11:12:24 pm'!
-'Description DO name assertions. DO file out referencing DO. Additional parent/child messages'!
-!provides: 'DenotativeObject' 1 25!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 4 April 2018 at 8:27:17 pm'!
+'Description Changes on Rename refactoring to show right error messages and not allow spaces in name'!
+!provides: 'DenotativeObject' 1 26!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -219,6 +219,16 @@ RemoveInstanceVariable subclass: #DenotativeObjectRemoveCollaborator
 	category: 'DenotativeObject-Refactorings'!
 !classDefinition: 'DenotativeObjectRemoveCollaborator class' category: #'DenotativeObject-Refactorings'!
 DenotativeObjectRemoveCollaborator class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectRename category: #'DenotativeObject-Refactorings'!
+RenameClass subclass: #DenotativeObjectRename
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRename class' category: #'DenotativeObject-Refactorings'!
+DenotativeObjectRename class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectRenameMethod category: #'DenotativeObject-Refactorings'!
@@ -2322,6 +2332,36 @@ errorMessageForInstanceVariable: aName notDefinedIn: aClass
 
 	^ 'Collaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
 
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:23:18'!
+classToRenameCanNotBeMetaclassErrorMessage
+	
+	^'Invalid Object to rename'! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:21:33'!
+newClassNameCanNotBeEmptyErrorMessage
+	
+	^'New object name can not be empty'! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:21:46'!
+newClassNameCanNotHaveSpacesErrorMessage
+	
+	^'New object name can not have spaces'! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
+newNameEqualsOldNameErrorMessage
+	
+	^'New object name equals old one'! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:34'!
+newNameMustBeSymbolErrorMessage
+	
+	^'New object name must be a symbol'! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:46'!
+newNameMustStartWithUppercaseLetterErrorMessage
+
+	^'New object name must start with an uppercase letter'! !
+
 !DenotativeObjectRenameMethod class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
 	
@@ -2423,6 +2463,11 @@ openChangedMethods
 	changes ifNotEmpty: [ 
 		DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newClassName ]
 ! !
+
+!DenotativeObjectRenameApplier methodsFor: 'refactoring - creation' stamp: 'HAW 4/4/2018 20:25:33'!
+createRefactoring
+
+	^ DenotativeObjectRename from: classToRename to: newClassName in: Smalltalk undeclared: Undeclared.! !
 
 !DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/30/2017 17:29:44'!
 openChangedMethodsWhenChangesNotEmpty 
