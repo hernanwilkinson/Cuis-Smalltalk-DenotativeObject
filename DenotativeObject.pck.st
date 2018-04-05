@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 4 April 2018 at 8:27:17 pm'!
-'Description Changes on Rename refactoring to show right error messages and not allow spaces in name'!
-!provides: 'DenotativeObject' 1 26!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 5 April 2018 at 9:51:56 am'!
+'Description Now #setUp and #tearDown are sent when running a DO test'!
+!provides: 'DenotativeObject' 1 27!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -2257,6 +2257,16 @@ signalFailure: aString
 	Error signal: aString 
 	! !
 
+!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/5/2018 09:46:38'!
+setUp
+
+	denotativeObject setUp! !
+
+!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/5/2018 09:49:42'!
+tearDown
+
+	denotativeObject tearDown! !
+
 !DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 9/10/2017 19:02:00'!
 test
 
@@ -2276,12 +2286,6 @@ for: aCompiledMethod
 	test realTest: aCompiledMethod.
 
 	^test! !
-
-!DenotativeObjectTestCase class methodsFor: 'instance creation' stamp: 'HAW 7/14/2017 08:20:40'!
-for: aClass test: aMethod
-
-	^self new initializeFor: aClass test: aMethod
-! !
 
 !DenotativeObjectRenameMethodApplierTest methodsFor: 'tests' stamp: 'HAW 8/31/2017 16:35:58'!
 test01ScopeOptionsAreTheSame
@@ -3020,6 +3024,16 @@ longPrintOn: aStream limitedTo: sizeLimit indent: indent
 methodNamed: aSelector
 
 	^self class compiledMethodAt: aSelector ! !
+
+!DenotativeObject class methodsFor: 'test support' stamp: 'HAW 4/5/2018 09:48:57'!
+setUp
+
+	"It is implemented because the DO test wrapper implements #setUp sending #setUp to the DO, so by default does nothing - Hernan"! !
+
+!DenotativeObject class methodsFor: 'test support' stamp: 'HAW 4/5/2018 09:49:06'!
+tearDown
+
+	"See setUp"! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:11:52'!
 comparingStringBetween: actual and: expected
