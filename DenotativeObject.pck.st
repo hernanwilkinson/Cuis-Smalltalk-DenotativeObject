@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 5 April 2018 at 9:51:56 am'!
-'Description Now #setUp and #tearDown are sent when running a DO test'!
-!provides: 'DenotativeObject' 1 27!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 5 April 2018 at 2:05:43 pm'!
+'Description System category rename. Requires change set 3289-CuisCore-HernanWilkinson-2018Apr05-13h39m-HAW.1.cs loaded'!
+!provides: 'DenotativeObject' 1 29!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -1795,7 +1795,7 @@ systemCatSingletonMenu
 
 	^self systemCategoryMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/14/2017 11:55:27'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 4/5/2018 11:53:17'!
 systemCategoryMenu
 
 	| aMenu |
@@ -1805,6 +1805,7 @@ systemCategoryMenu
 		('fileOut (o)'				fileOutSystemCategory				''		model)
 		('fileIn'						fileInSystemCategory				''		model)
 		-
+		('rename'					renameSystemCategory				''		model)
 		('remove (x)'				removeSystemCategory				''		model)
 		-
 		('Run tests (t)'				runSystemCategoryTests  	''	model)).
