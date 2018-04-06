@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 5 April 2018 at 2:05:43 pm'!
-'Description System category rename. Requires change set 3289-CuisCore-HernanWilkinson-2018Apr05-13h39m-HAW.1.cs loaded'!
-!provides: 'DenotativeObject' 1 29!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 6 April 2018 at 9:58:18 am'!
+'Description Rename of DenotativeObjectTestCase>>#test to DenotativeObjectTestCase>>#performRealTest to avoid SUnit running #test as a real test '!
+!provides: 'DenotativeObject' 1 30!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -2258,6 +2258,16 @@ signalFailure: aString
 	Error signal: aString 
 	! !
 
+!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/6/2018 09:53:25'!
+performRealTest
+
+	[ denotativeObject perform: realTestSelector ]
+		on: MessageNotUnderstood
+		do: [ :aMNU |
+			(aMNU receiver = denotativeObject and: [ self respondsTo: aMNU message selector ])
+				ifTrue: [ aMNU message sendTo: self ]
+				ifFalse: [ aMNU pass ]].! !
+
 !DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/5/2018 09:46:38'!
 setUp
 
@@ -2268,22 +2278,12 @@ tearDown
 
 	denotativeObject tearDown! !
 
-!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 9/10/2017 19:02:00'!
-test
-
-	[ denotativeObject perform: realTestSelector ]
-		on: MessageNotUnderstood
-		do: [ :aMNU |
-			(aMNU receiver = denotativeObject and: [ self respondsTo: aMNU message selector ])
-				ifTrue: [ aMNU message sendTo: self ]
-				ifFalse: [ aMNU pass ]].! !
-
-!DenotativeObjectTestCase class methodsFor: 'instance creation' stamp: 'HAW 7/14/2017 08:37:01'!
+!DenotativeObjectTestCase class methodsFor: 'instance creation' stamp: 'HAW 4/6/2018 09:53:14'!
 for: aCompiledMethod
 
 	| test |
 
-	test := super selector: #test.
+	test := super selector: #performRealTest.
 	test realTest: aCompiledMethod.
 
 	^test! !
