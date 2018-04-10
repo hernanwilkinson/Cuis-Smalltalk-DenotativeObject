@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 6 April 2018 at 9:58:18 am'!
-'Description Rename of DenotativeObjectTestCase>>#test to DenotativeObjectTestCase>>#performRealTest to avoid SUnit running #test as a real test '!
-!provides: 'DenotativeObject' 1 30!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 10 April 2018 at 7:01:21 pm'!
+'Description Create class option added'!
+!provides: 'DenotativeObject' 1 31!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -562,6 +562,38 @@ copyClass
 		do: [ :anError | self inform: anError printString ].
 			
 	! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 4/10/2018 18:42:12'!
+createClass
+
+	self selectedClass ifNotNil: [ :aDenotativeObject | | superclass className categoryName |	
+		className := FillInTheBlankMorph request: 'Class for ', aDenotativeObject name onCancel: [ ^self ].
+		(Smalltalk classNamed: className) ifNotNil: [
+			(PopUpMenu confirm: className, ' already exist. Do you want to recreate?' trueChoice: 'Recreate it' falseChoice: 'Do not continue') 
+				ifFalse: [ ^self ]].			
+		categoryName := FillInTheBlankMorph request: 'Enter category name' initialAnswer: aDenotativeObject category onCancel: [ ^self ].
+		
+		[ superclass := self createSuperclassOf: aDenotativeObject onCancel: [ ^self ].
+		aDenotativeObject createClassNamed: className asSymbol subclassOf: superclass category: categoryName ]
+			on: Error
+			do: [ :anError | self inform: anError messageText ]]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 4/10/2018 18:49:14'!
+createSuperclassOf: aDenotativeObject onCancel: aBlock
+
+	| denotativeObjectParent categoryName superclass superclassName |
+	
+	denotativeObjectParent := aDenotativeObject parentIfNone: [ ^Object ].
+	
+	superclassName := FillInTheBlankMorph request: 'Class for ', denotativeObjectParent name onCancel: [ ^aBlock value ].
+	(Smalltalk classNamed: superclassName) ifNotNil: [ :alreadyExistingSuperclass |
+		(PopUpMenu confirm: superclassName, ' already exist. Do you want to recreate or reuse it?' trueChoice: 'Recreate it' falseChoice: 'Reuse it')
+			ifFalse: [ ^alreadyExistingSuperclass ]].
+		
+	categoryName := FillInTheBlankMorph request: 'Enter category name' initialAnswer: denotativeObjectParent category onCancel: [ ^aBlock value ].	
+	superclass := self createSuperclassOf: denotativeObjectParent onCancel: aBlock.
+	
+	^denotativeObjectParent createClassNamed: superclassName asSymbol subclassOf: superclass category: categoryName! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:02:36'!
 defineClass: defString notifying: aRequestor
@@ -1736,7 +1768,7 @@ systemCatListKey: aChar from: view
 	^ super systemCatListKey: aChar from: view
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 3/31/2018 20:04:11'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 4/10/2018 17:03:06'!
 classListMenu
 
 	| aMenu |
@@ -1759,7 +1791,10 @@ classListMenu
 		('rename collaborator...'			renameInstVar)
 		('remove collaborator...'			removeInstVar)
 		-
-		('Run tests (t)'						runClassTests 	''	model)).
+		('Run tests (t)'						runClassTests 	''	model)
+		-
+		('create class'						createClass 	''	model)).
+
 	^ aMenu! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/13/2017 20:29:47'!
@@ -3026,6 +3061,11 @@ methodNamed: aSelector
 
 	^self class compiledMethodAt: aSelector ! !
 
+!DenotativeObject class methodsFor: 'methods' stamp: 'HAW 4/10/2018 16:56:14'!
+sourceCodeOf: aSelector
+
+	^(self methodNamed: aSelector) sourceCode ! !
+
 !DenotativeObject class methodsFor: 'test support' stamp: 'HAW 4/5/2018 09:48:57'!
 setUp
 
@@ -3035,6 +3075,43 @@ setUp
 tearDown
 
 	"See setUp"! !
+
+!DenotativeObject class methodsFor: 'class creation' stamp: 'HAW 4/10/2018 16:50:48'!
+createClassNamed: aName
+
+	superclass ~= DenotativeObject ifTrue: [ self error: 'Superclass must be supplied' ].
+	
+	^self createClassNamed: aName subclassOf: Object
+	! !
+
+!DenotativeObject class methodsFor: 'class creation' stamp: 'HAW 4/10/2018 16:52:18'!
+createClassNamed: aName subclassOf: aSuperclass
+
+	^self createClassNamed: aName subclassOf: aSuperclass category: self category
+	
+	! !
+
+!DenotativeObject class methodsFor: 'class creation' stamp: 'HAW 4/10/2018 19:00:17'!
+createClassNamed: aName subclassOf: aSuperclass category: aCategory
+
+	| newClass |
+	
+	newClass := aSuperclass subclass: aName
+		instanceVariableNames: self class instVarNames
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: aCategory.
+	
+	"Should I remove the newClass current selectors? if so I could loose new methods added to the class. If not, then I could leave
+	messages that are no longer valid because the where remove from the denotative object. Merging methods is not so easy and 
+	we should impact only the changes on the denotative object, but that it is not easy to do. 
+	The same thing happens with the instances variables - Hernan"
+	
+	self class selectorsDo: [ :aSelector | newClass 
+		compile: (self sourceCodeOf: aSelector) 
+		classifyUnder: (self class organization categoryOfElement: aSelector) ].
+	
+	^newClass! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:11:52'!
 comparingStringBetween: actual and: expected
