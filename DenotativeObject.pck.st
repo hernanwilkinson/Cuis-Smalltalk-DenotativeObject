@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 11 April 2018 at 7:39:52 pm'!
-'Description Added open Class Browser to the main menu. Added icons for the open browser options'!
-!provides: 'DenotativeObject' 1 32!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3292] on 11 April 2018 at 7:55:29 pm'!
+'Description Added open Class Browser to the main menu. Added icons for the open browser options. Fix on DenotativeObjectTheme'!
+!provides: 'DenotativeObject' 1 33!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -2188,10 +2188,10 @@ basicIcons
 			yourself
 ! !
 
-!DenotativeObjectTheme methodsFor: '*DenotativeObject' stamp: 'HAW 4/11/2018 19:36:52'!
+!DenotativeObjectTheme methodsFor: '*DenotativeObject' stamp: 'HAW 4/11/2018 19:54:48'!
 miscellaneousIcons 
 	
-	^(OrderedCollection withAll: super basicIcons)
+	^(OrderedCollection withAll: super miscellaneousIcons)
 			add: #('class browser') -> #editFindReplaceIcon;
 			yourself
 ! !
