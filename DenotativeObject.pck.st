@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 10 April 2018 at 7:01:21 pm'!
-'Description Create class option added'!
-!provides: 'DenotativeObject' 1 31!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 11 April 2018 at 7:39:52 pm'!
+'Description Added open Class Browser to the main menu. Added icons for the open browser options'!
+!provides: 'DenotativeObject' 1 32!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -756,9 +756,9 @@ runSystemCategoryTests
 
 	^self runDenotativeObjectSystemCategoryTests! !
 
-!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 8/31/2017 15:23:37'!
+!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 4/11/2018 15:30:27'!
 defaultBrowserTitle
-	^ 'Denotative Object Browser'! !
+	^ 'DenotativeObject Browser'! !
 
 !DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 7/9/2017 12:18:37'!
 systemOrganizer: aSystemOrganizer
@@ -2179,6 +2179,22 @@ pseudoVariables
 	^ (OrderedCollection withAll: super pseudoVariables) 
 		add: #parent;
 		asArray! !
+
+!DenotativeObjectTheme methodsFor: '*DenotativeObject' stamp: 'HAW 4/11/2018 19:32:36'!
+basicIcons
+
+		^(OrderedCollection withAll: super basicIcons)
+			add: #('denotativeobject browser') -> #morphsIcon;
+			yourself
+! !
+
+!DenotativeObjectTheme methodsFor: '*DenotativeObject' stamp: 'HAW 4/11/2018 19:36:52'!
+miscellaneousIcons 
+	
+	^(OrderedCollection withAll: super basicIcons)
+			add: #('class browser') -> #editFindReplaceIcon;
+			yourself
+! !
 
 !DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
 openTestResultWindow
@@ -4090,7 +4106,7 @@ handleForDenotativeObjectIn: aDenotativeObjectBrowser
 
 ! !
 
-!TheWorldMenu methodsFor: '*DenotativeObject' stamp: 'HAW 7/29/2017 20:40:50'!
+!TheWorldMenu methodsFor: '*DenotativeObject' stamp: 'HAW 4/11/2018 15:28:29'!
 buildWorldMenu
 	"Build the menu that is put up when the screen-desktop is clicked on"
 
@@ -4100,7 +4116,8 @@ buildWorldMenu
 	menu addStayUpIcons.
 	self fillIn: menu
 		from: {
-				{ 'Open DenotativeBrowser'. { self. #openDenotativeBrowser}}.
+				{ 'DenotativeObject Browser'. { DenotativeObjectBrowserWindow. #openBrowser}}.
+				{ 'Class Browser'. { BrowserWindow. #openBrowser}}.
 				nil.
 				{ 'Open...'. { self. #openWindow}}.
 				{ 'New morph...'. { self. #newMorph}.
@@ -4128,11 +4145,6 @@ buildWorldMenu
 				{ 'Quit'. { self. #quitSession}.
 					'quit out of Cuis.'}}.
 	^menu! !
-
-!TheWorldMenu methodsFor: '*DenotativeObject' stamp: 'HAW 7/29/2017 20:41:12'!
-openDenotativeBrowser
-	
-	DenotativeObjectBrowserWindow openBrowser .! !
 
 !MethodReference methodsFor: '*DenotativeObject' stamp: 'HAW 7/28/2017 19:48:44'!
 recalculateStringVersionForDenotativeObject
