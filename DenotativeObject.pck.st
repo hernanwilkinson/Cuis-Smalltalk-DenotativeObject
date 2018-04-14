@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3292] on 11 April 2018 at 7:55:29 pm'!
-'Description Added open Class Browser to the main menu. Added icons for the open browser options. Fix on DenotativeObjectTheme'!
-!provides: 'DenotativeObject' 1 33!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 14 April 2018 at 7:58:55 pm'!
+'Description Change to support new way of adding icons to menues'!
+!provides: 'DenotativeObject' 1 34!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -2180,21 +2180,16 @@ pseudoVariables
 		add: #parent;
 		asArray! !
 
-!DenotativeObjectTheme methodsFor: '*DenotativeObject' stamp: 'HAW 4/11/2018 19:32:36'!
-basicIcons
+!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'HAW 4/12/2018 15:48:17'!
+addBasicIconsTo: aCollectorCollection
 
-		^(OrderedCollection withAll: super basicIcons)
-			add: #('denotativeobject browser') -> #morphsIcon;
-			yourself
+	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
 ! !
 
-!DenotativeObjectTheme methodsFor: '*DenotativeObject' stamp: 'HAW 4/11/2018 19:54:48'!
-miscellaneousIcons 
-	
-	^(OrderedCollection withAll: super miscellaneousIcons)
-			add: #('class browser') -> #editFindReplaceIcon;
-			yourself
-! !
+!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'HAW 4/12/2018 16:01:29'!
+addMiscellaneousIconsTo: aCollectorCollection
+
+	^aCollectorCollection add: #('class browser') -> #editFindReplaceIcon! !
 
 !DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
 openTestResultWindow
