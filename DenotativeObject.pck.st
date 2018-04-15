@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 14 April 2018 at 7:58:55 pm'!
-'Description Change to support new way of adding icons to menues'!
-!provides: 'DenotativeObject' 1 34!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 15 April 2018 at 12:41:25 pm'!
+'Description New icons added to menues'!
+!provides: 'DenotativeObject' 1 35!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -2186,10 +2186,22 @@ addBasicIconsTo: aCollectorCollection
 	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
 ! !
 
-!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'HAW 4/12/2018 16:01:29'!
+!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'HAW 4/15/2018 12:38:52'!
 addMiscellaneousIconsTo: aCollectorCollection
 
-	^aCollectorCollection add: #('class browser') -> #editFindReplaceIcon! !
+	^aCollectorCollection 
+		add: #('class browser') -> #editFindReplaceIcon;
+		add: #('remove (x)' 'remove collaborator...') ->#deleteIcon;
+		add: #('create class') -> #morphsIcon;
+		add: #('fileOut (o)') -> #fileOutIcon;
+		add: #('clone...') -> #copyIcon;
+		add: #('add object...' 'add object in categoy...' 'add child object...' 'add child object in categoy...' 'add collaborator...' 'Next test name (Y)') -> #listAddIcon;
+		add: #('rename collaborator...') -> #saveAsIcon;
+		add: #('send and inspect (e)' 'Accept, Send and Inspect (e)') -> #inspectIcon;
+		add: #('debug (r)'	'debug and inspect (q)' 'Accept and Debug (r)' 'Accept, Debug and Inspect (q)') -> #debugIcon;
+		add: #('send (t)' 'Accept and Send (t)') -> #doItIcon;
+		add: #('show category') -> #helpIcon;
+		add: #('Accept and Run Test in Category (y)') -> #weatherFewCloudsIcon! !
 
 !DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
 openTestResultWindow
