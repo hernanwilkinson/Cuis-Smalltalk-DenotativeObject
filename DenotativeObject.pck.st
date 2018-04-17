@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 15 April 2018 at 12:41:25 pm'!
-'Description New icons added to menues'!
-!provides: 'DenotativeObject' 1 35!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3292] on 17 April 2018 at 4:32:28 pm'!
+'Description #initializeCollaboratorsFromFile is automatically removed when doing file out and file in'!
+!provides: 'DenotativeObject' 1 36!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -2957,14 +2957,16 @@ siblings
 
 	^self family reject: [ :each | each == self ]! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 3/31/2018 22:26:04'!
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:28:34'!
 fileOutInitializerOn: aStream
 
 	super fileOutInitializerOn: aStream.
-	(self class methodDict includesKey: self initializeCollaboratorsFromFileMessageName asSymbol) ifTrue: [
+	(self class methodDict includesKey: self initializeCollaboratorsFromFileMessageName) ifTrue: [
 		aStream 
 			newLine;
-		 	nextChunkPut: self name , ' ', self initializeCollaboratorsFromFileMessageName ].! !
+		 	nextChunkPut: self name , ' ', self initializeAfterFileInMessageName asString.
+			
+		self removeInitializeCollaboratorsFromFile ].! !
 
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 3/31/2018 22:25:58'!
 fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
@@ -2973,26 +2975,43 @@ fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aB
 	super fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool.
 	! !
 
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:12:18'!
+initializeAfterFileIn
+
+	self initializeCollaboratorsFromFile.
+	self removeInitializeCollaboratorsFromFile! !
+
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:23:36'!
+initializeCollaboratorsFromFile
+	
+	"It does nothing - it is here just in case there is an error an a DO does not automatically implement it, to avoid getting a MNU when sending initializeAfterFileIn - Hernan"! !
+
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:24:18'!
+removeInitializeCollaboratorsFromFile
+
+	"This check is to be sure not to remove DenotativeObject class>>#initializeCollaboratorsFromFile - Hernan"
+	
+	(self is: #DenotativeObject) ifTrue: [ self class removeSelector: self initializeCollaboratorsFromFileMessageName ] ! !
+
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 9/7/2017 16:44:18'!
 storeOn: aStream
 
 	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:11:14'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:30:29'!
 compileInitializeCollaboratorsFromFile
 		
-	self class compile: self initializeCollaboratorsFromFileSourceCode classified: self fileOutCategory notifying: nil.
-		! !
+	self class compile: self initializeCollaboratorsFromFileSourceCode ! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:11:28'!
-fileOutCategory
+!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:25:16'!
+initializeAfterFileInMessageName
 	
-	^'fileout'! !
+	^ #initializeAfterFileIn! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:12:43'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:24:31'!
 initializeCollaboratorsFromFileMessageName
 	
-	^'initializeCollaboratorsFromFile'! !
+	^#initializeCollaboratorsFromFile! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:13:39'!
 initializeCollaboratorsFromFileSourceCode
@@ -3024,14 +3043,14 @@ writeInitializationOf: aCollaborator on: sourceStream
 		store: (self instVarNamed: aCollaborator);
 		nextPut: $. ! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:12:10'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:30:45'!
 writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream
 
 	sourceStream 
-		nextPutAll: self initializeCollaboratorsFromFileMessageName;
+		nextPutAll: self initializeCollaboratorsFromFileMessageName asString;
 		newLine;
 		tab;
-		nextPutAll: '"Auto generated method for loading pourposes - Do not modify it"';
+		nextPutAll: '"Auto generated method for loading purposes - Do not modify it"';
 		newLine.! !
 
 !DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 16:14:41'!
