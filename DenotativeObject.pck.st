@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3292] on 17 April 2018 at 4:32:28 pm'!
-'Description #initializeCollaboratorsFromFile is automatically removed when doing file out and file in'!
-!provides: 'DenotativeObject' 1 36!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3295] on 22 April 2018 at 7:59:42 pm'!
+'Description Changes to be in sync with cs 3594/3495 that handles debugger changes better'!
+!provides: 'DenotativeObject' 1 37!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -2042,15 +2042,15 @@ browseMethodFullIn: anInspector
 		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]
 	! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/21/2017 12:27:01'!
+!DenotativeObjectDebuggerWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 4/22/2018 19:54:41'!
 contextStackKey: aChar from: view
 	"Respond to a keystroke in the context list"
 
-	aChar == $e ifTrue: [^ model send].
-	aChar == $t ifTrue: [^ model stepIntoBlock].
-	aChar == $p ifTrue: [^ model proceed].
-	aChar == $r ifTrue: [^ model restart].
-	aChar == $w ifTrue: [^ model where].
+	aChar == $e ifTrue: [^ self send].
+	aChar == $t ifTrue: [^ self stepIntoBlock].
+	aChar == $p ifTrue: [^ self proceed].
+	aChar == $r ifTrue: [^ self restart].
+	aChar == $w ifTrue: [^ self where].
 
 	^ self messageListKey: aChar from: view! !
 
@@ -2122,18 +2122,18 @@ contextFieldListMenu
 	
 	^ aMenu! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 8/22/2017 09:36:39'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 4/22/2018 19:55:41'!
 contextStackMenu
 	"Set up the menu appropriately for the context-stack-list, either shifted or unshifted as per the parameter provided"
 
 	| aMenu |
 	aMenu _ MenuMorph new defaultTarget: self.
 	aMenu addList: #(
-			('proceed (p)'					proceed 					'' 		model)
-			('restart (r)'					restart						''		model)
-			('into (e)'						send							''		model)
-			('over (t)'						stepIntoBlock						''		model)
-			('where (w)'					where						''		model)
+			('proceed (p)'					proceed)
+			('restart (r)'					restart)
+			('into (e)'						send)
+			('over (t)'						stepIntoBlock)
+			('where (w)'					where)
 		).
 	^aMenu! !
 
