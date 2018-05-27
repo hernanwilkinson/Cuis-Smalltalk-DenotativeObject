@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3295] on 22 April 2018 at 7:59:42 pm'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3295] on 27 May 2018 at 1:14:07 am'!
 'Description Changes to be in sync with cs 3594/3495 that handles debugger changes better'!
-!provides: 'DenotativeObject' 1 37!
+!provides: 'DenotativeObject' 1 38!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -836,6 +836,11 @@ fileInSystemCategory
 firstExperimentCategoryName
 	
 	^'First Experiment'! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'RNG 5/27/2018 01:03:53'!
+potentialClassNames
+
+	^ DenotativeObject allSubclasses collect: [ :class | class name ]! !
 
 !DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/1/2017 09:31:11'!
 removeSystemCategory
@@ -1733,15 +1738,25 @@ optionalButtonTuples
 	^self class optionalButtonTuples
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/14/2017 11:53:31'!
+!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'RNG 5/27/2018 01:04:26'!
 classListKey: aChar from: view 
 
-	aChar == $i ifTrue: [^ self inspectIt].
-	aChar == $x ifTrue: [^ model removeClass].
-	aChar == $t ifTrue: [^ model runClassTests ].
-	aChar == $o ifTrue: [ ^model fileOutClass ].
+	| mappings |
+	mappings := {
+		$a -> [ model addDenotativeObject ].
+		$A -> [ model addDenotativeObjectInCategory ].
+		$h -> [ model addChildDenotativeObject ].
+		$H -> [ model addChildDenotativeObjectInCategory ].
+		$i -> [ self inspectIt ].
+		$x -> [ model removeClass].
+		$t -> [ model runClassTests ].
+		$o -> [ model fileOutClass ].
+	} as: Dictionary.
 	
-	^ self messageListKey: aChar from: view! !
+	^ mappings
+		at: aChar
+		ifPresent: [ :mapping | mapping value ]
+		ifAbsent: [ self messageListKey: aChar from: view ]! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/13/2017 20:34:38'!
 messageListKey: aChar from: view
@@ -1768,17 +1783,22 @@ systemCatListKey: aChar from: view
 	^ super systemCatListKey: aChar from: view
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 4/10/2018 17:03:06'!
+!DenotativeObjectBrowserWindow methodsFor: 'commands' stamp: 'RNG 5/27/2018 01:11:39'!
+findClassDialogTitle
+
+	^ 'Denotative object name or fragment?'! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 01:06:18'!
 classListMenu
 
 	| aMenu |
 
 	aMenu := MenuMorph new defaultTarget: self.
 	aMenu addList: #(
-		('add object...'						addDenotativeObject     						'' 	model)
-		('add object in categoy...'			addDenotativeObjectInCategory    		'' 	model)
-		('add child object...'				addChildDenotativeObject     				'' 	model)
-		('add child object in categoy...'	addChildDenotativeObjectInCategory     '' 	model)
+		('add object... (a)'						addDenotativeObject     						'' 	model)
+		('add object in category... (A)'			addDenotativeObjectInCategory    		'' 	model)
+		('add child object... (h)'					addChildDenotativeObject     				'' 	model)
+		('add child object in category... (H)'	addChildDenotativeObjectInCategory     	'' 	model)
 		-
 		('fileOut (o)'						fileOutClass		''		model)
 		-
@@ -1830,13 +1850,16 @@ systemCatSingletonMenu
 
 	^self systemCategoryMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 4/5/2018 11:53:17'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 01:12:37'!
 systemCategoryMenu
 
 	| aMenu |
 	aMenu := MenuMorph new defaultTarget: self.
 
 	aMenu addList: #(
+		('find object... (f)'				findClass)
+		('recent objects... (r)'		recent			''		model)
+		-
 		('fileOut (o)'				fileOutSystemCategory				''		model)
 		('fileIn'						fileInSystemCategory				''		model)
 		-
@@ -2186,7 +2209,7 @@ addBasicIconsTo: aCollectorCollection
 	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
 ! !
 
-!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'HAW 4/15/2018 12:38:52'!
+!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'RNG 5/27/2018 01:07:24'!
 addMiscellaneousIconsTo: aCollectorCollection
 
 	^aCollectorCollection 
@@ -2194,13 +2217,16 @@ addMiscellaneousIconsTo: aCollectorCollection
 		add: #('remove (x)' 'remove collaborator...') ->#deleteIcon;
 		add: #('create class') -> #morphsIcon;
 		add: #('fileOut (o)') -> #fileOutIcon;
+		add: #('fileIn') -> #scriptIcon;
 		add: #('clone...') -> #copyIcon;
-		add: #('add object...' 'add object in categoy...' 'add child object...' 'add child object in categoy...' 'add collaborator...' 'Next test name (Y)') -> #listAddIcon;
+		add: #('add object... (a)' 'add object in category... (A)' 'add child object... (h)' 'add child object in category... (H)' 'add collaborator...' 'Next test name (Y)') -> #listAddIcon;
 		add: #('rename collaborator...') -> #saveAsIcon;
 		add: #('send and inspect (e)' 'Accept, Send and Inspect (e)') -> #inspectIcon;
 		add: #('debug (r)'	'debug and inspect (q)' 'Accept and Debug (r)' 'Accept, Debug and Inspect (q)') -> #debugIcon;
 		add: #('send (t)' 'Accept and Send (t)') -> #doItIcon;
 		add: #('show category') -> #helpIcon;
+		add: #('find object... (f)') -> #findIcon;
+		add: #('recent objects... (r)') -> #clockIcon;
 		add: #('Accept and Run Test in Category (y)') -> #weatherFewCloudsIcon! !
 
 !DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
@@ -4131,6 +4157,41 @@ handleForDenotativeObjectIn: aDenotativeObjectBrowser
 	self resume: (actions at: choice ifAbsent: [ ]).
 
 ! !
+
+!BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'RNG 5/27/2018 01:10:52'!
+findClass
+	"Search for a class by name."
+	| pattern foundClass classNames index toMatch exactMatch potentialClassNames |
+
+	self okToChange ifFalse: [ ^self flash ].
+	pattern _ ClassNameRequestMorph request: self findClassDialogTitle.
+	pattern isEmpty ifTrue: [^ self flash].
+	toMatch _ (pattern copyWithout: $.) asLowercase withBlanksTrimmed.
+	potentialClassNames _ model potentialClassNames asOrderedCollection.
+	classNames _ (pattern last = $. or: [pattern last = $ ])
+		ifTrue: [potentialClassNames select:
+					[:nm |  nm asLowercase = toMatch]]
+		ifFalse: [potentialClassNames select: 
+					[:n | n includesSubstring: toMatch caseSensitive: false]].
+	classNames isEmpty ifTrue: [^ self flash].
+	exactMatch _ classNames detect: [ :each | each asLowercase = toMatch] ifNone: nil.
+
+	index _ classNames size = 1
+		ifTrue:	[1]
+		ifFalse:	[exactMatch
+			ifNil: [(PopUpMenu labelArray: classNames lines: #()) startUpMenu]
+			ifNotNil: [classNames addFirst: exactMatch.
+				(PopUpMenu labelArray: classNames lines: #(1)) startUpMenu]].
+	index = 0 ifTrue: [^ self flash].
+	foundClass _ Smalltalk at: (classNames at: index) asSymbol.
+ 	model selectCategoryForClass: foundClass.
+	model selectClass: foundClass
+! !
+
+!BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'RNG 5/27/2018 01:11:04'!
+findClassDialogTitle
+
+	^ 'Class name or fragment?'! !
 
 !TheWorldMenu methodsFor: '*DenotativeObject' stamp: 'HAW 4/11/2018 15:28:29'!
 buildWorldMenu
