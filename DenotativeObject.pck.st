@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3295] on 27 May 2018 at 1:14:07 am'!
-'Description Changes to be in sync with cs 3594/3495 that handles debugger changes better'!
-!provides: 'DenotativeObject' 1 38!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3333] on 27 May 2018 at 9:52:58 pm'!
+'Description Adapt menus to new implementation'!
+!provides: 'DenotativeObject' 1 39!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -1788,86 +1788,240 @@ findClassDialogTitle
 
 	^ 'Denotative object name or fragment?'! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 01:06:18'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 21:51:52'!
 classListMenu
 
 	| aMenu |
-
 	aMenu := MenuMorph new defaultTarget: self.
-	aMenu addList: #(
-		('add object... (a)'						addDenotativeObject     						'' 	model)
-		('add object in category... (A)'			addDenotativeObjectInCategory    		'' 	model)
-		('add child object... (h)'					addChildDenotativeObject     				'' 	model)
-		('add child object in category... (H)'	addChildDenotativeObjectInCategory     	'' 	model)
-		-
-		('fileOut (o)'						fileOutClass		''		model)
-		-
-		('inspect (i)'						inspectIt)
-		('rename...'							renameClass	''		model)
-		('clone...'							copyClass		''		model)
-		('remove (x)'						removeClass	''		model)
-		-
-		('add collaborator...'				addInstVar)
-		('rename collaborator...'			renameInstVar)
-		('remove collaborator...'			removeInstVar)
-		-
-		('Run tests (t)'						runClassTests 	''	model)
-		-
-		('create class'						createClass 	''	model)).
-
+	aMenu addTitle: 'Objects'.
+	aMenu
+		addItemsFromDictionaries: `{
+			{
+				#label 			-> 		'add object... (a)'.
+				#selector 		-> 		#addDenotativeObject.
+				#object 			->		#model.
+				#icon 			-> 		#listAddIcon
+			} asDictionary.
+			{
+				#label 			-> 		'add object in category... (A)'.
+				#selector 		-> 		#addDenotativeObjectInCategory.
+				#object 			->		#model.
+				#icon 			-> 		#listAddIcon
+			} asDictionary.
+			{
+				#label 			-> 		'add child object... (h)'.
+				#selector 		-> 		#addChildDenotativeObject.
+				#object 			->		#model.
+				#icon 			-> 		#listAddIcon
+			} asDictionary.
+			{
+				#label 			-> 		'add child object in category... (H)'.
+				#selector 		-> 		#addChildDenotativeObjectInCategory.
+				#object 			->		#model.
+				#icon 			-> 		#listAddIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'fileOut (o)'.
+				#selector 		-> 		#fileOutClass.
+				#object 			->		#model.
+				#icon 			-> 		#fileOutIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'inspect (i)'.
+				#selector 		-> 		#inspectIt.
+				#object 			->		#model.
+				#icon 			-> 		#inspectIcon
+			} asDictionary.
+			{
+				#label 			-> 		'rename...'.
+				#selector 		-> 		#renameClass.
+				#object 			->		#model.
+				#icon 			-> 		#saveAsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'clone...'.
+				#selector 		-> 		#copyClass.
+				#object 			->		#model.
+				#icon 			-> 		#copyIcon
+			} asDictionary.
+			{
+				#label 			-> 		'remove (x)'.
+				#selector 		-> 		#removeClass.
+				#object 			->		#model.
+				#icon 			-> 		#deleteIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'add collaborator...'.
+				#selector 		-> 		#addInstVar.
+				#icon 			-> 		#listAddIcon
+			} asDictionary.
+			{
+				#label 			-> 		'rename collaborator...'.
+				#selector 		-> 		#renameInstVar.
+				#icon 			-> 		#saveAsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'remove collaborator...'.
+				#selector 		-> 		#removeInstVar.
+				#icon 			-> 		#deleteIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'run tests (t)'.
+				#selector 		-> 		#runClassTests.
+				#object 			->		#model.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'create class'.
+				#selector 		-> 		#createClass.
+				#object 			->		#model.
+				#icon 			-> 		#morphsIcon
+			} asDictionary.
+		}`.
 	^ aMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/13/2017 20:29:47'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 21:27:59'!
 messageListMenu
+	"Answer the message-list menu"
+	"Changed by emm to include menu-item for breakpoints"
 
 	| aMenu |
-
-	aMenu := MenuMorph new defaultTarget: self.
-	aMenu addList:#(
-			-
-			('fileOut (o)'					fileOutMessage		''	model)
-			-
-			('senders of... (n)'				browseSendersOfSelectedSelector)
-			('implementors of... (m)'		browseImplementorsOfSelectedSelector)
-			('versions (v)'					browseVersions)
-			-
-			('rename'						renameMethod)
-			('remove (x)'					removeMessage)
-			-
-			('change category...'			changeCategory		''		model)
-			('show category'				showHomeCategory	''		model)
-			-
-			('send (t)'						runMethodTest 		'' 	model)
-			('send and inspect (e)'			sendAndInspect 		'' 	model)
-			('debug (r)'						debugMethodTest 	'' 	model)
-			('debug and inspect (q)'		debugAndInspect 		'' 	model)
-			).
-	^ aMenu
-! !
+	aMenu _ MenuMorph new defaultTarget: self.
+	aMenu addTitle: 'Message List'.
+	aMenu
+		addItemsFromDictionaries: `{
+			{
+				#label 			-> 		'fileOut (o)'.
+				#object 			-> 		#model.
+				#selector 		-> 		#fileOutMessage.
+				#icon 			-> 		#fileOutIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'senders of... (n)'.
+				#selector 		-> 		#browseSendersOfSelectedSelector.
+				#icon 			-> 		#mailForwardIcon
+			} asDictionary.
+			{
+				#label 			-> 		'implementors of... (m)'.
+				#selector 		-> 		#browseImplementorsOfSelectedSelector.
+				#icon 			-> 		#developmentIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'rename'.
+				#selector 		-> 		#renameMethod.
+				#icon 			-> 		#saveAsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'remove (x)'.
+				#selector 		-> 		#removeMessage.
+				#icon 			-> 		#deleteIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'change category...'.
+				#object 			-> 		#model.
+				#selector 		-> 		#changeCategory.
+				#icon 			-> 		#editFindReplaceIcon
+			} asDictionary.
+			{
+				#label 			-> 		'show category'.
+				#object 			-> 		#model.
+				#selector 		-> 		#showHomeCategory.
+				#icon 			-> 		#helpIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'send (t)'.
+				#object 			-> 		#model.
+				#selector 		-> 		#runMethodTest.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'send and inspect (e)'.
+				#object 			-> 		#model.
+				#selector 		-> 		#sendAndInspect.
+				#icon 			-> 		#inspectIcon
+			} asDictionary.
+			{
+				#label 			-> 		'debug (r)'.
+				#object 			-> 		#model.
+				#selector 		-> 		#debugMethodTest.
+				#icon 			-> 		#debugIcon
+			} asDictionary.
+			{
+				#label 			-> 		'debug and inspect (q)'.
+				#object 			-> 		#model.
+				#selector 		-> 		#debugAndInspect.
+				#icon 			-> 		#debugIcon
+			} asDictionary.
+		}`.
+	^ aMenu! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 7/22/2017 06:22:49'!
 systemCatSingletonMenu
 
 	^self systemCategoryMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 01:12:37'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 21:39:39'!
 systemCategoryMenu
 
 	| aMenu |
-	aMenu := MenuMorph new defaultTarget: self.
-
-	aMenu addList: #(
-		('find object... (f)'				findClass)
-		('recent objects... (r)'		recent			''		model)
-		-
-		('fileOut (o)'				fileOutSystemCategory				''		model)
-		('fileIn'						fileInSystemCategory				''		model)
-		-
-		('rename'					renameSystemCategory				''		model)
-		('remove (x)'				removeSystemCategory				''		model)
-		-
-		('Run tests (t)'				runSystemCategoryTests  	''	model)).
-
+	aMenu _ MenuMorph new defaultTarget: self.
+	aMenu addTitle: 'Categories'.
+	aMenu
+		addItemsFromDictionaries: `{
+			{
+				#label 			-> 		'find object... (f)'.
+				#selector 		-> 		#findClass.
+				#icon 			-> 		#findIcon
+			} asDictionary.
+			{
+				#label 			-> 		'recent objects... (r)'.
+				#object 			-> 		#model.
+				#selector 		-> 		#recent.
+				#icon 			-> 		#clockIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'fileOut'.
+				#object 			-> 		#model.
+				#selector 		-> 		#fileOutSystemCategory.
+				#icon 			-> 		#fileOutIcon
+			} asDictionary.
+			{
+				#label 			-> 		'fileIn'.
+				#object 			-> 		#model.
+				#selector 		-> 		#fileInSystemCategory.
+				#icon 			-> 		#scriptIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'rename...'.
+				#object 			-> 		#model.
+				#selector 		-> 		#renameSystemCategory.
+				#icon 			-> 		#saveAsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'remove (x)'.
+				#object 			-> 		#model.
+				#selector 		-> 		#removeSystemCategory.
+				#icon 			-> 		#deleteIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'Run tests (t)'.
+				#object 			-> 		#model.
+				#selector 		-> 		#runSystemCategoryTests.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+		}`.
 	^aMenu! !
 
 !DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/30/2017 11:28:57'!
@@ -4193,45 +4347,114 @@ findClassDialogTitle
 
 	^ 'Class name or fragment?'! !
 
-!TheWorldMenu methodsFor: '*DenotativeObject' stamp: 'HAW 4/11/2018 15:28:29'!
+!TheWorldMenu methodsFor: '*DenotativeObject' stamp: 'RNG 5/27/2018 21:01:45'!
 buildWorldMenu
 	"Build the menu that is put up when the screen-desktop is clicked on"
 
-	| menu |
-	menu _ MenuMorph new defaultTarget: self.
-	self colorForDebugging: menu.
-	menu addStayUpIcons.
-	self fillIn: menu
-		from: {
-				{ 'DenotativeObject Browser'. { DenotativeObjectBrowserWindow. #openBrowser}}.
-				{ 'Class Browser'. { BrowserWindow. #openBrowser}}.
+	^(MenuMorph new defaultTarget: self)
+		addStayUpIcons;
+		addItemsFromDictionaries: `{
+				{
+					#label 			-> 		'DenotativeObject Browser'.
+					#selector 		-> 		#openBrowser.
+					#object 			-> 		DenotativeObjectBrowserWindow.
+					#icon 			-> 		#morphsIcon.
+					#balloonText 	-> 		'To work with denotative objects (without classes)'.
+				} asDictionary.
+				{
+					#label 			-> 		'Class Browser'.
+					#selector 		-> 		#openBrowser.
+					#object 			-> 		BrowserWindow.
+					#icon 			-> 		#editFindReplaceIcon.
+					#balloonText 	-> 		'Classical Smalltalk class browser'.
+				} asDictionary.
 				nil.
-				{ 'Open...'. { self. #openWindow}}.
-				{ 'New morph...'. { self. #newMorph}.
-					'Offers a variety of ways to create new objects'}.
-				{ 'Preferences...'. { self. #preferencesDo}.
-					'put up a menu offering many controls over appearance and system preferences.'}.
-				{ 'Windows...'. { self. #windowsDo}}.
-				{ 'Help...'. { self. #helpDo}.
-					'puts up a menu of useful items for updating the system, determining what version you are running, and much else'}.
+				{
+					#label 			-> 		'Open...'.
+					#selector 		-> 		#openOpenMenu.
+					#icon 			-> 		#openIcon.
+					#balloonText 	-> 		'Submenu to open various system tools'.
+				} asDictionary.
+				{
+					#label 			-> 		'New morph...'.
+					#selector 		-> 		#newMorph.
+					#icon 			-> 		#morphsIcon.
+					#balloonText 	-> 		'Offers a variety of ways to create new objects'.
+				} asDictionary.
+				{
+					#label 			-> 		'Preferences...'.
+					#selector 		-> 		#openPreferencesMenu.
+					#icon 			-> 		#preferencesIcon.
+					#balloonText 	-> 		'Opens a menu offering many controls over appearance and system preferences.'.
+				} asDictionary.
+				{
+					#label 			-> 		'Windows...'.
+					#selector 		-> 		#openWindowsMenu.
+					#icon 			-> 		#windowIcon.
+					#balloonText 	-> 		'Manage open windows'.
+				} asDictionary.
+				{
+					#label 			-> 		'Help...'.
+					#selector 		-> 		#openHelpMenu.
+					#icon 			-> 		#helpIcon.
+					#balloonText 	-> 		'Opens a menu of useful items for updating the system, determining what version you are running, and much else'.
+				} asDictionary.
 				nil.
-				{ 'Changes...'. { self. #changesDo}}.
-				{ 'Debug...'. { self. #debugDo}.
-					'a menu of debugging items'}.
-				{ 'Restore Display (r)'. { myWorld. #restoreMorphicDisplay}.
-					'repaint the screen -- useful for removing unwanted display artifacts, lingering cursors, etc.'}.
+				{
+					#label 			-> 		'Changes...'.
+					#selector 		-> 		#openChangesMenu.
+					#icon 			-> 		#changesIcon.
+					#balloonText 	-> 		'Opens a menu of useful tools for dealing with changes'.
+				} asDictionary.
+				{
+					#label 			-> 		'Debug...'.
+					#selector 		-> 		#openDebugMenu.
+					#icon 			-> 		#debugIcon.
+					#balloonText 	-> 		'a menu of debugging items'.
+				} asDictionary.
+				{
+					#label 			-> 		'Restore Display (r)'.
+					#object 			-> 		#myWorld.
+					#selector 		-> 		#restoreDisplay.
+					#icon 			-> 		#displayIcon.
+					#balloonText 	-> 		'Repaint the screen -- useful for removing unwanted display artifacts, lingering cursors, etc.'.
+				} asDictionary.
 				nil.
-				{ 'Save'. { Smalltalk . #saveSession}.
-					'save the current version of the image on disk'}.
-				{ 'Save as...'. { Smalltalk . #saveAs}.
-					'save the current version of the image on disk under a new name.'}.
-				{ 'Save as New Version'. { Smalltalk . #saveAsNewVersion}.
-					'give the current image a new version-stamped name\and save it under that name on disk.\Clear all user preferences and user state (class vars).' withNewLines}.
-				{ 'Save and Quit'. { self. #saveAndQuit}.
-					'save the image and quit out of Cuis.'}.				
-				{ 'Quit'. { self. #quitSession}.
-					'quit out of Cuis.'}}.
-	^menu! !
+				{
+					#label 			-> 		'Save'.
+					#object 			-> 		Smalltalk.
+					#selector 		-> 		#saveSession.
+					#icon 			-> 		#saveIcon.
+					#balloonText 	-> 		'Save the current version of the image on disk'.
+				} asDictionary.
+				{
+					#label 			-> 		'Save as...'.
+					#object 			-> 		Smalltalk.
+					#selector 		-> 		#saveAs.
+					#icon 			-> 		#saveAsIcon.
+					#balloonText 	-> 		'Save the current version of the image on disk under a new name.'.
+				} asDictionary.
+				{
+					#label 			-> 		'Save as New Version'.
+					#object 			-> 		Smalltalk.
+					#selector 		-> 		#saveAsNewVersion.
+					#icon 			-> 		#saveAsNewVersionIcon.
+					#balloonText 	-> 		('Save the current image a new version-stamped name\and save it under that name on disk.\',
+												'Clear all user preferences and user state (class vars).') withNewLines.
+				} asDictionary.
+				{
+					#label 			-> 		'Save and Quit'.
+					#selector 		-> 		#saveAndQuit.
+					#icon 			-> 		#saveAndQuitIcon.
+					#balloonText 	-> 		'Save the image and quit out of Cuis.'.
+				} asDictionary.
+				{
+					#label 			-> 		'Quit'.
+					#selector 		-> 		#quitSession.
+					#icon 			-> 		#quitIcon.
+					#balloonText 	-> 		'Quit out of Cuis.'.
+				} asDictionary.
+			}`! !
 
 !MethodReference methodsFor: '*DenotativeObject' stamp: 'HAW 7/28/2017 19:48:44'!
 recalculateStringVersionForDenotativeObject
