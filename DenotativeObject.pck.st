@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3333] on 27 May 2018 at 9:52:58 pm'!
-'Description Adapt menus to new implementation'!
-!provides: 'DenotativeObject' 1 39!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3345] on 13 June 2018 at 4:14:50 pm'!
+'Description Changes to look for denotative objects only. Recent objects now shows denotative objects only too.'!
+!provides: 'DenotativeObject' 1 40!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -161,6 +161,16 @@ InspectorWindow subclass: #DenotativeObjectInspectorWindow
 DenotativeObjectInspectorWindow class
 	instanceVariableNames: ''!
 
+!classDefinition: #DenotativeObjectNameRequestMorph category: #'DenotativeObject-Tools'!
+ClassNameRequestMorph subclass: #DenotativeObjectNameRequestMorph
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectNameRequestMorph class' category: #'DenotativeObject-Tools'!
+DenotativeObjectNameRequestMorph class
+	instanceVariableNames: ''!
+
 !classDefinition: #DenotativeObjectTheme category: #DenotativeObject!
 Theme subclass: #DenotativeObjectTheme
 	instanceVariableNames: ''
@@ -199,6 +209,16 @@ TestCase subclass: #DenotativeObjectRenameMethodApplierTest
 	category: 'DenotativeObject-Tests'!
 !classDefinition: 'DenotativeObjectRenameMethodApplierTest class' category: #'DenotativeObject-Tests'!
 DenotativeObjectRenameMethodApplierTest class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectCompleter category: #'DenotativeObject-Tools'!
+SmalltalkCompleter subclass: #DenotativeObjectCompleter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectCompleter class' category: #'DenotativeObject-Tools'!
+DenotativeObjectCompleter class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectAddCollaborator category: #'DenotativeObject-Refactorings'!
@@ -959,6 +979,11 @@ systemCategoryListIndex: anInteger
 	self changed: #classCommentIndicated.
 	self changed: #classMessagesIndicated.
 	self acceptedContentsChanged! !
+
+!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 6/13/2018 16:01:25'!
+recentClasses
+	
+	^super recentClasses select: [:aClassName | (Smalltalk classNamed: aClassName) is: #DenotativeObject ]! !
 
 !DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 20:20:49'!
 askForCategoryIn: aClass default: aString
@@ -1738,25 +1763,19 @@ optionalButtonTuples
 	^self class optionalButtonTuples
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'RNG 5/27/2018 01:04:26'!
+!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 6/13/2018 15:21:04'!
 classListKey: aChar from: view 
 
-	| mappings |
-	mappings := {
-		$a -> [ model addDenotativeObject ].
-		$A -> [ model addDenotativeObjectInCategory ].
-		$h -> [ model addChildDenotativeObject ].
-		$H -> [ model addChildDenotativeObjectInCategory ].
-		$i -> [ self inspectIt ].
-		$x -> [ model removeClass].
-		$t -> [ model runClassTests ].
-		$o -> [ model fileOutClass ].
-	} as: Dictionary.
-	
-	^ mappings
-		at: aChar
-		ifPresent: [ :mapping | mapping value ]
-		ifAbsent: [ self messageListKey: aChar from: view ]! !
+	aChar == $a ifTrue: [ ^model addDenotativeObject ].
+	aChar == $A ifTrue: [ ^model addDenotativeObjectInCategory ].
+	aChar == $h ifTrue: [ ^model addChildDenotativeObject ].
+	aChar ==	$H ifTrue: [ ^model addChildDenotativeObjectInCategory ].
+	aChar ==	$i ifTrue: [ ^self inspectIt ].
+	aChar ==	$x ifTrue: [ ^model removeClass].
+	aChar ==	$t ifTrue: [ ^model runClassTests ].
+	aChar ==	$o ifTrue: [ ^model fileOutClass ].
+
+	^self messageListKey: aChar from: view ! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/13/2017 20:34:38'!
 messageListKey: aChar from: view
@@ -1782,6 +1801,11 @@ systemCatListKey: aChar from: view
 	
 	^ super systemCatListKey: aChar from: view
 ! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'commands' stamp: 'HAW 6/13/2018 15:51:22'!
+classNameRequester 
+
+	^DenotativeObjectNameRequestMorph! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'commands' stamp: 'RNG 5/27/2018 01:11:39'!
 findClassDialogTitle
@@ -2345,6 +2369,11 @@ fieldListMenu
 		
 	^ aMenu! !
 
+!DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 6/13/2018 15:52:09'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
+
 !DenotativeObjectTheme methodsFor: 'tool colors' stamp: 'HAW 8/22/2017 11:42:56'!
 debugger
 
@@ -2532,6 +2561,13 @@ test01ScopeOptionsAreTheSame
 	self
 		assert: DenotativeObjectRenameMethodApplier new scopeOptionLabels size
 		equals: DenotativeObjectRenameMethodApplier superclass new scopeOptionLabels size.! !
+
+!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 6/13/2018 15:57:49'!
+computeIdentifierEntries
+
+	super computeIdentifierEntries.
+	entries := entries select: [ :anEntry | (Smalltalk classNamed: anEntry)  is: #DenotativeObject ].
+	! !
 
 !DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:21'!
 errorMessageForInvalidInstanceVariable: aName
@@ -4312,13 +4348,18 @@ handleForDenotativeObjectIn: aDenotativeObjectBrowser
 
 ! !
 
-!BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'RNG 5/27/2018 01:10:52'!
+!BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'HAW 6/13/2018 15:49:42'!
+classNameRequester 
+
+	^ClassNameRequestMorph! !
+
+!BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'HAW 6/13/2018 15:49:23'!
 findClass
 	"Search for a class by name."
 	| pattern foundClass classNames index toMatch exactMatch potentialClassNames |
 
 	self okToChange ifFalse: [ ^self flash ].
-	pattern _ ClassNameRequestMorph request: self findClassDialogTitle.
+	pattern _ self classNameRequester request: self findClassDialogTitle.
 	pattern isEmpty ifTrue: [^ self flash].
 	toMatch _ (pattern copyWithout: $.) asLowercase withBlanksTrimmed.
 	potentialClassNames _ model potentialClassNames asOrderedCollection.
