@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3345] on 13 June 2018 at 4:14:50 pm'!
-'Description Changes to look for denotative objects only. Recent objects now shows denotative objects only too.'!
-!provides: 'DenotativeObject' 1 40!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3358] on 5 July 2018 at 7:11:07 pm'!
+'Description Changes to World menu creation. Icons on remove method'!
+!provides: 'DenotativeObject' 1 41!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -1650,7 +1650,7 @@ browseSendersOfSelectedSelector
 
 	^model selectedMessageName ifNotNil: [:selector | self class browseSendersOf: selector ] ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/2/2018 20:03:40'!
 confirmRemovalOf: aSelector on: aClass
 
 	| count aMenu answer caption allSenders |
@@ -1662,10 +1662,12 @@ confirmRemovalOf: aSelector on: aClass
 	count = 1 ifTrue: [(allSenders first actualClass == aClass and: [allSenders first methodSymbol == aSelector]) ifTrue: [^ 1]].
 
 	"only sender is itself"
-	aMenu := PopUpMenu labels: 'Remove it
+	aMenu := PopUpMenu 
+		labels: 'Remove it
 Remove, then browse senders
 Don''t remove, but show me those senders
-Forget it -- do nothing -- sorry I asked'.
+Forget it -- do nothing -- sorry I asked'
+		icons: #(acceptIcon acceptIcon cancelIcon cancelIcon).
 	caption := 'This message has ' , count printString , ' sender'.
 	count > 1 ifTrue: [caption := caption copyWith: $s].
 
@@ -2180,6 +2182,30 @@ optionalButtonTuples
 	(10	'show...'				offerWhatToShowMenu		'menu of what to show in lower pane')).
 
 	^ aList! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'world menu options' stamp: 'HAW 7/5/2018 18:34:09'!
+worldMenuOptions 
+
+	^`{
+	{
+		#itemGroup 	-> 		0.
+		#itemOrder 		-> 		10.
+		#label 			-> 		'DenotativeObject Browser'.
+		#selector 		-> 		#openBrowser.
+		#object 			-> 		DenotativeObjectBrowserWindow.
+		#icon 			-> 		#morphsIcon.
+		#balloonText 	-> 		'To work with denotative objects (without classes)'.
+	} asDictionary.
+	{
+		#itemGroup 	-> 		0.
+		#itemOrder 		-> 		20.
+		#label 			-> 		'Class Browser'.
+		#selector 		-> 		#openBrowser.
+		#object 			-> 		BrowserWindow.
+		#icon 			-> 		#editFindReplaceIcon.
+		#balloonText 	-> 		'Classical Smalltalk class browser'.
+	} asDictionary. 
+	}`! !
 
 !DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:40:24'!
 browseContextSelection
@@ -4387,115 +4413,6 @@ findClass
 findClassDialogTitle
 
 	^ 'Class name or fragment?'! !
-
-!TheWorldMenu methodsFor: '*DenotativeObject' stamp: 'RNG 5/27/2018 21:01:45'!
-buildWorldMenu
-	"Build the menu that is put up when the screen-desktop is clicked on"
-
-	^(MenuMorph new defaultTarget: self)
-		addStayUpIcons;
-		addItemsFromDictionaries: `{
-				{
-					#label 			-> 		'DenotativeObject Browser'.
-					#selector 		-> 		#openBrowser.
-					#object 			-> 		DenotativeObjectBrowserWindow.
-					#icon 			-> 		#morphsIcon.
-					#balloonText 	-> 		'To work with denotative objects (without classes)'.
-				} asDictionary.
-				{
-					#label 			-> 		'Class Browser'.
-					#selector 		-> 		#openBrowser.
-					#object 			-> 		BrowserWindow.
-					#icon 			-> 		#editFindReplaceIcon.
-					#balloonText 	-> 		'Classical Smalltalk class browser'.
-				} asDictionary.
-				nil.
-				{
-					#label 			-> 		'Open...'.
-					#selector 		-> 		#openOpenMenu.
-					#icon 			-> 		#openIcon.
-					#balloonText 	-> 		'Submenu to open various system tools'.
-				} asDictionary.
-				{
-					#label 			-> 		'New morph...'.
-					#selector 		-> 		#newMorph.
-					#icon 			-> 		#morphsIcon.
-					#balloonText 	-> 		'Offers a variety of ways to create new objects'.
-				} asDictionary.
-				{
-					#label 			-> 		'Preferences...'.
-					#selector 		-> 		#openPreferencesMenu.
-					#icon 			-> 		#preferencesIcon.
-					#balloonText 	-> 		'Opens a menu offering many controls over appearance and system preferences.'.
-				} asDictionary.
-				{
-					#label 			-> 		'Windows...'.
-					#selector 		-> 		#openWindowsMenu.
-					#icon 			-> 		#windowIcon.
-					#balloonText 	-> 		'Manage open windows'.
-				} asDictionary.
-				{
-					#label 			-> 		'Help...'.
-					#selector 		-> 		#openHelpMenu.
-					#icon 			-> 		#helpIcon.
-					#balloonText 	-> 		'Opens a menu of useful items for updating the system, determining what version you are running, and much else'.
-				} asDictionary.
-				nil.
-				{
-					#label 			-> 		'Changes...'.
-					#selector 		-> 		#openChangesMenu.
-					#icon 			-> 		#changesIcon.
-					#balloonText 	-> 		'Opens a menu of useful tools for dealing with changes'.
-				} asDictionary.
-				{
-					#label 			-> 		'Debug...'.
-					#selector 		-> 		#openDebugMenu.
-					#icon 			-> 		#debugIcon.
-					#balloonText 	-> 		'a menu of debugging items'.
-				} asDictionary.
-				{
-					#label 			-> 		'Restore Display (r)'.
-					#object 			-> 		#myWorld.
-					#selector 		-> 		#restoreDisplay.
-					#icon 			-> 		#displayIcon.
-					#balloonText 	-> 		'Repaint the screen -- useful for removing unwanted display artifacts, lingering cursors, etc.'.
-				} asDictionary.
-				nil.
-				{
-					#label 			-> 		'Save'.
-					#object 			-> 		Smalltalk.
-					#selector 		-> 		#saveSession.
-					#icon 			-> 		#saveIcon.
-					#balloonText 	-> 		'Save the current version of the image on disk'.
-				} asDictionary.
-				{
-					#label 			-> 		'Save as...'.
-					#object 			-> 		Smalltalk.
-					#selector 		-> 		#saveAs.
-					#icon 			-> 		#saveAsIcon.
-					#balloonText 	-> 		'Save the current version of the image on disk under a new name.'.
-				} asDictionary.
-				{
-					#label 			-> 		'Save as New Version'.
-					#object 			-> 		Smalltalk.
-					#selector 		-> 		#saveAsNewVersion.
-					#icon 			-> 		#saveAsNewVersionIcon.
-					#balloonText 	-> 		('Save the current image a new version-stamped name\and save it under that name on disk.\',
-												'Clear all user preferences and user state (class vars).') withNewLines.
-				} asDictionary.
-				{
-					#label 			-> 		'Save and Quit'.
-					#selector 		-> 		#saveAndQuit.
-					#icon 			-> 		#saveAndQuitIcon.
-					#balloonText 	-> 		'Save the image and quit out of Cuis.'.
-				} asDictionary.
-				{
-					#label 			-> 		'Quit'.
-					#selector 		-> 		#quitSession.
-					#icon 			-> 		#quitIcon.
-					#balloonText 	-> 		'Quit out of Cuis.'.
-				} asDictionary.
-			}`! !
 
 !MethodReference methodsFor: '*DenotativeObject' stamp: 'HAW 7/28/2017 19:48:44'!
 recalculateStringVersionForDenotativeObject
