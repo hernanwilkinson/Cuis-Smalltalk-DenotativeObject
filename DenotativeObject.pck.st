@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3358] on 5 July 2018 at 7:11:07 pm'!
-'Description Changes to World menu creation. Icons on remove method'!
-!provides: 'DenotativeObject' 1 41!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3358] on 7 July 2018 at 8:15:32 pm'!
+'Description fix to work with new editor menu'!
+!provides: 'DenotativeObject' 1 42!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -1449,6 +1449,121 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 	morph formatAndStyleIfNeeded.		"Needed to re-shout workspaces, that might have new variables binded."
 	^ aBlock value: result! !
 
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 7/7/2018 19:58:57'!
+getMenu
+	
+	^(MenuMorph new defaultTarget: self)
+		addTitle: self class name;
+		addStayUpIcons;
+		addItemsFromDictionaries: `{
+			{
+				#label 			-> 		'Help...'.
+				#selector 		-> 		#openHelp.
+				#icon 			-> 		#helpIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'Do it (d)'.
+				#selector 		-> 		#doIt.
+				#icon 			-> 		#doItIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Print it (p)'.
+				#selector 		-> 		#printIt.
+				#icon 			-> 		#printIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Inspect it (i)'.
+				#selector 		-> 		#inspectIt.
+				#icon 			-> 		#inspectIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Explore it (I)'.
+				#selector 		-> 		#exploreIt.
+				#icon 			-> 		#exploreIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Debug it (D)'.	
+				#selector 		-> 		#debugIt.
+				#icon 			-> 		#debugIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'Browse it (b)'.
+				#selector 		-> 		#browseIt.
+				#icon 			-> 		#editFindReplaceIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Senders of it (n)'.
+				#selector 		-> 		#sendersOfIt.
+				#icon 			-> 		#mailForwardIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Implementors of it (m)'.
+				#selector 		-> 		#implementorsOfIt.
+				#icon 			-> 		#developmentIcon
+			} asDictionary.
+			{
+				#label 			-> 		'References to it (N)'.
+				#selector 		-> 		#referencesToIt.
+				#icon 			-> 		#addressBookIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'Rename temporary'.
+				#selector 		-> 		#renameTemporary.
+				#icon 			-> 		#saveAsIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'Accept (s)'.
+				#selector 		-> 		#acceptContents.
+				#icon 			-> 		#acceptIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Cancel (l)'.
+				#selector 		-> 		#cancelEdits.
+				#icon 			-> 		#cancelIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'Accept and Send (t)'.
+				#selector 		-> 		#acceptAndTest.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Accept, Send and Inspect (e)'.
+				#selector 		-> 		#acceptSendAndInspect.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Accept and Debug (r)'.
+				#selector 		-> 		#acceptAndDebugTest.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Accept, Debug and Inspect (q)'.
+				#selector 		-> 		#acceptDebugAndInspect.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Accept and Run Test in Category (y)'.
+				#selector 		-> 		#acceptAndTestAll.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Next test name (Y)'.
+				#selector 		-> 		#nextTestName.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.			
+			nil.
+			{
+				#label 			-> 		'More...'.
+				#selector 		-> 		#openMenu2.
+				#icon 			-> 		#listAddIcon
+			} asDictionary.
+		}`! !
+
 !DenotativeObjectSmalltalkEditor class methodsFor: 'keyboard shortcut tables' stamp: 'HAW 9/10/2017 14:48:19'!
 cmdShortcutsSpec
 	"
@@ -1464,70 +1579,72 @@ cmdShortcutsSpec
 		#($Y   #nextTestName: 				'')
 	)! !
 
-!DenotativeObjectSmalltalkEditor class methodsFor: 'keyboard shortcut tables' stamp: 'HAW 9/10/2017 19:13:40'!
-initializeMenu
-	"
-	self initializeMenu
-	"
-
-	super initializeMenu.
-	menu := SelectionMenu fromArray: {
-		{'Help...'.										#openHelp}.
-		#-.
-		{'Do it (d)'.										#doIt}.
-		{'Print it (p)'.									#printIt}.
-		{'Inspect it (i)'.									#inspectIt}.
-		{'Debug it (D)'.									#debugIt}.
-		#-.
-		{'Browse it (b)'.								#browseIt}.
-		{'Senders of it (n)'.							#sendersOfIt}.
-		{'Implementors of it (m)'.						#implementorsOfIt}.
-		{'References to it (N)'.						#referencesToIt}.
-		#-.
-		{'Rename temporary'.							#renameTemporary}.
-		#-.
-		{'Accept (s)'.									#acceptContents}.
-		{'Cancel (l)'.									#cancelEdits}.
-		#-.
-		{'Accept and Send (t)'.						#acceptAndTest}.
-		{'Accept, Send and Inspect (e)'.				#acceptSendAndInspect}.
-		{'Accept and Debug (r)'.						#acceptAndDebugTest}.
-		{'Accept, Debug and Inspect (q)'.				#acceptDebugAndInspect}.
-		{'Accept and Run Test in Category (y)'.		#acceptAndTestAll}.
-		{'Next test name (Y)'.							#nextTestName}.
-		#-.
-		{'More...'.										#getMenu2}.
-	}.
-! !
-
 !DenotativeObjectWorkspaceEditor methodsFor: 'system category list' stamp: 'HAW 8/21/2017 18:58:29'!
 selectedSystemCategoryName
 	
 	^'Workspace-Objects'! !
 
-!DenotativeObjectWorkspaceEditor class methodsFor: 'keyboard shortcut tables' stamp: 'HAW 7/22/2017 13:19:45'!
-initializeMenu
-	"
-	self initializeMenu
-	"
-
-	super initializeMenu.
-	menu := SelectionMenu fromArray: {
-		{'Help...'.										#openHelp}.
-		#-.
-		{'Do it (d)'.										#doIt}.
-		{'Print it (p)'.									#printIt}.
-		{'Inspect it (i)'.									#inspectIt}.
-		{'Debug it (D)'.									#debugIt}.
-		#-.
-		{'Browse it (b)'.								#browseIt}.
-		{'Senders of it (n)'.							#sendersOfIt}.
-		{'Implementors of it (m)'.						#implementorsOfIt}.
-		{'References to it (N)'.						#referencesToIt}.
-		#-.
-		{'More...'.										#getMenu2}.
-	}.
-! !
+!DenotativeObjectWorkspaceEditor methodsFor: 'menu' stamp: 'HAW 7/7/2018 20:13:59'!
+getMenu
+	
+	^(MenuMorph new defaultTarget: self)
+		addTitle: self class name;
+		addStayUpIcons;
+		addItemsFromDictionaries: `{
+			{
+				#label 			-> 		'Help...'.
+				#selector 		-> 		#openHelp.
+				#icon 			-> 		#helpIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'Do it (d)'.
+				#selector 		-> 		#doIt.
+				#icon 			-> 		#doItIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Print it (p)'.
+				#selector 		-> 		#printIt.
+				#icon 			-> 		#printIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Inspect it (i)'.
+				#selector 		-> 		#inspectIt.
+				#icon 			-> 		#inspectIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Debug it (D)'.	
+				#selector 		-> 		#debugIt.
+				#icon 			-> 		#debugIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'Browse it (b)'.
+				#selector 		-> 		#browseIt.
+				#icon 			-> 		#editFindReplaceIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Senders of it (n)'.
+				#selector 		-> 		#sendersOfIt.
+				#icon 			-> 		#mailForwardIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Implementors of it (m)'.
+				#selector 		-> 		#implementorsOfIt.
+				#icon 			-> 		#developmentIcon
+			} asDictionary.
+			{
+				#label 			-> 		'References to it (N)'.
+				#selector 		-> 		#referencesToIt.
+				#icon 			-> 		#addressBookIcon
+			} asDictionary.			
+			nil.
+			{
+				#label 			-> 		'More...'.
+				#selector 		-> 		#openMenu2.
+				#icon 			-> 		#listAddIcon
+			} asDictionary.
+		}`! !
 
 !DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 7/14/2017 20:19:56'!
 debug
