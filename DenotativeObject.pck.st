@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3358] on 7 July 2018 at 8:15:32 pm'!
-'Description fix to work with new editor menu'!
-!provides: 'DenotativeObject' 1 42!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3361] on 1 August 2018 at 8:38:13 pm'!
+'Description Safe remove object. Browse object references. Improvements on use of DenotativeObjectMessageSetWindow'!
+!provides: 'DenotativeObject' 1 43!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -261,6 +261,16 @@ RenameMethod subclass: #DenotativeObjectRenameMethod
 DenotativeObjectRenameMethod class
 	instanceVariableNames: ''!
 
+!classDefinition: #DenotativeObjectSafelyRemove category: #'DenotativeObject-Refactorings'!
+SafelyRemoveClass subclass: #DenotativeObjectSafelyRemove
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectSafelyRemove class' category: #'DenotativeObject-Refactorings'!
+DenotativeObjectSafelyRemove class
+	instanceVariableNames: ''!
+
 !classDefinition: #DenotativeObjectAddCollaboratorApplier category: #'DenotativeObject-Refactorings'!
 AddInstanceVariableApplier subclass: #DenotativeObjectAddCollaboratorApplier
 	instanceVariableNames: ''
@@ -309,6 +319,16 @@ RenameMethodApplier subclass: #DenotativeObjectRenameMethodApplier
 	category: 'DenotativeObject-Refactorings'!
 !classDefinition: 'DenotativeObjectRenameMethodApplier class' category: #'DenotativeObject-Refactorings'!
 DenotativeObjectRenameMethodApplier class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectSafelyRemoveApplier category: #'DenotativeObject-Refactorings'!
+SafelyRemoveClassApplier subclass: #DenotativeObjectSafelyRemoveApplier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectSafelyRemoveApplier class' category: #'DenotativeObject-Refactorings'!
+DenotativeObjectSafelyRemoveApplier class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObject category: #DenotativeObject!
@@ -685,30 +705,24 @@ newClassCreated: aClass
 		setClass: aClass selector: nil.
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/23/2017 14:36:55'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/1/2018 17:56:48'!
 removeClass
-	"Remove the selected class from the system, at interactive user request.  Make certain the user really wants to do this, since it is not reversible.  Answer true if removal actually happened."
-
-	| message  className classToRemove result |
-	classToRemove _ self selectedClassOrMetaClass ifNil: [Smalltalk beep. ^ false].
-	classToRemove _ classToRemove theNonMetaClass.
-	className _ classToRemove name.
-	message _ 'Are you certain that you
-want to REMOVE ', className, '?'.
-	(result _ self confirm: message)
-		ifTrue: 
-			[classToRemove removeFromSystem.
-			self changed: #classList.
-			self classListIndex: 0.
-			self changed: #systemCategoryList.
-			true].
-	^ result! !
+	
+	^self safelyRemoveClass ! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/10/2017 19:06:32'!
 renameClass
 
 	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
 		(DenotativeObjectRenameApplier on: self for: aBehavior theNonMetaClass) value ].! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/1/2018 18:02:13'!
+safelyRemoveClass
+
+	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
+		(DenotativeObjectSafelyRemoveApplier of: aBehavior theNonMetaClass) value ].
+	
+	! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:10'!
 withObjectNameDo: aBlock
@@ -1689,11 +1703,20 @@ messageListMenu
 
 ! !
 
-!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 8/21/2017 21:55:20'!
+!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 8/1/2018 20:28:53'!
+openMessageList: messageList label: labelString 
+	
+	^self openMessageList: messageList label: labelString autoSelect: false
+
+	! !
+
+!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 8/1/2018 19:53:14'!
 openMessageList: messageList label: labelString autoSelect: autoSelectString
 
 	| messageSet |
 
+	messageList do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
+	
 	messageSet _ DenotativeObjectMessageSet messageList: messageList.
 	messageSet autoSelectString: autoSelectString.
 	
@@ -1931,7 +1954,7 @@ findClassDialogTitle
 
 	^ 'Denotative object name or fragment?'! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 21:51:52'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/1/2018 20:20:52'!
 classListMenu
 
 	| aMenu |
@@ -1976,6 +1999,11 @@ classListMenu
 				#selector 		-> 		#inspectIt.
 				#object 			->		#model.
 				#icon 			-> 		#inspectIcon
+			} asDictionary.
+			{
+				#label 			-> 		'references (N)'.
+				#selector 		-> 		#browseClassRefs.
+				#icon 			-> 		#mailForwardIcon
 			} asDictionary.
 			{
 				#label 			-> 		'rename...'.
@@ -2167,16 +2195,12 @@ systemCategoryMenu
 		}`.
 	^aMenu! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/30/2017 11:28:57'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:54:38'!
 browseAllAccessesTo: aVar from: aClass
 
 	| methods label |
 
-	methods := (aClass whichSelectorsAccess: aVar) collect: [:selector |
-		MethodReference new
-			setStandardClass: aClass methodSymbol: selector;
-			recalculateStringVersionForDenotativeObject;
-			yourself].
+	methods := (aClass whichSelectorsAccess: aVar) collect: [:selector | MethodReference class: aClass selector: selector ].
 
 	label := 'Access to ' , aVar.
 	methods isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label].
@@ -2188,13 +2212,12 @@ browseAllAccessesTo: aVar from: aClass
 		label: label
 		autoSelect: aVar ! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 9/13/2017 16:46:19'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:54:55'!
 browseAllImplementorsOf: aSymbol
 
 	| implementors label |
 
 	implementors := (Smalltalk allImplementorsOf: aSymbol) select: [ :aMethodReference | aMethodReference actualClass inheritsFrom: DenotativeObject class ].
-	implementors do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
 
 	label := 'Implementors of ' , aSymbol.
 	implementors isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label ].
@@ -2249,13 +2272,12 @@ fullOnDenotativeObject: aDenotativeObject selector: aSelector
 	browser setClass: aDenotativeObject selector: aSelector.
 	self open: browser label: browser labelString! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:55:50'!
 sendersOf: aSymbol
 
 	| senders |
 
 	senders := (Smalltalk allCallsOn: aSymbol) select: [ :aMethodReference | aMethodReference actualClass inheritsFrom: DenotativeObject class ].
-	senders do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
 
 	^senders ! !
 
@@ -2740,15 +2762,6 @@ warningMessageForNewVariable: newVariable willBeHiddenAtAll: methods
 			nextPutAll: ' will be hidden at '.
 		methods asCommaStringAndPritingWith: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] ]! !
 
-!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 8/30/2017 18:24:55'!
-errorMessageForInstanceVariable: aVariable isReferencedInAll: methods
-
-	^String streamContents: [ :stream |
-		stream 
-			nextPutAll: aVariable;
-			nextPutAll: ' is referenced in '.
-		methods asCommaStringAndPritingWith: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] ]! !
-
 !DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
 errorMessageForInstanceVariable: aName notDefinedIn: aClass
 
@@ -2859,6 +2872,20 @@ warningMessageForRedefinitionOfSystemMessageOf: aNewSelector
 	^aNewSelector, ' is defined in the core system. Overriding it can cause unexpected behavior.'
 	! !
 
+!DenotativeObjectSafelyRemove class methodsFor: 'warnings' stamp: 'HAW 8/1/2018 18:26:06'!
+warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
+
+	^String streamContents: [ :stream |
+		stream nextPutAll: aClassToSafelyRemove name asString.
+		allSubclasses size = 1
+			ifTrue: [ stream nextPutAll: ' has a child' ]
+			ifFalse: [ stream 
+					nextPutAll: ' has ';
+					print:  allSubclasses size;
+					nextPutAll: ' children' ].
+		stream nextPutAll: ' that will be removed'].
+! !
+
 !DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:26:52'!
 createRefactoring
 
@@ -2878,6 +2905,16 @@ createRefactoring
 selectVariableLabel
 	
 	^'Select collaborator to remove'! !
+
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 8/1/2018 19:56:05'!
+browseReferencesOn: aCanNotRemoveDueToReferencesError
+	
+	DenotativeObjectMessageSetWindow
+		openMessageList: aCanNotRemoveDueToReferencesError references
+		label: (self referencesBrowserTitleOn: aCanNotRemoveDueToReferencesError)
+		autoSelect: true
+		
+	 ! !
 
 !DenotativeObjectRenameApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/8/2017 19:49:48'!
 openChangedMethods
@@ -2911,12 +2948,6 @@ messageSetWindowClass
 		
 	^DenotativeObjectMessageSetWindow ! !
 
-!DenotativeObjectRenameMethodApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:27:24'!
-showChangesInMessageSetWindow
-
-	changes do: [ :aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
-	super showChangesInMessageSetWindow ! !
-
 !DenotativeObjectRenameMethodApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/31/2017 15:42:13'!
 renameMethodClass
 
@@ -2943,6 +2974,21 @@ value
 		applyRefactoring;
 		showChanges
 		! !
+
+!DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 8/1/2018 19:56:50'!
+browseReferencesOn: aCanNotRemoveDueToReferencesError
+	
+	DenotativeObjectMessageSetWindow
+		openMessageList: aCanNotRemoveDueToReferencesError references
+		label: (self referencesBrowserTitleOn: aCanNotRemoveDueToReferencesError)
+		autoSelect: true
+		
+	 ! !
+
+!DenotativeObjectSafelyRemoveApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/1/2018 18:12:15'!
+createRefactoring
+		
+	^DenotativeObjectSafelyRemove of: classToRemove ! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:59:04'!
 allReplicants
