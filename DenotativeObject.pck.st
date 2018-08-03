@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3361] on 1 August 2018 at 8:38:13 pm'!
-'Description Safe remove object. Browse object references. Improvements on use of DenotativeObjectMessageSetWindow'!
-!provides: 'DenotativeObject' 1 43!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3389] on 3 August 2018 at 4:27:15 pm'!
+'Description Support to see object list as family tree or alphabetically'!
+!provides: 'DenotativeObject' 1 44!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -755,15 +755,10 @@ withSelectedCategoryNameDo: aBlock
 		ifNotNil: aBlock 
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 8/26/2017 17:35:54'!
-classList
-	"Answer an array of the class names of the selected category. Answer an
-	empty array if no selection exists."
+!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 8/3/2018 15:24:37'!
+defaultClassList
 
-	^selectedSystemCategory
-		ifNil: [#()]
-		ifNotNil: [(systemOrganizer listAtCategoryNamed: selectedSystemCategory) select: [ :aClass | 
-				(Smalltalk classNamed: aClass) is: #DenotativeObject ] ]! !
+	^super defaultClassList select: [ :aClass | (Smalltalk classNamed: aClass) is: #DenotativeObject ] ! !
 
 !DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:23:05'!
 debugMethodTest
@@ -1954,7 +1949,7 @@ findClassDialogTitle
 
 	^ 'Denotative object name or fragment?'! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/1/2018 20:20:52'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/3/2018 15:27:28'!
 classListMenu
 
 	| aMenu |
@@ -1985,6 +1980,19 @@ classListMenu
 				#selector 		-> 		#addChildDenotativeObjectInCategory.
 				#object 			->		#model.
 				#icon 			-> 		#listAddIcon
+			} asDictionary.
+			nil.
+			{
+				#label 			-> 		'show as family tree'.
+				#object 			->		#model.
+				#selector 		-> 		#enableListClassesHierarchically.
+				#icon 			-> 		#goTopIcon
+			} asDictionary.
+			{
+				#label 			-> 		'show alphabetically'.
+				#object 			-> 		#model.
+				#selector 		-> 		#enableListClassesAlphabetically.
+				#icon 			-> 		#sendReceiveIcon
 			} asDictionary.
 			nil.
 			{
