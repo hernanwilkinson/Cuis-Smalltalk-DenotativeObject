@@ -1,6 +1,7 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3389] on 3 August 2018 at 4:27:15 pm'!
-'Description Support to see object list as family tree or alphabetically'!
-!provides: 'DenotativeObject' 1 44!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3389] on 5 August 2018 at 3:38:52 pm'!
+'Description Addes support for Dark theme'!
+!provides: 'DenotativeObject' 1 45!
+!requires: 'Theme-Themes' 1 2 nil!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -179,6 +180,16 @@ Theme subclass: #DenotativeObjectTheme
 	category: 'DenotativeObject'!
 !classDefinition: 'DenotativeObjectTheme class' category: #DenotativeObject!
 DenotativeObjectTheme class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectDarkTheme category: #DenotativeObject!
+DarkTheme subclass: #DenotativeObjectDarkTheme
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectDarkTheme class' category: #DenotativeObject!
+DenotativeObjectDarkTheme class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectProgessiveTestRunner category: #'DenotativeObject-TestSupport'!
@@ -2584,6 +2595,13 @@ addMiscellaneousIconsTo: aCollectorCollection
 		add: #('find object... (f)') -> #findIcon;
 		add: #('recent objects... (r)') -> #clockIcon;
 		add: #('Accept and Run Test in Category (y)') -> #weatherFewCloudsIcon! !
+
+!DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/5/2018 15:13:12'!
+pseudoVariables
+
+	^ (OrderedCollection withAll: super pseudoVariables) 
+		add: #parent;
+		asArray! !
 
 !DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
 openTestResultWindow
