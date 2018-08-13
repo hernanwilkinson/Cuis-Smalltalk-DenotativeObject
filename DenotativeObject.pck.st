@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3389] on 5 August 2018 at 3:38:52 pm'!
-'Description Addes support for Dark theme'!
-!provides: 'DenotativeObject' 1 45!
-!requires: 'Theme-Themes' 1 2 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3411] on 13 August 2018 at 7:01:24 pm'!
+'Description Line up with RenameClass change'!
+!provides: 'DenotativeObject' 1 47!
 !requires: 'Refactoring' 1 24 nil!
+!requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -172,16 +172,6 @@ ClassNameRequestMorph subclass: #DenotativeObjectNameRequestMorph
 DenotativeObjectNameRequestMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectTheme category: #DenotativeObject!
-Theme subclass: #DenotativeObjectTheme
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectTheme class' category: #DenotativeObject!
-DenotativeObjectTheme class
-	instanceVariableNames: ''!
-
 !classDefinition: #DenotativeObjectDarkTheme category: #DenotativeObject!
 DarkTheme subclass: #DenotativeObjectDarkTheme
 	instanceVariableNames: ''
@@ -190,6 +180,16 @@ DarkTheme subclass: #DenotativeObjectDarkTheme
 	category: 'DenotativeObject'!
 !classDefinition: 'DenotativeObjectDarkTheme class' category: #DenotativeObject!
 DenotativeObjectDarkTheme class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectTheme category: #DenotativeObject!
+Theme subclass: #DenotativeObjectTheme
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectTheme class' category: #DenotativeObject!
+DenotativeObjectTheme class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectProgessiveTestRunner category: #'DenotativeObject-TestSupport'!
@@ -230,6 +230,16 @@ SmalltalkCompleter subclass: #DenotativeObjectCompleter
 	category: 'DenotativeObject-Tools'!
 !classDefinition: 'DenotativeObjectCompleter class' category: #'DenotativeObject-Tools'!
 DenotativeObjectCompleter class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeNewObjectPrecondition category: #'DenotativeObject-Refactorings'!
+NewClassPrecondition subclass: #DenotativeNewObjectPrecondition
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeNewObjectPrecondition class' category: #'DenotativeObject-Refactorings'!
+DenotativeNewObjectPrecondition class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectAddCollaborator category: #'DenotativeObject-Refactorings'!
@@ -2558,6 +2568,13 @@ autoCompleterClassFor: textGetter
 	
 	^DenotativeObjectCompleter! !
 
+!DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/5/2018 15:13:12'!
+pseudoVariables
+
+	^ (OrderedCollection withAll: super pseudoVariables) 
+		add: #parent;
+		asArray! !
+
 !DenotativeObjectTheme methodsFor: 'tool colors' stamp: 'HAW 8/22/2017 11:42:56'!
 debugger
 
@@ -2595,13 +2612,6 @@ addMiscellaneousIconsTo: aCollectorCollection
 		add: #('find object... (f)') -> #findIcon;
 		add: #('recent objects... (r)') -> #clockIcon;
 		add: #('Accept and Run Test in Category (y)') -> #weatherFewCloudsIcon! !
-
-!DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/5/2018 15:13:12'!
-pseudoVariables
-
-	^ (OrderedCollection withAll: super pseudoVariables) 
-		add: #parent;
-		asArray! !
 
 !DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
 openTestResultWindow
@@ -2760,6 +2770,26 @@ computeIdentifierEntries
 	entries := entries select: [ :anEntry | (Smalltalk classNamed: anEntry)  is: #DenotativeObject ].
 	! !
 
+!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:48:06'!
+newClassNameCanNotBeEmptyErrorMessage
+	
+	^'New object name can not be empty'! !
+
+!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:09'!
+newClassNameCanNotHaveSpacesErrorMessage
+	
+	^'New object name can not have spaces'! !
+
+!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:32'!
+newNameMustBeSymbolErrorMessage
+	
+	^'New object name must be a symbol'! !
+
+!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:48'!
+newNameMustStartWithUppercaseLetterErrorMessage
+
+	^'New object name must start with an uppercase letter'! !
+
 !DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:21'!
 errorMessageForInvalidInstanceVariable: aName
 
@@ -2798,30 +2828,15 @@ classToRenameCanNotBeMetaclassErrorMessage
 	
 	^'Invalid Object to rename'! !
 
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:21:33'!
-newClassNameCanNotBeEmptyErrorMessage
-	
-	^'New object name can not be empty'! !
-
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:21:46'!
-newClassNameCanNotHaveSpacesErrorMessage
-	
-	^'New object name can not have spaces'! !
-
 !DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
 newNameEqualsOldNameErrorMessage
 	
 	^'New object name equals old one'! !
 
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:34'!
-newNameMustBeSymbolErrorMessage
-	
-	^'New object name must be a symbol'! !
+!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 8/13/2018 18:46:41'!
+newClassPreconditionClass
 
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:46'!
-newNameMustStartWithUppercaseLetterErrorMessage
-
-	^'New object name must start with an uppercase letter'! !
+	^DenotativeNewObjectPrecondition! !
 
 !DenotativeObjectRenameMethod class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
@@ -4477,12 +4492,6 @@ printTheNonMetaClassAndSelectorOn: aStream
 		print: self methodClass theNonMetaClass; 
 		nextPutAll: '>>'; 
 		nextPutAll: self selector storeString! !
-
-!CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 8/24/2017 11:19:34'!
-sourceCode
-
-	"This method is implemented because getSource is not so intuitive - Hernan"
-	^self getSource! !
 
 !ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 7/20/2017 20:00:43'!
 messageText
