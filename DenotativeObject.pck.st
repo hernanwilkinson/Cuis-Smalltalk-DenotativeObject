@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3411] on 13 August 2018 at 7:01:24 pm'!
-'Description Line up with RenameClass change'!
-!provides: 'DenotativeObject' 1 47!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3411] on 14 August 2018 at 11:11:29 am'!
+'Description Ask confirmation when removing message without senders'!
+!provides: 'DenotativeObject' 1 48!
 !requires: 'Refactoring' 1 24 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -1806,30 +1806,43 @@ browseSendersOfSelectedSelector
 
 	^model selectedMessageName ifNotNil: [:selector | self class browseSendersOf: selector ] ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/2/2018 20:03:40'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:09:03'!
 confirmRemovalOf: aSelector on: aClass
 
-	| count aMenu answer caption allSenders |
+	^ (self has: aSelector noSenderOrIsItselfOn: aClass)
+		ifTrue: [self confirmRemovalWhenNoSenders ]
+		ifFalse: [self confirmRemovalWhenHasSenders ].
+! !
 
-	allSenders := self sendersOf: aSelector.
-	count := allSenders size.
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:09:39'!
+confirmRemovalWhenHasSenders
 
-	count = 0 ifTrue: [^ 1].
-	count = 1 ifTrue: [(allSenders first actualClass == aClass and: [allSenders first methodSymbol == aSelector]) ifTrue: [^ 1]].
-
-	"only sender is itself"
-	aMenu := PopUpMenu 
+	| menu |
+	
+	menu := PopUpMenu 
 		labels: 'Remove it
 Remove, then browse senders
 Don''t remove, but show me those senders
 Forget it -- do nothing -- sorry I asked'
 		icons: #(acceptIcon acceptIcon cancelIcon cancelIcon).
-	caption := 'This message has ' , count printString , ' sender'.
-	count > 1 ifTrue: [caption := caption copyWith: $s].
+			
+	^menu startUpWithCaption: 'This message has sender(s)' ! !
 
-	answer := aMenu startUpWithCaption: caption.
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:08:29'!
+confirmRemovalWhenNoSenders
+	
+	^ (self confirm: 'This message has no senders. Remove it anyway?') ifTrue: [1] ifFalse: [0]! !
 
-	^answer! !
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:05:30'!
+has: aSelector noSenderOrIsItselfOn: aClass
+
+	| count allSenders |
+
+	allSenders := self sendersOf: aSelector.
+	count := allSenders size.
+
+	^count = 0 or: [ count = 1 and: [(allSenders first actualClass == aClass and: [allSenders first methodSymbol == aSelector])]]
+! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 07:36:04'!
 inspectIt
@@ -1842,7 +1855,7 @@ removeInstVar
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
 		(DenotativeObjectRemoveCollaboratorApplier on: self for: aClass) value ].! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 10:46:42'!
 removeMessage
 
 	| messageName confirmation |
@@ -1935,7 +1948,7 @@ classListKey: aChar from: view
 
 	^self messageListKey: aChar from: view ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/13/2017 20:34:38'!
+!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/14/2018 10:46:27'!
 messageListKey: aChar from: view
 
 	 model selectedMessageName ifNotNil: [ :selector |
@@ -1945,7 +1958,7 @@ messageListKey: aChar from: view
 		aChar = $o ifTrue: [ ^ model fileOutMessage].
 		aChar = $c ifTrue: [ ^ model copySelector].
 		aChar = $v ifTrue: [ ^ self browseVersions].
-		aChar = $x ifTrue: [ ^ model removeMessage].
+		aChar = $x ifTrue: [ ^ self removeMessage].
 		aChar = $t ifTrue: [ ^ model runMethodTest].
 		aChar = $r ifTrue: [ ^ model debugMethodTest].
 		aChar = $e ifTrue: [ ^model sendAndInspect ].
@@ -2085,7 +2098,7 @@ classListMenu
 		}`.
 	^ aMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 21:27:59'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/14/2018 10:44:50'!
 messageListMenu
 	"Answer the message-list menu"
 	"Changed by emm to include menu-item for breakpoints"
@@ -2118,6 +2131,7 @@ messageListMenu
 				#selector 		-> 		#renameMethod.
 				#icon 			-> 		#saveAsIcon
 			} asDictionary.
+			nil.
 			{
 				#label 			-> 		'remove (x)'.
 				#selector 		-> 		#removeMessage.
