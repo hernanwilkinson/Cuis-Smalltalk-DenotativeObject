@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3421] on 15 August 2018 at 12:12:16 pm'!
-'Description Renamed RenameMethodxxx with RenameSelectorxxx'!
-!provides: 'DenotativeObject' 1 49!
-!requires: 'Theme-Themes' 1 2 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3418] on 18 August 2018 at 5:33:38 pm'!
+'Description Lineup with AddParameter refactoring'!
+!provides: 'DenotativeObject' 1 50!
 !requires: 'Refactoring' 1 24 nil!
+!requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -252,6 +252,16 @@ AddInstanceVariable subclass: #DenotativeObjectAddCollaborator
 DenotativeObjectAddCollaborator class
 	instanceVariableNames: ''!
 
+!classDefinition: #DenotativeObjectRenameSelector category: #'DenotativeObject-Refactorings'!
+RenameSelector subclass: #DenotativeObjectRenameSelector
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRenameSelector class' category: #'DenotativeObject-Refactorings'!
+DenotativeObjectRenameSelector class
+	instanceVariableNames: ''!
+
 !classDefinition: #DenotativeObjectRemoveCollaborator category: #'DenotativeObject-Refactorings'!
 RemoveInstanceVariable subclass: #DenotativeObjectRemoveCollaborator
 	instanceVariableNames: ''
@@ -272,16 +282,6 @@ RenameClass subclass: #DenotativeObjectRename
 DenotativeObjectRename class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRenameSelector category: #'DenotativeObject-Refactorings'!
-RenameSelector subclass: #DenotativeObjectRenameSelector
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRenameSelector class' category: #'DenotativeObject-Refactorings'!
-DenotativeObjectRenameSelector class
-	instanceVariableNames: ''!
-
 !classDefinition: #DenotativeObjectSafelyRemove category: #'DenotativeObject-Refactorings'!
 SafelyRemoveClass subclass: #DenotativeObjectSafelyRemove
 	instanceVariableNames: ''
@@ -300,6 +300,16 @@ AddInstanceVariableApplier subclass: #DenotativeObjectAddCollaboratorApplier
 	category: 'DenotativeObject-Refactorings'!
 !classDefinition: 'DenotativeObjectAddCollaboratorApplier class' category: #'DenotativeObject-Refactorings'!
 DenotativeObjectAddCollaboratorApplier class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectRenameSelectorApplier category: #'DenotativeObject-Refactorings'!
+RenameSelectorApplier subclass: #DenotativeObjectRenameSelectorApplier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRenameSelectorApplier class' category: #'DenotativeObject-Refactorings'!
+DenotativeObjectRenameSelectorApplier class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectRemoveCollaboratorApplier category: #'DenotativeObject-Refactorings'!
@@ -330,16 +340,6 @@ RenameInstanceVariableApplier subclass: #DenotativeObjectRenameCollaboratorAppli
 	category: 'DenotativeObject-Refactorings'!
 !classDefinition: 'DenotativeObjectRenameCollaboratorApplier class' category: #'DenotativeObject-Refactorings'!
 DenotativeObjectRenameCollaboratorApplier class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectRenameSelectorApplier category: #'DenotativeObject-Refactorings'!
-RenameSelectorApplier subclass: #DenotativeObjectRenameSelectorApplier
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRenameSelectorApplier class' category: #'DenotativeObject-Refactorings'!
-DenotativeObjectRenameSelectorApplier class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectSafelyRemoveApplier category: #'DenotativeObject-Refactorings'!
@@ -2607,26 +2607,6 @@ addBasicIconsTo: aCollectorCollection
 	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
 ! !
 
-!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'RNG 5/27/2018 01:07:24'!
-addMiscellaneousIconsTo: aCollectorCollection
-
-	^aCollectorCollection 
-		add: #('class browser') -> #editFindReplaceIcon;
-		add: #('remove (x)' 'remove collaborator...') ->#deleteIcon;
-		add: #('create class') -> #morphsIcon;
-		add: #('fileOut (o)') -> #fileOutIcon;
-		add: #('fileIn') -> #scriptIcon;
-		add: #('clone...') -> #copyIcon;
-		add: #('add object... (a)' 'add object in category... (A)' 'add child object... (h)' 'add child object in category... (H)' 'add collaborator...' 'Next test name (Y)') -> #listAddIcon;
-		add: #('rename collaborator...') -> #saveAsIcon;
-		add: #('send and inspect (e)' 'Accept, Send and Inspect (e)') -> #inspectIcon;
-		add: #('debug (r)'	'debug and inspect (q)' 'Accept and Debug (r)' 'Accept, Debug and Inspect (q)') -> #debugIcon;
-		add: #('send (t)' 'Accept and Send (t)') -> #doItIcon;
-		add: #('show category') -> #helpIcon;
-		add: #('find object... (f)') -> #findIcon;
-		add: #('recent objects... (r)') -> #clockIcon;
-		add: #('Accept and Run Test in Category (y)') -> #weatherFewCloudsIcon! !
-
 !DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
 openTestResultWindow
 
@@ -2832,26 +2812,6 @@ warningMessageForNewVariable: newVariable willBeHiddenAtAll: methods
 			nextPutAll: ' will be hidden at '.
 		methods asCommaStringAndPritingWith: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] ]! !
 
-!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
-errorMessageForInstanceVariable: aName notDefinedIn: aClass
-
-	^ 'Collaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
-
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:23:18'!
-classToRenameCanNotBeMetaclassErrorMessage
-	
-	^'Invalid Object to rename'! !
-
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
-newNameEqualsOldNameErrorMessage
-	
-	^'New object name equals old one'! !
-
-!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 8/13/2018 18:46:41'!
-newClassPreconditionClass
-
-	^DenotativeNewObjectPrecondition! !
-
 !DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
 	
@@ -2927,6 +2887,26 @@ warningMessageForRedefinitionOfSystemMessageOf: aNewSelector
 	^aNewSelector, ' is defined in the core system. Overriding it can cause unexpected behavior.'
 	! !
 
+!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
+errorMessageForInstanceVariable: aName notDefinedIn: aClass
+
+	^ 'Collaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:23:18'!
+classToRenameCanNotBeMetaclassErrorMessage
+	
+	^'Invalid Object to rename'! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
+newNameEqualsOldNameErrorMessage
+	
+	^'New object name equals old one'! !
+
+!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 8/13/2018 18:46:41'!
+newClassPreconditionClass
+
+	^DenotativeNewObjectPrecondition! !
+
 !DenotativeObjectSafelyRemove class methodsFor: 'warnings' stamp: 'HAW 8/1/2018 18:26:06'!
 warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
 
@@ -2951,6 +2931,43 @@ newVariableNameLabel
 	
 	^'Enter new collaborator name:'! !
 
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:24:09'!
+closeBrowser
+	
+	! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 15:44:08'!
+messageSetWindowClass
+		
+	^DenotativeObjectMessageSetWindow ! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/18/2018 16:56:23'!
+refactoringClass
+
+	^DenotativeObjectRenameSelector ! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/31/2017 15:39:08'!
+scopeOptionLabels
+
+	"They have to be the same number and in the same order as super. If not, a different way to redefine the scope must be implemented
+	for denotative objects - Hernan"
+	
+	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
+	! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'evaluation' stamp: 'HAW 8/31/2017 16:34:32'!
+value
+
+	requestExitBlock := [ ^self ].
+
+	self
+		requestRefactoringParametersHandlingRefactoringExceptions;
+		calculateImplementorsAndSenders;
+		createRefactoringHandlingRefactoringExceptions;
+		applyRefactoring;
+		showChanges
+		! !
+
 !DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:29:01'!
 createRefactoring
 
@@ -2961,12 +2978,12 @@ selectVariableLabel
 	
 	^'Select collaborator to remove'! !
 
-!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 8/1/2018 19:56:05'!
-browseReferencesOn: aCanNotRemoveDueToReferencesError
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 8/17/2018 16:37:06'!
+browseReferencesOn: aCanNotRefactorDueToReferencesError
 	
 	DenotativeObjectMessageSetWindow
-		openMessageList: aCanNotRemoveDueToReferencesError references
-		label: (self referencesBrowserTitleOn: aCanNotRemoveDueToReferencesError)
+		openMessageList: aCanNotRefactorDueToReferencesError references
+		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
 		autoSelect: true
 		
 	 ! !
@@ -2993,49 +3010,12 @@ selectVariableLabel
 	
 	^'Select collaborator to rename'! !
 
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:24:09'!
-closeBrowser
-	
-	! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 15:44:08'!
-messageSetWindowClass
-		
-	^DenotativeObjectMessageSetWindow ! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/15/2018 11:58:43'!
-renameSelectorClass
-
-	^DenotativeObjectRenameSelector ! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/31/2017 15:39:08'!
-scopeOptionLabels
-
-	"They have to be the same number and in the same order as super. If not, a different way to redefine the scope must be implemented
-	for denotative objects - Hernan"
-	
-	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
-	! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'evaluation' stamp: 'HAW 8/31/2017 16:34:32'!
-value
-
-	requestExitBlock := [ ^self ].
-
-	self
-		requestRefactoringParametersHandlingRefactoringExceptions;
-		calculateImplementorsAndSenders;
-		createRefactoringHandlingRefactoringExceptions;
-		applyRefactoring;
-		showChanges
-		! !
-
-!DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 8/1/2018 19:56:50'!
-browseReferencesOn: aCanNotRemoveDueToReferencesError
+!DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 8/17/2018 16:37:22'!
+browseReferencesOn: aCanNotRefactorDueToReferencesError
 	
 	DenotativeObjectMessageSetWindow
-		openMessageList: aCanNotRemoveDueToReferencesError references
-		label: (self referencesBrowserTitleOn: aCanNotRemoveDueToReferencesError)
+		openMessageList: aCanNotRefactorDueToReferencesError references
+		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
 		autoSelect: true
 		
 	 ! !
