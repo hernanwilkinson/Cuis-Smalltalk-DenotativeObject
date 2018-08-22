@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3418] on 18 August 2018 at 5:33:38 pm'!
-'Description Lineup with AddParameter refactoring'!
-!provides: 'DenotativeObject' 1 50!
-!requires: 'Refactoring' 1 24 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3426] on 22 August 2018 at 3:30:54 pm'!
+'Description Inspect menu option on DO fixed'!
+!provides: 'DenotativeObject' 1 51!
 !requires: 'Theme-Themes' 1 2 nil!
+!requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -1983,7 +1983,7 @@ findClassDialogTitle
 
 	^ 'Denotative object name or fragment?'! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/3/2018 15:27:28'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/22/2018 15:30:27'!
 classListMenu
 
 	| aMenu |
@@ -2039,7 +2039,6 @@ classListMenu
 			{
 				#label 			-> 		'inspect (i)'.
 				#selector 		-> 		#inspectIt.
-				#object 			->		#model.
 				#icon 			-> 		#inspectIcon
 			} asDictionary.
 			{
