@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3426] on 22 August 2018 at 3:30:54 pm'!
-'Description Inspect menu option on DO fixed'!
-!provides: 'DenotativeObject' 1 51!
-!requires: 'Theme-Themes' 1 2 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3429] on 24 August 2018 at 4:54:18 pm'!
+'Description Removed fileout from class menu'!
+!provides: 'DenotativeObject' 1 52!
 !requires: 'Refactoring' 1 24 nil!
+!requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -1934,7 +1934,7 @@ optionalButtonTuples
 	^self class optionalButtonTuples
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 6/13/2018 15:21:04'!
+!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/24/2018 16:31:38'!
 classListKey: aChar from: view 
 
 	aChar == $a ifTrue: [ ^model addDenotativeObject ].
@@ -1944,7 +1944,6 @@ classListKey: aChar from: view
 	aChar ==	$i ifTrue: [ ^self inspectIt ].
 	aChar ==	$x ifTrue: [ ^model removeClass].
 	aChar ==	$t ifTrue: [ ^model runClassTests ].
-	aChar ==	$o ifTrue: [ ^model fileOutClass ].
 
 	^self messageListKey: aChar from: view ! !
 
@@ -1983,7 +1982,7 @@ findClassDialogTitle
 
 	^ 'Denotative object name or fragment?'! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/22/2018 15:30:27'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/24/2018 16:31:33'!
 classListMenu
 
 	| aMenu |
@@ -2029,13 +2028,7 @@ classListMenu
 				#icon 			-> 		#sendReceiveIcon
 			} asDictionary.
 			nil.
-			{
-				#label 			-> 		'fileOut (o)'.
-				#selector 		-> 		#fileOutClass.
-				#object 			->		#model.
-				#icon 			-> 		#fileOutIcon
-			} asDictionary.
-			nil.
+
 			{
 				#label 			-> 		'inspect (i)'.
 				#selector 		-> 		#inspectIt.
@@ -3437,9 +3430,9 @@ storeOn: aStream
 
 	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:30:29'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 8/23/2018 16:43:24'!
 compileInitializeCollaboratorsFromFile
-		
+	
 	self class compile: self initializeCollaboratorsFromFileSourceCode ! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:25:16'!
