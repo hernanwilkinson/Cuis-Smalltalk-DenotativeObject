@@ -2130,6 +2130,12 @@ messageListMenu
 				#icon 			-> 		#deleteIcon
 			} asDictionary.
 			nil.
+			{				 
+				#label 			-> 		'versions (v)'.
+				#selector 		-> 		#browseVersions.
+				#icon 			-> 		#clockIcon
+			} asDictionary.
+			nil
 			{
 				#label 			-> 		'change category...'.
 				#object 			-> 		#model.
