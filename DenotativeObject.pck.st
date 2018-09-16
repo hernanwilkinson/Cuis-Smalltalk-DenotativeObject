@@ -432,7 +432,7 @@ editorClass
 contents: aText notifying: aController
 
 	^[ super contents: aText notifying: aController ]
-		on: UndeclaredVariable 
+		on: UndeclaredVariable
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
 ! !
 
@@ -519,7 +519,7 @@ acceptedStringOrText
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:25:37'!
 addChildDenotativeObject
-	
+
 	self withSelectedCategoryNameDo: [ :systemCategoryName |
 		self withObjectNameDo: [ :objectName |
 			self withParentNameDo: [ :parentName |
@@ -527,7 +527,7 @@ addChildDenotativeObject
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:55'!
 addChildDenotativeObjectInCategory
-	
+
 	self withObjectNameDo: [ :objectName |
 		self withParentNameDo: [ :parentName |
 			self withCategoryNameDo: [ :categoryName |
@@ -536,14 +536,14 @@ addChildDenotativeObjectInCategory
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:24:11'!
 addDenotativeObject
-	
-	self withSelectedCategoryNameDo: [ :systemCategoryName | 
+
+	self withSelectedCategoryNameDo: [ :systemCategoryName |
 		self withObjectNameDo: [ :objectName |
 			self addDenotativeObjectNamed: objectName inCategory:  systemCategoryName ]]! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:13:46'!
 addDenotativeObjectInCategory
-	
+
 	self withObjectNameDo: [ :objectName |
 		self withCategoryNameDo: [ :categoryName |
 			self addDenotativeObjectNamed: objectName inCategory: categoryName ]]
@@ -551,36 +551,36 @@ addDenotativeObjectInCategory
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/7/2017 15:30:59'!
 addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName
-	
+
 	| definitionString collaborators |
 
-	collaborators := Array 
-		with: '#', objectName 
+	collaborators := Array
+		with: '#', objectName
 		with: parentName
 		with: ''''''
 		with: '''', categoryName, ''''.
-	
+
 	definitionString := String streamContents: [ :stream |
-		stream  nextPutAll:  ObjectBuilder name asString.		
+		stream  nextPutAll:  ObjectBuilder name asString.
 		#create:asChildOf:collaboratorNames:in: keywords withIndexDo: [ :keyword :index |
 			stream
 				space;
 				nextPutAll: keyword;
 				space;
 				nextPutAll: (collaborators at: index) ]].
-	
-	self defineClass: definitionString  notifying: nil 
+
+	self defineClass: definitionString  notifying: nil
 	! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:13:21'!
 addDenotativeObjectNamed: objectName inCategory: categoryName
-	
+
 	^self addDenotativeObjectNamed: objectName asChildOf: DenotativeObject name asString inCategory: categoryName ! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/20/2017 14:44:22'!
 assertDoesNotExistObjectNamed: denotativeObjectName
 
-	(Smalltalk includesKey: denotativeObjectName asSymbol) 
+	(Smalltalk includesKey: denotativeObjectName asSymbol)
 		ifTrue: [ self error: (self objectNameInUseErrorDescription: denotativeObjectName)]
 	! !
 
@@ -588,12 +588,12 @@ assertDoesNotExistObjectNamed: denotativeObjectName
 classDefinitionText
 	"return the text to display for the definition of the currently selected class"
 	| theClass |
-	
+
 	^(theClass := self selectedClassOrMetaClass) ifNil: [''] ifNotNil: [DenotativeObject definitionOf: theClass]! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:05:55'!
 collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning
-	
+
 	^String streamContents: [:stream |
 		stream
 			nextPutAll: 'The collaborator ';
@@ -615,25 +615,25 @@ copyClass
 	originalName := originalClass name.
 	copysName _ self request: 'Please type new object name' initialAnswer: originalName.
 	copysName = '' ifTrue: [^ self].  " Cancel returns '' "
-	
+
 	[ originalClass cloneNamed: copysName.
 	self classListIndex: 0.
 	self changed: #classList ]
 		on: Error
 		do: [ :anError | self inform: anError printString ].
-			
+
 	! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 4/10/2018 18:42:12'!
 createClass
 
-	self selectedClass ifNotNil: [ :aDenotativeObject | | superclass className categoryName |	
+	self selectedClass ifNotNil: [ :aDenotativeObject | | superclass className categoryName |
 		className := FillInTheBlankMorph request: 'Class for ', aDenotativeObject name onCancel: [ ^self ].
 		(Smalltalk classNamed: className) ifNotNil: [
-			(PopUpMenu confirm: className, ' already exist. Do you want to recreate?' trueChoice: 'Recreate it' falseChoice: 'Do not continue') 
-				ifFalse: [ ^self ]].			
+			(PopUpMenu confirm: className, ' already exist. Do you want to recreate?' trueChoice: 'Recreate it' falseChoice: 'Do not continue')
+				ifFalse: [ ^self ]].
 		categoryName := FillInTheBlankMorph request: 'Enter category name' initialAnswer: aDenotativeObject category onCancel: [ ^self ].
-		
+
 		[ superclass := self createSuperclassOf: aDenotativeObject onCancel: [ ^self ].
 		aDenotativeObject createClassNamed: className asSymbol subclassOf: superclass category: categoryName ]
 			on: Error
@@ -643,74 +643,74 @@ createClass
 createSuperclassOf: aDenotativeObject onCancel: aBlock
 
 	| denotativeObjectParent categoryName superclass superclassName |
-	
+
 	denotativeObjectParent := aDenotativeObject parentIfNone: [ ^Object ].
-	
+
 	superclassName := FillInTheBlankMorph request: 'Class for ', denotativeObjectParent name onCancel: [ ^aBlock value ].
 	(Smalltalk classNamed: superclassName) ifNotNil: [ :alreadyExistingSuperclass |
 		(PopUpMenu confirm: superclassName, ' already exist. Do you want to recreate or reuse it?' trueChoice: 'Recreate it' falseChoice: 'Reuse it')
 			ifFalse: [ ^alreadyExistingSuperclass ]].
-		
-	categoryName := FillInTheBlankMorph request: 'Enter category name' initialAnswer: denotativeObjectParent category onCancel: [ ^aBlock value ].	
+
+	categoryName := FillInTheBlankMorph request: 'Enter category name' initialAnswer: denotativeObjectParent category onCancel: [ ^aBlock value ].
 	superclass := self createSuperclassOf: denotativeObjectParent onCancel: aBlock.
-	
+
 	^denotativeObjectParent createClassNamed: superclassName asSymbol subclassOf: superclass category: categoryName! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:02:36'!
 defineClass: defString notifying: aRequestor
 
-	^[self defineClassWithoutHandlingWarning: defString notifying: aRequestor]		
+	^[self defineClassWithoutHandlingWarning: defString notifying: aRequestor]
 		on: Warning
 		do: [ :aWarning |
-			(self confirm: aWarning printString) 
+			(self confirm: aWarning printString)
 				ifTrue: [ aWarning resume ]
 				ifFalse: [ aWarning return: false ]].! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:54'!
-defineClassWihoutHandlingErrors: defString notifying: aRequestor 
-		
+defineClassWihoutHandlingErrors: defString notifying: aRequestor
+
  	| class classCreated |
-	
+
 	self validateDefinitionString: defString.
 	class := Compiler evaluate: defString notifying: aRequestor logged: true.
-	
+
 	classCreated := class isKindOf: Behavior.
 	classCreated ifTrue: [ self newClassCreated: class ].
-	
+
 	^classCreated! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:06:31'!
-defineClassWithoutHandlingParseNotification: defString notifying: aRequestor 
-		
+defineClassWithoutHandlingParseNotification: defString notifying: aRequestor
+
 	^[self defineClassWihoutHandlingErrors: defString notifying: aRequestor ]
-		on: Error - MessageNotUnderstood 
-		do: [ :anError | 
+		on: Error - MessageNotUnderstood
+		do: [ :anError |
 			self filterErrorMessagesWithClassStringFrom: anError.
 			self inform: anError printString.
 			anError return: false ]! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 15:57:26'!
-defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor 
-			
+defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor
+
 	^[self defineClassWithoutHandlingParseNotification: defString notifying: aRequestor ]
-		on: ParserNotification 
+		on: ParserNotification
 		do: [ :parserNotification |
 			self inform: self invalidDefinitionErrorDescription.
 			parserNotification return: false ]! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:04:07'!
 defineClassWithoutHandlingWarning: defString notifying: aRequestor
-	
+
 	^[self defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor ]
-		on: UndeclaredVariableWarning 
+		on: UndeclaredVariableWarning
 		do: [ :anUndeclareVariableWarning |
-			(self confirm: (self collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning)) 
+			(self confirm: (self collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning))
 				ifTrue: [ anUndeclareVariableWarning resume ]
 				ifFalse: [ anUndeclareVariableWarning return: false ]]! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:06:59'!
 filterErrorMessagesWithClassStringFrom: anError
-		
+
 	anError messageText = 'Class names must be capitalized' ifTrue: [ ^anError messageText: 'Object names must be capitalized' ].
 	anError messageText: (anError messageText copyReplaceAll: ' class' with: '').
 	anError messageText: (anError messageText copyReplaceAll: ' inherits from ' with: ' is child of ').
@@ -718,8 +718,8 @@ filterErrorMessagesWithClassStringFrom: anError
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:32'!
 newClassCreated: aClass
-	
-	self 
+
+	self
 		changed: #systemCategoryList;
 		changed: #classList;
 		changed: #clearUserEdits;
@@ -728,7 +728,7 @@ newClassCreated: aClass
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/1/2018 17:56:48'!
 removeClass
-	
+
 	^self safelyRemoveClass ! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/10/2017 19:06:32'!
@@ -742,20 +742,20 @@ safelyRemoveClass
 
 	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
 		(DenotativeObjectSafelyRemoveApplier of: aBehavior theNonMetaClass) value ].
-	
+
 	! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:10'!
 withObjectNameDo: aBlock
-	
-	^self withObjectNameDo: aBlock label: 'Enter object name' 
+
+	^self withObjectNameDo: aBlock label: 'Enter object name'
 	! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:38:06'!
 withObjectNameDo: aBlock label: aLabel
-	
+
 	| objectName |
-	
+
 	objectName := FillInTheBlankMorph request: aLabel onCancel: [^self].
 	objectName := objectName withBlanksTrimmed.
 	"This is just to provide a better error message - Hernan"
@@ -764,16 +764,16 @@ withObjectNameDo: aBlock label: aLabel
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:23'!
 withParentNameDo: aBlock
-	
-	^self withObjectNameDo: aBlock label: 'Enter parent name' 
+
+	^self withObjectNameDo: aBlock label: 'Enter parent name'
 ! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:24:57'!
 withSelectedCategoryNameDo: aBlock
 
-	^self selectedSystemCategoryName 
+	^self selectedSystemCategoryName
 		ifNil: [ self inform: 'An object category must be selected' ]
-		ifNotNil: aBlock 
+		ifNotNil: aBlock
 ! !
 
 !DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 8/3/2018 15:24:37'!
@@ -834,7 +834,7 @@ defineMessageFrom: aString notifying: aRequestor
 	oldMessageList _ self messageList.
 	selector _ self selectedClassOrMetaClass parserClass selectorFrom: aString.
 	(self metaClassIndicated
-		and: [ selector ~= #printOn: 
+		and: [ selector ~= #printOn:
 		and: [(self selectedClassOrMetaClass includesSelector: selector) not
 		and: [Metaclass isScarySelector: selector]]])
 		ifTrue: ["A frist-time definition overlaps the protocol of Metaclasses"
@@ -842,14 +842,14 @@ defineMessageFrom: aString notifying: aRequestor
 Overriding it could cause serious problems.
 Is this really what you want to do?'))
 				ifFalse: [^nil]].
-			
+
 	[ selector _ self selectedClassOrMetaClass
 				compile: aString
 				classified: (category _ self selectedMessageCategoryName)
 				notifying: aRequestor ]
-		on: UndeclaredVariable 
+		on: UndeclaredVariable
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
-	
+
 	selector
 		ifNil: [^ nil].
 	selector ~~ selectedMessageName
@@ -863,7 +863,7 @@ Is this really what you want to do?'))
 				ifFalse: [self changed: #messageList].
 			self messageListIndex: (self messageList indexOf: selector)].
 	^ selector
-	
+
 	! !
 
 !DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 7/14/2017 20:46:27'!
@@ -884,7 +884,7 @@ fileInSystemCategory
 
 !DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 7/22/2017 11:45:50'!
 firstExperimentCategoryName
-	
+
 	^'First Experiment'! !
 
 !DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'RNG 5/27/2018 01:03:53'!
@@ -897,7 +897,7 @@ removeSystemCategory
 
 	selectedSystemCategory ifNil: [^ self].
 	(self classList isEmpty or: [ self confirm: 'Are you sure you want to
-remove this system category 
+remove this system category
 and all its objects?'])
 		ifTrue: [
 			systemOrganizer removeSystemCategory: selectedSystemCategory.
@@ -906,9 +906,9 @@ and all its objects?'])
 
 !DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/22/2017 09:53:35'!
 withCategoryNameDo: aBlock
-	
+
 	| categoryName |
-	
+
 	categoryName := FillInTheBlankMorph request: 'Enter category name' onCancel: [^self].
 	categoryName := categoryName withBlanksTrimmed.
 	categoryName isEmpty ifTrue: [ ^self inform: 'Category name can not be empty' ].
@@ -934,31 +934,31 @@ objectNameInUseErrorDescription: denotativeObjectName
 validateDefinitionString: defString
 
 	| defTokens |
-	
+
 	defTokens := defString findTokens: Character separators.
 	defTokens isEmpty ifTrue: [ self error: self invalidDefinitionErrorDescription ].
-	
-	defTokens first = ObjectBuilder name asString 
+
+	defTokens first = ObjectBuilder name asString
 		ifTrue: [ self validateObjectCreation: defTokens ]
 		ifFalse: [ self validateObjectRedefinition: defTokens ]! !
 
 !DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/20/2017 14:44:07'!
-validateObjectCreation: defTokens 
+validateObjectCreation: defTokens
 
 	| denotativeObjectName nameIndex |
-	
+
 	nameIndex := defTokens findFirst: [ :token | token beginsWith: '#' ].
 	nameIndex = 0 ifTrue: [ self error: self invalidDefinitionStringErrorDescription ].
-	
+
 	denotativeObjectName := (defTokens at: nameIndex) copyWithoutAll: '#()'.
 	self assertDoesNotExistObjectNamed: denotativeObjectName.
 	! !
 
 !DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/6/2017 11:09:16'!
-validateObjectRedefinition: defTokens 
+validateObjectRedefinition: defTokens
 
 	| potentialDenotativeObject |
-	
+
 	potentialDenotativeObject :=Smalltalk classNamed: defTokens first asSymbol.
 	(potentialDenotativeObject is: #DenotativeObject) ifFalse: [ self error: (self invalidObjectErrorDescription: defTokens first)]
 
@@ -974,10 +974,10 @@ metaClassIndicated: trueOrFalse
 systemCategoryList
 
 	| denotativeObjecCategories |
-	
-	denotativeObjecCategories := (systemOrganizer categories select: [:aCategory | 
+
+	denotativeObjecCategories := (systemOrganizer categories select: [:aCategory |
 		(systemOrganizer classesAt: aCategory) anySatisfy: [ :aClass | aClass is: #DenotativeObject ]]) asSortedCollection.
-	
+
 	^denotativeObjecCategories isEmpty ifTrue: [ {self firstExperimentCategoryName} ] ifFalse: [ denotativeObjecCategories ]
 
 ! !
@@ -988,7 +988,7 @@ systemCategoryListIndex: anInteger
 	selections to be deselected."
 
 	| index systemCategoryList |
-	
+
 	systemCategoryList _ self systemCategoryList.
 	index _ systemCategoryList ifInBounds: anInteger ifNot: 0.
 
@@ -1012,16 +1012,16 @@ systemCategoryListIndex: anInteger
 
 !DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 6/13/2018 16:01:25'!
 recentClasses
-	
+
 	^super recentClasses select: [:aClassName | (Smalltalk classNamed: aClassName) is: #DenotativeObject ]! !
 
 !DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 20:20:49'!
 askForCategoryIn: aClass default: aString
 
 	| categories index category |
-	
-	categories := OrderedCollection with: 'new ...'. 
-	categories addAll: (aClass allMethodCategoriesIntegratedThrough: aClass).	
+
+	categories := OrderedCollection with: 'new ...'.
+	categories addAll: (aClass allMethodCategoriesIntegratedThrough: aClass).
 	index := PopUpMenu withCaption: 'Please provide a good category for the new method!!'
 						chooseFrom: categories.
 	index = 0 ifTrue: [^ aString].
@@ -1042,14 +1042,14 @@ send
 
 	"Sends until receiver is a denotative object.
 	Proceeds if a message not understood was send to accelerate the process - Hernan"
-	
+
 	^[
 		inStep := true.
 		[ super send ] on: Exception do: [ :anException | self inform: 'Can not debug this'. ^self ].
 		(contextStackTop receiver is: #DenotativeObject)
 			ifFalse: [ self stepIntoBlock ]] ensure: [ inStep := false ]
-		
-		
+
+
 	"[super send.
 	(sendProceeds or: [ contextStackTop selector = #doesNotUnderstand: ]) ifTrue: [ ^self proceed ].
 	self selectedContext methodClass inheritsFrom: DenotativeObject class ] whileFalse.
@@ -1061,11 +1061,11 @@ send
 stepIntoBlock
 
 	[ | toDebugContext |
-	
+
 	inStep := true.
 	super stepIntoBlock.
 
-	toDebugContext := contextStackTop.	
+	toDebugContext := contextStackTop.
 	[toDebugContext notNil and: [(toDebugContext receiver is: #DenotativeObject) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
 	toDebugContext isNil
 		ifTrue: [ self proceed ]
@@ -1079,7 +1079,7 @@ askForSuperclassOf: aClass upTo: aSuperclass toImplement: aSelector ifCancel: ca
 
 	classes := aClass soleInstance withParents collect: [ :denotativeObject | denotativeObject class ].
 	classes size = 1 ifTrue: [ ^aClass ].
-	
+
 	chosenClassIndex := PopUpMenu
 		withCaption: 'Define #', aSelector, ' in which object?'
 		chooseFrom: (classes collect: [:c | c soleInstance name]).
@@ -1093,7 +1093,7 @@ askForSuperclassOf: aClass upTo: aSuperclass toImplement: aSelector ifCancel: ca
 contents: aText notifying: aController
 
 	^[ super contents: aText notifying: aController ]
-		on: UndeclaredVariable 
+		on: UndeclaredVariable
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
 ! !
 
@@ -1114,7 +1114,7 @@ originalSend
 
 !DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 19:08:57'!
 selectedSystemCategoryName
-	
+
 	^self receiver ifNil: [ 'Debugger-Objects' ] ifNotNil: [ :receiver | receiver isBehavior ifTrue: [ receiver category ] ifFalse: [ receiver class category ]]! !
 
 !DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 7/29/2017 17:29:17'!
@@ -1128,7 +1128,7 @@ openFullMorphicLabel: aLabelString
 	"Open a full morphic debugger with the given label"
 
 	| oldContextStackIndex |
-	
+
 	oldContextStackIndex := contextStackIndex.
 	self expandStack. "Sets contextStackIndex to zero."
 
@@ -1143,11 +1143,11 @@ newStack: stack
 	denotativeObjectContexts := stack select: [ :context | (context methodClass inheritsFrom: DenotativeObject class) or: [ context selector = #doesNotUnderstand: ]].
 
 	denotativeObjectContexts isEmpty
-		ifTrue: [ super newStack: stack ] 
-		ifFalse: [ 
+		ifTrue: [ super newStack: stack ]
+		ifFalse: [
 			super newStack: denotativeObjectContexts.
 			contextStackList := contextStackList collect: [:aString | aString copyReplaceAll: ' class' with: '' ]]
-		
+
 	! !
 
 !DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 9/7/2017 15:15:38'!
@@ -1201,7 +1201,7 @@ openOn: anObject
 openOn: anObject withLabel: label
 
 	DenotativeObjectInspectorWindow open: (self inspect: anObject) label: label
-	
+
 ! !
 
 !DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
@@ -1229,7 +1229,7 @@ acceptAndDebugTest
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 8/22/2017 10:50:30'!
 acceptThenTestMethodAndSuite: aSuiteBuilder
-	
+
 	self acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: [:result | ]
 ! !
 
@@ -1240,9 +1240,9 @@ isTest: aSelector
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 9/10/2017 14:59:58'!
 nextTestName
-	
+
 	| testNames |
-	
+
 	testNames := self codeProvider selectedClassOrMetaClass selectors select: [ :selector | self isTest: selector ].
 	self addString: 'test', ((testNames size + 1)  printStringBase: 10 length: 2 padded: true)! !
 
@@ -1294,10 +1294,10 @@ testSuiteOf: aDenotativeObject
 acceptAndDebugTestOr: aBlock
 
 	^self acceptAndWithMethodDo: [ :aPotencialTestMethod |
-		(self isTest: aPotencialTestMethod selector) 
+		(self isTest: aPotencialTestMethod selector)
 			ifTrue: [
-				(DenotativeObjectTestCase 
-					for: aPotencialTestMethod) 
+				(DenotativeObjectTestCase
+					for: aPotencialTestMethod)
 					debugAsFailureIfCanNot: [ PopUpMenu inform: TestCase canNotDebugMethodErrorDescription ]]
 			ifFalse: aBlock]! !
 
@@ -1307,28 +1307,28 @@ acceptDebugAndInspect
 	^self acceptAndDebugTestOr: [ self codeProvider debugAndInspect ]! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 11:07:05'!
-acceptDebugAndInspect: aKeyboardEvent 
-	
+acceptDebugAndInspect: aKeyboardEvent
+
 	self acceptDebugAndInspect.
 	^true! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 10:51:34'!
 acceptSendAndInspect
-	
+
 	self acceptThenTestMethodAndSuite:  [ :aMethod | self testSuiteOf: aMethod methodClass ] orSendAndWithResultDo: [:result | result inspect ]
 ! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 10:55:50'!
-acceptSendAndInspect: aKeyboardEvent 
-	
+acceptSendAndInspect: aKeyboardEvent
+
 	self acceptSendAndInspect.
 	^true! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 10:50:11'!
 acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: aBlock
-	
+
 	self acceptAndWithMethodDo: [ :aPotencialTestMethod |
-		(self isTest: aPotencialTestMethod selector) 
+		(self isTest: aPotencialTestMethod selector)
 			ifTrue: [
 				self runAndDebuggIfNecessary: aPotencialTestMethod.
 				self runTestSuite: (aSuiteBuilder value: aPotencialTestMethod) ]
@@ -1406,7 +1406,7 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 			on: Error
 			do: [:anError |
 				self inform: anError printString.
-				debugger inStep 
+				debugger inStep
 					ifTrue: [ anError pass ]
 					ifFalse: [
 						| activeProcess toDebugContext  |
@@ -1417,12 +1417,12 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 						debugger := DenotativeObjectDebugger new.
 						toDebugContext := thisContext.
 						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-						toDebugContext isNil 
+						toDebugContext isNil
 							ifTrue: [ anError pass ]
 							ifFalse: [
 								debugger process: activeProcess context: toDebugContext.
 								debugger openFullNoSuspendLabel: anError printString.
-								activeProcess suspend ]	
+								activeProcess suspend ]
 						] ]
 	 ] newProcess name: 'debugIt'.
 	context := guineaPig suspendedContext.
@@ -1459,7 +1459,7 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 			ifFail: [^ failBlock value]
 			logged: true
 			profiled: doProfile.]
-		on: UndeclaredVariable 
+		on: UndeclaredVariable
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ]]
 		on: OutOfScopeNotification
 		do: [ :ex | ex resume: true]]
@@ -1481,7 +1481,7 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 7/7/2018 19:58:57'!
 getMenu
-	
+
 	^(MenuMorph new defaultTarget: self)
 		addTitle: self class name;
 		addStayUpIcons;
@@ -1513,7 +1513,7 @@ getMenu
 				#icon 			-> 		#exploreIcon
 			} asDictionary.
 			{
-				#label 			-> 		'Debug it (D)'.	
+				#label 			-> 		'Debug it (D)'.
 				#selector 		-> 		#debugIt.
 				#icon 			-> 		#debugIcon
 			} asDictionary.
@@ -1585,7 +1585,7 @@ getMenu
 				#label 			-> 		'Next test name (Y)'.
 				#selector 		-> 		#nextTestName.
 				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.			
+			} asDictionary.
 			nil.
 			{
 				#label 			-> 		'More...'.
@@ -1600,9 +1600,9 @@ cmdShortcutsSpec
 	self initialize
 	"
 	"arranged in QWERTY keyboard order"
-	
+
 	^ super cmdShortcutsSpec,
-	
+
 	#(
 		#($e	#acceptSendAndInspect:	'')
 		#($q	#acceptDebugAndInspect:	'')
@@ -1611,12 +1611,12 @@ cmdShortcutsSpec
 
 !DenotativeObjectWorkspaceEditor methodsFor: 'system category list' stamp: 'HAW 8/21/2017 18:58:29'!
 selectedSystemCategoryName
-	
+
 	^'Workspace-Objects'! !
 
 !DenotativeObjectWorkspaceEditor methodsFor: 'menu' stamp: 'HAW 7/7/2018 20:13:59'!
 getMenu
-	
+
 	^(MenuMorph new defaultTarget: self)
 		addTitle: self class name;
 		addStayUpIcons;
@@ -1643,7 +1643,7 @@ getMenu
 				#icon 			-> 		#inspectIcon
 			} asDictionary.
 			{
-				#label 			-> 		'Debug it (D)'.	
+				#label 			-> 		'Debug it (D)'.
 				#selector 		-> 		#debugIt.
 				#icon 			-> 		#debugIcon
 			} asDictionary.
@@ -1667,7 +1667,7 @@ getMenu
 				#label 			-> 		'References to it (N)'.
 				#selector 		-> 		#referencesToIt.
 				#icon 			-> 		#addressBookIcon
-			} asDictionary.			
+			} asDictionary.
 			nil.
 			{
 				#label 			-> 		'More...'.
@@ -1720,8 +1720,8 @@ messageListMenu
 ! !
 
 !DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 8/1/2018 20:28:53'!
-openMessageList: messageList label: labelString 
-	
+openMessageList: messageList label: labelString
+
 	^self openMessageList: messageList label: labelString autoSelect: false
 
 	! !
@@ -1732,10 +1732,10 @@ openMessageList: messageList label: labelString autoSelect: autoSelectString
 	| messageSet |
 
 	messageList do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
-	
+
 	messageSet _ DenotativeObjectMessageSet messageList: messageList.
 	messageSet autoSelectString: autoSelectString.
-	
+
 	^self open: messageSet label: labelString ! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:27:24'!
@@ -1759,7 +1759,7 @@ browseAllImplementorsOf: aSelector
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 14:40:52'!
 browseClassRefs
 
-	model selectedClassOrMetaClass ifNotNil: [ :selectedDenotativeObject | 
+	model selectedClassOrMetaClass ifNotNil: [ :selectedDenotativeObject |
 		self class browseReferencesTo: (Smalltalk bindingOf: selectedDenotativeObject theNonMetaClass name) ]
 	! !
 
@@ -1772,8 +1772,8 @@ browseImplementorsOfSelectedSelector
 browseInstVarRefs
 
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		aClass 
-			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators' 
+		aClass
+			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators'
 			thenDo: [:aVar | self browseAllAccessesTo: aVar from: aClass]
 			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]! !
 
@@ -1818,19 +1818,19 @@ confirmRemovalOf: aSelector on: aClass
 confirmRemovalWhenHasSenders
 
 	| menu |
-	
-	menu := PopUpMenu 
+
+	menu := PopUpMenu
 		labels: 'Remove it
 Remove, then browse senders
 Don''t remove, but show me those senders
 Forget it -- do nothing -- sorry I asked'
 		icons: #(acceptIcon acceptIcon cancelIcon cancelIcon).
-			
+
 	^menu startUpWithCaption: 'This message has sender(s)' ! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:08:29'!
 confirmRemovalWhenNoSenders
-	
+
 	^ (self confirm: 'This message has no senders. Remove it anyway?') ifTrue: [1] ifFalse: [0]! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:05:30'!
@@ -1846,12 +1846,12 @@ has: aSelector noSenderOrIsItselfOn: aClass
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 07:36:04'!
 inspectIt
-	
+
 	model selectedClass inspect! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:29:23'!
 removeInstVar
-	
+
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
 		(DenotativeObjectRemoveCollaboratorApplier on: self for: aClass) value ].! !
 
@@ -1881,7 +1881,7 @@ removeSelector: messageName
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:32:04'!
 renameInstVar
-	
+
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
 		(DenotativeObjectRenameCollaboratorApplier on: self for: aClass) value ].! !
 
@@ -1935,7 +1935,7 @@ optionalButtonTuples
 	! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/24/2018 16:31:38'!
-classListKey: aChar from: view 
+classListKey: aChar from: view
 
 	aChar == $a ifTrue: [ ^model addDenotativeObject ].
 	aChar == $A ifTrue: [ ^model addDenotativeObjectInCategory ].
@@ -1968,12 +1968,12 @@ messageListKey: aChar from: view
 systemCatListKey: aChar from: view
 
 	aChar == $o ifTrue: [^ model fileOutSystemCategory].
-	
+
 	^ super systemCatListKey: aChar from: view
 ! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'commands' stamp: 'HAW 6/13/2018 15:51:22'!
-classNameRequester 
+classNameRequester
 
 	^DenotativeObjectNameRequestMorph! !
 
@@ -2130,7 +2130,7 @@ messageListMenu
 				#icon 			-> 		#deleteIcon
 			} asDictionary.
 			nil.
-			{				 
+			{
 				#label 			-> 		'versions (v)'.
 				#selector 		-> 		#browseVersions.
 				#icon 			-> 		#clockIcon
@@ -2305,10 +2305,10 @@ browseSendersOf: aSymbol
 		autoSelect: aSymbol keywords first! !
 
 !DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/20/2017 15:34:07'!
-fullOnDenotativeObject: aDenotativeObject selector: aSelector 
-		
+fullOnDenotativeObject: aDenotativeObject selector: aSelector
+
 	| browser |
-	
+
 	browser := DenotativeObjectBrowser new.
 	browser setClass: aDenotativeObject selector: aSelector.
 	self open: browser label: browser labelString! !
@@ -2327,8 +2327,8 @@ fullOnClass: aClass selector: aSelector
 
 	"This is to be sure that we are going to browse a denotative object, if not we open
 	the classic browser. This is important because if in an inspector the Browse option on a no denotative object
-	is selected, then the denotative browser will be open for a no denotative object - Hernan"	
-	
+	is selected, then the denotative browser will be open for a no denotative object - Hernan"
+
 	(aClass theNonMetaClass is: #DenotativeObject)
 		ifTrue: [ self fullOnDenotativeObject: aClass selector: aSelector ]
 		ifFalse: [ BrowserWindow fullOnClass: aClass selector: aSelector ]! !
@@ -2364,7 +2364,7 @@ optionalButtonTuples
 	^ aList! !
 
 !DenotativeObjectBrowserWindow class methodsFor: 'world menu options' stamp: 'HAW 7/5/2018 18:34:09'!
-worldMenuOptions 
+worldMenuOptions
 
 	^`{
 	{
@@ -2384,12 +2384,12 @@ worldMenuOptions
 		#object 			-> 		BrowserWindow.
 		#icon 			-> 		#editFindReplaceIcon.
 		#balloonText 	-> 		'Classical Smalltalk class browser'.
-	} asDictionary. 
+	} asDictionary.
 	}`! !
 
 !DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:40:24'!
 browseContextSelection
-	
+
 	model contextVariablesInspector selectionIndex = 0 ifTrue: [^ self flash].
 	^self browseMethodFullIn: model contextVariablesInspector
 	! !
@@ -2398,16 +2398,16 @@ browseContextSelection
 browseInstVarRefs
 
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		aClass 
-			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators' 
+		aClass
+			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators'
 			thenDo: [:aVar | DenotativeObjectBrowserWindow browseAllAccessesTo: aVar from: aClass]
-			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]			
+			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]
 		! !
 
 !DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:26:26'!
 browseMessages
 
-	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: DenotativeObjectBrowserWindow 
+	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: DenotativeObjectBrowserWindow
 	! !
 
 !DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:22:29'!
@@ -2427,12 +2427,12 @@ browseReceiver
 !DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:25:20'!
 browseSendersOfMessages
 
-	self getSelectorAndSendQuery: #browseSendersOf: to: DenotativeObjectBrowserWindow 
+	self getSelectorAndSendQuery: #browseSendersOf: to: DenotativeObjectBrowserWindow
 	! !
 
 !DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:36:58'!
 inspectContextSelection
-	
+
 	model contextVariablesInspector selectionIndex = 0 ifTrue: [^ self flash].
 	^ model contextVariablesInspector selection inspect! !
 
@@ -2526,7 +2526,7 @@ contextFieldListMenu
 	aMenu addList: #(
 		('inspect (i)'						inspectContextSelection)
 		('browse (b)'						browseContextSelection)).
-	
+
 	^ aMenu! !
 
 !DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 4/22/2018 19:55:41'!
@@ -2553,7 +2553,7 @@ receiverFieldListMenu
 	aMenu addList: #(
 		('inspect (i)'						inspectReceiverSelection)
 		('browse (b)'						browseReceiver)).
-		
+
 	^ aMenu! !
 
 !DenotativeObjectInspectorWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:17:35'!
@@ -2572,18 +2572,18 @@ fieldListMenu
 	aMenu addList: #(
 		('inspect (i)'							inspectSelection)
 		('browse (b)'						browseMethodFull)).
-		
+
 	^ aMenu! !
 
 !DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 6/13/2018 15:52:09'!
 autoCompleterClassFor: textGetter
-	
+
 	^DenotativeObjectCompleter! !
 
 !DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/5/2018 15:13:12'!
 pseudoVariables
 
-	^ (OrderedCollection withAll: super pseudoVariables) 
+	^ (OrderedCollection withAll: super pseudoVariables)
 		add: #parent;
 		asArray! !
 
@@ -2595,7 +2595,7 @@ debugger
 !DenotativeObjectTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/27/2017 22:11:47'!
 pseudoVariables
 
-	^ (OrderedCollection withAll: super pseudoVariables) 
+	^ (OrderedCollection withAll: super pseudoVariables)
 		add: #parent;
 		asArray! !
 
@@ -2622,7 +2622,7 @@ asMethodReference
 debug
 
 	| debugger |
-	
+
 	debugger := nil.
 
 	[ self setUpResources.
@@ -2642,12 +2642,12 @@ debug
 						debugger := DenotativeObjectDebugger new.
 						toDebugContext := thisContext.
 						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-						toDebugContext isNil 
+						toDebugContext isNil
 							ifTrue: [ anError pass ]
 							ifFalse: [
 								debugger process: activeProcess context: toDebugContext.
 								debugger openFullNoSuspendLabel: anError printString.
-								activeProcess suspend ]	
+								activeProcess suspend ]
 						] ]
 ! !
 
@@ -2715,7 +2715,7 @@ openDebuggerOnFailingTestMethod
 signalFailure: aString
 
 	failureString _ aString.
-	Error signal: aString 
+	Error signal: aString
 	! !
 
 !DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/6/2018 09:53:25'!
@@ -2764,17 +2764,17 @@ computeIdentifierEntries
 
 !DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:48:06'!
 newClassNameCanNotBeEmptyErrorMessage
-	
+
 	^'New object name can not be empty'! !
 
 !DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:09'!
 newClassNameCanNotHaveSpacesErrorMessage
-	
+
 	^'New object name can not have spaces'! !
 
 !DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:32'!
 newNameMustBeSymbolErrorMessage
-	
+
 	^'New object name must be a symbol'! !
 
 !DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:48'!
@@ -2791,28 +2791,28 @@ errorMessageForInvalidInstanceVariable: aName
 errorMessageForNewInstanceVariable: aName alreadyDefinedInAll: classes
 
 	| denotativeObjects |
-	
+
 	denotativeObjects := classes collect: [:aClass | aClass theNonMetaClass ].
-	
+
 	^ 'Collaborator ''' , aName , ''' is already defined in ' , denotativeObjects asCommaStringAnd.! !
 
 !DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:30'!
 newVariableCanNotBeEmptyErrorMessage
-	
+
 	^'New collaborator name can not be empty'! !
 
 !DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 18:18:40'!
 warningMessageForNewVariable: newVariable willBeHiddenAtAll: methods
- 
+
 	^String streamContents: [ :stream |
-		stream 
+		stream
 			nextPutAll: newVariable;
 			nextPutAll: ' will be hidden at '.
 		methods asCommaStringAndPritingWith: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] ]! !
 
 !DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
-	
+
 	"Only do it on the class side - Hernan"
 	self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor theMetaClass.
 
@@ -2822,7 +2822,7 @@ addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClass
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inHierarchyOf: aClass doingPerClass: aBlock
 
 	aClass theMetaClass withAllSubAndSuperclassesDo: [ :aPotentialClassToRefactor |
-		(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
+		(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [
 			self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor.
 			aBlock value: aPotentialClassToRefactor ]]
 	! !
@@ -2831,22 +2831,22 @@ addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inHierar
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inSystem: aSystem
 
 	"Denotative objects are always subclasses of DenotativeObject, so I restrict the search to those clases - Hernan"
-	DenotativeObject class allSubclassesDo: [ :aPotentialClassToRefactor | 
+	DenotativeObject class allSubclassesDo: [ :aPotentialClassToRefactor |
 		self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ].
 ! !
 
 !DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:20:04'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor
-	
+
 	"This is just to be sure that no denotative object is included to rename - Hernan"
-	^(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
+	^(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [
 		super addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ]! !
 
 !DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 8/31/2017 15:26:09'!
 errorMessageForInvalidImplementors: aCollectionOfInvalidImplementors
 
 	^String streamContents: [ :stream |
-		stream 
+		stream
 			nextPutAll: (aCollectionOfInvalidImplementors size = 1 ifTrue: [ 'This method' ] ifFalse: [ 'These methods']);
 		 	nextPutAll: ' do not have same the same selector to rename: '.
 		aCollectionOfInvalidImplementors asCommaStringAndPritingWith: [:anImplementor | anImplementor printTheNonMetaClassAndSelectorOn: stream ] ] ! !
@@ -2855,7 +2855,7 @@ errorMessageForInvalidImplementors: aCollectionOfInvalidImplementors
 errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
 
 	^String streamContents: [ :stream |
-		stream 
+		stream
 			nextPutAll: 'Message #';
 			nextPutAll: anOldSelector;
 			nextPutAll: ' is not send by: '.
@@ -2865,17 +2865,17 @@ errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
 errorMessageForNewSelector: aNewSelector implementedInAll: classesImplementingNewSelector
 
 	| denotativeObjectImplementingNewSelector |
-	
+
 	denotativeObjectImplementingNewSelector := classesImplementingNewSelector collect: [ :aClass | aClass theNonMetaClass ].
-	
+
 	^'Can not rename because #', aNewSelector, ' is implemented in: ', denotativeObjectImplementingNewSelector asCommaStringAnd ! !
 
 !DenotativeObjectRenameSelector class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 09:16:25'!
 warnImplementionOf: aNewSelector in: aClass willOverrideImplementationIn: aSuperclass
-	
+
 	(DenotativeObject class includesBehavior: aSuperclass)
 		ifTrue: [ self refactoringWarning: (self warningMessageForRedefinitionOfSystemMessageOf: aNewSelector) ]
-		ifFalse: [ 
+		ifFalse: [
 			"I remove the 'class' string from the object name - Hernan"
 			self refactoringWarning: (self warningMessageForImplementationOf: aNewSelector in: aClass theNonMetaClass willOverrideImplementationIn: aSuperclass theNonMetaClass) ].! !
 
@@ -2892,12 +2892,12 @@ errorMessageForInstanceVariable: aName notDefinedIn: aClass
 
 !DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:23:18'!
 classToRenameCanNotBeMetaclassErrorMessage
-	
+
 	^'Invalid Object to rename'! !
 
 !DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
 newNameEqualsOldNameErrorMessage
-	
+
 	^'New object name equals old one'! !
 
 !DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 8/13/2018 18:46:41'!
@@ -2912,7 +2912,7 @@ warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
 		stream nextPutAll: aClassToSafelyRemove name asString.
 		allSubclasses size = 1
 			ifTrue: [ stream nextPutAll: ' has a child' ]
-			ifFalse: [ stream 
+			ifFalse: [ stream
 					nextPutAll: ' has ';
 					print:  allSubclasses size;
 					nextPutAll: ' children' ].
@@ -2926,17 +2926,17 @@ createRefactoring
 
 !DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:22:34'!
 newVariableNameLabel
-	
+
 	^'Enter new collaborator name:'! !
 
 !DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:24:09'!
 closeBrowser
-	
+
 	! !
 
 !DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 15:44:08'!
 messageSetWindowClass
-		
+
 	^DenotativeObjectMessageSetWindow ! !
 
 !DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/18/2018 16:56:23'!
@@ -2949,7 +2949,7 @@ scopeOptionLabels
 
 	"They have to be the same number and in the same order as super. If not, a different way to redefine the scope must be implemented
 	for denotative objects - Hernan"
-	
+
 	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
 	! !
 
@@ -2973,23 +2973,23 @@ createRefactoring
 
 !DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:09'!
 selectVariableLabel
-	
+
 	^'Select collaborator to remove'! !
 
 !DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 8/17/2018 16:37:06'!
 browseReferencesOn: aCanNotRefactorDueToReferencesError
-	
+
 	DenotativeObjectMessageSetWindow
 		openMessageList: aCanNotRefactorDueToReferencesError references
 		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
 		autoSelect: true
-		
+
 	 ! !
 
 !DenotativeObjectRenameApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/8/2017 19:49:48'!
 openChangedMethods
 
-	changes ifNotEmpty: [ 
+	changes ifNotEmpty: [
 		DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newClassName ]
 ! !
 
@@ -2999,38 +2999,38 @@ createRefactoring
 	^ DenotativeObjectRename from: classToRename to: newClassName in: Smalltalk undeclared: Undeclared.! !
 
 !DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/30/2017 17:29:44'!
-openChangedMethodsWhenChangesNotEmpty 
+openChangedMethodsWhenChangesNotEmpty
 
 	DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newInstanceVariable! !
 
 !DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:14'!
 selectVariableLabel
-	
+
 	^'Select collaborator to rename'! !
 
 !DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 8/17/2018 16:37:22'!
 browseReferencesOn: aCanNotRefactorDueToReferencesError
-	
+
 	DenotativeObjectMessageSetWindow
 		openMessageList: aCanNotRefactorDueToReferencesError references
 		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
 		autoSelect: true
-		
+
 	 ! !
 
 !DenotativeObjectSafelyRemoveApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/1/2018 18:12:15'!
 createRefactoring
-		
+
 	^DenotativeObjectSafelyRemove of: classToRemove ! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:59:04'!
 allReplicants
 
 	| withAllReplicants allReplicants|
-	
+
 	withAllReplicants := self withAllReplicants.
 	allReplicants := withAllReplicants reject: [ :aDenotativeObject | aDenotativeObject theOriginalDenotativeObject == aDenotativeObject ].
-	
+
 	^allReplicants ! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:47:27'!
@@ -3055,7 +3055,7 @@ allReplicantsSelect: aBlock
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:31:54'!
 assertCanReplicate
-	
+
 	self isReplicant ifTrue: [ self signalCanNotReplicateReplicant ].
 ! !
 
@@ -3072,7 +3072,7 @@ isReplicant
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:32:50'!
 isTheOriginalDenotativeObject
-	
+
 	^ self == self theOriginalDenotativeObject ! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:28:00'!
@@ -3083,16 +3083,16 @@ replicantNamePrefix
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/30/2017 11:03:02'!
 replicate
 	"A replicant is a copy of myself. My replicants and I have our own state but we all share the same behaviour, hence a change of behaviour in any of us will hold for all.
-	
+
 	Replicants are anonymous"
-	
+
 	| replicant |
-	
+
 	self assertCanReplicate.
-	
+
 	replicant _ self class basicNew copyFrom: self.
 	replicant setName: self replicantNamePrefix , self name.
-	
+
 	^ replicant.
 	! !
 
@@ -3102,8 +3102,8 @@ signalCanNotReplicateReplicant
 	self error: self canNotReplicateReplicantErrorMessage! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:58:54'!
-theOriginalDenotativeObject 
-	
+theOriginalDenotativeObject
+
 	^self class soleInstance ! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:42:50'!
@@ -3158,19 +3158,19 @@ definitionOf: aMetaclass
 	^ String streamContents: [ :stream | | selector collaborators |
 		stream
 			nextPutAll: aMetaclass soleInstance name.
-	
+
 		"Done this way to support rename of #create:collarobatorNames:in: - Hernan"
 		collaborators := OrderedCollection new.
-		(aMetaclass soleInstance superclass is: #DenotativeObject) 
-			ifTrue: [ 
+		(aMetaclass soleInstance superclass is: #DenotativeObject)
+			ifTrue: [
 				selector := #asChildOf:collaboratorNames:in:.
 				collaborators add: aMetaclass soleInstance superclass name ]
 			ifFalse: [ selector := #collaboratorNames:in: ].
-			
-		collaborators 
+
+		collaborators
 			add: '''', aMetaclass instanceVariablesString, '''';
-			add: '''', aMetaclass category, ''''. 
-									
+			add: '''', aMetaclass category, ''''.
+
 		selector keywords withIndexDo: [ :keyword :index |
 			stream
 				newLine;
@@ -3183,12 +3183,12 @@ definitionOf: aMetaclass
 template: aSystemCategoryName
 
 	^String streamContents: [ :stream | | collaborators |
-		stream 
+		stream
 			nextPutAll: ObjectBuilder name;
 			space.
-			
+
 		"Done this way to support rename of #create:collarobatorNames:in: - Hernan"
-		collaborators := Array 
+		collaborators := Array
 			with: '#anObject'
 			with: ''''''
 			with: '''', aSystemCategoryName, ''''.
@@ -3247,19 +3247,19 @@ parent
 parentIfNone: aBlock
 
 	superclass = DenotativeObject ifTrue: [ ^aBlock value ].
-	
+
 	^ superclass ! !
 
 !DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:02:41'!
 parents
 
 	| parents |
-	
+
 	parents := self allSuperclassesUpTo: DenotativeObject.
 	parents removeLast.
-	
-	^parents 
-	
+
+	^parents
+
 	! !
 
 !DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:02:52'!
@@ -3268,18 +3268,18 @@ parentsDo: aBlock
 	^self parents do: aBlock! !
 
 !DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:54:54'!
-signalHasNoParentError 
-	
+signalHasNoParentError
+
 	self error: self hasNoParentErrorDescription! !
 
 !DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:02:02'!
 withParents
 
 	| withParents |
-	
+
 	withParents := self withAllSuperclassesUpTo: DenotativeObject.
 	withParents removeLast.
-	
+
 	^withParents ! !
 
 !DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:00:24'!
@@ -3301,9 +3301,9 @@ cloneNamed: copysNameString
 	originalName := originalClass name.
 	copysName := copysNameString asSymbol.
 	copysName = originalName ifTrue: [^ self].
-	
+
 	(Smalltalk includesKey: copysName) ifTrue: [^ self error: copysName , ' already exists'].
-	
+
 	newDefinition := originalClass definition
 		copyReplaceAll: originalName printString
 		with: copysName printString.
@@ -3314,7 +3314,7 @@ cloneNamed: copysNameString
 	Compiler evaluate: newMetaDefinition logged: true.
 	newClass copyAllCategoriesFrom: originalClass.
 	newClass class copyAllCategoriesFrom: originalClass class.
-	originalClass hasComment ifTrue: [ newClass comment: originalClass comment ].	
+	originalClass hasComment ifTrue: [ newClass comment: originalClass comment ].
 	originalClass class instVarNames do: [ :anInstVarName | newClass instVarNamed: anInstVarName put: (originalClass instVarNamed: anInstVarName) ].
 
 	DenotativeObjectBrowser allInstancesDo: [ :browser | browser changed: #classList ].
@@ -3325,7 +3325,7 @@ nextCloneNumber
 
 	CloneNumber isNil ifTrue: [ CloneNumber := 0 ].
 	CloneNumber := CloneNumber + 1.
-	
+
 	^CloneNumber! !
 
 !DenotativeObject class methodsFor: 'collaborators' stamp: 'HAW 9/7/2017 15:15:23'!
@@ -3337,35 +3337,35 @@ collaboratorNamed: aName
 collaboratorNames
 
 	| names |
-	
+
 	names := OrderedCollection new.
 	self withParentsDo: [ :aDenotativeObject | names addAllFirst: aDenotativeObject class instVarNames ].
-	
+
 	^names! !
 
 !DenotativeObject class methodsFor: 'delegation' stamp: 'HAW 9/10/2017 18:17:50'!
 delegate
-	
+
 	^ DelegatorBuilder for: self startingLookupOnParentOf: thisContext sender methodClass! !
 
 !DenotativeObject class methodsFor: 'delegation' stamp: 'HAW 9/10/2017 18:17:03'!
 delegateToParent
-	
+
 	^ (Delegator from: thisContext sender) value! !
 
 !DenotativeObject class methodsFor: 'error handling' stamp: 'HAW 8/20/2017 11:08:03'!
 doesNotUnderstand: aMessage
 
-	"This redefinition is just to provide a message text to the exception without the 'class' part, so when shown in the debugger title or a 
+	"This redefinition is just to provide a message text to the exception without the 'class' part, so when shown in the debugger title or a
 	message window, only the name of the denotative object appears
-	There are other alternatives to solve this as creating a new message to get the description as denotativeObjectPrintString, to handle 
+	There are other alternatives to solve this as creating a new message to get the description as denotativeObjectPrintString, to handle
 	the MessageNotUndertood in all places and set the messageText in the handler, etc., but this one looked like the least intrusive one,
 	the only problem it has is if Object>>doesNotUnderstand: changes this one should change too.
-	I thought about changing Object>>doesNotUnderstand: to send a message to get the messageText and by default do nothing, but 
+	I thought about changing Object>>doesNotUnderstand: to send a message to get the messageText and by default do nothing, but
 	again, that change is more intrusive... - Hernan"
-	
+
 	| exception resumeValue |
-	
+
 	(exception _ MessageNotUnderstood new)
 		message: aMessage;
 		receiver: self;
@@ -3400,10 +3400,10 @@ fileOutInitializerOn: aStream
 
 	super fileOutInitializerOn: aStream.
 	(self class methodDict includesKey: self initializeCollaboratorsFromFileMessageName) ifTrue: [
-		aStream 
+		aStream
 			newLine;
 		 	nextChunkPut: self name , ' ', self initializeAfterFileInMessageName asString.
-			
+
 		self removeInitializeCollaboratorsFromFile ].! !
 
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 3/31/2018 22:25:58'!
@@ -3421,14 +3421,14 @@ initializeAfterFileIn
 
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:23:36'!
 initializeCollaboratorsFromFile
-	
+
 	"It does nothing - it is here just in case there is an error an a DO does not automatically implement it, to avoid getting a MNU when sending initializeAfterFileIn - Hernan"! !
 
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:24:18'!
 removeInitializeCollaboratorsFromFile
 
 	"This check is to be sure not to remove DenotativeObject class>>#initializeCollaboratorsFromFile - Hernan"
-	
+
 	(self is: #DenotativeObject) ifTrue: [ self class removeSelector: self initializeCollaboratorsFromFileMessageName ] ! !
 
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 9/7/2017 16:44:18'!
@@ -3438,41 +3438,41 @@ storeOn: aStream
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 8/23/2018 16:43:24'!
 compileInitializeCollaboratorsFromFile
-	
+
 	self class compile: self initializeCollaboratorsFromFileSourceCode ! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:25:16'!
 initializeAfterFileInMessageName
-	
+
 	^ #initializeAfterFileIn! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:24:31'!
 initializeCollaboratorsFromFileMessageName
-	
+
 	^#initializeCollaboratorsFromFile! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:13:39'!
 initializeCollaboratorsFromFileSourceCode
-	
+
 	| sourceCode |
-	
+
 	sourceCode := String streamContents: [ :sourceStream |
-		self 
+		self
 			writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream;
 			writeCollaboratorsInitializationOn: sourceStream ].
-		
+
 	^sourceCode! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:14:52'!
-writeCollaboratorsInitializationOn: sourceStream 
-	
+writeCollaboratorsInitializationOn: sourceStream
+
 	self collaboratorNames do: [ :aCollaborator | self writeInitializationOf: aCollaborator on: sourceStream ].
-		
+
 	! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:15:29'!
 writeInitializationOf: aCollaborator on: sourceStream
-	
+
 	sourceStream
 		newLine;
 		tab;
@@ -3484,7 +3484,7 @@ writeInitializationOf: aCollaborator on: sourceStream
 !DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:30:45'!
 writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream
 
-	sourceStream 
+	sourceStream
 		nextPutAll: self initializeCollaboratorsFromFileMessageName asString;
 		newLine;
 		tab;
@@ -3494,8 +3494,8 @@ writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream
 !DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 16:14:41'!
 inspect
 
-	^ self 
-		withCurrentInspectorWindowDo: [ :window | window isTopWindow ifTrue: [ window flash ] ifFalse: [ window activate ] ] 
+	^ self
+		withCurrentInspectorWindowDo: [ :window | window isTopWindow ifTrue: [ window flash ] ifFalse: [ window activate ] ]
 		ifNone: [ super inspect ]! !
 
 !DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 15:03:13'!
@@ -3506,19 +3506,19 @@ inspectorClass
 
 !DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/10/2017 20:05:03'!
 withCurrentInspectorWindowDo: foundBlock ifNone: noneBlock
-		
-	^ DenotativeObjectInspectorWindow allInstances 
+
+	^ DenotativeObjectInspectorWindow allInstances
 		detect: [ :anInspectorWindow | anInspectorWindow model ifNil: [ false ] ifNotNil: [ :model | model object == self ]]
-		ifFound: foundBlock 
+		ifFound: foundBlock
 		ifNone: noneBlock ! !
 
 !DenotativeObject class methodsFor: 'equality' stamp: 'HAW 8/26/2017 17:38:05'!
 is: aSymbol
 
 	"Return true only for subclasses - Hernan"
-	
-	^aSymbol = #DenotativeObject 
-		and: [ self ~= DenotativeObject 
+
+	^aSymbol = #DenotativeObject
+		and: [ self ~= DenotativeObject
 		and: [ self inheritsFrom: DenotativeObject ]]! !
 
 !DenotativeObject class methodsFor: 'printing' stamp: 'HAW 7/12/2017 23:57:46'!
@@ -3560,7 +3560,7 @@ tearDown
 createClassNamed: aName
 
 	superclass ~= DenotativeObject ifTrue: [ self error: 'Superclass must be supplied' ].
-	
+
 	^self createClassNamed: aName subclassOf: Object
 	! !
 
@@ -3568,29 +3568,29 @@ createClassNamed: aName
 createClassNamed: aName subclassOf: aSuperclass
 
 	^self createClassNamed: aName subclassOf: aSuperclass category: self category
-	
+
 	! !
 
 !DenotativeObject class methodsFor: 'class creation' stamp: 'HAW 4/10/2018 19:00:17'!
 createClassNamed: aName subclassOf: aSuperclass category: aCategory
 
 	| newClass |
-	
+
 	newClass := aSuperclass subclass: aName
 		instanceVariableNames: self class instVarNames
 		classVariableNames: ''
 		poolDictionaries: ''
 		category: aCategory.
-	
+
 	"Should I remove the newClass current selectors? if so I could loose new methods added to the class. If not, then I could leave
-	messages that are no longer valid because the where remove from the denotative object. Merging methods is not so easy and 
-	we should impact only the changes on the denotative object, but that it is not easy to do. 
+	messages that are no longer valid because the where remove from the denotative object. Merging methods is not so easy and
+	we should impact only the changes on the denotative object, but that it is not easy to do.
 	The same thing happens with the instances variables - Hernan"
-	
-	self class selectorsDo: [ :aSelector | newClass 
-		compile: (self sourceCodeOf: aSelector) 
+
+	self class selectorsDo: [ :aSelector | newClass
+		compile: (self sourceCodeOf: aSelector)
 		classifyUnder: (self class organization categoryOfElement: aSelector) ].
-	
+
 	^newClass! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:11:52'!
@@ -3607,37 +3607,37 @@ comparingStringBetween: actual and: expected
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 09:43:49'!
 defaultAssertionFailedDescription
-	
+
 	^'Assertion failed'! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:26:44'!
 defaultIdenticalFailureDescription
-	
+
 	^'Objects are not identical'! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:18:43'!
 defaultNotEqualsFaillureDescription
-	
+
 	^'Expected to be different but they are equal'! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:31:30'!
 defaultNotIdenticalFailureDescription
-	
+
 	^'Expected to be not identical but they are identical'! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:50:21'!
 failDescription
-	
+
 	^'Failed'! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 11:11:36'!
 shouldNotSignalFailureDescription
-	
+
 	^'Exception was signal when not expected to'! !
 
 !Assert class methodsFor: 'boolean assertions' stamp: 'HAW 7/30/2017 10:49:36'!
 fail
-	
+
 	self isTrue: false description: self failDescription! !
 
 !Assert class methodsFor: 'boolean assertions' stamp: 'HAW 7/30/2017 09:45:59'!
@@ -3658,7 +3658,7 @@ isTrue: aBooleanOrBlock
 
 !Assert class methodsFor: 'boolean assertions' stamp: 'HAW 7/30/2017 09:42:57'!
 isTrue: aBooleanOrBlock description: aFailureDescription
- 
+
 	aBooleanOrBlock value ifFalse: [ self signalFailure: aFailureDescription ]
 ! !
 
@@ -3671,17 +3671,17 @@ should: aBlockClosure signal: anExceptionHandlingCondition withDescription: exce
 should: aBlockClosure signal: anExceptionHandlingCondition withDescription: exceptionDescription asserting: assertionsBlock
 
 	| signaledException |
-	
+
 	signaledException := nil.
-	aBlockClosure 
-		on: anExceptionHandlingCondition - MessageNotUnderstood 
-		do: [ :anException | 
+	aBlockClosure
+		on: anExceptionHandlingCondition - MessageNotUnderstood
+		do: [ :anException |
 			signaledException := anException.
 			anException return: nil ].
-		
-	signaledException isNil 
+
+	signaledException isNil
 		ifTrue: [ self fail ]
-		ifFalse: [ 
+		ifFalse: [
 			self that: signaledException messageText isEqualTo: exceptionDescription.
 			assertionsBlock value: signaledException ]
 		! !
@@ -3690,12 +3690,12 @@ should: aBlockClosure signal: anExceptionHandlingCondition withDescription: exce
 shouldNot: aBlockClosure signal: anExceptionHandlingCondition
 
 	| handledException |
-	
+
 	handledException := false.
-	aBlockClosure 
-		on: anExceptionHandlingCondition 
+	aBlockClosure
+		on: anExceptionHandlingCondition
 		do: [ :anException | handledException := true ].
-		
+
 	self isFalse: handledException description: self shouldNotSignalFailureDescription! !
 
 !Assert class methodsFor: 'private - signal failure' stamp: 'HAW 7/30/2017 11:18:57'!
@@ -3705,28 +3705,28 @@ signalFailure: aDescription
 
 !Assert class methodsFor: 'equality assertions' stamp: 'HAW 7/30/2017 10:39:33'!
 that: actual isEqualTo: expected
- 
+
 	self that: actual isEqualTo: expected description: (self comparingStringBetween: actual and: expected)! !
 
 !Assert class methodsFor: 'equality assertions' stamp: 'HAW 9/7/2017 15:45:12'!
-that: actual isEqualTo: expected description: failureDescription 
+that: actual isEqualTo: expected description: failureDescription
 
 	self isTrue: (actual isEqualTo: expected) description: failureDescription ! !
 
 !Assert class methodsFor: 'equality assertions' stamp: 'HAW 7/30/2017 10:21:19'!
 that: actual isNotEqualTo: expected
- 
+
 	self that: actual isNotEqualTo: expected description: self defaultNotEqualsFaillureDescription ! !
 
 !Assert class methodsFor: 'equality assertions' stamp: 'HAW 9/7/2017 16:48:27'!
-that: actual isNotEqualTo: expected description: failureDescription 
- 
+that: actual isNotEqualTo: expected description: failureDescription
+
 	self isTrue: (actual isNotEqualTo: expected) description: failureDescription ! !
 
 !Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/30/2017 10:27:44'!
 that: actual isIdenticalTo: expected
 
-	self that: actual isIdenticalTo: expected description: self defaultIdenticalFailureDescription 
+	self that: actual isIdenticalTo: expected description: self defaultIdenticalFailureDescription
 ! !
 
 !Assert class methodsFor: 'identity assertions' stamp: 'HAW 9/7/2017 16:47:54'!
@@ -3736,7 +3736,7 @@ that: actual isIdenticalTo: expected description: failureDescription
 
 !Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/30/2017 10:31:04'!
 that: actual isNotIdenticalTo: expected
- 
+
 	self that: actual isNotIdenticalTo: expected description: self defaultNotIdenticalFailureDescription
 ! !
 
@@ -3746,34 +3746,34 @@ that: actual isNotIdenticalTo: expected description: failureDescription
 	self isTrue: (actual isNotIdenticalTo: expected) description: failureDescription ! !
 
 !AssertTest class methodsFor: 'support' stamp: 'HAW 7/30/2017 09:21:26'!
-shouldFail: aBlockClosure 
-	
+shouldFail: aBlockClosure
+
 	| failed |
-	
+
 	failed := false.
 	aBlockClosure
-		on: Error - MessageNotUnderstood 
+		on: Error - MessageNotUnderstood
 		do: [ :anError | failed := true ].
-		
+
 	failed ifFalse: [ Error signal: 'Expected to fail but did not fail' ]! !
 
 !AssertTest class methodsFor: 'support' stamp: 'HAW 7/30/2017 09:42:07'!
-shouldFail: aBlockClosure withDescription: aFailureDescription 
+shouldFail: aBlockClosure withDescription: aFailureDescription
 
 	| failedAsExpected |
-	
+
 	failedAsExpected := false.
 	aBlockClosure
-		on: Error - MessageNotUnderstood 
+		on: Error - MessageNotUnderstood
 		do: [ :anError | failedAsExpected	:= anError messageText = aFailureDescription ].
-		
+
 	failedAsExpected ifFalse: [ Error signal: 'Expected to fail but did not fail' ]! !
 
 !AssertTest class methodsFor: 'support' stamp: 'HAW 7/30/2017 09:18:45'!
-shouldNotFail: aBlockClosure 
-	
-	aBlockClosure 
-		on: Error - MessageNotUnderstood 
+shouldNotFail: aBlockClosure
+
+	aBlockClosure
+		on: Error - MessageNotUnderstood
 		do: [:anError | anError pass ]
 			! !
 
@@ -3814,34 +3814,34 @@ test06isFalseSupportsBlockAsCollaborator
 test07isTrueCanHaveAFailureDescription
 
 	| failureDescription |
-	
+
 	failureDescription := 'fails because I passed false'.
-	self shouldFail: [ Assert isTrue: false description: failureDescription ] withDescription: failureDescription 
-	
+	self shouldFail: [ Assert isTrue: false description: failureDescription ] withDescription: failureDescription
+
 	! !
 
 !AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 7/30/2017 09:44:48'!
 test08isFalseCanHaveAFailureDescription
 
 	| failureDescription |
-	
+
 	failureDescription := 'fails because I passed true'.
-	self shouldFail: [ Assert isFalse: true description: failureDescription ] withDescription: failureDescription 
-	
+	self shouldFail: [ Assert isFalse: true description: failureDescription ] withDescription: failureDescription
+
 	! !
 
 !AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:39:06'!
 test09AssertEqualsPassWhenCollaboratorsAreEqual
 
 	"I use {1} instead of 1 becuase 1 is identical to 1 but two { 1 } are not identical but equals - Hernan"
-	
+
 	self shouldNotFail: [ Assert that: { 1 } isEqualTo: { 1 } ]! !
 
 !AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:39:11'!
 test10AssertEqualsFailsWhenCollaboratorsAreNotEqual
 
 	| actual expected |
-	
+
 	actual := { 1 }.
 	expected := { 2 }.
 	self shouldFail: [ Assert that: actual isEqualTo: expected ] withDescription: (Assert comparingStringBetween: actual and: expected).
@@ -3852,69 +3852,69 @@ test10AssertEqualsFailsWhenCollaboratorsAreNotEqual
 test11AssertEqualsCanHaveAFailureDescription
 
 	| actual expected failureDescription |
-	
+
 	actual := { 1 }.
 	expected := { 2 }.
 	failureDescription := 'not equal'.
-	self shouldFail: [ Assert that: actual isEqualTo: expected description: failureDescription ] withDescription: failureDescription 
+	self shouldFail: [ Assert that: actual isEqualTo: expected description: failureDescription ] withDescription: failureDescription
 
 	! !
 
 !AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:15:58'!
 test12AssertNotEqualsPassWhenCollaboratorsAreNotEqual
-	
+
 	self shouldNotFail: [ Assert that: { 1 } isNotEqualTo: { 2 } ]! !
 
 !AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:18:17'!
 test13AssertNotEqualsFailsWhenCollaboratorsAreEqual
-	
+
 	self shouldFail: [ Assert that: { 1 } isNotEqualTo: { 1 } ] withDescription: Assert defaultNotEqualsFaillureDescription! !
 
 !AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:20:14'!
 test14AssertNotEqualsCanHaveAFailureDescription
 
 	| failureDescription |
-	
+
 	failureDescription := 'they are equal!!'.
-	
+
 	self shouldFail: [ Assert that: { 1 } isNotEqualTo: { 1 } description: failureDescription ] withDescription: failureDescription ! !
 
 !AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:24:11'!
 test15AssertIdenticalPassWhenCollaboratorsAreIdentical
-	
+
 	self shouldNotFail: [ Assert that: self isIdenticalTo: self ]! !
 
 !AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:25:53'!
 test16AssertIdenticalFailsWhenCollaboratorsAreNotIdentical
-	
+
 	self shouldFail: [ Assert that: 1 isIdenticalTo: 2 ] withDescription: Assert defaultIdenticalFailureDescription! !
 
 !AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:29:38'!
 test17AssertIdenticalCanHaveFailureDescription
 
 	| failureDescription |
-	
+
 	failureDescription := 'not identical'.
-	
+
 	self shouldFail: [ Assert that: 1 isIdenticalTo: 2 description: failureDescription ] withDescription: failureDescription ! !
 
 !AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:30:23'!
 test18AssertNotIdenticalPassWhenCollaboratorsAreNotIdentical
-	
+
 	self shouldNotFail: [ Assert that: {1} isNotIdenticalTo: {2} ] ! !
 
 !AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:32:48'!
 test19AssertNotIdenticalFailsWhenCollaboratorsAreIdentical
-	
+
 	self shouldFail: [ Assert that: self isNotIdenticalTo: self ] withDescription: Assert defaultNotIdenticalFailureDescription ! !
 
 !AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:33:33'!
 test20AssertNotIdenticalCanHaveFailureDescription
 
 	| failureDescription |
-	
+
 	failureDescription := 'Identical!!'.
-	
+
 	self shouldFail: [ Assert that: self isNotIdenticalTo: self description: failureDescription ] withDescription: failureDescription ! !
 
 !AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 10:40:38'!
@@ -3949,10 +3949,10 @@ test25ShouldSignalSupportsAssertionsOnException
 	| errorDescription |
 
 	errorDescription := 'nice error'.
-	self shouldNotFail: [ Assert 
-		should: [ Error signal: errorDescription ] 
-		signal: Error 
-		withDescription: errorDescription 
+	self shouldNotFail: [ Assert
+		should: [ Error signal: errorDescription ]
+		signal: Error
+		withDescription: errorDescription
 		asserting: [ :anError | Assert isTrue: true ]].! !
 
 !AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 10:56:46'!
@@ -3962,11 +3962,11 @@ test26ShouldSignalFailsWhenAditionalAssertionsFail
 
 	errorDescription := 'nice error'.
 	failureDescription := 'failed'.
-	self 
-		shouldFail: [ Assert 
-			should: [ Error signal: errorDescription ] 
-			signal: Error 
-			withDescription: errorDescription 
+	self
+		shouldFail: [ Assert
+			should: [ Error signal: errorDescription ]
+			signal: Error
+			withDescription: errorDescription
 			asserting: [ :anError | Assert isTrue: false description: failureDescription ]]
 		withDescription: failureDescription ! !
 
@@ -3974,16 +3974,16 @@ test26ShouldSignalFailsWhenAditionalAssertionsFail
 test27ShouldSignalDoesNotHandlesMesssageNotUnderstood
 
 	| mnuNotHandledByShouldSignal |
-	
-	[ Assert 
-			should: [ 1 xxx ] 
-			signal: Error 
-			withDescription: 'no description' 
+
+	[ Assert
+			should: [ 1 xxx ]
+			signal: Error
+			withDescription: 'no description'
 			asserting: [ :anError | mnuNotHandledByShouldSignal := false ]]
-		on: MessageNotUnderstood 
+		on: MessageNotUnderstood
 		do: [ :aMNU | mnuNotHandledByShouldSignal := true ].
-		
-	Assert isTrue: mnuNotHandledByShouldSignal 
+
+	Assert isTrue: mnuNotHandledByShouldSignal
 			! !
 
 !AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 11:05:19'!
@@ -4002,7 +4002,7 @@ test29ShouldNotSignalFailsWhenExceptionIsSignal
 test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 
 	| errorDescription |
-	
+
 	errorDescription := 'my error'.
 	Assert
 		should:[ Assert shouldNot: [ Error signal: errorDescription ] signal: Notification ]
@@ -4017,7 +4017,7 @@ assertIsValidName: anObjectName
 
 !ObjectBuilder class methodsFor: 'preconditions' stamp: 'HAW 8/26/2017 18:04:04'!
 assertIsValidParent: aParentDenotativeObject
-	
+
 	(self isValidParent: aParentDenotativeObject) ifFalse: [ self signalInvalidParent: aParentDenotativeObject ]
 	! !
 
@@ -4028,8 +4028,8 @@ create: anObject asChildOf: aParentDenotativeObject collaboratorNames: variables
 
 	self assertIsValidName: anObject.
 	self assertIsValidParent: aParentDenotativeObject.
-	
-	newClass := aParentDenotativeObject 
+
+	newClass := aParentDenotativeObject
 		subclass: anObject asSymbol
 		instanceVariableNames: ''
 		classVariableNames: ''
@@ -4054,27 +4054,27 @@ invalidParentErrorDescriptionFor: aParentDenotativeObject
 
 !ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 3/31/2018 20:36:06'!
 nameCanNotBeEmptyErrorDescription
-	
+
 	^'Name can not be empty'! !
 
 !ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 3/31/2018 20:32:17'!
 nameCanNotHaveSpacesErrorDescription
-	
+
 	^'Object name can not have spaces'! !
 
 !ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:03:41'!
-signalInvalidParent: aParentDenotativeObject 
+signalInvalidParent: aParentDenotativeObject
 
 	self error: (self invalidParentErrorDescriptionFor: aParentDenotativeObject)! !
 
 !ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 3/31/2018 20:35:47'!
 signalNameCanNotBeEmpty
-	
+
 	self error: self nameCanNotBeEmptyErrorDescription! !
 
 !ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 3/31/2018 20:32:03'!
 signalNameCanNotHaveSpaces
-	
+
 	self error: self nameCanNotHaveSpacesErrorDescription! !
 
 !ObjectBuilder class methodsFor: 'testing' stamp: 'HAW 3/31/2018 22:57:20'!
@@ -4092,7 +4092,7 @@ initializeNamed: aName on: anObject
 !Collaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
 printOn: aStream
 
-	aStream 
+	aStream
 		nextPutAll: name;
 		nextPutAll: ' at ';
 		print: owner! !
@@ -4127,7 +4127,7 @@ signal: aName isNotACollaboratorOn: anObject
 named: aName on: anObject
 
 	self assert: aName isCollaboratorOn: anObject.
-	
+
 	^self new initializeNamed: aName on: anObject ! !
 
 !Delegator methodsFor: 'initialization' stamp: 'HAW 9/10/2017 18:05:13'!
@@ -4140,9 +4140,9 @@ initializeDelegate: aSelector to: aReceiver with: collaborators startingLookupOn
 
 !Delegator methodsFor: 'evaluating' stamp: 'HAW 9/10/2017 18:11:30'!
 value
-	
+
 	| implementor |
-	
+
 	implementor := currentMethodClass superclass.
 	[ implementor ~= DenotativeObject class ] whileTrue: [
 		(implementor includesSelector: selector) ifTrue: [ | methodToDelegate |
@@ -4151,7 +4151,7 @@ value
 				valueWithReceiver: receiver
 				arguments: arguments ].
 		implementor := implementor superclass ].
-	
+
 	self error: 'No parent implements ' , selector.
 ! !
 
@@ -4222,14 +4222,14 @@ compile: aString receiver: receiver in: evalContext
 			ifFail: [ ^ nil ]]
 				on: OutOfScopeNotification
 				do: [ :ex | ex resume: true ].
-				
+
 	^ methodNode generate
-	
+
 	! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:03:18'!
 debug
-	
+
 	self debugAndWithResultDo: [:result | ]! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:03:53'!
@@ -4248,7 +4248,7 @@ debug: aCompiledMethod receiver: anObject in: evalContext withResultDo: aBlock
 			on: Error
 			do: [:anError |
 				self inform: anError printString.
-				debugger inStep 
+				debugger inStep
 					ifTrue: [ anError pass ]
 					ifFalse: [
 						| activeProcess toDebugContext  |
@@ -4259,12 +4259,12 @@ debug: aCompiledMethod receiver: anObject in: evalContext withResultDo: aBlock
 						debugger := DenotativeObjectDebugger new.
 						toDebugContext := thisContext.
 						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-						toDebugContext isNil 
+						toDebugContext isNil
 							ifTrue: [ anError pass ]
 							ifFalse: [
 								debugger process: activeProcess context: toDebugContext.
 								debugger openFullNoSuspendLabel: anError printString.
-								activeProcess suspend ]	
+								activeProcess suspend ]
 						] ]
 	 ] newProcess name: 'debugIt'.
 	context := guineaPig suspendedContext.
@@ -4278,20 +4278,20 @@ debug: aCompiledMethod receiver: anObject in: evalContext withResultDo: aBlock
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:04:21'!
 debugAndInspect
-	
+
 	self debugAndWithResultDo: [:result | result inspect ]! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:04:33'!
 debugAndWithResultDo: aBlock
-	
+
 	| receiver context stringToEval method |
-	
+
 	receiver := self doItReceiver.
 	context := self doItContext.
 	stringToEval := self stringToEvalSending: self selectedMessageName to: receiver onCancel: [^self].
 	[ method := self compile: stringToEval receiver: receiver in: context.
 	method ifNotNil: [ self debug: method receiver: receiver in: context withResultDo: aBlock ]]
-		on: SyntaxErrorNotification 
+		on: SyntaxErrorNotification
 		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
 ! !
 
@@ -4299,7 +4299,7 @@ debugAndWithResultDo: aBlock
 debugDenotativeObjectMethodTest
 
 	(self isTest: currentCompiledMethod selector)
-		ifTrue: [ 
+		ifTrue: [
 			| test |
 			test := DenotativeObjectTestCase for: currentCompiledMethod.
 			test runCaseAsFailure ]
@@ -4326,7 +4326,7 @@ runDenotativeObjectMessageCategoryTests
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:29:21'!
 runDenotativeObjectMethodTest
 
-	(self isTest: currentCompiledMethod selector) 
+	(self isTest: currentCompiledMethod selector)
 		ifTrue: [ | suite |
 			suite := TestSuite named: currentCompiledMethod methodClass soleInstance name, ' ', currentCompiledMethod selector asString.
 			suite addTest: (DenotativeObjectTestCase for: currentCompiledMethod).
@@ -4359,7 +4359,7 @@ runDenotativeObjectTests
 	! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:05:42'!
-send 
+send
 
 	self sendAndWithResultDo: [ :result | ]! !
 
@@ -4370,15 +4370,15 @@ sendAndInspect
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:06:42'!
 sendAndWithResultDo: aBlock
-	
+
 	| receiver context stringToEval method debugger |
-	
+
 	receiver := self doItReceiver.
 	context := self doItContext.
 	stringToEval := self stringToEvalSending: self selectedMessageName to: receiver onCancel: [^self].
 	debugger := nil.
 	[ method := self compile: stringToEval receiver: receiver in: context.
-	method ifNotNil: [[ 
+	method ifNotNil: [[
 		[| result |
 		result := method
 			valueWithReceiver: receiver
@@ -4398,15 +4398,15 @@ sendAndWithResultDo: aBlock
 						debugger := DenotativeObjectDebugger new.
 						toDebugContext := thisContext.
 						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-						toDebugContext isNil 
+						toDebugContext isNil
 							ifTrue: [ anError pass ]
 							ifFalse: [
 								debugger process: activeProcess context: toDebugContext.
 								debugger openFullNoSuspendLabel: anError printString.
-								activeProcess suspend ]	
+								activeProcess suspend ]
 						] ]
 				] fork. ]]
-		on: SyntaxErrorNotification 
+		on: SyntaxErrorNotification
 		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
 	! !
 
@@ -4414,36 +4414,36 @@ sendAndWithResultDo: aBlock
 stringToEvalSending: aSymbol to: aDenotativeObject onCancel: aCancelBlock
 
 	| externalCollaborators |
-	
+
 	externalCollaborators := (aDenotativeObject class >> aSymbol) methodNode arguments collect: [ :anArgumentNode |
 		FillInTheBlankMorph request: 'Enter collaborator ', anArgumentNode name onCancel: [^aCancelBlock value] ].
-	
+
 	^String streamContents: [ :stream |
-		stream 
+		stream
 			nextPutAll: aDenotativeObject name;
 			space.
-			
+
 		aSymbol numArgs = 0
 			ifTrue: [ stream nextPutAll: aSymbol ]
-			ifFalse: [ 
+			ifFalse: [
 				aSymbol keywords withIndexDo: [ :keyword :index |
-					stream 
+					stream
 						nextPutAll: keyword;
 						nextPutAll: ' (';
 						nextPutAll: (externalCollaborators at: index);
 						nextPutAll: ') ' ]]]
-					
+
 	! !
 
 !Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/20/2017 10:41:58'!
 allRealInstances
-	
+
 	^super allInstances ! !
 
 !Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 22:06:25'!
 compilerClass
 
-	^(thisClass is: #DenotativeObject) 
+	^(thisClass is: #DenotativeObject)
 		ifTrue: [ DenotativeObjectCompiler ]
 		ifFalse: [ super compilerClass ]! !
 
@@ -4478,11 +4478,11 @@ sendTo: aReceiver withAll: aCollaborators
 	^(self asMessageWithAll: aCollaborators) sendTo: aReceiver ! !
 
 !CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 8/30/2017 18:19:32'!
-printTheNonMetaClassAndSelectorOn: aStream 
-	
-	aStream 
-		print: self methodClass theNonMetaClass; 
-		nextPutAll: '>>'; 
+printTheNonMetaClassAndSelectorOn: aStream
+
+	aStream
+		print: self methodClass theNonMetaClass;
+		nextPutAll: '>>';
 		nextPutAll: self selector storeString! !
 
 !ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 7/20/2017 20:00:43'!
@@ -4495,22 +4495,22 @@ addCollaboratorLabelsTo: labels andActionsTo: actions
 
 	labels add: 'declare block-local temp'.
 	actions add: [ parser declareTemp: name at: #block ].
-			
+
 	labels add: 'declare method temp'.
 	actions add: [ parser declareTemp: name at: #method ].
-			
+
 	parser canDeclareInstanceVariable ifTrue: [
 		labels add: 'declare collaborator'.
 		actions add: [ parser declareInstVar: name ]].
-	
+
 ! !
 
 !UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 16:18:06'!
-addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
+addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser
 
 	labels add: 'define new denotative object'.
 	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
-	
+
 	labels add: 'declare global'.
 	actions add: [ parser declareGlobal: name ].
 
@@ -4518,7 +4518,7 @@ addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectB
 
 !UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 14:42:30'!
 defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
- 
+
 	| newClass |
 
 	newClass := DenotativeObject
@@ -4527,9 +4527,9 @@ defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
 		classVariableNames: ''
 		poolDictionaries: ''
 		category: aDenotativeObjectBrowser selectedSystemCategoryName.
-		
+
 	aDenotativeObjectBrowser changed: #classList.
-	
+
 	^parser encoder
 		global: (Smalltalk associationAt: newClass name)
 		name: newClass name
@@ -4539,7 +4539,7 @@ defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
 handleForDenotativeObjectIn: aDenotativeObjectBrowser
 
 	| alternatives labels actions lines caption choice |
-	
+
 	alternatives := parser possibleVariablesFor: name.
 	labels := OrderedCollection new.
 	actions := OrderedCollection new.
@@ -4553,19 +4553,19 @@ handleForDenotativeObjectIn: aDenotativeObjectBrowser
 	alternatives do: [ :each |
 		labels add: each.
 		actions add: [ parser substituteVariable: each atInterval: interval ]].
-	
+
 	lines add: labels size.
 	labels add: 'cancel'.
-	
+
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
 	choice := (PopUpMenu labelArray: labels lines: lines) startUpWithCaption: caption.
-	
+
 	self resume: (actions at: choice ifAbsent: [ ]).
 
 ! !
 
 !BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'HAW 6/13/2018 15:49:42'!
-classNameRequester 
+classNameRequester
 
 	^ClassNameRequestMorph! !
 
@@ -4582,7 +4582,7 @@ findClass
 	classNames _ (pattern last = $. or: [pattern last = $ ])
 		ifTrue: [potentialClassNames select:
 					[:nm |  nm asLowercase = toMatch]]
-		ifFalse: [potentialClassNames select: 
+		ifFalse: [potentialClassNames select:
 					[:n | n includesSubstring: toMatch caseSensitive: false]].
 	classNames isEmpty ifTrue: [^ self flash].
 	exactMatch _ classNames detect: [ :each | each asLowercase = toMatch] ifNone: nil.
@@ -4606,5 +4606,5 @@ findClassDialogTitle
 
 !MethodReference methodsFor: '*DenotativeObject' stamp: 'HAW 7/28/2017 19:48:44'!
 recalculateStringVersionForDenotativeObject
-	
+
 	stringVersion := classSymbol asString,' ', methodSymbol ! !
