@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3429] on 24 August 2018 at 4:54:18 pm'!
-'Description Removed fileout from class menu'!
-!provides: 'DenotativeObject' 1 52!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3430] on 18 September 2018 at 2:41:52 pm'!
+'Description Added DenotativeObjectMorph '!
+!provides: 'DenotativeObject' 1 53!
 !requires: 'Refactoring' 1 24 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -10,6 +10,7 @@ SystemOrganization addCategory: #DenotativeObject!
 SystemOrganization addCategory: #'DenotativeObject-Tests'!
 SystemOrganization addCategory: #'DenotativeObject-Refactorings'!
 SystemOrganization addCategory: #'DenotativeObject-Meta'!
+SystemOrganization addCategory: #'DenotativeObject-Morph'!
 
 
 !classDefinition: #DenotativeObjectWorkspace category: #'DenotativeObject-Tools'!
@@ -382,6 +383,36 @@ DenotativeObject subclass: #AssertTest
 AssertTest class
 	instanceVariableNames: ''!
 
+!classDefinition: #DenotativeObjectMorph category: #'DenotativeObject-Morph'!
+DenotativeObject subclass: #DenotativeObjectMorph
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'DenotativeObjectMorph class' category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph class
+	instanceVariableNames: 'morph'!
+
+!classDefinition: #Light category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #Light
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'Light class' category: #'DenotativeObject-Morph'!
+Light class
+	instanceVariableNames: ''!
+
+!classDefinition: #ThreeLightsContainer category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #ThreeLightsContainer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'ThreeLightsContainer class' category: #'DenotativeObject-Morph'!
+ThreeLightsContainer class
+	instanceVariableNames: ''!
+
 !classDefinition: #ObjectBuilder category: #DenotativeObject!
 Object subclass: #ObjectBuilder
 	instanceVariableNames: ''
@@ -737,11 +768,11 @@ renameClass
 	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
 		(DenotativeObjectRenameApplier on: self for: aBehavior theNonMetaClass) value ].! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/1/2018 18:02:13'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/14/2018 13:49:17'!
 safelyRemoveClass
 
 	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
-		(DenotativeObjectSafelyRemoveApplier of: aBehavior theNonMetaClass) value ].
+		(DenotativeObjectSafelyRemoveApplier on: self of: aBehavior theNonMetaClass) value ].
 	
 	! !
 
@@ -2090,7 +2121,7 @@ classListMenu
 		}`.
 	^ aMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/15/2018 11:57:52'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/15/2018 18:24:09'!
 messageListMenu
 	"Answer the message-list menu"
 	"Changed by emm to include menu-item for breakpoints"
@@ -2123,19 +2154,17 @@ messageListMenu
 				#selector 		-> 		#renameSelector.
 				#icon 			-> 		#saveAsIcon
 			} asDictionary.
-			nil.
 			{
 				#label 			-> 		'remove (x)'.
 				#selector 		-> 		#removeMessage.
 				#icon 			-> 		#deleteIcon
 			} asDictionary.
-			nil.
 			{				 
 				#label 			-> 		'versions (v)'.
 				#selector 		-> 		#browseVersions.
 				#icon 			-> 		#clockIcon
 			} asDictionary.
-			nil
+			nil.		
 			{
 				#label 			-> 		'change category...'.
 				#object 			-> 		#model.
@@ -4009,6 +4038,43 @@ test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 		signal: Error
 		withDescription: errorDescription ! !
 
+!DenotativeObjectMorph class methodsFor: 'as yet unclassified' stamp: 'HAW 9/17/2018 15:30:40'!
+createMorph 
+
+	self childResponsibility ! !
+
+!DenotativeObjectMorph class methodsFor: 'as yet unclassified' stamp: 'HAW 9/13/2018 19:01:00'!
+doesNotUnderstand: aMessage
+
+	^aMessage sendTo: self morph ! !
+
+!DenotativeObjectMorph class methodsFor: 'as yet unclassified' stamp: 'HAW 9/17/2018 15:30:30'!
+initializeMorph 
+
+	morph := self createMorph! !
+
+!DenotativeObjectMorph class methodsFor: 'as yet unclassified' stamp: 'HAW 9/13/2018 18:57:58'!
+morph
+
+	morph isNil ifTrue: [ self initializeMorph ].
+	
+	^morph ! !
+
+!Light class methodsFor: 'as yet unclassified' stamp: 'HAW 9/17/2018 15:32:29'!
+createMorph
+
+	^EllipseMorph new
+		color: Color black;
+		yourself! !
+
+!ThreeLightsContainer class methodsFor: 'as yet unclassified' stamp: 'HAW 9/17/2018 15:31:40'!
+createMorph
+
+	^LayoutMorph newColumn
+		morphExtent: 60 @ 130;
+		yourself
+! !
+
 !ObjectBuilder class methodsFor: 'preconditions' stamp: 'HAW 3/31/2018 20:35:28'!
 assertIsValidName: anObjectName
 
@@ -4096,6 +4162,11 @@ printOn: aStream
 		nextPutAll: name;
 		nextPutAll: ' at ';
 		print: owner! !
+
+!Collaborator methodsFor: 'name' stamp: 'HAW 9/14/2018 13:32:56'!
+name
+
+	^ name! !
 
 !Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:30:32'!
 value
