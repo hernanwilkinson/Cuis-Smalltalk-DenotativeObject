@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3430] on 18 September 2018 at 2:41:52 pm'!
-'Description Added DenotativeObjectMorph '!
-!provides: 'DenotativeObject' 1 53!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3430] on 18 September 2018 at 2:47:30 pm'!
+'Description Added DenotativeObjectMorph. Method categorization'!
+!provides: 'DenotativeObject' 1 54!
 !requires: 'Refactoring' 1 24 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -4038,36 +4038,36 @@ test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 		signal: Error
 		withDescription: errorDescription ! !
 
-!DenotativeObjectMorph class methodsFor: 'as yet unclassified' stamp: 'HAW 9/17/2018 15:30:40'!
-createMorph 
-
-	self childResponsibility ! !
-
-!DenotativeObjectMorph class methodsFor: 'as yet unclassified' stamp: 'HAW 9/13/2018 19:01:00'!
+!DenotativeObjectMorph class methodsFor: 'message forwarding - private' stamp: 'HAW 9/18/2018 14:46:01'!
 doesNotUnderstand: aMessage
 
 	^aMessage sendTo: self morph ! !
 
-!DenotativeObjectMorph class methodsFor: 'as yet unclassified' stamp: 'HAW 9/17/2018 15:30:30'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:30:40'!
+createMorph 
+
+	self childResponsibility ! !
+
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:30:30'!
 initializeMorph 
 
 	morph := self createMorph! !
 
-!DenotativeObjectMorph class methodsFor: 'as yet unclassified' stamp: 'HAW 9/13/2018 18:57:58'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 9/13/2018 18:57:58'!
 morph
 
 	morph isNil ifTrue: [ self initializeMorph ].
 	
 	^morph ! !
 
-!Light class methodsFor: 'as yet unclassified' stamp: 'HAW 9/17/2018 15:32:29'!
+!Light class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:32:29'!
 createMorph
 
 	^EllipseMorph new
 		color: Color black;
 		yourself! !
 
-!ThreeLightsContainer class methodsFor: 'as yet unclassified' stamp: 'HAW 9/17/2018 15:31:40'!
+!ThreeLightsContainer class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:31:40'!
 createMorph
 
 	^LayoutMorph newColumn
