@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3430] on 18 September 2018 at 2:47:30 pm'!
-'Description Added DenotativeObjectMorph. Method categorization'!
-!provides: 'DenotativeObject' 1 54!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3451] on 27 September 2018 at 4:20:57 pm'!
+'Description Menu to show or hide DenotativeObjectMorph. Implementation of #isDescendantOf:'!
+!provides: 'DenotativeObject' 1 55!
 !requires: 'Refactoring' 1 24 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -1041,6 +1041,21 @@ systemCategoryListIndex: anInteger
 	self changed: #classMessagesIndicated.
 	self acceptedContentsChanged! !
 
+!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'HAW 9/27/2018 15:07:14'!
+hasMorphObjectSelected
+
+	^ self selectedClass notNil and: [ self selectedClass isDescendantOf: DenotativeObjectMorph ]! !
+
+!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 9/27/2018 11:18:46'!
+hideSelectedMorph
+
+	self selectedClass delete! !
+
+!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 9/27/2018 11:18:58'!
+showSelectedMorph
+
+	self selectedClass openInWorld! !
+
 !DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 6/13/2018 16:01:25'!
 recentClasses
 	
@@ -2013,14 +2028,14 @@ findClassDialogTitle
 
 	^ 'Denotative object name or fragment?'! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 8/24/2018 16:31:33'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 9/27/2018 11:05:54'!
 classListMenu
 
 	| aMenu |
 	aMenu := MenuMorph new defaultTarget: self.
 	aMenu addTitle: 'Objects'.
 	aMenu
-		addItemsFromDictionaries: `{
+		addItemsFromDictionaries: self morphMenuItems , `{
 			{
 				#label 			-> 		'add object... (a)'.
 				#selector 		-> 		#addDenotativeObject.
@@ -2204,6 +2219,27 @@ messageListMenu
 			} asDictionary.
 		}`.
 	^ aMenu! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 9/27/2018 11:18:31'!
+morphMenuItems
+
+	^ (model hasMorphObjectSelected) ifTrue: [
+		| toggleDisplayOption showOption hideOption |
+		showOption _ `{
+			#label 			-> 		'show!!'.
+			#selector 		-> 		#showSelectedMorph.
+			#object 			->			#model.
+			#icon 			-> 		#weatherClearIcon
+		} asDictionary`.
+		hideOption _ `{
+			#label 			-> 		'hide!!'.
+			#selector 		-> 		#hideSelectedMorph.
+			#object 			->			#model.
+			#icon 			-> 		#weatherOvercastIcon
+		} asDictionary`.
+		toggleDisplayOption _ model selectedClass owner ifNil: [ showOption ] ifNotNil: [ hideOption ].
+		{ toggleDisplayOption. nil }
+	] ifFalse: [ {} ]! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 7/22/2017 06:22:49'!
 systemCatSingletonMenu
@@ -3266,6 +3302,15 @@ isChildOf: aParent
 
 	"We have to use #= instead of isEqualTo: becuase the last one can be redefined - Hernan"
 	^(self parentIfNone: [ ^false ]) = aParent! !
+
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 9/27/2018 15:04:37'!
+isDescendantOf: anAncestor
+
+	"We have to use #= instead of isEqualTo: becuase the last one can be redefined - Hernan"
+	| parent | 
+	
+	parent := self parentIfNone: [ ^false ].
+	^ parent = anAncestor or: [ parent isDescendantOf: anAncestor ]! !
 
 !DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:58:28'!
 parent
@@ -4674,6 +4719,18 @@ findClass
 findClassDialogTitle
 
 	^ 'Class name or fragment?'! !
+
+!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:12'!
+weatherClearIcon
+
+	^ self fetch: #( '16x16' 'status' 'weather-clear' )
+! !
+
+!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:09'!
+weatherOvercastIcon
+
+	^ self fetch: #( '16x16' 'status' 'weather-overcast' )
+! !
 
 !MethodReference methodsFor: '*DenotativeObject' stamp: 'HAW 7/28/2017 19:48:44'!
 recalculateStringVersionForDenotativeObject
