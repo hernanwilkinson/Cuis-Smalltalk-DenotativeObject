@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3451] on 27 September 2018 at 4:20:57 pm'!
-'Description Menu to show or hide DenotativeObjectMorph. Implementation of #isDescendantOf:'!
-!provides: 'DenotativeObject' 1 55!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3461] on 1 October 2018 at 2:53:59 pm'!
+'Description Use of auto complete for class names and denotative object names'!
+!provides: 'DenotativeObject' 1 56!
 !requires: 'Refactoring' 1 24 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -655,11 +655,11 @@ copyClass
 			
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 4/10/2018 18:42:12'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 10/1/2018 14:52:20'!
 createClass
 
 	self selectedClass ifNotNil: [ :aDenotativeObject | | superclass className categoryName |	
-		className := FillInTheBlankMorph request: 'Class for ', aDenotativeObject name onCancel: [ ^self ].
+		className := ClassNameRequestMorph request: 'Class for ', aDenotativeObject name onCancel: [ ^self ].
 		(Smalltalk classNamed: className) ifNotNil: [
 			(PopUpMenu confirm: className, ' already exist. Do you want to recreate?' trueChoice: 'Recreate it' falseChoice: 'Do not continue') 
 				ifFalse: [ ^self ]].			
@@ -670,14 +670,14 @@ createClass
 			on: Error
 			do: [ :anError | self inform: anError messageText ]]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 4/10/2018 18:49:14'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 10/1/2018 14:52:33'!
 createSuperclassOf: aDenotativeObject onCancel: aBlock
 
 	| denotativeObjectParent categoryName superclass superclassName |
 	
 	denotativeObjectParent := aDenotativeObject parentIfNone: [ ^Object ].
 	
-	superclassName := FillInTheBlankMorph request: 'Class for ', denotativeObjectParent name onCancel: [ ^aBlock value ].
+	superclassName := ClassNameRequestMorph request: 'Class for ', denotativeObjectParent name onCancel: [ ^aBlock value ].
 	(Smalltalk classNamed: superclassName) ifNotNil: [ :alreadyExistingSuperclass |
 		(PopUpMenu confirm: superclassName, ' already exist. Do you want to recreate or reuse it?' trueChoice: 'Recreate it' falseChoice: 'Reuse it')
 			ifFalse: [ ^alreadyExistingSuperclass ]].
@@ -782,12 +782,12 @@ withObjectNameDo: aBlock
 	^self withObjectNameDo: aBlock label: 'Enter object name' 
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:38:06'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 10/1/2018 14:52:54'!
 withObjectNameDo: aBlock label: aLabel
 	
 	| objectName |
 	
-	objectName := FillInTheBlankMorph request: aLabel onCancel: [^self].
+	objectName := DenotativeObjectNameRequestMorph request: aLabel onCancel: [^self].
 	objectName := objectName withBlanksTrimmed.
 	"This is just to provide a better error message - Hernan"
 	[ ObjectBuilder assertIsValidName: objectName ] on: Error do: [:anError | ^self inform: anError messageText ].
