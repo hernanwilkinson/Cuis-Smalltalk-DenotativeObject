@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3461] on 1 October 2018 at 2:53:59 pm'!
-'Description Use of auto complete for class names and denotative object names'!
-!provides: 'DenotativeObject' 1 56!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3507] on 28 November 2018 at 1:31:26 pm'!
+'Description Fix senders of #asCommaStringAndPritingWith: to #asCommaStringAndPrintingWith:'!
+!provides: 'DenotativeObject' 1 57!
 !requires: 'Refactoring' 1 24 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -2866,14 +2866,14 @@ newVariableCanNotBeEmptyErrorMessage
 	
 	^'New collaborator name can not be empty'! !
 
-!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 18:18:40'!
+!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 11/28/2018 13:28:55'!
 warningMessageForNewVariable: newVariable willBeHiddenAtAll: methods
  
 	^String streamContents: [ :stream |
 		stream 
 			nextPutAll: newVariable;
 			nextPutAll: ' will be hidden at '.
-		methods asCommaStringAndPritingWith: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] ]! !
+		methods asCommaStringAndPrintingWith: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] ]! !
 
 !DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
@@ -2907,16 +2907,16 @@ addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPot
 	^(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
 		super addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ]! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 8/31/2017 15:26:09'!
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 11/28/2018 13:29:04'!
 errorMessageForInvalidImplementors: aCollectionOfInvalidImplementors
 
 	^String streamContents: [ :stream |
 		stream 
 			nextPutAll: (aCollectionOfInvalidImplementors size = 1 ifTrue: [ 'This method' ] ifFalse: [ 'These methods']);
 		 	nextPutAll: ' do not have same the same selector to rename: '.
-		aCollectionOfInvalidImplementors asCommaStringAndPritingWith: [:anImplementor | anImplementor printTheNonMetaClassAndSelectorOn: stream ] ] ! !
+		aCollectionOfInvalidImplementors asCommaStringAndPrintingWith: [:anImplementor | anImplementor printTheNonMetaClassAndSelectorOn: stream ] ] ! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 8/31/2017 15:26:28'!
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 11/28/2018 13:29:11'!
 errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
 
 	^String streamContents: [ :stream |
@@ -2924,7 +2924,7 @@ errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
 			nextPutAll: 'Message #';
 			nextPutAll: anOldSelector;
 			nextPutAll: ' is not send by: '.
-		aCollectionOfInvalidSenders asCommaStringAndPritingWith: [:aSender | aSender printTheNonMetaClassAndSelectorOn: stream ] ] ! !
+		aCollectionOfInvalidSenders asCommaStringAndPrintingWith: [:aSender | aSender printTheNonMetaClassAndSelectorOn: stream ] ] ! !
 
 !DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 8/31/2017 15:28:03'!
 errorMessageForNewSelector: aNewSelector implementedInAll: classesImplementingNewSelector
