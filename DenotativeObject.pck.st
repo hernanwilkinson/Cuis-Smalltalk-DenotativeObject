@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3507] on 28 November 2018 at 1:31:26 pm'!
-'Description Fix senders of #asCommaStringAndPritingWith: to #asCommaStringAndPrintingWith:'!
-!provides: 'DenotativeObject' 1 57!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3508] on 29 November 2018 at 8:23:56 pm'!
+'Description Support for contextual rename'!
+!provides: 'DenotativeObject' 1 58!
 !requires: 'Refactoring' 1 24 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -48,7 +48,10 @@ Debugger subclass: #DenotativeObjectDebugger
 	instanceVariableNames: 'inStep'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Tools'!
+	category: 'DenotativeObject-Tools'
+"
+inStep : <>
+"!
 !classDefinition: 'DenotativeObjectDebugger class' category: #'DenotativeObject-Tools'!
 DenotativeObjectDebugger class
 	instanceVariableNames: ''!
@@ -208,7 +211,13 @@ TestCase subclass: #DenotativeObjectTestCase
 	instanceVariableNames: 'testMethod realTest realTestSelector denotativeObject'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-TestSupport'!
+	category: 'DenotativeObject-TestSupport'
+"
+testMethod : <>
+realTest : <>
+realTestSelector : <>
+denotativeObject : <>
+"!
 !classDefinition: 'DenotativeObjectTestCase class' category: #'DenotativeObject-TestSupport'!
 DenotativeObjectTestCase class
 	instanceVariableNames: ''!
@@ -391,7 +400,10 @@ DenotativeObject subclass: #DenotativeObjectMorph
 	category: 'DenotativeObject-Morph'!
 !classDefinition: 'DenotativeObjectMorph class' category: #'DenotativeObject-Morph'!
 DenotativeObjectMorph class
-	instanceVariableNames: 'morph'!
+	instanceVariableNames: 'morph'
+"
+morph : <UndefinedObject>
+"!
 
 !classDefinition: #Light category: #'DenotativeObject-Morph'!
 DenotativeObjectMorph subclass: #Light
@@ -428,7 +440,11 @@ Object subclass: #Collaborator
 	instanceVariableNames: 'owner name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'!
+	category: 'DenotativeObject-Meta'
+"
+owner : <>
+name : <>
+"!
 !classDefinition: 'Collaborator class' category: #'DenotativeObject-Meta'!
 Collaborator class
 	instanceVariableNames: ''!
@@ -438,7 +454,13 @@ Object subclass: #Delegator
 	instanceVariableNames: 'currentMethodClass selector receiver arguments'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'!
+	category: 'DenotativeObject-Meta'
+"
+currentMethodClass : <>
+selector : <>
+receiver : <>
+arguments : <>
+"!
 !classDefinition: 'Delegator class' category: #'DenotativeObject-Meta'!
 Delegator class
 	instanceVariableNames: ''!
@@ -448,7 +470,11 @@ ProtoObject subclass: #DelegatorBuilder
 	instanceVariableNames: 'receiver lookupBase'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'!
+	category: 'DenotativeObject-Meta'
+"
+receiver : <>
+lookupBase : <>
+"!
 !classDefinition: 'DelegatorBuilder class' category: #'DenotativeObject-Meta'!
 DelegatorBuilder class
 	instanceVariableNames: ''!
@@ -1525,7 +1551,7 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 	morph formatAndStyleIfNeeded.		"Needed to re-shout workspaces, that might have new variables binded."
 	^ aBlock value: result! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 7/7/2018 19:58:57'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 11/28/2018 20:36:10'!
 getMenu
 	
 	^(MenuMorph new defaultTarget: self)
@@ -1586,8 +1612,8 @@ getMenu
 			} asDictionary.
 			nil.
 			{
-				#label 			-> 		'Rename temporary'.
-				#selector 		-> 		#renameTemporary.
+				#label 			-> 		'Rename... (R)'.
+				#selector 		-> 		#contextualRename.
 				#icon 			-> 		#saveAsIcon
 			} asDictionary.
 			nil.
@@ -1639,6 +1665,21 @@ getMenu
 				#icon 			-> 		#listAddIcon
 			} asDictionary.
 		}`! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 11/29/2018 20:16:56'!
+renameClassOn: aBrowser for: aClassToRefactor
+
+	(DenotativeObjectRenameApplier on: aBrowser for: aClassToRefactor) value ! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 11/29/2018 20:20:21'!
+renameInstanceVariableOn: aBrowser for: anInstanceVariableName at: aClassToRefactor 
+	
+	(DenotativeObjectRenameCollaboratorApplier on: aBrowser for: anInstanceVariableName at: aClassToRefactor) value! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 11/29/2018 20:20:51'!
+renameSelectorFor: aSelector in: aClassToRefactor
+
+	(DenotativeObjectRenameSelectorApplier for: aSelector in: aClassToRefactor) value! !
 
 !DenotativeObjectSmalltalkEditor class methodsFor: 'keyboard shortcut tables' stamp: 'HAW 9/10/2017 14:48:19'!
 cmdShortcutsSpec
