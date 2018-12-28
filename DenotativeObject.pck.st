@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3508] on 29 November 2018 at 8:23:56 pm'!
-'Description Support for contextual rename'!
-!provides: 'DenotativeObject' 1 58!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3544] on 28 December 2018 at 11:47:04 am'!
+'Description Support for categorization of classes & methods with drag & drop'!
+!provides: 'DenotativeObject' 1 59!
 !requires: 'Refactoring' 1 24 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -48,10 +48,7 @@ Debugger subclass: #DenotativeObjectDebugger
 	instanceVariableNames: 'inStep'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Tools'
-"
-inStep : <>
-"!
+	category: 'DenotativeObject-Tools'!
 !classDefinition: 'DenotativeObjectDebugger class' category: #'DenotativeObject-Tools'!
 DenotativeObjectDebugger class
 	instanceVariableNames: ''!
@@ -211,13 +208,7 @@ TestCase subclass: #DenotativeObjectTestCase
 	instanceVariableNames: 'testMethod realTest realTestSelector denotativeObject'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-TestSupport'
-"
-testMethod : <>
-realTest : <>
-realTestSelector : <>
-denotativeObject : <>
-"!
+	category: 'DenotativeObject-TestSupport'!
 !classDefinition: 'DenotativeObjectTestCase class' category: #'DenotativeObject-TestSupport'!
 DenotativeObjectTestCase class
 	instanceVariableNames: ''!
@@ -400,10 +391,7 @@ DenotativeObject subclass: #DenotativeObjectMorph
 	category: 'DenotativeObject-Morph'!
 !classDefinition: 'DenotativeObjectMorph class' category: #'DenotativeObject-Morph'!
 DenotativeObjectMorph class
-	instanceVariableNames: 'morph'
-"
-morph : <UndefinedObject>
-"!
+	instanceVariableNames: 'morph'!
 
 !classDefinition: #Light category: #'DenotativeObject-Morph'!
 DenotativeObjectMorph subclass: #Light
@@ -440,11 +428,7 @@ Object subclass: #Collaborator
 	instanceVariableNames: 'owner name'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'
-"
-owner : <>
-name : <>
-"!
+	category: 'DenotativeObject-Meta'!
 !classDefinition: 'Collaborator class' category: #'DenotativeObject-Meta'!
 Collaborator class
 	instanceVariableNames: ''!
@@ -454,13 +438,7 @@ Object subclass: #Delegator
 	instanceVariableNames: 'currentMethodClass selector receiver arguments'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'
-"
-currentMethodClass : <>
-selector : <>
-receiver : <>
-arguments : <>
-"!
+	category: 'DenotativeObject-Meta'!
 !classDefinition: 'Delegator class' category: #'DenotativeObject-Meta'!
 Delegator class
 	instanceVariableNames: ''!
@@ -470,11 +448,7 @@ ProtoObject subclass: #DelegatorBuilder
 	instanceVariableNames: 'receiver lookupBase'
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'
-"
-receiver : <>
-lookupBase : <>
-"!
+	category: 'DenotativeObject-Meta'!
 !classDefinition: 'DelegatorBuilder class' category: #'DenotativeObject-Meta'!
 DelegatorBuilder class
 	instanceVariableNames: ''!
@@ -2005,14 +1979,14 @@ buildLowerPanes
 
 	^codeAndButtons ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:22:49'!
-buildMorphicClassColumn
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/28/2018 11:41:57'!
+buildMorphicClassColumnWith: aClassList
 
 	| column |
 
 	column := LayoutMorph newColumn.
-	column addMorphUseAll: self buildMorphicClassList.
-
+	column addMorphUseAll: aClassList.
+	
 	^column! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:22:49'!
