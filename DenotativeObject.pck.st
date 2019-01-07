@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3544] on 28 December 2018 at 11:47:04 am'!
-'Description Support for categorization of classes & methods with drag & drop'!
-!provides: 'DenotativeObject' 1 59!
-!requires: 'Refactoring' 1 24 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3562] on 7 January 2019 at 4:32:58 pm'!
+'Description Support for denotative objects with names that start wit lowecase. Support to new errors when renaming'!
+!provides: 'DenotativeObject' 1 60!
 !requires: 'Theme-Themes' 1 2 nil!
+!requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -61,6 +61,16 @@ Inspector subclass: #DenotativeObjectInspector
 	category: 'DenotativeObject-Tools'!
 !classDefinition: 'DenotativeObjectInspector class' category: #'DenotativeObject-Tools'!
 DenotativeObjectInspector class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectBuilder category: #DenotativeObject!
+ClassBuilder subclass: #DenotativeObjectBuilder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectBuilder class' category: #DenotativeObject!
+DenotativeObjectBuilder class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectCompiler category: #'DenotativeObject-Compiler'!
@@ -1250,6 +1260,12 @@ openOn: anObject withLabel: label
 	
 ! !
 
+!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 1/7/2019 16:23:10'!
+doesClassNameStartWithUppercase: aClassName
+
+	"To allow denotative objects to start with lowercase - Hernan"
+	^true! !
+
 !DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
 parserClass
 
@@ -1650,10 +1666,10 @@ renameInstanceVariableOn: aBrowser for: anInstanceVariableName at: aClassToRefac
 	
 	(DenotativeObjectRenameCollaboratorApplier on: aBrowser for: anInstanceVariableName at: aClassToRefactor) value! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 11/29/2018 20:20:51'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 1/7/2019 15:34:00'!
 renameSelectorFor: aSelector in: aClassToRefactor
 
-	(DenotativeObjectRenameSelectorApplier for: aSelector in: aClassToRefactor) value! !
+	DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [DenotativeObjectRenameSelectorApplier on: model textProvider for: aSelector in: aClassToRefactor ]! !
 
 !DenotativeObjectSmalltalkEditor class methodsFor: 'keyboard shortcut tables' stamp: 'HAW 9/10/2017 14:48:19'!
 cmdShortcutsSpec
@@ -1946,11 +1962,11 @@ renameInstVar
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
 		(DenotativeObjectRenameCollaboratorApplier on: self for: aClass) value ].! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/15/2018 11:59:44'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 1/7/2019 15:33:15'!
 renameSelector
 
 	model selectedMessageName ifNotNil: [ :oldSelector |
-		(DenotativeObjectRenameSelectorApplier for: oldSelector in: model selectedClassOrMetaClass) value ].! !
+		DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [ DenotativeObjectRenameSelectorApplier on: model for: oldSelector in: model selectedClassOrMetaClass ]]! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
 sendersOf: aSymbol
@@ -2881,14 +2897,14 @@ newVariableCanNotBeEmptyErrorMessage
 	
 	^'New collaborator name can not be empty'! !
 
-!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 11/28/2018 13:28:55'!
+!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 1/7/2019 10:51:35'!
 warningMessageForNewVariable: newVariable willBeHiddenAtAll: methods
  
 	^String streamContents: [ :stream |
 		stream 
 			nextPutAll: newVariable;
 			nextPutAll: ' will be hidden at '.
-		methods asCommaStringAndPrintingWith: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] ]! !
+		methods asCommaSeparated: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] on: stream ]! !
 
 !DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
@@ -2922,16 +2938,16 @@ addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPot
 	^(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
 		super addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ]! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 11/28/2018 13:29:04'!
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 1/7/2019 10:51:35'!
 errorMessageForInvalidImplementors: aCollectionOfInvalidImplementors
 
 	^String streamContents: [ :stream |
 		stream 
 			nextPutAll: (aCollectionOfInvalidImplementors size = 1 ifTrue: [ 'This method' ] ifFalse: [ 'These methods']);
 		 	nextPutAll: ' do not have same the same selector to rename: '.
-		aCollectionOfInvalidImplementors asCommaStringAndPrintingWith: [:anImplementor | anImplementor printTheNonMetaClassAndSelectorOn: stream ] ] ! !
+		aCollectionOfInvalidImplementors asCommaSeparated: [:anImplementor | anImplementor printTheNonMetaClassAndSelectorOn: stream ] on: stream ] ! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 11/28/2018 13:29:11'!
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 1/7/2019 10:51:35'!
 errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
 
 	^String streamContents: [ :stream |
@@ -2939,7 +2955,7 @@ errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
 			nextPutAll: 'Message #';
 			nextPutAll: anOldSelector;
 			nextPutAll: ' is not send by: '.
-		aCollectionOfInvalidSenders asCommaStringAndPrintingWith: [:aSender | aSender printTheNonMetaClassAndSelectorOn: stream ] ] ! !
+		aCollectionOfInvalidSenders asCommaSeparated: [:aSender | aSender printTheNonMetaClassAndSelectorOn: stream ] on: stream ] ! !
 
 !DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 8/31/2017 15:28:03'!
 errorMessageForNewSelector: aNewSelector implementedInAll: classesImplementingNewSelector
@@ -3024,6 +3040,14 @@ refactoringClass
 
 	^DenotativeObjectRenameSelector ! !
 
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 1/3/2019 16:00:15'!
+askForImplementosAndSenders
+
+	self 
+		askScope;
+		calculateImplementorsAndSenders;
+		createAndApplyRefactoring! !
+
 !DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/31/2017 15:39:08'!
 scopeOptionLabels
 
@@ -3032,19 +3056,6 @@ scopeOptionLabels
 	
 	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
 	! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'evaluation' stamp: 'HAW 8/31/2017 16:34:32'!
-value
-
-	requestExitBlock := [ ^self ].
-
-	self
-		requestRefactoringParametersHandlingRefactoringExceptions;
-		calculateImplementorsAndSenders;
-		createRefactoringHandlingRefactoringExceptions;
-		applyRefactoring;
-		showChanges
-		! !
 
 !DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:29:01'!
 createRefactoring
@@ -3682,6 +3693,26 @@ createClassNamed: aName subclassOf: aSuperclass category: aCategory
 	
 	^newClass! !
 
+!DenotativeObject class methodsFor: 'subclass creation' stamp: 'HAW 1/3/2019 16:10:58'!
+subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat 
+	"This is the standard initialization message for creating a new class as a 
+	subclass of an existing class (the receiver)."
+	
+	| answer |
+	answer _ DenotativeObjectBuilder new
+		superclass: self
+		subclass: t
+		instanceVariableNames: f
+		classVariableNames: d
+		poolDictionaries: s
+		category: cat.
+		
+	Smalltalk
+		logChange: answer definition 
+		preamble: answer definitionPreamble.
+	^answer
+! !
+
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:11:52'!
 comparingStringBetween: actual and: expected
 
@@ -4147,7 +4178,7 @@ assertIsValidParent: aParentDenotativeObject
 	(self isValidParent: aParentDenotativeObject) ifFalse: [ self signalInvalidParent: aParentDenotativeObject ]
 	! !
 
-!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 3/31/2018 20:30:08'!
+!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 1/3/2019 16:12:02'!
 create: anObject asChildOf: aParentDenotativeObject collaboratorNames: variablesDefinition in: aCategory
 
 	| newClass |
