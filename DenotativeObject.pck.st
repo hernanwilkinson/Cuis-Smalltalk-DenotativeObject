@@ -1,7 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3562] on 7 January 2019 at 4:32:58 pm'!
-'Description Support for denotative objects with names that start wit lowecase. Support to new errors when renaming'!
-!provides: 'DenotativeObject' 1 60!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3590] on 20 February 2019 at 6:21:56 pm'!
+'Description Now it depends on LiveTyping so the autocompleter works better. It also defines the autocompleter to use in debugger, inspectors, etc. that it was using the smalltalk one'!
+!provides: 'DenotativeObject' 1 61!
 !requires: 'Theme-Themes' 1 2 nil!
+!requires: 'LiveTyping' 1 5 nil!
 !requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -234,13 +235,23 @@ DenotativeObjectRenameMethodApplierTest class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectCompleter category: #'DenotativeObject-Tools'!
-SmalltalkCompleter subclass: #DenotativeObjectCompleter
+LiveTypingSmalltalkCompleter subclass: #DenotativeObjectCompleter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
 !classDefinition: 'DenotativeObjectCompleter class' category: #'DenotativeObject-Tools'!
 DenotativeObjectCompleter class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectAutoCompleterSelectorsCollector category: #'DenotativeObject-Tools'!
+AutoCompleterSelectorsCollector subclass: #DenotativeObjectAutoCompleterSelectorsCollector
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectAutoCompleterSelectorsCollector class' category: #'DenotativeObject-Tools'!
+DenotativeObjectAutoCompleterSelectorsCollector class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeNewObjectPrecondition category: #'DenotativeObject-Refactorings'!
@@ -501,6 +512,11 @@ runMethodTest
 runSystemCategoryTests
 
 	^self runDenotativeObjectSystemCategoryTests! !
+
+!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 16:56:52'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
 
 !DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 21:57:20'!
 editorClassFor: textGetter
@@ -1066,6 +1082,11 @@ showSelectedMorph
 
 	self selectedClass openInWorld! !
 
+!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 2/19/2019 15:32:07'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
+
 !DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 6/13/2018 16:01:25'!
 recentClasses
 	
@@ -1084,6 +1105,11 @@ askForCategoryIn: aClass default: aString
 	category := index = 1 ifTrue: [FillInTheBlankMorph request: 'Enter category name:']
 						ifFalse: [categories at: index].
 	^ category isEmpty ifTrue: [aString] ifFalse: [category]! !
+
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 10:54:42'!
+originalSend
+
+	^super send! !
 
 !DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 18:18:10'!
 restart
@@ -1153,25 +1179,25 @@ contents: aText notifying: aController
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
 ! !
 
-!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 12:43:55'!
-editorClassFor: textGetter
-
-	^DenotativeObjectSmalltalkEditor ! !
-
-!DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 17:29:24'!
+!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 7/29/2017 17:29:24'!
 inStep
 
 	^inStep ! !
 
-!DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 7/29/2017 10:54:42'!
-originalSend
-
-	^super send! !
-
-!DenotativeObjectDebugger methodsFor: 'as yet unclassified' stamp: 'HAW 8/21/2017 19:08:57'!
+!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 8/21/2017 19:08:57'!
 selectedSystemCategoryName
 	
 	^self receiver ifNil: [ 'Debugger-Objects' ] ifNotNil: [ :receiver | receiver isBehavior ifTrue: [ receiver category ] ifFalse: [ receiver class category ]]! !
+
+!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 18:06:23'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
+
+!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 12:43:55'!
+editorClassFor: textGetter
+
+	^DenotativeObjectSmalltalkEditor ! !
 
 !DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 7/29/2017 17:29:17'!
 initialize
@@ -1212,6 +1238,11 @@ baseFieldList
 	and the instance variable names of the inspected object."
 
 	^ (Array with: 'self' with: 'all collaborators'), object collaboratorNames ! !
+
+!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 18:44:01'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
 
 !DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 8/5/2017 10:37:42'!
 editorClassFor: textGetter
@@ -1541,7 +1572,7 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 	morph formatAndStyleIfNeeded.		"Needed to re-shout workspaces, that might have new variables binded."
 	^ aBlock value: result! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 11/28/2018 20:36:10'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 2/19/2019 16:42:27'!
 getMenu
 	
 	^(MenuMorph new defaultTarget: self)
@@ -1606,6 +1637,7 @@ getMenu
 				#selector 		-> 		#contextualRename.
 				#icon 			-> 		#saveAsIcon
 			} asDictionary.
+			}, LiveTyping smalltalkEditorMenuOptions, {
 			nil.
 			{
 				#label 			-> 		'Accept (s)'.
@@ -2851,12 +2883,53 @@ test01ScopeOptionsAreTheSame
 		assert: DenotativeObjectRenameSelectorApplier new scopeOptionLabels size
 		equals: DenotativeObjectRenameSelectorApplier superclass new scopeOptionLabels size.! !
 
-!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 6/13/2018 15:57:49'!
+!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 2/19/2019 18:41:17'!
 computeIdentifierEntries
 
-	super computeIdentifierEntries.
-	entries := entries select: [ :anEntry | (Smalltalk classNamed: anEntry)  is: #DenotativeObject ].
-	! !
+	| entriesSet addBlock instVarToExclude |
+
+	entriesSet := Set new.
+	addBlock := [ :identifier | (identifier beginsWith: prefix) ifTrue: [ entriesSet add: identifier]].
+	instVarToExclude := DenotativeObject class allInstVarNames asSet.
+
+	parser 
+		blockArgNamesDo: addBlock;
+		blockTempNamesDo: addBlock;
+		methodArgNamesDo: addBlock;
+		methodTempNamesDo: addBlock;
+		instVarNamesDo: [ :identifier | (instVarToExclude includes: identifier) ifFalse: [ addBlock value: identifier ]].
+	parser reservedNames do: [ :identifier | identifier = 'super' ifFalse: [ addBlock value: identifier ]].	
+	
+	Smalltalk namesBeginningWith: prefix do: [ :identifier | ((Smalltalk classNamed: identifier) is: #DenotativeObject) ifTrue: [ entriesSet add: identifier ]].
+	
+	entries := entriesSet asArray sort! !
+
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 2/19/2019 15:50:42'!
+computeMessageEntriesForClass: aClass
+
+	(aClass isMeta and: [ aClass soleInstance is: #DenotativeObject])
+		ifTrue: [ self computeMessageEntriesForDenotativeObject: aClass ]
+		ifFalse: [ super computeMessageEntriesForClass: aClass ]
+		! !
+
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 2/19/2019 15:46:48'!
+computeMessageEntriesForDenotativeObject: aDenotativeObject
+
+	selectorsClasses := Array with: aDenotativeObject.
+	
+	entries := (DenotativeObjectAutoCompleterSelectorsCollector for: prefix) 
+		addSelectorsOf: aDenotativeObject upTo: (DenotativeObject class superclass);
+		entriesToShow! !
+
+!DenotativeObjectCompleter class methodsFor: 'instance creation' stamp: 'HAW 2/19/2019 15:19:16'!
+withModel: aStringHolder
+
+	^self new setModel: aStringHolder! !
+
+!DenotativeObjectAutoCompleterSelectorsCollector methodsFor: 'collecting - private' stamp: 'HAW 2/19/2019 15:46:24'!
+addCategory: aCategory of: classOrganization
+
+	(aCategory includesSubString: 'private') ifFalse: [ super addCategory: aCategory of: classOrganization ]! !
 
 !DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:48:06'!
 newClassNameCanNotBeEmptyErrorMessage
@@ -3114,9 +3187,11 @@ createRefactoring
 		
 	^DenotativeObjectSafelyRemove of: classToRemove ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:59:04'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 2/19/2019 16:48:06'!
 allReplicants
 
+	"Returns a collection with all the replicants of myself"
+	
 	| withAllReplicants allReplicants|
 	
 	withAllReplicants := self withAllReplicants.
@@ -3222,7 +3297,7 @@ withAllReplicantsSelect: aBlock
 
 	^self withAllReplicants select: aBlock ! !
 
-!DenotativeObject class methodsFor: 'message handling' stamp: 'HAW 8/22/2017 10:16:30'!
+!DenotativeObject class methodsFor: 'message handling - private' stamp: 'HAW 8/22/2017 10:16:30'!
 argumentNameSufix
 
 	^self theOriginalDenotativeObject name
@@ -3453,7 +3528,7 @@ delegateToParent
 	
 	^ (Delegator from: thisContext sender) value! !
 
-!DenotativeObject class methodsFor: 'error handling' stamp: 'HAW 8/20/2017 11:08:03'!
+!DenotativeObject class methodsFor: 'error handling - private' stamp: 'HAW 8/20/2017 11:08:03'!
 doesNotUnderstand: aMessage
 
 	"This redefinition is just to provide a message text to the exception without the 'class' part, so when shown in the debugger title or a 
@@ -3506,13 +3581,6 @@ fileOutInitializerOn: aStream
 			
 		self removeInitializeCollaboratorsFromFile ].! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 3/31/2018 22:25:58'!
-fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
-
-	self collaboratorNames isEmpty ifFalse: [ self compileInitializeCollaboratorsFromFile ].
-	super fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool.
-	! !
-
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:12:18'!
 initializeAfterFileIn
 
@@ -3531,27 +3599,29 @@ removeInitializeCollaboratorsFromFile
 	
 	(self is: #DenotativeObject) ifTrue: [ self class removeSelector: self initializeCollaboratorsFromFileMessageName ] ! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 9/7/2017 16:44:18'!
-storeOn: aStream
-
-	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 8/23/2018 16:43:24'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 8/23/2018 16:43:24'!
 compileInitializeCollaboratorsFromFile
 	
 	self class compile: self initializeCollaboratorsFromFileSourceCode ! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:25:16'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:25:58'!
+fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
+
+	self collaboratorNames isEmpty ifFalse: [ self compileInitializeCollaboratorsFromFile ].
+	super fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool.
+	! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:25:16'!
 initializeAfterFileInMessageName
 	
 	^ #initializeAfterFileIn! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:24:31'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:24:31'!
 initializeCollaboratorsFromFileMessageName
 	
 	^#initializeCollaboratorsFromFile! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:13:39'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:13:39'!
 initializeCollaboratorsFromFileSourceCode
 	
 	| sourceCode |
@@ -3563,14 +3633,19 @@ initializeCollaboratorsFromFileSourceCode
 		
 	^sourceCode! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:14:52'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 9/7/2017 16:44:18'!
+storeOn: aStream
+
+	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:14:52'!
 writeCollaboratorsInitializationOn: sourceStream 
 	
 	self collaboratorNames do: [ :aCollaborator | self writeInitializationOf: aCollaborator on: sourceStream ].
 		
 	! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 3/31/2018 22:15:29'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:15:29'!
 writeInitializationOf: aCollaborator on: sourceStream
 	
 	sourceStream
@@ -3581,7 +3656,7 @@ writeInitializationOf: aCollaborator on: sourceStream
 		store: (self instVarNamed: aCollaborator);
 		nextPut: $. ! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init' stamp: 'HAW 4/17/2018 16:30:45'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:30:45'!
 writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream
 
 	sourceStream 
@@ -3597,12 +3672,6 @@ inspect
 	^ self 
 		withCurrentInspectorWindowDo: [ :window | window isTopWindow ifTrue: [ window flash ] ifFalse: [ window activate ] ] 
 		ifNone: [ super inspect ]! !
-
-!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 15:03:13'!
-inspectorClass
-
-	^(self is: #DenotativeObject) ifTrue: [ DenotativeObjectInspector ] ifFalse: [ super inspectorClass ]
-	! !
 
 !DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/10/2017 20:05:03'!
 withCurrentInspectorWindowDo: foundBlock ifNone: noneBlock
@@ -3646,17 +3715,17 @@ sourceCodeOf: aSelector
 
 	^(self methodNamed: aSelector) sourceCode ! !
 
-!DenotativeObject class methodsFor: 'test support' stamp: 'HAW 4/5/2018 09:48:57'!
+!DenotativeObject class methodsFor: 'test support - private' stamp: 'HAW 4/5/2018 09:48:57'!
 setUp
 
 	"It is implemented because the DO test wrapper implements #setUp sending #setUp to the DO, so by default does nothing - Hernan"! !
 
-!DenotativeObject class methodsFor: 'test support' stamp: 'HAW 4/5/2018 09:49:06'!
+!DenotativeObject class methodsFor: 'test support - private' stamp: 'HAW 4/5/2018 09:49:06'!
 tearDown
 
 	"See setUp"! !
 
-!DenotativeObject class methodsFor: 'class creation' stamp: 'HAW 4/10/2018 16:50:48'!
+!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 4/10/2018 16:50:48'!
 createClassNamed: aName
 
 	superclass ~= DenotativeObject ifTrue: [ self error: 'Superclass must be supplied' ].
@@ -3664,14 +3733,14 @@ createClassNamed: aName
 	^self createClassNamed: aName subclassOf: Object
 	! !
 
-!DenotativeObject class methodsFor: 'class creation' stamp: 'HAW 4/10/2018 16:52:18'!
+!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 4/10/2018 16:52:18'!
 createClassNamed: aName subclassOf: aSuperclass
 
 	^self createClassNamed: aName subclassOf: aSuperclass category: self category
 	
 	! !
 
-!DenotativeObject class methodsFor: 'class creation' stamp: 'HAW 4/10/2018 19:00:17'!
+!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 4/10/2018 19:00:17'!
 createClassNamed: aName subclassOf: aSuperclass category: aCategory
 
 	| newClass |
@@ -3693,7 +3762,7 @@ createClassNamed: aName subclassOf: aSuperclass category: aCategory
 	
 	^newClass! !
 
-!DenotativeObject class methodsFor: 'subclass creation' stamp: 'HAW 1/3/2019 16:10:58'!
+!DenotativeObject class methodsFor: 'subclass creation - private' stamp: 'HAW 1/3/2019 16:10:58'!
 subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat 
 	"This is the standard initialization message for creating a new class as a 
 	subclass of an existing class (the receiver)."
@@ -3712,6 +3781,12 @@ subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s c
 		preamble: answer definitionPreamble.
 	^answer
 ! !
+
+!DenotativeObject class methodsFor: 'inspecting - private' stamp: 'HAW 9/7/2017 15:03:13'!
+inspectorClass
+
+	^(self is: #DenotativeObject) ifTrue: [ DenotativeObjectInspector ] ifFalse: [ super inspectorClass ]
+	! !
 
 !Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:11:52'!
 comparingStringBetween: actual and: expected
@@ -4234,10 +4309,10 @@ signalNameCanNotHaveSpaces
 	
 	self error: self nameCanNotHaveSpacesErrorDescription! !
 
-!ObjectBuilder class methodsFor: 'testing' stamp: 'HAW 3/31/2018 22:57:20'!
+!ObjectBuilder class methodsFor: 'testing' stamp: 'HAW 2/19/2019 16:55:51'!
 isValidParent: aParentDenotativeObject
 
-	^aParentDenotativeObject = DenotativeObject or: [ aParentDenotativeObject is: #DenotativeObject ]! !
+	^aParentDenotativeObject includesBehavior: DenotativeObject ! !
 
 !Collaborator methodsFor: 'initialization' stamp: 'HAW 8/24/2017 08:29:25'!
 initializeNamed: aName on: anObject
@@ -4608,6 +4683,16 @@ compilerClass
 	^(thisClass is: #DenotativeObject) 
 		ifTrue: [ DenotativeObjectCompiler ]
 		ifFalse: [ super compilerClass ]! !
+
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 2/19/2019 17:53:31'!
+typeName
+
+	"The only downside of this implementation is that when not working in a Denotative Object Browser, it will show
+	the messages as DenotativeObject instead of DenotativeObject class - Hernan"
+	
+	^(self soleInstance includesBehavior: DenotativeObject)
+		ifTrue: [ self soleInstance name ]
+		ifFalse: [ self name ]! !
 
 !Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:05:08'!
 asMessage
