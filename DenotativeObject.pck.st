@@ -1,9 +1,9 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3590] on 20 February 2019 at 6:21:56 pm'!
-'Description Now it depends on LiveTyping so the autocompleter works better. It also defines the autocompleter to use in debugger, inspectors, etc. that it was using the smalltalk one'!
-!provides: 'DenotativeObject' 1 61!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3620] on 21 February 2019 at 7:41:05 am'!
+'Description Fixes due to latests changes in autocompleter'!
+!provides: 'DenotativeObject' 1 62!
+!requires: 'Refactoring' 1 24 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
-!requires: 'Refactoring' 1 24 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -475,7 +475,63 @@ DelegatorBuilder class
 	instanceVariableNames: ''!
 
 
-!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 7/22/2017 13:16:28'!
+!DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
+parserClass
+
+	^DenotativeObjectParser ! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+removeSelector: messageName
+
+	model selectedClassOrMetaClass removeSelector: messageName.
+	model
+		messageListIndex: 0;
+		changed: #messageList;
+		setClassOrganizer.
+	! !
+
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:28:34'!
+fileOutInitializerOn: aStream
+
+	super fileOutInitializerOn: aStream.
+	(self class methodDict includesKey: self initializeCollaboratorsFromFileMessageName) ifTrue: [
+		aStream 
+			newLine;
+		 	nextChunkPut: self name , ' ', self initializeAfterFileInMessageName asString.
+			
+		self removeInitializeCollaboratorsFromFile ].! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:25:58'!
+fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
+
+	self collaboratorNames isEmpty ifFalse: [ self compileInitializeCollaboratorsFromFile ].
+	super fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool.
+	! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 9/7/2017 16:44:18'!
+storeOn: aStream
+
+	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
+
+!Collaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
+printOn: aStream
+
+	aStream 
+		nextPutAll: name;
+		nextPutAll: ' at ';
+		print: owner! !
+
+!Collaborator methodsFor: 'name' stamp: 'HAW 9/14/2018 13:32:56'!
+name
+
+	^ name! !
+
+!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:10:50'!
+autoCompleterClass
+	
+	^DenotativeObjectCompleter ! !
+
+!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:11:31'!
 editorClass
 
 	^DenotativeObjectWorkspaceEditor ! !
@@ -1297,11 +1353,6 @@ doesClassNameStartWithUppercase: aClassName
 	"To allow denotative objects to start with lowercase - Hernan"
 	^true! !
 
-!DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
-parserClass
-
-	^DenotativeObjectParser ! !
-
 !DenotativeObjectParser methodsFor: 'public access' stamp: 'HAW 8/27/2017 20:14:07'!
 encoder
 	encoder ifNil: [encoder := DenotativeObjectEncoder new].
@@ -1703,20 +1754,13 @@ renameSelectorFor: aSelector in: aClassToRefactor
 
 	DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [DenotativeObjectRenameSelectorApplier on: model textProvider for: aSelector in: aClassToRefactor ]! !
 
-!DenotativeObjectSmalltalkEditor class methodsFor: 'keyboard shortcut tables' stamp: 'HAW 9/10/2017 14:48:19'!
-cmdShortcutsSpec
-	"
-	self initialize
-	"
-	"arranged in QWERTY keyboard order"
-	
-	^ super cmdShortcutsSpec,
-	
-	#(
-		#($e	#acceptSendAndInspect:	'')
-		#($q	#acceptDebugAndInspect:	'')
-		#($Y   #nextTestName: 				'')
-	)! !
+!DenotativeObjectSmalltalkEditor class methodsFor: 'keyboard shortcut tables' stamp: 'HAW 2/21/2019 00:05:04'!
+denotativeObjectSmalltalkEditorCmdShortcutsSpec
+
+	^RefactoringMenues smalltalkEditorCmdShortcutsSpec, LiveTyping smalltalkEditorCmdShortcutsSpec, `#(
+		#($e	#acceptSendAndInspect:  	'')
+		#($q	#acceptDebugAndInspect:   	'')
+		#($Y   #nextTestName: 				''))`! !
 
 !DenotativeObjectWorkspaceEditor methodsFor: 'system category list' stamp: 'HAW 8/21/2017 18:58:29'!
 selectedSystemCategoryName
@@ -1978,16 +2022,6 @@ removeMessage
 
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
-removeSelector: messageName
-
-	model selectedClassOrMetaClass removeSelector: messageName.
-	model
-		messageListIndex: 0;
-		changed: #messageList;
-		setClassOrganizer.
-	! !
-
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:32:04'!
 renameInstVar
 	
@@ -2005,12 +2039,12 @@ sendersOf: aSymbol
 
 	^self class sendersOf: aSymbol ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 8/23/2017 14:19:44'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 2/21/2019 00:12:05'!
 buildLowerPanes
 
 	| codeAndButtons workspace separator |
 
-	workspace := 	TextModelMorph withModel: DenotativeObjectWorkspace new.
+	workspace := TextModelMorph withModel: DenotativeObjectWorkspace new.
 	workspace askBeforeDiscardingEdits: false.
 
 	separator := LayoutAdjustingMorph new.
@@ -2883,13 +2917,13 @@ test01ScopeOptionsAreTheSame
 		assert: DenotativeObjectRenameSelectorApplier new scopeOptionLabels size
 		equals: DenotativeObjectRenameSelectorApplier superclass new scopeOptionLabels size.! !
 
-!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 2/19/2019 18:41:17'!
+!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 2/20/2019 22:03:08'!
 computeIdentifierEntries
 
 	| entriesSet addBlock instVarToExclude |
 
 	entriesSet := Set new.
-	addBlock := [ :identifier | (identifier beginsWith: prefix) ifTrue: [ entriesSet add: identifier]].
+	addBlock := [ :identifier :ikindOfIdentifierTitle| (identifier beginsWith: prefix) ifTrue: [ entriesSet add: identifier]].
 	instVarToExclude := DenotativeObject class allInstVarNames asSet.
 
 	parser 
@@ -2897,10 +2931,11 @@ computeIdentifierEntries
 		blockTempNamesDo: addBlock;
 		methodArgNamesDo: addBlock;
 		methodTempNamesDo: addBlock;
-		instVarNamesDo: [ :identifier | (instVarToExclude includes: identifier) ifFalse: [ addBlock value: identifier ]].
-	parser reservedNames do: [ :identifier | identifier = 'super' ifFalse: [ addBlock value: identifier ]].	
+		instVarNamesDo: [ :identifier :kindOfIdentifierTitle | (instVarToExclude includes: identifier) ifFalse: [ addBlock value: identifier ]].
+	parser reservedNames do: [ :identifier | identifier = 'super' ifFalse: [ addBlock value: identifier value: '' ]].	
 	
-	Smalltalk namesBeginningWith: prefix do: [ :identifier | ((Smalltalk classNamed: identifier) is: #DenotativeObject) ifTrue: [ entriesSet add: identifier ]].
+	parser namesBeginningWith: prefix do: [ :identifier :kindOfIdentifierTitle | 
+		((Smalltalk classNamed: identifier) ifNil: [ true ] ifNotNil: [ :aClass | aClass is: #DenotativeObject]) ifTrue: [ entriesSet add: identifier ]].
 	
 	entries := entriesSet asArray sort! !
 
@@ -3570,17 +3605,6 @@ siblings
 
 	^self family reject: [ :each | each == self ]! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:28:34'!
-fileOutInitializerOn: aStream
-
-	super fileOutInitializerOn: aStream.
-	(self class methodDict includesKey: self initializeCollaboratorsFromFileMessageName) ifTrue: [
-		aStream 
-			newLine;
-		 	nextChunkPut: self name , ' ', self initializeAfterFileInMessageName asString.
-			
-		self removeInitializeCollaboratorsFromFile ].! !
-
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:12:18'!
 initializeAfterFileIn
 
@@ -3604,13 +3628,6 @@ compileInitializeCollaboratorsFromFile
 	
 	self class compile: self initializeCollaboratorsFromFileSourceCode ! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:25:58'!
-fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
-
-	self collaboratorNames isEmpty ifFalse: [ self compileInitializeCollaboratorsFromFile ].
-	super fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool.
-	! !
-
 !DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:25:16'!
 initializeAfterFileInMessageName
 	
@@ -3632,11 +3649,6 @@ initializeCollaboratorsFromFileSourceCode
 			writeCollaboratorsInitializationOn: sourceStream ].
 		
 	^sourceCode! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 9/7/2017 16:44:18'!
-storeOn: aStream
-
-	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:14:52'!
 writeCollaboratorsInitializationOn: sourceStream 
@@ -4320,19 +4332,6 @@ initializeNamed: aName on: anObject
 	owner := anObject.
 	name := aName.
 	! !
-
-!Collaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
-printOn: aStream
-
-	aStream 
-		nextPutAll: name;
-		nextPutAll: ' at ';
-		print: owner! !
-
-!Collaborator methodsFor: 'name' stamp: 'HAW 9/14/2018 13:32:56'!
-name
-
-	^ name! !
 
 !Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:30:32'!
 value
