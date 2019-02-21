@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3620] on 21 February 2019 at 7:41:05 am'!
-'Description Fixes due to latests changes in autocompleter'!
-!provides: 'DenotativeObject' 1 62!
-!requires: 'Refactoring' 1 24 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3622] on 21 February 2019 at 5:14:31 pm'!
+'Description Object finder shows only denotative objects. Recent objects show correcly now'!
+!provides: 'DenotativeObject' 1 63!
 !requires: 'Theme-Themes' 1 2 nil!
+!requires: 'Refactoring' 1 24 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -37,7 +37,7 @@ DenotativeObjectMessageSet class
 !classDefinition: #DenotativeObjectBrowser category: #'DenotativeObject-Tools'!
 Browser subclass: #DenotativeObjectBrowser
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'RecentDenotativeObjects'
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
 !classDefinition: 'DenotativeObjectBrowser class' category: #'DenotativeObject-Tools'!
@@ -232,6 +232,26 @@ TestCase subclass: #DenotativeObjectRenameMethodApplierTest
 	category: 'DenotativeObject-Tests'!
 !classDefinition: 'DenotativeObjectRenameMethodApplierTest class' category: #'DenotativeObject-Tests'!
 DenotativeObjectRenameMethodApplierTest class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectTest category: #'DenotativeObject-Tests'!
+TestCase subclass: #DenotativeObjectTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Tests'!
+!classDefinition: 'DenotativeObjectTest class' category: #'DenotativeObject-Tests'!
+DenotativeObjectTest class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectNameCompleter category: #'DenotativeObject-Tools'!
+ClassNameCompleter subclass: #DenotativeObjectNameCompleter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectNameCompleter class' category: #'DenotativeObject-Tools'!
+DenotativeObjectNameCompleter class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectCompleter category: #'DenotativeObject-Tools'!
@@ -474,6 +494,13 @@ ProtoObject subclass: #DelegatorBuilder
 DelegatorBuilder class
 	instanceVariableNames: ''!
 
+
+!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:54:14'!
+releaseClassCachedState
+	"
+	DenotativeObjectBrowser  releaseClassCachedState
+	"
+	RecentDenotativeObjects _ nil! !
 
 !DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
 parserClass
@@ -889,10 +916,10 @@ withSelectedCategoryNameDo: aBlock
 		ifNotNil: aBlock 
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 8/3/2018 15:24:37'!
+!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 2/21/2019 16:37:48'!
 defaultClassList
 
-	^super defaultClassList select: [ :aClass | (Smalltalk classNamed: aClass) is: #DenotativeObject ] ! !
+	^super defaultClassList select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ] ! !
 
 !DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:23:05'!
 debugMethodTest
@@ -978,6 +1005,11 @@ Is this really what you want to do?'))
 	^ selector
 	
 	! !
+
+!DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 15:32:07'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
 
 !DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 7/14/2017 20:46:27'!
 editorClassFor: textGetter
@@ -1067,13 +1099,10 @@ validateObjectCreation: defTokens
 	self assertDoesNotExistObjectNamed: denotativeObjectName.
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/6/2017 11:09:16'!
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 2/21/2019 16:41:15'!
 validateObjectRedefinition: defTokens 
 
-	| potentialDenotativeObject |
-	
-	potentialDenotativeObject :=Smalltalk classNamed: defTokens first asSymbol.
-	(potentialDenotativeObject is: #DenotativeObject) ifFalse: [ self error: (self invalidObjectErrorDescription: defTokens first)]
+	(Smalltalk isDenotativeObjectNamed: defTokens first asSymbol) ifFalse: [ self error: (self invalidObjectErrorDescription: defTokens first)]
 
 		! !
 
@@ -1138,15 +1167,12 @@ showSelectedMorph
 
 	self selectedClass openInWorld! !
 
-!DenotativeObjectBrowser methodsFor: 'as yet unclassified' stamp: 'HAW 2/19/2019 15:32:07'!
-autoCompleterClassFor: textGetter
-	
-	^DenotativeObjectCompleter! !
-
-!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 6/13/2018 16:01:25'!
+!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:53:49'!
 recentClasses
+
+	RecentDenotativeObjects ifNil: [ RecentDenotativeObjects := OrderedCollection new ].
 	
-	^super recentClasses select: [:aClassName | (Smalltalk classNamed: aClassName) is: #DenotativeObject ]! !
+	^RecentDenotativeObjects ! !
 
 !DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 20:20:49'!
 askForCategoryIn: aClass default: aString
@@ -2737,10 +2763,10 @@ fieldListMenu
 		
 	^ aMenu! !
 
-!DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 6/13/2018 15:52:09'!
+!DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 16:15:49'!
 autoCompleterClassFor: textGetter
 	
-	^DenotativeObjectCompleter! !
+	^DenotativeObjectNameCompleter! !
 
 !DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/5/2018 15:13:12'!
 pseudoVariables
@@ -2917,11 +2943,28 @@ test01ScopeOptionsAreTheSame
 		assert: DenotativeObjectRenameSelectorApplier new scopeOptionLabels size
 		equals: DenotativeObjectRenameSelectorApplier superclass new scopeOptionLabels size.! !
 
-!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 2/20/2019 22:03:08'!
+!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 2/21/2019 16:36:56'!
+test01IsDenotativeObjectNamedReturnsTrueForADenotativeObject
+
+	self assert: (Smalltalk isDenotativeObjectNamed: Assert name) ! !
+
+!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 2/21/2019 16:37:14'!
+test02IsDenotativeObjectNamedReturnsFalseForANoDenotativeObject
+
+	self deny: (Smalltalk isDenotativeObjectNamed: Object name) ! !
+
+!DenotativeObjectNameCompleter methodsFor: 'entries' stamp: 'HAW 2/21/2019 16:58:47'!
+computeEntries
+
+	super computeEntries.
+	entries := entries select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ].! !
+
+!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 2/21/2019 17:07:42'!
 computeIdentifierEntries
 
 	| entriesSet addBlock instVarToExclude |
 
+	canShowSelectorDocumentation _ false.
 	entriesSet := Set new.
 	addBlock := [ :identifier :ikindOfIdentifierTitle| (identifier beginsWith: prefix) ifTrue: [ entriesSet add: identifier]].
 	instVarToExclude := DenotativeObject class allInstVarNames asSet.
@@ -2935,6 +2978,7 @@ computeIdentifierEntries
 	parser reservedNames do: [ :identifier | identifier = 'super' ifFalse: [ addBlock value: identifier value: '' ]].	
 	
 	parser namesBeginningWith: prefix do: [ :identifier :kindOfIdentifierTitle | 
+		"I want to show global objects as meter, second, etc. and denotative objects only - Hernan"
 		((Smalltalk classNamed: identifier) ifNil: [ true ] ifNotNil: [ :aClass | aClass is: #DenotativeObject]) ifTrue: [ entriesSet add: identifier ]].
 	
 	entries := entriesSet asArray sort! !
@@ -3221,6 +3265,79 @@ browseReferencesOn: aCanNotRefactorDueToReferencesError
 createRefactoring
 		
 	^DenotativeObjectSafelyRemove of: classToRemove ! !
+
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:12:18'!
+initializeAfterFileIn
+
+	self initializeCollaboratorsFromFile.
+	self removeInitializeCollaboratorsFromFile! !
+
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:23:36'!
+initializeCollaboratorsFromFile
+	
+	"It does nothing - it is here just in case there is an error an a DO does not automatically implement it, to avoid getting a MNU when sending initializeAfterFileIn - Hernan"! !
+
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:24:18'!
+removeInitializeCollaboratorsFromFile
+
+	"This check is to be sure not to remove DenotativeObject class>>#initializeCollaboratorsFromFile - Hernan"
+	
+	(self is: #DenotativeObject) ifTrue: [ self class removeSelector: self initializeCollaboratorsFromFileMessageName ] ! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 8/23/2018 16:43:24'!
+compileInitializeCollaboratorsFromFile
+	
+	self class compile: self initializeCollaboratorsFromFileSourceCode ! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:25:16'!
+initializeAfterFileInMessageName
+	
+	^ #initializeAfterFileIn! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:24:31'!
+initializeCollaboratorsFromFileMessageName
+	
+	^#initializeCollaboratorsFromFile! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:13:39'!
+initializeCollaboratorsFromFileSourceCode
+	
+	| sourceCode |
+	
+	sourceCode := String streamContents: [ :sourceStream |
+		self 
+			writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream;
+			writeCollaboratorsInitializationOn: sourceStream ].
+		
+	^sourceCode! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:14:52'!
+writeCollaboratorsInitializationOn: sourceStream 
+	
+	self collaboratorNames do: [ :aCollaborator | self writeInitializationOf: aCollaborator on: sourceStream ].
+		
+	! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:15:29'!
+writeInitializationOf: aCollaborator on: sourceStream
+	
+	sourceStream
+		newLine;
+		tab;
+		nextPutAll: aCollaborator;
+		nextPutAll: ' := ';
+		store: (self instVarNamed: aCollaborator);
+		nextPut: $. ! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:30:45'!
+writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream
+
+	sourceStream 
+		nextPutAll: self initializeCollaboratorsFromFileMessageName asString;
+		newLine;
+		tab;
+		nextPutAll: '"Auto generated method for loading purposes - Do not modify it"';
+		newLine.! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 2/19/2019 16:48:06'!
 allReplicants
@@ -3604,79 +3721,6 @@ originalSibling
 siblings
 
 	^self family reject: [ :each | each == self ]! !
-
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:12:18'!
-initializeAfterFileIn
-
-	self initializeCollaboratorsFromFile.
-	self removeInitializeCollaboratorsFromFile! !
-
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:23:36'!
-initializeCollaboratorsFromFile
-	
-	"It does nothing - it is here just in case there is an error an a DO does not automatically implement it, to avoid getting a MNU when sending initializeAfterFileIn - Hernan"! !
-
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:24:18'!
-removeInitializeCollaboratorsFromFile
-
-	"This check is to be sure not to remove DenotativeObject class>>#initializeCollaboratorsFromFile - Hernan"
-	
-	(self is: #DenotativeObject) ifTrue: [ self class removeSelector: self initializeCollaboratorsFromFileMessageName ] ! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 8/23/2018 16:43:24'!
-compileInitializeCollaboratorsFromFile
-	
-	self class compile: self initializeCollaboratorsFromFileSourceCode ! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:25:16'!
-initializeAfterFileInMessageName
-	
-	^ #initializeAfterFileIn! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:24:31'!
-initializeCollaboratorsFromFileMessageName
-	
-	^#initializeCollaboratorsFromFile! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:13:39'!
-initializeCollaboratorsFromFileSourceCode
-	
-	| sourceCode |
-	
-	sourceCode := String streamContents: [ :sourceStream |
-		self 
-			writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream;
-			writeCollaboratorsInitializationOn: sourceStream ].
-		
-	^sourceCode! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:14:52'!
-writeCollaboratorsInitializationOn: sourceStream 
-	
-	self collaboratorNames do: [ :aCollaborator | self writeInitializationOf: aCollaborator on: sourceStream ].
-		
-	! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:15:29'!
-writeInitializationOf: aCollaborator on: sourceStream
-	
-	sourceStream
-		newLine;
-		tab;
-		nextPutAll: aCollaborator;
-		nextPutAll: ' := ';
-		store: (self instVarNamed: aCollaborator);
-		nextPut: $. ! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:30:45'!
-writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream
-
-	sourceStream 
-		nextPutAll: self initializeCollaboratorsFromFileMessageName asString;
-		newLine;
-		tab;
-		nextPutAll: '"Auto generated method for loading purposes - Do not modify it"';
-		newLine.! !
 
 !DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 16:14:41'!
 inspect
@@ -4730,6 +4774,11 @@ printTheNonMetaClassAndSelectorOn: aStream
 		print: self methodClass theNonMetaClass; 
 		nextPutAll: '>>'; 
 		nextPutAll: self selector storeString! !
+
+!SystemDictionary methodsFor: '*DenotativeObject' stamp: 'HAW 2/21/2019 16:35:05'!
+isDenotativeObjectNamed: aName
+
+	^(self classNamed: aName) is: #DenotativeObject! !
 
 !ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 7/20/2017 20:00:43'!
 messageText
