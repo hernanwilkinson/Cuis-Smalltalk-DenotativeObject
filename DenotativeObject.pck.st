@@ -1,8 +1,7 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3622] on 21 February 2019 at 5:14:31 pm'!
-'Description Object finder shows only denotative objects. Recent objects show correcly now'!
-!provides: 'DenotativeObject' 1 63!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3634] on 28 February 2019 at 8:42:13 pm'!
+'Description Removed dependency with Refactoring, now in LiveTyping'!
+!provides: 'DenotativeObject' 1 64!
 !requires: 'Theme-Themes' 1 2 nil!
-!requires: 'Refactoring' 1 24 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
@@ -205,7 +204,7 @@ DenotativeObjectTheme class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectProgessiveTestRunner category: #'DenotativeObject-TestSupport'!
-ProgessiveTestRunner subclass: #DenotativeObjectProgessiveTestRunner
+ProgressiveTestRunner subclass: #DenotativeObjectProgessiveTestRunner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
