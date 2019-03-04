@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3634] on 28 February 2019 at 8:42:13 pm'!
-'Description Removed dependency with Refactoring, now in LiveTyping'!
-!provides: 'DenotativeObject' 1 64!
-!requires: 'Theme-Themes' 1 2 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3639] on 4 March 2019 at 4:47:57 pm'!
+'Description Removed compily:clasifying:'!
+!provides: 'DenotativeObject' 1 65!
 !requires: 'LiveTyping' 1 5 nil!
+!requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -273,16 +273,6 @@ AutoCompleterSelectorsCollector subclass: #DenotativeObjectAutoCompleterSelector
 DenotativeObjectAutoCompleterSelectorsCollector class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeNewObjectPrecondition category: #'DenotativeObject-Refactorings'!
-NewClassPrecondition subclass: #DenotativeNewObjectPrecondition
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeNewObjectPrecondition class' category: #'DenotativeObject-Refactorings'!
-DenotativeNewObjectPrecondition class
-	instanceVariableNames: ''!
-
 !classDefinition: #DenotativeObjectAddCollaborator category: #'DenotativeObject-Refactorings'!
 AddInstanceVariable subclass: #DenotativeObjectAddCollaborator
 	instanceVariableNames: ''
@@ -391,6 +381,16 @@ SafelyRemoveClassApplier subclass: #DenotativeObjectSafelyRemoveApplier
 	category: 'DenotativeObject-Refactorings'!
 !classDefinition: 'DenotativeObjectSafelyRemoveApplier class' category: #'DenotativeObject-Refactorings'!
 DenotativeObjectSafelyRemoveApplier class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeNewObjectPrecondition category: #'DenotativeObject-Refactorings'!
+NewClassPrecondition subclass: #DenotativeNewObjectPrecondition
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeNewObjectPrecondition class' category: #'DenotativeObject-Refactorings'!
+DenotativeNewObjectPrecondition class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObject category: #DenotativeObject!
@@ -3009,26 +3009,6 @@ addCategory: aCategory of: classOrganization
 
 	(aCategory includesSubString: 'private') ifFalse: [ super addCategory: aCategory of: classOrganization ]! !
 
-!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:48:06'!
-newClassNameCanNotBeEmptyErrorMessage
-	
-	^'New object name can not be empty'! !
-
-!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:09'!
-newClassNameCanNotHaveSpacesErrorMessage
-	
-	^'New object name can not have spaces'! !
-
-!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:32'!
-newNameMustBeSymbolErrorMessage
-	
-	^'New object name must be a symbol'! !
-
-!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:48'!
-newNameMustStartWithUppercaseLetterErrorMessage
-
-	^'New object name must start with an uppercase letter'! !
-
 !DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:21'!
 errorMessageForInvalidInstanceVariable: aName
 
@@ -3264,6 +3244,26 @@ browseReferencesOn: aCanNotRefactorDueToReferencesError
 createRefactoring
 		
 	^DenotativeObjectSafelyRemove of: classToRemove ! !
+
+!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:48:06'!
+newClassNameCanNotBeEmptyErrorMessage
+	
+	^'New object name can not be empty'! !
+
+!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:09'!
+newClassNameCanNotHaveSpacesErrorMessage
+	
+	^'New object name can not have spaces'! !
+
+!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:32'!
+newNameMustBeSymbolErrorMessage
+	
+	^'New object name must be a symbol'! !
+
+!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:48'!
+newNameMustStartWithUppercaseLetterErrorMessage
+
+	^'New object name must start with an uppercase letter'! !
 
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:12:18'!
 initializeAfterFileIn
@@ -3795,7 +3795,7 @@ createClassNamed: aName subclassOf: aSuperclass
 	
 	! !
 
-!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 4/10/2018 19:00:17'!
+!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 3/4/2019 15:25:31'!
 createClassNamed: aName subclassOf: aSuperclass category: aCategory
 
 	| newClass |
@@ -3813,7 +3813,7 @@ createClassNamed: aName subclassOf: aSuperclass category: aCategory
 	
 	self class selectorsDo: [ :aSelector | newClass 
 		compile: (self sourceCodeOf: aSelector) 
-		classifyUnder: (self class organization categoryOfElement: aSelector) ].
+		classified: (self class organization categoryOfElement: aSelector) ].
 	
 	^newClass! !
 
