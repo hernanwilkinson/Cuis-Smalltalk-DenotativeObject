@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3639] on 4 March 2019 at 4:47:57 pm'!
-'Description Removed compily:clasifying:'!
-!provides: 'DenotativeObject' 1 65!
-!requires: 'LiveTyping' 1 5 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3649] on 7 March 2019 at 11:12:09 pm'!
+'Description Rename of warning message'!
+!provides: 'DenotativeObject' 1 66!
 !requires: 'Theme-Themes' 1 2 nil!
+!requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -3028,13 +3028,13 @@ newVariableCanNotBeEmptyErrorMessage
 	
 	^'New collaborator name can not be empty'! !
 
-!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 1/7/2019 10:51:35'!
-warningMessageForNewVariable: newVariable willBeHiddenAtAll: methods
+!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 3/7/2019 23:09:55'!
+errorMessageForNewVariable: newVariable willBeHiddenAtAll: methods
  
 	^String streamContents: [ :stream |
 		stream 
 			nextPutAll: newVariable;
-			nextPutAll: ' will be hidden at '.
+			nextPutAll: ' can not be named as temporary/collaborator in '.
 		methods asCommaSeparated: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] on: stream ]! !
 
 !DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
