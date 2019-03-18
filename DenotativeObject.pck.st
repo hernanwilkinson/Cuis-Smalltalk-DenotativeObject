@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3649] on 7 March 2019 at 11:12:09 pm'!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3659] on 18 March 2019 at 2:48:51 pm'!
 'Description Rename of warning message'!
-!provides: 'DenotativeObject' 1 66!
-!requires: 'Theme-Themes' 1 2 nil!
+!provides: 'DenotativeObject' 1 67!
 !requires: 'LiveTyping' 1 5 nil!
+!requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -3171,11 +3171,12 @@ refactoringClass
 
 	^DenotativeObjectRenameSelector ! !
 
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 1/3/2019 16:00:15'!
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 3/12/2019 22:26:21'!
 askForImplementosAndSenders
 
 	self 
 		askScope;
+		initializeImplementorsAndSenders;
 		calculateImplementorsAndSenders;
 		createAndApplyRefactoring! !
 
