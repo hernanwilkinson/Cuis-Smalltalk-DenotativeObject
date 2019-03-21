@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3659] on 18 March 2019 at 2:48:51 pm'!
-'Description Rename of warning message'!
-!provides: 'DenotativeObject' 1 67!
-!requires: 'LiveTyping' 1 5 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3671] on 21 March 2019 at 2:44:02 pm'!
+'Description Fixes to inspector and auto complete'!
+!provides: 'DenotativeObject' 1 68!
 !requires: 'Theme-Themes' 1 2 nil!
+!requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -1313,52 +1313,59 @@ newStack: stack
 		
 	! !
 
-!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 9/7/2017 15:15:38'!
-baseFieldList
-	"Answer an Array consisting of 'self'
-	and the instance variable names of the inspected object."
+!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:02'!
+alwaysPresentFieldList
 
-	^ (Array with: 'self' with: 'all collaborators'), object collaboratorNames ! !
+	^ #('self' 'all collaborators')! !
+
+!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:15'!
+baseFieldList
+
+	^ self alwaysPresentFieldList, object collaboratorNames ! !
 
 !DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 18:44:01'!
 autoCompleterClassFor: textGetter
 	
 	^DenotativeObjectCompleter! !
 
-!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 8/5/2017 10:37:42'!
+!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 3/21/2019 14:41:51'!
 editorClassFor: textGetter
+
 	^DenotativeObjectSmalltalkEditor ! !
 
-!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 7/13/2017 08:14:13'!
+!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:41:59'!
+instVarBase
+
+	^DenotativeObject class instSize - self alwaysPresentFieldList size
+	
+	! !
+
+!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:42:10'!
 replaceSelectionValue: anObject
 	"The receiver has a list of variables of its inspected object. One of these
 	is selected. The value of the selected variable is set to the value,
 	anObject."
 	| si instVarIndex |
-	selectionIndex <= 2 ifTrue: [
+	selectionIndex <= self alwaysPresentFieldList size ifTrue: [
 		self toggleIndex: (si := selectionIndex).
 		self toggleIndex: si.
 		^ object].
-	instVarIndex := selectionIndex + 7 "- 2 +9".
+	instVarIndex := selectionIndex + self instVarBase.
 	instVarIndex > object class instSize
 		ifFalse: [^ object instVarAt: instVarIndex put: anObject].
 	self error: 'Cannot replace selection'.
-	"object class isVariable or: [self error: 'Cannot replace selection'].
-	basicIndex := selectionIndex - 2 - object class instSize.
-	(object basicSize <= (self i1 + self i2)  or: [basicIndex <= self i1])
-		ifTrue: [^object basicAt: basicIndex put: anObject]
-		ifFalse: [^object basicAt: object basicSize - (self i1 + self i2) + basicIndex
-					put: anObject]"! !
+	! !
 
-!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 7/13/2017 08:12:57'!
+!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:42:26'!
 selection
 	"The receiver has a list of variables of its inspected object.
 	One of these is selected. Answer the value of the selected variable."
-	| |
+	
 	selectionIndex = 0 ifTrue: [^ ''].
 	selectionIndex = 1 ifTrue: [^ object].
 	selectionIndex = 2 ifTrue: [^ object longPrintStringLimitedTo: 20000].
-	^ object instVarAt: selectionIndex + 7 "- 2 + 9"
+	
+	^ object instVarAt: selectionIndex + self instVarBase
 	! !
 
 !DenotativeObjectInspector class methodsFor: 'instance creation' stamp: 'HAW 7/13/2017 00:01:59'!
@@ -2958,14 +2965,14 @@ computeEntries
 	super computeEntries.
 	entries := entries select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ].! !
 
-!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 2/21/2019 17:07:42'!
+!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 3/21/2019 07:16:56'!
 computeIdentifierEntries
 
 	| entriesSet addBlock instVarToExclude |
 
 	canShowSelectorDocumentation _ false.
 	entriesSet := Set new.
-	addBlock := [ :identifier :ikindOfIdentifierTitle| (identifier beginsWith: prefix) ifTrue: [ entriesSet add: identifier]].
+	addBlock := [ :identifier :kindOfIdentifierTitle| (identifier beginsWith: prefix) ifTrue: [ entriesSet add: identifier]].
 	instVarToExclude := DenotativeObject class allInstVarNames asSet.
 
 	parser 
@@ -2973,7 +2980,7 @@ computeIdentifierEntries
 		blockTempNamesDo: addBlock;
 		methodArgNamesDo: addBlock;
 		methodTempNamesDo: addBlock;
-		instVarNamesDo: [ :identifier :kindOfIdentifierTitle | (instVarToExclude includes: identifier) ifFalse: [ addBlock value: identifier ]].
+		instVarNamesDo: [ :identifier :kindOfIdentifierTitle | (instVarToExclude includes: identifier) ifFalse: [ addBlock value: identifier value: kindOfIdentifierTitle ]].
 	parser reservedNames do: [ :identifier | identifier = 'super' ifFalse: [ addBlock value: identifier value: '' ]].	
 	
 	parser namesBeginningWith: prefix do: [ :identifier :kindOfIdentifierTitle | 
