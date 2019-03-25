@@ -1693,7 +1693,7 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 	debugger openFullNoSuspendLabel: 'Debug it'.
 
 	[ [debugger originalSend.
-	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: 'Can not debug this'. ^self ] ] whileFalse.
+	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: 'Cannot debug a message to something that isn't a DenotativeObject.'. ^self ] ] whileFalse.
 
 	! !
 
