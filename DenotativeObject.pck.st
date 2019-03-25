@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3671] on 21 March 2019 at 2:44:02 pm'!
-'Description Fixes to inspector and auto complete'!
-!provides: 'DenotativeObject' 1 68!
-!requires: 'Theme-Themes' 1 2 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3685] on 25 March 2019 at 1:52:10 pm'!
+'Description Rename supports lower case objects. Implementors & Senders improvement'!
+!provides: 'DenotativeObject' 1 69!
 !requires: 'LiveTyping' 1 5 nil!
+!requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -433,6 +433,56 @@ DenotativeObject subclass: #DenotativeObjectMorph
 DenotativeObjectMorph class
 	instanceVariableNames: 'morph'!
 
+!classDefinition: #CloneOfLight category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #CloneOfLight
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'CloneOfLight class' category: #'DenotativeObject-Morph'!
+CloneOfLight class
+	instanceVariableNames: ''!
+
+!classDefinition: #CloneOfLight2 category: #'DenotativeObject-Morph'!
+CloneOfLight subclass: #CloneOfLight2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'CloneOfLight2 class' category: #'DenotativeObject-Morph'!
+CloneOfLight2 class
+	instanceVariableNames: ''!
+
+!classDefinition: #CloneOfLight3 category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #CloneOfLight3
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'CloneOfLight3 class' category: #'DenotativeObject-Morph'!
+CloneOfLight3 class
+	instanceVariableNames: ''!
+
+!classDefinition: #CloneOfThreeLightsContainer category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #CloneOfThreeLightsContainer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'CloneOfThreeLightsContainer class' category: #'DenotativeObject-Morph'!
+CloneOfThreeLightsContainer class
+	instanceVariableNames: ''!
+
+!classDefinition: #CloneOfThreeLightsContainer1 category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #CloneOfThreeLightsContainer1
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'CloneOfThreeLightsContainer1 class' category: #'DenotativeObject-Morph'!
+CloneOfThreeLightsContainer1 class
+	instanceVariableNames: ''!
+
 !classDefinition: #Light category: #'DenotativeObject-Morph'!
 DenotativeObjectMorph subclass: #Light
 	instanceVariableNames: ''
@@ -441,6 +491,26 @@ DenotativeObjectMorph subclass: #Light
 	category: 'DenotativeObject-Morph'!
 !classDefinition: 'Light class' category: #'DenotativeObject-Morph'!
 Light class
+	instanceVariableNames: ''!
+
+!classDefinition: #Light1 category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #Light1
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'Light1 class' category: #'DenotativeObject-Morph'!
+Light1 class
+	instanceVariableNames: ''!
+
+!classDefinition: #LuzVerde category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #LuzVerde
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'LuzVerde class' category: #'DenotativeObject-Morph'!
+LuzVerde class
 	instanceVariableNames: ''!
 
 !classDefinition: #ThreeLightsContainer category: #'DenotativeObject-Morph'!
@@ -1527,8 +1597,16 @@ browseIt
 		ifFalse:
 			[DenotativeObjectBrowserWindow browseAllImplementorsOf: aSymbol]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 7/22/2017 06:23:23'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:27:41'!
 implementorsOfIt
+
+	self
+		withSelectorUnderCursorDo: [ :aSelector | DenotativeObjectBrowserWindow browseAllImplementorsOf: aSelector ]
+		otherwise: [ self implementorsOfItWhenErrorsParsing ]
+	! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:27:07'!
+implementorsOfItWhenErrorsParsing
 
 	| aSelector |
 
@@ -1556,8 +1634,16 @@ referencesToIt
 
 	DenotativeObjectBrowserWindow browseReferencesTo: reference! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 7/22/2017 06:23:34'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:29:07'!
 sendersOfIt
+
+	self
+		withSelectorUnderCursorDo: [ :aSelector | DenotativeObjectBrowserWindow browseSendersOf: aSelector ]
+		otherwise: [ self sendersOfItWhenErrorsParsing ]
+	! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:28:15'!
+sendersOfItWhenErrorsParsing
 
 	| aSelector |
 
@@ -3253,6 +3339,11 @@ createRefactoring
 		
 	^DenotativeObjectSafelyRemove of: classToRemove ! !
 
+!DenotativeNewObjectPrecondition methodsFor: 'as yet unclassified' stamp: 'HAW 3/24/2019 20:33:31'!
+assertNewClassNameStartsWithUppercaseLetter
+
+	"Denotative Objects can start with lowercase letter - Hernan"! !
+
 !DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:48:06'!
 newClassNameCanNotBeEmptyErrorMessage
 	
@@ -4289,7 +4380,58 @@ morph
 	
 	^morph ! !
 
+!CloneOfLight class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:08:25'!
+createMorph
+
+	^EllipseMorph new
+		color: Color black;
+		yourself! !
+
+!CloneOfLight2 class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:14:03'!
+createMorph
+
+	^EllipseMorph new
+		color: Color black;
+		yourself! !
+
+!CloneOfLight3 class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:14:24'!
+createMorph
+
+	^EllipseMorph new
+		color: Color black;
+		yourself! !
+
+!CloneOfThreeLightsContainer class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:11:44'!
+createMorph
+
+	^LayoutMorph newColumn
+		morphExtent: 60 @ 130;
+		yourself
+! !
+
+!CloneOfThreeLightsContainer1 class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:16:23'!
+createMorph
+
+	^LayoutMorph newColumn
+		morphExtent: 60 @ 130;
+		yourself
+! !
+
 !Light class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:32:29'!
+createMorph
+
+	^EllipseMorph new
+		color: Color black;
+		yourself! !
+
+!Light1 class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:17:28'!
+createMorph
+
+	^EllipseMorph new
+		color: Color black;
+		yourself! !
+
+!LuzVerde class methodsFor: 'morph' stamp: 'HAW 3/24/2019 20:58:55'!
 createMorph
 
 	^EllipseMorph new
