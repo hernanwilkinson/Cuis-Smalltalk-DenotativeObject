@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3685] on 25 March 2019 at 1:52:10 pm'!
-'Description Rename supports lower case objects. Implementors & Senders improvement'!
-!provides: 'DenotativeObject' 1 69!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3685] on 26 March 2019 at 4:34:25 pm'!
+'Description Fixed fileout of DenotativeObjectMorph. Fixed removing a DenotativeObjectMorph that is in use or referenced by other morph. Fixed context menues of inspector and debugger. Better error message when can not debug'!
+!provides: 'DenotativeObject' 1 70!
 !requires: 'LiveTyping' 1 5 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -433,56 +433,6 @@ DenotativeObject subclass: #DenotativeObjectMorph
 DenotativeObjectMorph class
 	instanceVariableNames: 'morph'!
 
-!classDefinition: #CloneOfLight category: #'DenotativeObject-Morph'!
-DenotativeObjectMorph subclass: #CloneOfLight
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'CloneOfLight class' category: #'DenotativeObject-Morph'!
-CloneOfLight class
-	instanceVariableNames: ''!
-
-!classDefinition: #CloneOfLight2 category: #'DenotativeObject-Morph'!
-CloneOfLight subclass: #CloneOfLight2
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'CloneOfLight2 class' category: #'DenotativeObject-Morph'!
-CloneOfLight2 class
-	instanceVariableNames: ''!
-
-!classDefinition: #CloneOfLight3 category: #'DenotativeObject-Morph'!
-DenotativeObjectMorph subclass: #CloneOfLight3
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'CloneOfLight3 class' category: #'DenotativeObject-Morph'!
-CloneOfLight3 class
-	instanceVariableNames: ''!
-
-!classDefinition: #CloneOfThreeLightsContainer category: #'DenotativeObject-Morph'!
-DenotativeObjectMorph subclass: #CloneOfThreeLightsContainer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'CloneOfThreeLightsContainer class' category: #'DenotativeObject-Morph'!
-CloneOfThreeLightsContainer class
-	instanceVariableNames: ''!
-
-!classDefinition: #CloneOfThreeLightsContainer1 category: #'DenotativeObject-Morph'!
-DenotativeObjectMorph subclass: #CloneOfThreeLightsContainer1
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'CloneOfThreeLightsContainer1 class' category: #'DenotativeObject-Morph'!
-CloneOfThreeLightsContainer1 class
-	instanceVariableNames: ''!
-
 !classDefinition: #Light category: #'DenotativeObject-Morph'!
 DenotativeObjectMorph subclass: #Light
 	instanceVariableNames: ''
@@ -491,26 +441,6 @@ DenotativeObjectMorph subclass: #Light
 	category: 'DenotativeObject-Morph'!
 !classDefinition: 'Light class' category: #'DenotativeObject-Morph'!
 Light class
-	instanceVariableNames: ''!
-
-!classDefinition: #Light1 category: #'DenotativeObject-Morph'!
-DenotativeObjectMorph subclass: #Light1
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'Light1 class' category: #'DenotativeObject-Morph'!
-Light1 class
-	instanceVariableNames: ''!
-
-!classDefinition: #LuzVerde category: #'DenotativeObject-Morph'!
-DenotativeObjectMorph subclass: #LuzVerde
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'LuzVerde class' category: #'DenotativeObject-Morph'!
-LuzVerde class
 	instanceVariableNames: ''!
 
 !classDefinition: #ThreeLightsContainer category: #'DenotativeObject-Morph'!
@@ -1270,7 +1200,7 @@ restart
 		do: [ :anError | self inform: 'Can not continue debugging' ]
 	! !
 
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/30/2017 09:26:41'!
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 3/26/2019 16:33:14'!
 send
 
 	"Sends until receiver is a denotative object.
@@ -1278,7 +1208,7 @@ send
 	
 	^[
 		inStep := true.
-		[ super send ] on: Exception do: [ :anException | self inform: 'Can not debug this'. ^self ].
+		[ super send ] on: Exception do: [ :anException | self inform: self class canNotDebugErrorMessage. ^self ].
 		(contextStackTop receiver is: #DenotativeObject)
 			ifFalse: [ self stepIntoBlock ]] ensure: [ inStep := false ]
 		
@@ -1382,6 +1312,11 @@ newStack: stack
 			contextStackList := contextStackList collect: [:aString | aString copyReplaceAll: ' class' with: '' ]]
 		
 	! !
+
+!DenotativeObjectDebugger class methodsFor: 'error messages' stamp: 'HAW 3/26/2019 16:32:37'!
+canNotDebugErrorMessage
+
+	^'Cannot debug a message sent to an object that is not a DenotativeObject'! !
 
 !DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:02'!
 alwaysPresentFieldList
@@ -1654,7 +1589,7 @@ sendersOfItWhenErrorsParsing
 
 	DenotativeObjectBrowserWindow browseSendersOf: aSelector! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/5/2017 11:27:49'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 3/26/2019 16:34:04'!
 debug: aCompiledMethod receiver: anObject in: evalContext
 
 	| guineaPig debugger context |
@@ -1693,7 +1628,7 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 	debugger openFullNoSuspendLabel: 'Debug it'.
 
 	[ [debugger originalSend.
-	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: 'Can not debug this'. ^self ] ] whileFalse.
+	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: DenotativeObjectDebugger canNotDebugErrorMessage. ^self ] ] whileFalse.
 
 	! !
 
@@ -2797,43 +2732,60 @@ optionalButtonTuples
 
 	^DenotativeObjectBrowserWindow optionalButtonTuples reject: [ :tuple | tuple third = #offerWhatToShowMenu ]! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 9/10/2017 18:39:12'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 3/26/2019 16:00:51'!
 contextFieldListMenu
 
 	| aMenu |
 
 	aMenu := MenuMorph new defaultTarget: self.
-	aMenu addList: #(
-		('inspect (i)'						inspectContextSelection)
-		('browse (b)'						browseContextSelection)).
+	aMenu addItemsFromDictionaries: `{
+			{
+				#label 			-> 		'inspect (i)'.
+				#selector 		-> 		#inspectContextSelection.
+				#icon 			-> 		#inspectIcon
+			} asDictionary.
+			{
+				#label 			-> 		'browse (b)'.
+				#selector 		-> 		#browseContextSelection.
+				#icon 			-> 		#editFindReplaceIcon
+			} asDictionary. }`.
 	
 	^ aMenu! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 4/22/2018 19:55:41'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 3/26/2019 15:59:55'!
 contextStackMenu
 	"Set up the menu appropriately for the context-stack-list, either shifted or unshifted as per the parameter provided"
 
 	| aMenu |
 	aMenu _ MenuMorph new defaultTarget: self.
-	aMenu addList: #(
-			('proceed (p)'					proceed)
-			('restart (r)'					restart)
-			('into (e)'						send)
-			('over (t)'						stepIntoBlock)
-			('where (w)'					where)
-		).
+	aMenu addItemsFromDictionaries: `{
+			{ #label -> 'proceed (p)'. #selector -> #proceed } asDictionary. 
+			{ #label -> 'restart (r)'. #selector -> #restart } asDictionary. 
+			{ #label -> 'into (e)'. #selector -> #send } asDictionary. 
+			{ #label -> 'over (t)'. #selector -> #stepIntoBlock } asDictionary. 
+			{ #label -> 'where (w)'. #selector -> #where } asDictionary. }`.
+
 	^aMenu! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 9/10/2017 18:34:31'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 3/26/2019 15:56:27'!
 receiverFieldListMenu
 
 	| aMenu |
 
 	aMenu := MenuMorph new defaultTarget: self.
-	aMenu addList: #(
-		('inspect (i)'						inspectReceiverSelection)
-		('browse (b)'						browseReceiver)).
-		
+	
+	aMenu addItemsFromDictionaries: `{
+			{
+				#label 			-> 		'inspect (i)'.
+				#selector 		-> 		#inspectReceiverSelection.
+				#icon 			-> 		#inspectIcon
+			} asDictionary.
+			{
+				#label 			-> 		'browse (b)'.
+				#selector 		-> 		#browseReceiver.
+				#icon 			-> 		#editFindReplaceIcon
+			} asDictionary. }`.
+	
 	^ aMenu! !
 
 !DenotativeObjectInspectorWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:17:35'!
@@ -2842,17 +2794,25 @@ browseMethodFull
 	model selectedClassOrMetaClass ifNotNil: [ :denotativeObject |
 		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]! !
 
-!DenotativeObjectInspectorWindow methodsFor: 'menu building' stamp: 'HAW 8/20/2017 15:15:27'!
+!DenotativeObjectInspectorWindow methodsFor: 'menu building' stamp: 'HAW 3/26/2019 15:48:58'!
 fieldListMenu
 
 	| aMenu |
 
 	aMenu _ MenuMorph new defaultTarget: self.
 
-	aMenu addList: #(
-		('inspect (i)'							inspectSelection)
-		('browse (b)'						browseMethodFull)).
-		
+	aMenu addItemsFromDictionaries: `{
+			{
+				#label 			-> 		'inspect (i)'.
+				#selector 		-> 		#inspectSelection.
+				#icon 			-> 		#inspectIcon
+			} asDictionary.
+			{
+				#label 			-> 		'browse (b)'.
+				#selector 		-> 		#browseMethodFull.
+				#icon 			-> 		#editFindReplaceIcon
+			} asDictionary. }`.
+			
 	^ aMenu! !
 
 !DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 16:15:49'!
@@ -3416,16 +3376,21 @@ writeCollaboratorsInitializationOn: sourceStream
 		
 	! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:15:29'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/26/2019 15:41:41'!
 writeInitializationOf: aCollaborator on: sourceStream
+	
+	| collaboratorValue |
+	
+	collaboratorValue := self instVarNamed: aCollaborator.
+	collaboratorValue := (collaboratorValue isKindOf: Morph) ifTrue: [ nil ] ifFalse: [ collaboratorValue ].
 	
 	sourceStream
 		newLine;
 		tab;
 		nextPutAll: aCollaborator;
 		nextPutAll: ' := ';
-		store: (self instVarNamed: aCollaborator);
-		nextPut: $. ! !
+		store: collaboratorValue;
+		nextPut: $.! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:30:45'!
 writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream
@@ -4363,10 +4328,24 @@ doesNotUnderstand: aMessage
 
 	^aMessage sendTo: self morph ! !
 
-!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:30:40'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 3/25/2019 20:42:51'!
+clearMorph
+
+	morph := nil! !
+
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 3/26/2019 16:26:00'!
 createMorph 
 
-	self childResponsibility ! !
+	"Creates the morph related with this DenotativeObjectMorph. Should be redefined
+	by children to provide the right morph"
+	
+	"It is necessary to create a default morph because if the DenotativeObjectMorph is removed from the system
+	the image will break. It would be nicer to see if the D.O. is referenced by a Morph and avoid removing it but 
+	it is too complicated and time consuming. Having an x as default morph will indicate something went wrong - Hernan"
+	
+	^ImageMorph new 
+		image: Theme current closeIcon;
+		yourself ! !
 
 !DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:30:30'!
 initializeMorph 
@@ -4380,58 +4359,7 @@ morph
 	
 	^morph ! !
 
-!CloneOfLight class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:08:25'!
-createMorph
-
-	^EllipseMorph new
-		color: Color black;
-		yourself! !
-
-!CloneOfLight2 class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:14:03'!
-createMorph
-
-	^EllipseMorph new
-		color: Color black;
-		yourself! !
-
-!CloneOfLight3 class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:14:24'!
-createMorph
-
-	^EllipseMorph new
-		color: Color black;
-		yourself! !
-
-!CloneOfThreeLightsContainer class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:11:44'!
-createMorph
-
-	^LayoutMorph newColumn
-		morphExtent: 60 @ 130;
-		yourself
-! !
-
-!CloneOfThreeLightsContainer1 class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:16:23'!
-createMorph
-
-	^LayoutMorph newColumn
-		morphExtent: 60 @ 130;
-		yourself
-! !
-
 !Light class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:32:29'!
-createMorph
-
-	^EllipseMorph new
-		color: Color black;
-		yourself! !
-
-!Light1 class methodsFor: 'morph' stamp: 'HAW 3/25/2019 06:17:28'!
-createMorph
-
-	^EllipseMorph new
-		color: Color black;
-		yourself! !
-
-!LuzVerde class methodsFor: 'morph' stamp: 'HAW 3/24/2019 20:58:55'!
 createMorph
 
 	^EllipseMorph new
@@ -4661,7 +4589,7 @@ debug
 	
 	self debugAndWithResultDo: [:result | ]! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:03:53'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 3/26/2019 16:33:44'!
 debug: aCompiledMethod receiver: anObject in: evalContext withResultDo: aBlock
 
 	| guineaPig debugger context |
@@ -4702,7 +4630,7 @@ debug: aCompiledMethod receiver: anObject in: evalContext withResultDo: aBlock
 	debugger openFullNoSuspendLabel: 'Debug it'.
 
 	[ [debugger originalSend.
-	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: 'Can not debug this'. ^self ] ] whileFalse.
+	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: DenotativeObjectDebugger canNotDebugErrorMessage. ^self ] ] whileFalse.
 ! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:04:21'!
