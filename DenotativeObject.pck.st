@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3685] on 26 March 2019 at 4:34:25 pm'!
-'Description Fixed fileout of DenotativeObjectMorph. Fixed removing a DenotativeObjectMorph that is in use or referenced by other morph. Fixed context menues of inspector and debugger. Better error message when can not debug'!
-!provides: 'DenotativeObject' 1 70!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3688] on 30 April 2019 at 5:15:17 pm'!
+'Description Selects the right references on #browseReferencesOn:'!
+!provides: 'DenotativeObject' 1 71!
 !requires: 'LiveTyping' 1 5 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -1925,13 +1925,6 @@ messageListMenu
 
 ! !
 
-!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 8/1/2018 20:28:53'!
-openMessageList: messageList label: labelString 
-	
-	^self openMessageList: messageList label: labelString autoSelect: false
-
-	! !
-
 !DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 8/1/2018 19:53:14'!
 openMessageList: messageList label: labelString autoSelect: autoSelectString
 
@@ -3252,15 +3245,14 @@ selectVariableLabel
 	
 	^'Select collaborator to remove'! !
 
-!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 8/17/2018 16:37:06'!
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 4/30/2019 17:14:00'!
 browseReferencesOn: aCanNotRefactorDueToReferencesError
-	
+
 	DenotativeObjectMessageSetWindow
 		openMessageList: aCanNotRefactorDueToReferencesError references
 		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
-		autoSelect: true
-		
-	 ! !
+		autoSelect: aCanNotRefactorDueToReferencesError referencee  
+! !
 
 !DenotativeObjectRenameApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/8/2017 19:49:48'!
 openChangedMethods
@@ -3284,15 +3276,14 @@ selectVariableLabel
 	
 	^'Select collaborator to rename'! !
 
-!DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 8/17/2018 16:37:22'!
+!DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 4/30/2019 17:12:36'!
 browseReferencesOn: aCanNotRefactorDueToReferencesError
-	
+
 	DenotativeObjectMessageSetWindow
 		openMessageList: aCanNotRefactorDueToReferencesError references
 		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
-		autoSelect: true
-		
-	 ! !
+		autoSelect: aCanNotRefactorDueToReferencesError referencee name asString
+! !
 
 !DenotativeObjectSafelyRemoveApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/1/2018 18:12:15'!
 createRefactoring
