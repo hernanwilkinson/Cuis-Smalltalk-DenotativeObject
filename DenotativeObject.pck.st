@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3688] on 30 April 2019 at 5:15:17 pm'!
-'Description Selects the right references on #browseReferencesOn:'!
-!provides: 'DenotativeObject' 1 71!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3721] on 30 April 2019 at 6:38:18 pm'!
+'Description Nahuel fixes to add, rename and remove collaborator'!
+!provides: 'DenotativeObject' 1 72!
 !requires: 'LiveTyping' 1 5 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -1937,11 +1937,11 @@ openMessageList: messageList label: labelString autoSelect: autoSelectString
 	
 	^self open: messageSet label: labelString ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:27:24'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:47:11'!
 addInstVar
 
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		(DenotativeObjectAddCollaboratorApplier on: self for: aClass) value ].! !
+		(DenotativeObjectAddCollaboratorApplier on: model for: aClass) value ].! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:29:15'!
 browseAllAccessesTo: aVar from: aClass
@@ -2048,11 +2048,11 @@ inspectIt
 	
 	model selectedClass inspect! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:29:23'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:50:38'!
 removeInstVar
 	
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		(DenotativeObjectRemoveCollaboratorApplier on: self for: aClass) value ].! !
+		(DenotativeObjectRemoveCollaboratorApplier on: model for: aClass) value ].! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 10:46:42'!
 removeMessage
@@ -2068,11 +2068,11 @@ removeMessage
 
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:32:04'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:45:38'!
 renameInstVar
 	
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		(DenotativeObjectRenameCollaboratorApplier on: self for: aClass) value ].! !
+		(DenotativeObjectRenameCollaboratorApplier on: model at: aClass) value ].! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 1/7/2019 15:33:15'!
 renameSelector
