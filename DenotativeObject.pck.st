@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3740] on 10 May 2019 at 11:31:15 am'!
-'Description rename shortcut in method list'!
-!provides: 'DenotativeObject' 1 73!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3740] on 10 May 2019 at 12:46:37 pm'!
+'Description fixes on new object name creation'!
+!provides: 'DenotativeObject' 1 74!
 !requires: 'LiveTyping' 1 5 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -383,14 +383,14 @@ SafelyRemoveClassApplier subclass: #DenotativeObjectSafelyRemoveApplier
 DenotativeObjectSafelyRemoveApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeNewObjectPrecondition category: #'DenotativeObject-Refactorings'!
-NewClassPrecondition subclass: #DenotativeNewObjectPrecondition
+!classDefinition: #NewDenotativeObjectPrecondition category: #'DenotativeObject-Refactorings'!
+NewClassPrecondition subclass: #NewDenotativeObjectPrecondition
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeNewObjectPrecondition class' category: #'DenotativeObject-Refactorings'!
-DenotativeNewObjectPrecondition class
+!classDefinition: 'NewDenotativeObjectPrecondition class' category: #'DenotativeObject-Refactorings'!
+NewDenotativeObjectPrecondition class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObject category: #DenotativeObject!
@@ -716,13 +716,6 @@ addDenotativeObjectNamed: objectName inCategory: categoryName
 	
 	^self addDenotativeObjectNamed: objectName asChildOf: DenotativeObject name asString inCategory: categoryName ! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/20/2017 14:44:22'!
-assertDoesNotExistObjectNamed: denotativeObjectName
-
-	(Smalltalk includesKey: denotativeObjectName asSymbol) 
-		ifTrue: [ self error: (self objectNameInUseErrorDescription: denotativeObjectName)]
-	! !
-
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 7/22/2017 09:05:19'!
 classDefinitionText
 	"return the text to display for the definition of the currently selected class"
@@ -818,14 +811,14 @@ defineClassWihoutHandlingErrors: defString notifying: aRequestor
 	
 	^classCreated! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:06:31'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 5/10/2019 12:34:39'!
 defineClassWithoutHandlingParseNotification: defString notifying: aRequestor 
 		
 	^[self defineClassWihoutHandlingErrors: defString notifying: aRequestor ]
 		on: Error - MessageNotUnderstood 
 		do: [ :anError | 
 			self filterErrorMessagesWithClassStringFrom: anError.
-			self inform: anError printString.
+			self inform: anError messageText.
 			anError return: false ]! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 15:57:26'!
@@ -1068,11 +1061,10 @@ invalidObjectErrorDescription: name
 
 	^name, ' is not a denotative object'! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/6/2017 11:00:33'!
-objectNameInUseErrorDescription: denotativeObjectName
-
-	^denotativeObjectName bold , ' is used by another object or it is reserved by the system'
-! !
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 5/10/2019 11:45:38'!
+objectNameMustBeSymbolErrorDescription
+	
+	^'Object name must be symbol. It has to start wiht #'! !
 
 !DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 9/13/2017 15:11:23'!
 validateDefinitionString: defString
@@ -1086,17 +1078,17 @@ validateDefinitionString: defString
 		ifTrue: [ self validateObjectCreation: defTokens ]
 		ifFalse: [ self validateObjectRedefinition: defTokens ]! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/20/2017 14:44:07'!
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 5/10/2019 12:36:46'!
 validateObjectCreation: defTokens 
 
 	| denotativeObjectName nameIndex |
 	
 	nameIndex := defTokens findFirst: [ :token | token beginsWith: '#' ].
-	nameIndex = 0 ifTrue: [ self error: self invalidDefinitionStringErrorDescription ].
+	nameIndex = 0 ifTrue: [ self error: self objectNameMustBeSymbolErrorDescription ].
 	
 	denotativeObjectName := (defTokens at: nameIndex) copyWithoutAll: '#()'.
-	self assertDoesNotExistObjectNamed: denotativeObjectName.
-	! !
+	(NewDenotativeObjectPrecondition for: denotativeObjectName asSymbol in: Smalltalk undeclared: Undeclared) value.
+! !
 
 !DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 2/21/2019 16:41:15'!
 validateObjectRedefinition: defTokens 
@@ -3174,10 +3166,10 @@ newNameEqualsOldNameErrorMessage
 	
 	^'New object name equals old one'! !
 
-!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 8/13/2018 18:46:41'!
+!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 5/10/2019 12:25:43'!
 newClassPreconditionClass
 
-	^DenotativeNewObjectPrecondition! !
+	^NewDenotativeObjectPrecondition! !
 
 !DenotativeObjectSafelyRemove class methodsFor: 'warnings' stamp: 'HAW 8/1/2018 18:26:06'!
 warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
@@ -3291,30 +3283,35 @@ createRefactoring
 		
 	^DenotativeObjectSafelyRemove of: classToRemove ! !
 
-!DenotativeNewObjectPrecondition methodsFor: 'as yet unclassified' stamp: 'HAW 3/24/2019 20:33:31'!
-assertNewClassNameStartsWithUppercaseLetter
+!NewDenotativeObjectPrecondition methodsFor: 'evaluating - private' stamp: 'HAW 5/10/2019 12:32:56'!
+assertNewClassNameStartsWithRightLetter
 
-	"Denotative Objects can start with lowercase letter - Hernan"! !
+	newClassName first isLetter ifFalse: [ self signalNewNameMustStartWithRightLetter ]! !
 
-!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:48:06'!
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 5/10/2019 12:45:35'!
+errorMessageForAlreadyExistClassNamed: anObjectName
+
+	^'Object named ', anObjectName, ' already exist in the system'! !
+
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:48:06'!
 newClassNameCanNotBeEmptyErrorMessage
 	
 	^'New object name can not be empty'! !
 
-!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:09'!
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:49:09'!
 newClassNameCanNotHaveSpacesErrorMessage
 	
 	^'New object name can not have spaces'! !
 
-!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:32'!
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:49:32'!
 newNameMustBeSymbolErrorMessage
 	
 	^'New object name must be a symbol'! !
 
-!DenotativeNewObjectPrecondition class methodsFor: 'exceptions' stamp: 'HAW 8/13/2018 18:49:48'!
-newNameMustStartWithUppercaseLetterErrorMessage
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 5/10/2019 12:32:07'!
+newNameMustStartWithRightLetterErrorMessage
 
-	^'New object name must start with an uppercase letter'! !
+	^'New object name must start with a letter'! !
 
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:12:18'!
 initializeAfterFileIn
