@@ -2150,7 +2150,8 @@ messageListKey: aChar from: view
 		aChar = $t ifTrue: [ ^ model runMethodTest].
 		aChar = $r ifTrue: [ ^ model debugMethodTest].
 		aChar = $e ifTrue: [ ^model sendAndInspect ].
-		aChar = $q ifTrue: [ ^model debugAndInspect ] ].
+		aChar = $q ifTrue: [ ^model debugAndInspect ].
+		aChar = $R ifTrue: [ ^self renameSelector ]. ]].
 	! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/14/2017 11:58:39'!
@@ -2308,7 +2309,7 @@ messageListMenu
 			} asDictionary.
 			nil.
 			{
-				#label 			-> 		'rename'.
+				#label 			-> 		'rename (R)'.
 				#selector 		-> 		#renameSelector.
 				#icon 			-> 		#saveAsIcon
 			} asDictionary.
