@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3721] on 30 April 2019 at 6:38:18 pm'!
-'Description Nahuel fixes to add, rename and remove collaborator'!
-!provides: 'DenotativeObject' 1 72!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3740] on 10 May 2019 at 11:31:15 am'!
+'Description rename shortcut in method list'!
+!provides: 'DenotativeObject' 1 73!
 !requires: 'LiveTyping' 1 5 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -2136,7 +2136,7 @@ classListKey: aChar from: view
 
 	^self messageListKey: aChar from: view ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/14/2018 10:46:27'!
+!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 5/10/2019 11:29:44'!
 messageListKey: aChar from: view
 
 	 model selectedMessageName ifNotNil: [ :selector |
@@ -2150,7 +2150,8 @@ messageListKey: aChar from: view
 		aChar = $t ifTrue: [ ^ model runMethodTest].
 		aChar = $r ifTrue: [ ^ model debugMethodTest].
 		aChar = $e ifTrue: [ ^model sendAndInspect ].
-		aChar = $q ifTrue: [ ^model debugAndInspect ] ].
+		aChar = $q ifTrue: [ ^model debugAndInspect ].
+		aChar = $R ifTrue: [ ^self renameSelector ] ].
 	! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 9/14/2017 11:58:39'!
@@ -2279,7 +2280,7 @@ classListMenu
 		}`.
 	^ aMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/15/2018 18:24:09'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 5/10/2019 11:30:17'!
 messageListMenu
 	"Answer the message-list menu"
 	"Changed by emm to include menu-item for breakpoints"
@@ -2308,7 +2309,7 @@ messageListMenu
 			} asDictionary.
 			nil.
 			{
-				#label 			-> 		'rename'.
+				#label 			-> 		'rename (R)'.
 				#selector 		-> 		#renameSelector.
 				#icon 			-> 		#saveAsIcon
 			} asDictionary.
