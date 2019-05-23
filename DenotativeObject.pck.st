@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3740] on 10 May 2019 at 12:46:37 pm'!
-'Description fixes on new object name creation'!
-!provides: 'DenotativeObject' 1 74!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3740] on 23 May 2019 at 3:10:37 pm'!
+'Description fix for evaluation on denotative object workspace. option to create denotative object when variable not defined starting with lowercase'!
+!provides: 'DenotativeObject' 1 75!
 !requires: 'LiveTyping' 1 5 nil!
 !requires: 'Theme-Themes' 1 2 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -1624,7 +1624,7 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 
 	! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/21/2017 13:07:13'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 5/23/2019 15:04:04'!
 evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 	"Treat the current selection as an expression; evaluate it and return the result
 	3 +4
@@ -1640,7 +1640,6 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 		ifFalse: [rcvr := ctxt := nil].
 	[result := [[
 		Compiler new
-			sourceStreamGetter: #selectionAsStream;		"Cuis specific. Do not remove!!"
 			evaluate: self selectionAsStream
 			in: ctxt
 			to: rcvr
@@ -4851,8 +4850,8 @@ messageText
 
 	^dividend printString, ' can not be divided by 0'! !
 
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:23:55'!
-addCollaboratorLabelsTo: labels andActionsTo: actions
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:09:04'!
+addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
 
 	labels add: 'declare block-local temp'.
 	actions add: [ parser declareTemp: name at: #block ].
@@ -4864,6 +4863,9 @@ addCollaboratorLabelsTo: labels andActionsTo: actions
 		labels add: 'declare collaborator'.
 		actions add: [ parser declareInstVar: name ]].
 	
+	labels add: 'define new denotative object'.
+	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
+
 ! !
 
 !UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 16:18:06'!
@@ -4896,7 +4898,7 @@ defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
 		name: newClass name
 		! !
 
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:24:02'!
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:08:55'!
 handleForDenotativeObjectIn: aDenotativeObjectBrowser
 
 	| alternatives labels actions lines caption choice |
@@ -4907,7 +4909,7 @@ handleForDenotativeObjectIn: aDenotativeObjectBrowser
 	lines := OrderedCollection new.
 
 	name first isLowercase
-		ifTrue: [ self addCollaboratorLabelsTo: labels andActionsTo: actions ]
+		ifTrue: [ self addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ]
 		ifFalse: [ self addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ].
 
 	lines add: labels size.
