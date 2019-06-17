@@ -1,8 +1,8 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3740] on 23 May 2019 at 3:10:37 pm'!
-'Description fix for evaluation on denotative object workspace. option to create denotative object when variable not defined starting with lowercase'!
-!provides: 'DenotativeObject' 1 75!
-!requires: 'LiveTyping' 1 5 nil!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3801] on 17 June 2019 at 5:14:40 pm'!
+'Description fix selection when evaluating in denotative object workspace'!
+!provides: 'DenotativeObject' 1 76!
 !requires: 'Theme-Themes' 1 2 nil!
+!requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
@@ -1624,29 +1624,9 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 
 	! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 5/23/2019 15:04:04'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 6/17/2019 16:49:00'!
 evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
-	"Treat the current selection as an expression; evaluate it and return the result
-	3 +4
-	"
-	| provider result rcvr ctxt |
-	self lineSelectAndEmptyCheck: [^ ''].
-
-	provider := self codeProvider.
-	(provider respondsTo: #doItReceiver)
-		ifTrue: [
-				rcvr := provider doItReceiver.
-				ctxt := provider doItContext]
-		ifFalse: [rcvr := ctxt := nil].
-	[result := [[
-		Compiler new
-			evaluate: self selectionAsStream
-			in: ctxt
-			to: rcvr
-			notifying: self
-			ifFail: [^ failBlock value]
-			logged: true
-			profiled: doProfile.]
+	[[[ ^super evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile ]
 		on: UndeclaredVariable 
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ]]
 		on: OutOfScopeNotification
@@ -1663,9 +1643,7 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 			debugger process: activeProcess context: context.
 			debugger openFullNoSuspendLabel: anError printString.
 			activeProcess suspend.
-			].
-	morph formatAndStyleIfNeeded.		"Needed to re-shout workspaces, that might have new variables binded."
-	^ aBlock value: result! !
+			]! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 2/19/2019 16:42:27'!
 getMenu
