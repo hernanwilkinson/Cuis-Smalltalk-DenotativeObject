@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3801] on 17 June 2019 at 5:14:40 pm'!
-'Description fix selection when evaluating in denotative object workspace'!
-!provides: 'DenotativeObject' 1 76!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3805] on 17 June 2019 at 7:58:18 pm'!
+'Description fix for cmd+e'!
+!provides: 'DenotativeObject' 1 77!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -4530,14 +4530,13 @@ isNotIdenticalTo: aDenotativeObject
 
 	^ (self isIdenticalTo: aDenotativeObject) not! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:08:04'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 6/17/2019 19:56:57'!
 compile: aString receiver: receiver in: evalContext
 
 	| methodNode |
 
 	methodNode := [
 		Compiler new
-			sourceStreamGetter: #selectionAsStream;		"Cuis specific. Do not remove!!"
 			compileNoPattern: aString
 			in: receiver class
 			context: evalContext
