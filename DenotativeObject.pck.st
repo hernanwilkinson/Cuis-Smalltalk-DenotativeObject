@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3805] on 17 June 2019 at 7:58:18 pm'!
-'Description fix for cmd+e'!
-!provides: 'DenotativeObject' 1 77!
+'From Cuis 5.0 [latest update: #3826] on 17 July 2019 at 6:04:17 pm'!
+'Description Support for not showing types with balloon help in browser and inspector'!
+!provides: 'DenotativeObject' 1 78!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -2054,13 +2054,15 @@ sendersOf: aSymbol
 
 	^self class sendersOf: aSymbol ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 2/21/2019 00:12:05'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:44:03'!
 buildLowerPanes
 
 	| codeAndButtons workspace separator |
 
 	workspace := TextModelMorph withModel: DenotativeObjectWorkspace new.
-	workspace askBeforeDiscardingEdits: false.
+	workspace 
+		askBeforeDiscardingEdits: false;
+		doNotShowBalloonHelp.
 
 	separator := LayoutAdjustingMorph new.
 
@@ -2069,6 +2071,7 @@ buildLowerPanes
 		addMorph: self optionalButtonRow fixedHeight: self defaultButtonPaneHeight;
 		addAdjusterMorph.
 	codePane := self buildMorphicCodePane.
+	codePane doNotShowBalloonHelp.
 	codeAndButtons
 		addMorph: codePane proportionalHeight: 2.0;
 		addMorph: separator fixedHeight: 4;
@@ -2777,6 +2780,20 @@ fieldListMenu
 			} asDictionary. }`.
 			
 	^ aMenu! !
+
+!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:40:48'!
+buildContentsText
+
+	^super buildContentsText 
+		doNotShowBalloonHelp;
+		yourself ! !
+
+!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:38:01'!
+buildEvaluatorText
+
+	^super buildEvaluatorText 
+		doNotShowBalloonHelp;
+		yourself ! !
 
 !DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 16:15:49'!
 autoCompleterClassFor: textGetter
