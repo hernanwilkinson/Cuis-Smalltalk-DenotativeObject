@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3826] on 17 July 2019 at 6:04:17 pm'!
-'Description Support for not showing types with balloon help in browser and inspector'!
-!provides: 'DenotativeObject' 1 78!
+'From Cuis 5.0 [latest update: #3832] on 4 August 2019 at 10:14:07 pm'!
+'Description Fix when implementing a quick method in the stack base. Now shows DoIt method in debugger'!
+!provides: 'DenotativeObject' 1 79!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -1290,12 +1290,16 @@ openFullMorphicLabel: aLabelString
 	DenotativeObjectDebuggerWindow open: self label: aLabelString.
 	self toggleContextStackIndex: oldContextStackIndex! !
 
-!DenotativeObjectDebugger methodsFor: 'private' stamp: 'HAW 7/29/2017 20:17:54'!
+!DenotativeObjectDebugger methodsFor: 'private' stamp: 'HAW 8/4/2019 21:26:31'!
 newStack: stack
 
 	| denotativeObjectContexts |
 
-	denotativeObjectContexts := stack select: [ :context | (context methodClass inheritsFrom: DenotativeObject class) or: [ context selector = #doesNotUnderstand: ]].
+	denotativeObjectContexts := stack select: [ :context | 
+		(context methodClass inheritsFrom: DenotativeObject class) 
+		or: [ context selector = #doesNotUnderstand: 
+		or: [ context selector = Scanner doItSelector 
+		or: [ context selector = Scanner doItInSelector ]]]].
 
 	denotativeObjectContexts isEmpty
 		ifTrue: [ super newStack: stack ] 
@@ -1624,7 +1628,7 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 
 	! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 6/17/2019 16:49:00'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/4/2019 21:22:44'!
 evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 	[[[ ^super evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile ]
 		on: UndeclaredVariable 
@@ -1632,18 +1636,11 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 		on: OutOfScopeNotification
 		do: [ :ex | ex resume: true]]
 		on: Error
-		do: [ :anError |
-			| activeProcess context debugger |
-
-			activeProcess := Processor activeProcess.
-			debugger := DenotativeObjectDebugger new.
+		do: [ :anError | | context  |
 			context := thisContext.
 			[context notNil and: [(context receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ context := context sender ].
 			context isNil ifTrue: [ self error: 'can not debug' ].
-			debugger process: activeProcess context: context.
-			debugger openFullNoSuspendLabel: anError printString.
-			activeProcess suspend.
-			]! !
+			DenotativeObjectDebugger openOn: Processor activeProcess context: context label: anError printString fullView: false ]! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 2/19/2019 16:42:27'!
 getMenu
