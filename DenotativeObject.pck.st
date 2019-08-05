@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3832] on 4 August 2019 at 10:14:07 pm'!
-'Description Fix when implementing a quick method in the stack base. Now shows DoIt method in debugger'!
-!provides: 'DenotativeObject' 1 79!
+'From Cuis 5.0 [latest update: #3836] on 5 August 2019 at 3:41:51 pm'!
+'Description Fix on refactoring hierarchy refactoring scope'!
+!provides: 'DenotativeObject' 1 80!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -3075,10 +3075,13 @@ addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClass
 
 ! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:31:58'!
+!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/5/2019 15:39:54'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inHierarchyOf: aClass doingPerClass: aBlock
 
-	aClass theMetaClass withAllSubAndSuperclassesDo: [ :aPotentialClassToRefactor |
+	| highestClassImplementingOldSelector |
+	
+	highestClassImplementingOldSelector := aClass highestClassImplementing: anOldSelector ifNone: [ aClass ].
+	highestClassImplementingOldSelector theNonMetaClass withAllSubclassesDo: [ :aPotentialClassToRefactor |
 		(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
 			self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor.
 			aBlock value: aPotentialClassToRefactor ]]
