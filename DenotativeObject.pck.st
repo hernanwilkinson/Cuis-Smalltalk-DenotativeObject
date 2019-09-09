@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3836] on 5 August 2019 at 3:41:51 pm'!
-'Description Fix on refactoring hierarchy refactoring scope'!
-!provides: 'DenotativeObject' 1 80!
+'From Cuis 5.0 [latest update: #3846] on 9 September 2019 at 9:26:57 am'!
+'Description Rename object shortcut + minor fixes by Nahuel'!
+!provides: 'DenotativeObject' 1 81!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -894,11 +894,12 @@ withObjectNameDo: aBlock label: aLabel
 	[ ObjectBuilder assertIsValidName: objectName ] on: Error do: [:anError | ^self inform: anError messageText ].
 	^aBlock value: objectName ! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:23'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'RNG 8/29/2019 19:45:11'!
 withParentNameDo: aBlock
-	
-	^self withObjectNameDo: aBlock label: 'Enter parent name' 
-! !
+
+	^ self selectedClassName
+		ifNil: [ self withObjectNameDo: aBlock label: 'Enter parent name' ]
+		ifNotNil: [ aBlock value: self selectedClassName ]! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:24:57'!
 withSelectedCategoryNameDo: aBlock
@@ -2092,16 +2093,18 @@ optionalButtonTuples
 	^self class optionalButtonTuples
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/24/2018 16:31:38'!
+!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'RNG 8/30/2019 09:09:23'!
 classListKey: aChar from: view 
 
-	aChar == $a ifTrue: [ ^model addDenotativeObject ].
-	aChar == $A ifTrue: [ ^model addDenotativeObjectInCategory ].
-	aChar == $h ifTrue: [ ^model addChildDenotativeObject ].
-	aChar ==	$H ifTrue: [ ^model addChildDenotativeObjectInCategory ].
-	aChar ==	$i ifTrue: [ ^self inspectIt ].
-	aChar ==	$x ifTrue: [ ^model removeClass].
-	aChar ==	$t ifTrue: [ ^model runClassTests ].
+	aChar == $a ifTrue: [ ^ model addDenotativeObject ].
+	aChar == $A ifTrue: [ ^ model addDenotativeObjectInCategory ].
+	aChar == $h ifTrue: [ ^ model addChildDenotativeObject ].
+	aChar == $H ifTrue: [ ^ model addChildDenotativeObjectInCategory ].
+	aChar == $i ifTrue: [ ^ self inspectIt ].
+	aChar == $x ifTrue: [ ^ model removeClass].
+	aChar == $t ifTrue: [ ^ model runClassTests ].
+	aChar == $R ifTrue: [ ^ model renameClass ].
+	aChar == $o ifTrue: [ ^ model fileOutClass ].
 
 	^self messageListKey: aChar from: view ! !
 
@@ -2141,7 +2144,7 @@ findClassDialogTitle
 
 	^ 'Denotative object name or fragment?'! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 9/27/2018 11:05:54'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 8/30/2019 09:06:33'!
 classListMenu
 
 	| aMenu |
@@ -2152,31 +2155,31 @@ classListMenu
 			{
 				#label 			-> 		'add object... (a)'.
 				#selector 		-> 		#addDenotativeObject.
-				#object 			->		#model.
+				#object 			->			#model.
 				#icon 			-> 		#listAddIcon
 			} asDictionary.
 			{
 				#label 			-> 		'add object in category... (A)'.
 				#selector 		-> 		#addDenotativeObjectInCategory.
-				#object 			->		#model.
+				#object 			->			#model.
 				#icon 			-> 		#listAddIcon
 			} asDictionary.
 			{
 				#label 			-> 		'add child object... (h)'.
 				#selector 		-> 		#addChildDenotativeObject.
-				#object 			->		#model.
+				#object 			->			#model.
 				#icon 			-> 		#listAddIcon
 			} asDictionary.
 			{
 				#label 			-> 		'add child object in category... (H)'.
 				#selector 		-> 		#addChildDenotativeObjectInCategory.
-				#object 			->		#model.
+				#object 			->			#model.
 				#icon 			-> 		#listAddIcon
 			} asDictionary.
 			nil.
 			{
 				#label 			-> 		'show as family tree'.
-				#object 			->		#model.
+				#object 			->			#model.
 				#selector 		-> 		#enableListClassesHierarchically.
 				#icon 			-> 		#goTopIcon
 			} asDictionary.
@@ -2187,7 +2190,13 @@ classListMenu
 				#icon 			-> 		#sendReceiveIcon
 			} asDictionary.
 			nil.
-
+			{
+				#label 			-> 		'file out (o)'.
+				#object 			-> 		#model.
+				#selector 		-> 		#fileOutClass.
+				#icon 			-> 		#fileOutIcon
+			} asDictionary.
+			nil.
 			{
 				#label 			-> 		'inspect (i)'.
 				#selector 		-> 		#inspectIt.
@@ -2199,7 +2208,7 @@ classListMenu
 				#icon 			-> 		#mailForwardIcon
 			} asDictionary.
 			{
-				#label 			-> 		'rename...'.
+				#label 			-> 		'rename... (R)'.
 				#selector 		-> 		#renameClass.
 				#object 			->		#model.
 				#icon 			-> 		#saveAsIcon
@@ -2359,7 +2368,7 @@ systemCatSingletonMenu
 
 	^self systemCategoryMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 21:39:39'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 8/30/2019 09:08:16'!
 systemCategoryMenu
 
 	| aMenu |
@@ -2380,20 +2389,20 @@ systemCategoryMenu
 			} asDictionary.
 			nil.
 			{
-				#label 			-> 		'fileOut'.
+				#label 			-> 		'file out (o)'.
 				#object 			-> 		#model.
 				#selector 		-> 		#fileOutSystemCategory.
 				#icon 			-> 		#fileOutIcon
 			} asDictionary.
 			{
-				#label 			-> 		'fileIn'.
+				#label 			-> 		'file in'.
 				#object 			-> 		#model.
 				#selector 		-> 		#fileInSystemCategory.
 				#icon 			-> 		#scriptIcon
 			} asDictionary.
 			nil.
 			{
-				#label 			-> 		'rename...'.
+				#label 			-> 		'rename... (R)'.
 				#object 			-> 		#model.
 				#selector 		-> 		#renameSystemCategory.
 				#icon 			-> 		#saveAsIcon
@@ -3213,13 +3222,13 @@ askForImplementosAndSenders
 		calculateImplementorsAndSenders;
 		createAndApplyRefactoring! !
 
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/31/2017 15:39:08'!
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'RNG 8/29/2019 19:50:08'!
 scopeOptionLabels
 
 	"They have to be the same number and in the same order as super. If not, a different way to redefine the scope must be implemented
 	for denotative objects - Hernan"
 	
-	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
+	^ {'Only in this object'. 'In its parents and children'. 'In Object Category'. 'In its parents, children and its Categories'. 'In System'}
 	! !
 
 !DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:29:01'!
@@ -3292,8 +3301,8 @@ newClassNameCanNotBeEmptyErrorMessage
 	
 	^'New object name can not be empty'! !
 
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:49:09'!
-newClassNameCanNotHaveSpacesErrorMessage
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'RNG 8/29/2019 19:58:23'!
+newClassNameCanNotHaveSeparatorsErrorMessage
 	
 	^'New object name can not have spaces'! !
 
@@ -3581,10 +3590,10 @@ childResponsibility
 
 	self error: (self childResposibilityErrorDescriptionFor: thisContext sender selector)! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 9/13/2017 16:17:25'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'RNG 8/29/2019 19:49:25'!
 childResposibilityErrorDescriptionFor: aSelector
 
-	^'Implementation of ', aSelector, ' is responsibility of my childs'! !
+	^ 'Implementation of #', aSelector, ' is responsibility of my children'! !
 
 !DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 3/31/2018 23:06:32'!
 children
