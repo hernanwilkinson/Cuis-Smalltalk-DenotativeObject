@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3846] on 9 October 2019 at 11:23:20 am'!
-'Description DenotativeObjectLightTheme'!
-!provides: 'DenotativeObject' 1 81!
+'From Cuis 5.0 [latest update: #3935] on 28 October 2019 at 1:03:26 am'!
+'Description Support for autocompletion of previous binary message send'!
+!provides: 'DenotativeObject' 1 82!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -13,493 +13,493 @@ SystemOrganization addCategory: #'DenotativeObject-Meta'!
 SystemOrganization addCategory: #'DenotativeObject-Morph'!
 
 
-!classDefinition: #DenotativeObjectWorkspace category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectWorkspace category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 Workspace subclass: #DenotativeObjectWorkspace
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectWorkspace class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectWorkspace class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectWorkspace class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectMessageSet category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectMessageSet category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 MessageSet subclass: #DenotativeObjectMessageSet
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectMessageSet class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectMessageSet class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectMessageSet class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectBrowser category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectBrowser category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 Browser subclass: #DenotativeObjectBrowser
 	instanceVariableNames: ''
 	classVariableNames: 'RecentDenotativeObjects'
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectBrowser class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectBrowser class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectBrowser class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectDebugger category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectDebugger category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 Debugger subclass: #DenotativeObjectDebugger
 	instanceVariableNames: 'inStep'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectDebugger class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectDebugger class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectDebugger class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectInspector category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectInspector category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 Inspector subclass: #DenotativeObjectInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectInspector class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectInspector class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectInspector class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectBuilder category: #DenotativeObject!
+!classDefinition: #DenotativeObjectBuilder category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 ClassBuilder subclass: #DenotativeObjectBuilder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectBuilder class' category: #DenotativeObject!
+!classDefinition: 'DenotativeObjectBuilder class' category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectBuilder class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectCompiler category: #'DenotativeObject-Compiler'!
+!classDefinition: #DenotativeObjectCompiler category: #'DenotativeObject-Compiler' stamp: 'HAW 10/28/2019 01:03:26'!
 Compiler subclass: #DenotativeObjectCompiler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Compiler'!
-!classDefinition: 'DenotativeObjectCompiler class' category: #'DenotativeObject-Compiler'!
+!classDefinition: 'DenotativeObjectCompiler class' category: #'DenotativeObject-Compiler' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectCompiler class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectParser category: #'DenotativeObject-Compiler'!
+!classDefinition: #DenotativeObjectParser category: #'DenotativeObject-Compiler' stamp: 'HAW 10/28/2019 01:03:26'!
 Parser subclass: #DenotativeObjectParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Compiler'!
-!classDefinition: 'DenotativeObjectParser class' category: #'DenotativeObject-Compiler'!
+!classDefinition: 'DenotativeObjectParser class' category: #'DenotativeObject-Compiler' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectParser class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectEncoder category: #'DenotativeObject-Compiler'!
+!classDefinition: #DenotativeObjectEncoder category: #'DenotativeObject-Compiler' stamp: 'HAW 10/28/2019 01:03:26'!
 EncoderForV3PlusClosures subclass: #DenotativeObjectEncoder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Compiler'!
-!classDefinition: 'DenotativeObjectEncoder class' category: #'DenotativeObject-Compiler'!
+!classDefinition: 'DenotativeObjectEncoder class' category: #'DenotativeObject-Compiler' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectEncoder class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectSmalltalkEditor category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectSmalltalkEditor category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 SmalltalkEditor subclass: #DenotativeObjectSmalltalkEditor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectSmalltalkEditor class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectSmalltalkEditor class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectSmalltalkEditor class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectWorkspaceEditor category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectWorkspaceEditor category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectSmalltalkEditor subclass: #DenotativeObjectWorkspaceEditor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectWorkspaceEditor class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectWorkspaceEditor class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectWorkspaceEditor class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectTestResultWindow category: #'DenotativeObject-TestSupport'!
+!classDefinition: #DenotativeObjectTestResultWindow category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 TestResultWindow subclass: #DenotativeObjectTestResultWindow
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'DenotativeObjectTestResultWindow class' category: #'DenotativeObject-TestSupport'!
+!classDefinition: 'DenotativeObjectTestResultWindow class' category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectTestResultWindow class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectMessageSetWindow category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectMessageSetWindow category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 MessageSetWindow subclass: #DenotativeObjectMessageSetWindow
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectMessageSetWindow class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectMessageSetWindow class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectMessageSetWindow class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectBrowserWindow category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectBrowserWindow category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 BrowserWindow subclass: #DenotativeObjectBrowserWindow
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectBrowserWindow class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectBrowserWindow class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectBrowserWindow class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectDebuggerWindow category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectDebuggerWindow category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DebuggerWindow subclass: #DenotativeObjectDebuggerWindow
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectDebuggerWindow class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectDebuggerWindow class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectDebuggerWindow class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectInspectorWindow category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectInspectorWindow category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 InspectorWindow subclass: #DenotativeObjectInspectorWindow
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectInspectorWindow class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectInspectorWindow class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectInspectorWindow class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectNameRequestMorph category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectNameRequestMorph category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 ClassNameRequestMorph subclass: #DenotativeObjectNameRequestMorph
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectNameRequestMorph class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectNameRequestMorph class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectNameRequestMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectDarkTheme category: #DenotativeObject!
+!classDefinition: #DenotativeObjectDarkTheme category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 DarkTheme subclass: #DenotativeObjectDarkTheme
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectDarkTheme class' category: #DenotativeObject!
+!classDefinition: 'DenotativeObjectDarkTheme class' category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectDarkTheme class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectLightTheme category: #DenotativeObject!
+!classDefinition: #DenotativeObjectLightTheme category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 LightTheme subclass: #DenotativeObjectLightTheme
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectLightTheme class' category: #DenotativeObject!
+!classDefinition: 'DenotativeObjectLightTheme class' category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectLightTheme class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectTheme category: #DenotativeObject!
+!classDefinition: #DenotativeObjectTheme category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 Theme subclass: #DenotativeObjectTheme
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectTheme class' category: #DenotativeObject!
+!classDefinition: 'DenotativeObjectTheme class' category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectTheme class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectProgessiveTestRunner category: #'DenotativeObject-TestSupport'!
+!classDefinition: #DenotativeObjectProgessiveTestRunner category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 ProgressiveTestRunner subclass: #DenotativeObjectProgessiveTestRunner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'DenotativeObjectProgessiveTestRunner class' category: #'DenotativeObject-TestSupport'!
+!classDefinition: 'DenotativeObjectProgessiveTestRunner class' category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectProgessiveTestRunner class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectTestCase category: #'DenotativeObject-TestSupport'!
+!testClassDefinition: #DenotativeObjectTestCase category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 TestCase subclass: #DenotativeObjectTestCase
 	instanceVariableNames: 'testMethod realTest realTestSelector denotativeObject'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'DenotativeObjectTestCase class' category: #'DenotativeObject-TestSupport'!
+!classDefinition: 'DenotativeObjectTestCase class' category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectTestCase class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRenameMethodApplierTest category: #'DenotativeObject-Tests'!
+!testClassDefinition: #DenotativeObjectRenameMethodApplierTest category: #'DenotativeObject-Tests' stamp: 'HAW 10/28/2019 01:03:26'!
 TestCase subclass: #DenotativeObjectRenameMethodApplierTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tests'!
-!classDefinition: 'DenotativeObjectRenameMethodApplierTest class' category: #'DenotativeObject-Tests'!
+!classDefinition: 'DenotativeObjectRenameMethodApplierTest class' category: #'DenotativeObject-Tests' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectRenameMethodApplierTest class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectTest category: #'DenotativeObject-Tests'!
+!testClassDefinition: #DenotativeObjectTest category: #'DenotativeObject-Tests' stamp: 'HAW 10/28/2019 01:03:26'!
 TestCase subclass: #DenotativeObjectTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tests'!
-!classDefinition: 'DenotativeObjectTest class' category: #'DenotativeObject-Tests'!
+!classDefinition: 'DenotativeObjectTest class' category: #'DenotativeObject-Tests' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectTest class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectNameCompleter category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectNameCompleter category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 ClassNameCompleter subclass: #DenotativeObjectNameCompleter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectNameCompleter class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectNameCompleter class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectNameCompleter class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectCompleter category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectCompleter category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 LiveTypingSmalltalkCompleter subclass: #DenotativeObjectCompleter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectCompleter class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectCompleter class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectCompleter class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectAutoCompleterSelectorsCollector category: #'DenotativeObject-Tools'!
+!classDefinition: #DenotativeObjectAutoCompleterSelectorsCollector category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 AutoCompleterSelectorsCollector subclass: #DenotativeObjectAutoCompleterSelectorsCollector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectAutoCompleterSelectorsCollector class' category: #'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectAutoCompleterSelectorsCollector class' category: #'DenotativeObject-Tools' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectAutoCompleterSelectorsCollector class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectAddCollaborator category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectAddCollaborator category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 AddInstanceVariable subclass: #DenotativeObjectAddCollaborator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectAddCollaborator class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectAddCollaborator class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectAddCollaborator class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRenameSelector category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectRenameSelector category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 RenameSelector subclass: #DenotativeObjectRenameSelector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRenameSelector class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRenameSelector class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectRenameSelector class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRemoveCollaborator category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectRemoveCollaborator category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 RemoveInstanceVariable subclass: #DenotativeObjectRemoveCollaborator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRemoveCollaborator class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRemoveCollaborator class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectRemoveCollaborator class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRename category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectRename category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 RenameClass subclass: #DenotativeObjectRename
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRename class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRename class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectRename class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectSafelyRemove category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectSafelyRemove category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 SafelyRemoveClass subclass: #DenotativeObjectSafelyRemove
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectSafelyRemove class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectSafelyRemove class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectSafelyRemove class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectAddCollaboratorApplier category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectAddCollaboratorApplier category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 AddInstanceVariableApplier subclass: #DenotativeObjectAddCollaboratorApplier
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectAddCollaboratorApplier class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectAddCollaboratorApplier class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectAddCollaboratorApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRenameSelectorApplier category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectRenameSelectorApplier category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 RenameSelectorApplier subclass: #DenotativeObjectRenameSelectorApplier
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRenameSelectorApplier class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRenameSelectorApplier class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectRenameSelectorApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRemoveCollaboratorApplier category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectRemoveCollaboratorApplier category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 RemoveInstanceVariableApplier subclass: #DenotativeObjectRemoveCollaboratorApplier
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRemoveCollaboratorApplier class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRemoveCollaboratorApplier class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectRemoveCollaboratorApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRenameApplier category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectRenameApplier category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 RenameClassApplier subclass: #DenotativeObjectRenameApplier
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRenameApplier class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRenameApplier class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectRenameApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRenameCollaboratorApplier category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectRenameCollaboratorApplier category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 RenameInstanceVariableApplier subclass: #DenotativeObjectRenameCollaboratorApplier
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRenameCollaboratorApplier class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRenameCollaboratorApplier class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectRenameCollaboratorApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectSafelyRemoveApplier category: #'DenotativeObject-Refactorings'!
+!classDefinition: #DenotativeObjectSafelyRemoveApplier category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 SafelyRemoveClassApplier subclass: #DenotativeObjectSafelyRemoveApplier
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectSafelyRemoveApplier class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectSafelyRemoveApplier class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectSafelyRemoveApplier class
 	instanceVariableNames: ''!
 
-!classDefinition: #NewDenotativeObjectPrecondition category: #'DenotativeObject-Refactorings'!
+!classDefinition: #NewDenotativeObjectPrecondition category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 NewClassPrecondition subclass: #NewDenotativeObjectPrecondition
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'NewDenotativeObjectPrecondition class' category: #'DenotativeObject-Refactorings'!
+!classDefinition: 'NewDenotativeObjectPrecondition class' category: #'DenotativeObject-Refactorings' stamp: 'HAW 10/28/2019 01:03:26'!
 NewDenotativeObjectPrecondition class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObject category: #DenotativeObject!
+!classDefinition: #DenotativeObject category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 Object subclass: #DenotativeObject
 	instanceVariableNames: ''
 	classVariableNames: 'CloneNumber'
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObject class' category: #DenotativeObject!
+!classDefinition: 'DenotativeObject class' category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObject class
 	instanceVariableNames: ''!
 
-!classDefinition: #Assert category: #'DenotativeObject-TestSupport'!
+!classDefinition: #Assert category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObject subclass: #Assert
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'Assert class' category: #'DenotativeObject-TestSupport'!
+!classDefinition: 'Assert class' category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 Assert class
 	instanceVariableNames: ''!
 
-!classDefinition: #AssertTest category: #'DenotativeObject-TestSupport'!
+!classDefinition: #AssertTest category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObject subclass: #AssertTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'AssertTest class' category: #'DenotativeObject-TestSupport'!
+!classDefinition: 'AssertTest class' category: #'DenotativeObject-TestSupport' stamp: 'HAW 10/28/2019 01:03:26'!
 AssertTest class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectMorph category: #'DenotativeObject-Morph'!
+!classDefinition: #DenotativeObjectMorph category: #'DenotativeObject-Morph' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObject subclass: #DenotativeObjectMorph
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Morph'!
-!classDefinition: 'DenotativeObjectMorph class' category: #'DenotativeObject-Morph'!
+!classDefinition: 'DenotativeObjectMorph class' category: #'DenotativeObject-Morph' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectMorph class
 	instanceVariableNames: 'morph'!
 
-!classDefinition: #Light category: #'DenotativeObject-Morph'!
+!classDefinition: #Light category: #'DenotativeObject-Morph' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectMorph subclass: #Light
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Morph'!
-!classDefinition: 'Light class' category: #'DenotativeObject-Morph'!
+!classDefinition: 'Light class' category: #'DenotativeObject-Morph' stamp: 'HAW 10/28/2019 01:03:26'!
 Light class
 	instanceVariableNames: ''!
 
-!classDefinition: #ThreeLightsContainer category: #'DenotativeObject-Morph'!
+!classDefinition: #ThreeLightsContainer category: #'DenotativeObject-Morph' stamp: 'HAW 10/28/2019 01:03:26'!
 DenotativeObjectMorph subclass: #ThreeLightsContainer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Morph'!
-!classDefinition: 'ThreeLightsContainer class' category: #'DenotativeObject-Morph'!
+!classDefinition: 'ThreeLightsContainer class' category: #'DenotativeObject-Morph' stamp: 'HAW 10/28/2019 01:03:26'!
 ThreeLightsContainer class
 	instanceVariableNames: ''!
 
-!classDefinition: #ObjectBuilder category: #DenotativeObject!
+!classDefinition: #ObjectBuilder category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 Object subclass: #ObjectBuilder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject'!
-!classDefinition: 'ObjectBuilder class' category: #DenotativeObject!
+!classDefinition: 'ObjectBuilder class' category: #DenotativeObject stamp: 'HAW 10/28/2019 01:03:26'!
 ObjectBuilder class
 	instanceVariableNames: ''!
 
-!classDefinition: #Collaborator category: #'DenotativeObject-Meta'!
+!classDefinition: #Collaborator category: #'DenotativeObject-Meta' stamp: 'HAW 10/28/2019 01:03:26'!
 Object subclass: #Collaborator
 	instanceVariableNames: 'owner name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Meta'!
-!classDefinition: 'Collaborator class' category: #'DenotativeObject-Meta'!
+!classDefinition: 'Collaborator class' category: #'DenotativeObject-Meta' stamp: 'HAW 10/28/2019 01:03:26'!
 Collaborator class
 	instanceVariableNames: ''!
 
-!classDefinition: #Delegator category: #'DenotativeObject-Meta'!
+!classDefinition: #Delegator category: #'DenotativeObject-Meta' stamp: 'HAW 10/28/2019 01:03:26'!
 Object subclass: #Delegator
 	instanceVariableNames: 'currentMethodClass selector receiver arguments'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Meta'!
-!classDefinition: 'Delegator class' category: #'DenotativeObject-Meta'!
+!classDefinition: 'Delegator class' category: #'DenotativeObject-Meta' stamp: 'HAW 10/28/2019 01:03:26'!
 Delegator class
 	instanceVariableNames: ''!
 
-!classDefinition: #DelegatorBuilder category: #'DenotativeObject-Meta'!
+!classDefinition: #DelegatorBuilder category: #'DenotativeObject-Meta' stamp: 'HAW 10/28/2019 01:03:26'!
 ProtoObject subclass: #DelegatorBuilder
 	instanceVariableNames: 'receiver lookupBase'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-Meta'!
-!classDefinition: 'DelegatorBuilder class' category: #'DenotativeObject-Meta'!
+!classDefinition: 'DelegatorBuilder class' category: #'DenotativeObject-Meta' stamp: 'HAW 10/28/2019 01:03:26'!
 DelegatorBuilder class
 	instanceVariableNames: ''!
 
@@ -3040,22 +3040,43 @@ computeIdentifierEntries
 	
 	entries := entriesSet asArray sort! !
 
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 2/19/2019 15:50:42'!
-computeMessageEntriesForClass: aClass
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 10/28/2019 01:03:00'!
+computeMessageEntriesForClass: aClass with: possibleBinaryMessageSendRange 
 
 	(aClass isMeta and: [ aClass soleInstance is: #DenotativeObject])
-		ifTrue: [ self computeMessageEntriesForDenotativeObject: aClass ]
-		ifFalse: [ super computeMessageEntriesForClass: aClass ]
+		ifTrue: [ self 
+			computeMessageEntriesForDenotativeObject: aClass 
+			withPreviousBinaryMessageSend: possibleBinaryMessageSendRange ]
+		ifFalse: [ super computeMessageEntriesForClass: aClass with: possibleBinaryMessageSendRange ]
 		! !
 
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 2/19/2019 15:46:48'!
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 10/27/2019 22:22:17'!
 computeMessageEntriesForDenotativeObject: aDenotativeObject
 
 	selectorsClasses := Array with: aDenotativeObject.
 	
 	entries := (DenotativeObjectAutoCompleterSelectorsCollector for: prefix) 
 		addSelectorsOf: aDenotativeObject upTo: (DenotativeObject class superclass);
-		entriesToShow! !
+		entriesToShow.
+	
+! !
+
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 10/27/2019 22:28:34'!
+computeMessageEntriesForDenotativeObject: aDenotativeObject withPreviousBinaryMessageSend: possibleBinaryMessageSendRange 
+
+	(self isBinaryMessageSend: possibleBinaryMessageSendRange)
+		ifTrue: [ self 
+			computeMessageEntriesForClass: aDenotativeObject 
+			withPreviousBinaryMessageSend: possibleBinaryMessageSendRange 
+			collectingWith: (DenotativeObjectAutoCompleterSelectorsCollector for: prefix) 
+			asRoot: DenotativeObject class superclass ]
+		ifFalse: [ self computeMessageEntriesForDenotativeObject: aDenotativeObject ].
+		
+	self ifEmptyEntriesShowAllPrefixedSelectors
+
+	
+
+! !
 
 !DenotativeObjectCompleter class methodsFor: 'instance creation' stamp: 'HAW 2/19/2019 15:19:16'!
 withModel: aStringHolder
