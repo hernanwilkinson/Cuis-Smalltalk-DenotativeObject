@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3963] on 4 December 2019 at 12:12:52 pm'!
-'Description Changes to rename denotative object based on changes on rename class '!
-!provides: 'DenotativeObject' 1 83!
+'From Cuis 5.0 [latest update: #3963] on 4 December 2019 at 4:23:48 pm'!
+'Description Changes due to refactoring in autocompleter'!
+!provides: 'DenotativeObject' 1 84!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -3041,18 +3041,32 @@ computeIdentifierEntries
 	
 	entries := entriesSet asArray sort! !
 
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 10/28/2019 01:03:00'!
-computeMessageEntriesForClass: aClass with: possibleBinaryMessageSendRange 
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:44:22'!
+computeMessageEntriesForClass: aClass  
 
 	(aClass isMeta and: [ aClass soleInstance is: #DenotativeObject])
-		ifTrue: [ self 
-			computeMessageEntriesForDenotativeObject: aClass 
-			withPreviousBinaryMessageSend: possibleBinaryMessageSendRange ]
-		ifFalse: [ super computeMessageEntriesForClass: aClass with: possibleBinaryMessageSendRange ]
+		ifTrue: [ self computeMessageEntriesForDenotativeObject: aClass ]
+		ifFalse: [ super computeMessageEntriesForClass: aClass ]
 		! !
 
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 10/27/2019 22:22:17'!
-computeMessageEntriesForDenotativeObject: aDenotativeObject
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:49:36'!
+computeMessageEntriesForDenotativeObject: aDenotativeObject 
+
+	self isPreviousMessageSendBinary
+		ifTrue: [ self 
+			computeMessageEntriesWithBinaryMessageForClass: aDenotativeObject 
+			collectingWith: (DenotativeObjectAutoCompleterSelectorsCollector for: prefix) 
+			asRoot: DenotativeObject class superclass ]
+		ifFalse: [ self computeMessageEntriesWithoutBinaryMessageForDenotativeObject: aDenotativeObject ].
+		
+	self ifEmptyEntriesShowAllPrefixedSelectors
+
+	
+
+! !
+
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:44:04'!
+computeMessageEntriesWithoutBinaryMessageForDenotativeObject: aDenotativeObject
 
 	selectorsClasses := Array with: aDenotativeObject.
 	
@@ -3060,23 +3074,6 @@ computeMessageEntriesForDenotativeObject: aDenotativeObject
 		addSelectorsOf: aDenotativeObject upTo: (DenotativeObject class superclass);
 		entriesToShow.
 	
-! !
-
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 10/27/2019 22:28:34'!
-computeMessageEntriesForDenotativeObject: aDenotativeObject withPreviousBinaryMessageSend: possibleBinaryMessageSendRange 
-
-	(self isBinaryMessageSend: possibleBinaryMessageSendRange)
-		ifTrue: [ self 
-			computeMessageEntriesForClass: aDenotativeObject 
-			withPreviousBinaryMessageSend: possibleBinaryMessageSendRange 
-			collectingWith: (DenotativeObjectAutoCompleterSelectorsCollector for: prefix) 
-			asRoot: DenotativeObject class superclass ]
-		ifFalse: [ self computeMessageEntriesForDenotativeObject: aDenotativeObject ].
-		
-	self ifEmptyEntriesShowAllPrefixedSelectors
-
-	
-
 ! !
 
 !DenotativeObjectCompleter class methodsFor: 'instance creation' stamp: 'HAW 2/19/2019 15:19:16'!
