@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3963] on 4 December 2019 at 4:23:48 pm'!
-'Description Changes due to refactoring in autocompleter'!
-!provides: 'DenotativeObject' 1 84!
+'From Cuis 5.0 [latest update: #3997] on 30 December 2019 at 12:37:33 pm'!
+'Description Deproxification of DenotativeObjectMorph when passed as parameter '!
+!provides: 'DenotativeObject' 1 85!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -4353,10 +4353,18 @@ test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 		signal: Error
 		withDescription: errorDescription ! !
 
-!DenotativeObjectMorph class methodsFor: 'message forwarding - private' stamp: 'HAW 9/18/2018 14:46:01'!
+!DenotativeObjectMorph class methodsFor: 'message forwarding - private' stamp: 'HAW 12/30/2019 12:36:02'!
 doesNotUnderstand: aMessage
 
-	^aMessage sendTo: self morph ! !
+	| deproxifiedArguments |
+	
+	"Because in Morph many methods send the message #==, it is necessary to deproxify the denotative object morphs
+	that are part of the message. This will only work for arguments, it is not doing a traverse into the arguments but
+	it is ok for now because DenotativeObjectMorph is used for simple examples - Hernan"
+	deproxifiedArguments := aMessage arguments collect: [ :anArgument | 
+		anArgument morphIfDenotativeObjectMorph ].
+	
+	^morph perform: aMessage selector withArguments: deproxifiedArguments! !
 
 !DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 3/25/2019 20:42:51'!
 clearMorph
@@ -4388,6 +4396,11 @@ morph
 	morph isNil ifTrue: [ self initializeMorph ].
 	
 	^morph ! !
+
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 12/30/2019 12:24:45'!
+morphIfDenotativeObjectMorph
+
+	^self morph! !
 
 !Light class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:32:29'!
 createMorph
@@ -4593,6 +4606,11 @@ isNotEqualTo: aDenotativeObject
 isNotIdenticalTo: aDenotativeObject
 
 	^ (self isIdenticalTo: aDenotativeObject) not! !
+
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 12/30/2019 12:19:39'!
+morphIfDenotativeObjectMorph
+
+	^self! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 6/17/2019 19:56:57'!
 compile: aString receiver: receiver in: evalContext
