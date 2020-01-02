@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3997] on 30 December 2019 at 12:37:33 pm'!
-'Description Deproxification of DenotativeObjectMorph when passed as parameter '!
-!provides: 'DenotativeObject' 1 85!
+'From Cuis 5.0 [latest update: #3997] on 2 January 2020 at 10:01:05 am'!
+'Description Extract method in editor menu'!
+!provides: 'DenotativeObject' 1 86!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -1652,7 +1652,7 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 			context isNil ifTrue: [ self error: 'can not debug' ].
 			DenotativeObjectDebugger openOn: Processor activeProcess context: context label: anError printString fullView: false ]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 2/19/2019 16:42:27'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 1/2/2020 09:58:31'!
 getMenu
 	
 	^(MenuMorph new defaultTarget: self)
@@ -1715,6 +1715,11 @@ getMenu
 			{
 				#label 			-> 		'Rename... (R)'.
 				#selector 		-> 		#contextualRename.
+				#icon 			-> 		#saveAsIcon
+			} asDictionary.
+			{
+				#label 			-> 		'Extract Method... (K)'.
+				#selector 		-> 		#extractMethod.
 				#icon 			-> 		#saveAsIcon
 			} asDictionary.
 			}, LiveTyping smalltalkEditorMenuOptions, {
