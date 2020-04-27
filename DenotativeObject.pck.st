@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3997] on 2 January 2020 at 10:01:05 am'!
-'Description Extract method in editor menu'!
-!provides: 'DenotativeObject' 1 86!
+'From Cuis 5.0 [latest update: #4109] on 27 April 2020 at 3:45:49 pm'!
+'Description Fix for showing menu of Light'!
+!provides: 'DenotativeObject' 1 87!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -2349,24 +2349,24 @@ messageListMenu
 		}`.
 	^ aMenu! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 9/27/2018 11:18:31'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 4/23/2020 16:36:40'!
 morphMenuItems
 
 	^ (model hasMorphObjectSelected) ifTrue: [
 		| toggleDisplayOption showOption hideOption |
-		showOption _ `{
+		showOption _ {
 			#label 			-> 		'show!!'.
 			#selector 		-> 		#showSelectedMorph.
 			#object 			->			#model.
 			#icon 			-> 		#weatherClearIcon
-		} asDictionary`.
-		hideOption _ `{
+		} asDictionary.
+		hideOption _ {
 			#label 			-> 		'hide!!'.
 			#selector 		-> 		#hideSelectedMorph.
 			#object 			->			#model.
 			#icon 			-> 		#weatherOvercastIcon
-		} asDictionary`.
-		toggleDisplayOption _ model selectedClass owner ifNil: [ showOption ] ifNotNil: [ hideOption ].
+		} asDictionary.
+		toggleDisplayOption _ model selectedClass morph owner ifNil: [ showOption ] ifNotNil: [ hideOption ].
 		{ toggleDisplayOption. nil }
 	] ifFalse: [ {} ]! !
 
