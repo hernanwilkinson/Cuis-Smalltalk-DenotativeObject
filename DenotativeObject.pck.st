@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4109] on 27 April 2020 at 3:45:49 pm'!
-'Description Fix for showing menu of Light'!
-!provides: 'DenotativeObject' 1 87!
+'From Cuis 5.0 [latest update: #4109] on 2 May 2020 at 12:10:15 am'!
+'Description Rename selector fix'!
+!provides: 'DenotativeObject' 1 88!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -3197,6 +3197,11 @@ warningMessageForRedefinitionOfSystemMessageOf: aNewSelector
 	^aNewSelector, ' is defined in the core system. Overriding it can cause unexpected behavior.'
 	! !
 
+!DenotativeObjectRenameSelector class methodsFor: 'as yet unclassified' stamp: 'HAW 5/2/2020 00:02:39'!
+initialize
+
+	self addAllowedToRefactorClassCompiler: DenotativeObjectCompiler ! !
+
 !DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
 errorMessageForInstanceVariable: aName notDefinedIn: aClass
 
@@ -5047,3 +5052,4 @@ weatherOvercastIcon
 recalculateStringVersionForDenotativeObject
 	
 	stringVersion := classSymbol asString,' ', methodSymbol ! !
+DenotativeObjectRenameSelector initialize!
