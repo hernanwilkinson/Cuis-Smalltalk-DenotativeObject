@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4109] on 2 May 2020 at 12:10:15 am'!
-'Description Rename selector fix'!
-!provides: 'DenotativeObject' 1 88!
+'From Cuis 5.0 [latest update: #4226] on 18 June 2020 at 9:38:45 am'!
+'Description Lineup with 4226'!
+!provides: 'DenotativeObject' 1 89!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -2147,16 +2147,6 @@ systemCatListKey: aChar from: view
 	^ super systemCatListKey: aChar from: view
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'commands' stamp: 'HAW 6/13/2018 15:51:22'!
-classNameRequester 
-
-	^DenotativeObjectNameRequestMorph! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'commands' stamp: 'RNG 5/27/2018 01:11:39'!
-findClassDialogTitle
-
-	^ 'Denotative object name or fragment?'! !
-
 !DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 12/4/2019 12:07:51'!
 classListMenu
 
@@ -2515,6 +2505,16 @@ sendersOf: aSymbol
 	senders := (Smalltalk allCallsOn: aSymbol) select: [ :aMethodReference | aMethodReference actualClass inheritsFrom: DenotativeObject class ].
 
 	^senders ! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 6/18/2020 09:28:01'!
+classNameRequester 
+
+	^DenotativeObjectNameRequestMorph! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 6/18/2020 09:16:45'!
+findClassDialogTitle
+
+	^ 'Denotative object name or fragment?'! !
 
 !DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 8/21/2017 12:46:32'!
 fullOnClass: aClass selector: aSelector
@@ -4996,45 +4996,16 @@ handleForDenotativeObjectIn: aDenotativeObjectBrowser
 
 ! !
 
-!BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'HAW 6/13/2018 15:49:42'!
-classNameRequester 
-
-	^ClassNameRequestMorph! !
-
-!BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'HAW 6/13/2018 15:49:23'!
+!BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'GC 3/17/2019 08:13:00'!
 findClass
-	"Search for a class by name."
-	| pattern foundClass classNames index toMatch exactMatch potentialClassNames |
 
-	self okToChange ifFalse: [ ^self flash ].
-	pattern _ self classNameRequester request: self findClassDialogTitle.
-	pattern isEmpty ifTrue: [^ self flash].
-	toMatch _ (pattern copyWithout: $.) asLowercase withBlanksTrimmed.
-	potentialClassNames _ model potentialClassNames asOrderedCollection.
-	classNames _ (pattern last = $. or: [pattern last = $ ])
-		ifTrue: [potentialClassNames select:
-					[:nm |  nm asLowercase = toMatch]]
-		ifFalse: [potentialClassNames select: 
-					[:n | n includesSubstring: toMatch caseSensitive: false]].
-	classNames isEmpty ifTrue: [^ self flash].
-	exactMatch _ classNames detect: [ :each | each asLowercase = toMatch] ifNone: nil.
-
-	index _ classNames size = 1
-		ifTrue:	[1]
-		ifFalse:	[exactMatch
-			ifNil: [(PopUpMenu labelArray: classNames lines: #()) startUpMenu]
-			ifNotNil: [classNames addFirst: exactMatch.
-				(PopUpMenu labelArray: classNames lines: #(1)) startUpMenu]].
-	index = 0 ifTrue: [^ self flash].
-	foundClass _ Smalltalk at: (classNames at: index) asSymbol.
- 	model selectCategoryForClass: foundClass.
-	model selectClass: foundClass
-! !
-
-!BrowserWindow methodsFor: '*DenotativeObject-Tools' stamp: 'RNG 5/27/2018 01:11:04'!
-findClassDialogTitle
-
-	^ 'Class name or fragment?'! !
+	| scopedClassNames |
+	
+	scopedClassNames _ model potentialClassNames asOrderedCollection.
+	
+	self class findClassFrom: scopedClassNames ifFound: [:foundClass |
+		model selectCategoryForClass: foundClass.
+		model selectClass: foundClass ]! !
 
 !Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:12'!
 weatherClearIcon
