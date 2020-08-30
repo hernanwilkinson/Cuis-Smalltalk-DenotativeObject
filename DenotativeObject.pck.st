@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4226] on 18 June 2020 at 9:38:45 am'!
-'Description Lineup with 4226'!
-!provides: 'DenotativeObject' 1 89!
+'From Cuis 5.0 [latest update: #4364] on 30 August 2020 at 7:01:21 pm'!
+'Description Lineup with 4364'!
+!provides: 'DenotativeObject' 1 90!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -893,16 +893,19 @@ withObjectNameDo: aBlock
 	^self withObjectNameDo: aBlock label: 'Enter object name' 
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 10/1/2018 14:52:54'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/29/2020 18:08:57'!
 withObjectNameDo: aBlock label: aLabel
 	
-	| objectName |
-	
-	objectName := DenotativeObjectNameRequestMorph request: aLabel onCancel: [^self].
-	objectName := objectName withBlanksTrimmed.
-	"This is just to provide a better error message - Hernan"
-	[ ObjectBuilder assertIsValidName: objectName ] on: Error do: [:anError | ^self inform: anError messageText ].
-	^aBlock value: objectName ! !
+	DenotativeObjectNameRequestMorph 
+		request: aLabel 
+		initialAnswer: '' 
+		do: [ :objectName | | trimmedObjectName |
+			trimmedObjectName := objectName withBlanksTrimmed.
+			"This is just to provide a better error message - Hernan"
+			[ ObjectBuilder assertIsValidName: trimmedObjectName.
+			aBlock value: trimmedObjectName ]
+		 		on: Error 
+				do: [:anError | ^self inform: anError messageText ]].! !
 
 !DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:23'!
 withParentNameDo: aBlock
@@ -1051,15 +1054,16 @@ and all its objects?'])
 			self systemCategoryListIndex: 0.
 			self changed: #systemCategoryList ]! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/22/2017 09:53:35'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/29/2020 18:18:18'!
 withCategoryNameDo: aBlock
 	
-	| categoryName |
-	
-	categoryName := FillInTheBlankMorph request: 'Enter category name' onCancel: [^self].
-	categoryName := categoryName withBlanksTrimmed.
-	categoryName isEmpty ifTrue: [ ^self inform: 'Category name can not be empty' ].
-	^aBlock value: categoryName ! !
+	self 
+		request: 'Enter category name' 
+		do: [ :categoryName | | trimmedCategoryName |
+			trimmedCategoryName := categoryName withBlanksTrimmed.
+			trimmedCategoryName isEmpty 
+				ifTrue: [ self inform: 'Category name can not be empty' ]
+				ifFalse: [ aBlock value: categoryName ]]! !
 
 !DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:35:22'!
 invalidDefinitionErrorDescription
