@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4364] on 30 August 2020 at 7:01:21 pm'!
-'Description Lineup with 4364'!
-!provides: 'DenotativeObject' 1 90!
+'From Cuis 5.0 [latest update: #4365] on 23 September 2020 at 7:22:17 pm'!
+'Description Fix some bugs with changes in StringRequestMorph'!
+!provides: 'DenotativeObject' 1 91!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
@@ -766,34 +766,45 @@ copyClass
 			
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 10/1/2018 14:52:20'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/23/2020 19:08:23'!
 createClass
 
 	self selectedClass ifNotNil: [ :aDenotativeObject | | superclass className categoryName |	
-		className := ClassNameRequestMorph request: 'Class for ', aDenotativeObject name onCancel: [ ^self ].
+		className := ClassNameRequestMorph request: 'Class for ', aDenotativeObject name orCancel: [ ^self ].
 		(Smalltalk classNamed: className) ifNotNil: [
-			(PopUpMenu confirm: className, ' already exist. Do you want to recreate?' trueChoice: 'Recreate it' falseChoice: 'Do not continue') 
-				ifFalse: [ ^self ]].			
-		categoryName := FillInTheBlankMorph request: 'Enter category name' initialAnswer: aDenotativeObject category onCancel: [ ^self ].
+			(PopUpMenu 
+				confirm: className, ' already exist. Do you want to recreate?' 
+				trueChoice: 'Recreate it' 
+				falseChoice: 'Do not continue') ifFalse: [ ^self ]].			
+		categoryName := StringRequestMorph 
+			request: 'Enter category name' 
+			initialAnswer: aDenotativeObject category 
+			orCancel: [ ^self ].
 		
 		[ superclass := self createSuperclassOf: aDenotativeObject onCancel: [ ^self ].
 		aDenotativeObject createClassNamed: className asSymbol subclassOf: superclass category: categoryName ]
 			on: Error
 			do: [ :anError | self inform: anError messageText ]]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 10/1/2018 14:52:33'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/23/2020 19:07:23'!
 createSuperclassOf: aDenotativeObject onCancel: aBlock
 
 	| denotativeObjectParent categoryName superclass superclassName |
 	
 	denotativeObjectParent := aDenotativeObject parentIfNone: [ ^Object ].
 	
-	superclassName := ClassNameRequestMorph request: 'Class for ', denotativeObjectParent name onCancel: [ ^aBlock value ].
+	superclassName := ClassNameRequestMorph request: 'Class for ', denotativeObjectParent name orCancel: [ ^aBlock value ].
 	(Smalltalk classNamed: superclassName) ifNotNil: [ :alreadyExistingSuperclass |
-		(PopUpMenu confirm: superclassName, ' already exist. Do you want to recreate or reuse it?' trueChoice: 'Recreate it' falseChoice: 'Reuse it')
-			ifFalse: [ ^alreadyExistingSuperclass ]].
+		(PopUpMenu 
+			confirm: superclassName, ' already exist. Do you want to recreate or reuse it?' 
+			trueChoice: 'Recreate it' 
+			falseChoice: 'Reuse it') ifFalse: [ ^alreadyExistingSuperclass ]].
 		
-	categoryName := FillInTheBlankMorph request: 'Enter category name' initialAnswer: denotativeObjectParent category onCancel: [ ^aBlock value ].	
+	categoryName := StringRequestMorph 
+		request: 'Enter category name' 
+		initialAnswer: denotativeObjectParent category 
+		orCancel: [ ^aBlock value ].	
+		
 	superclass := self createSuperclassOf: denotativeObjectParent onCancel: aBlock.
 	
 	^denotativeObjectParent createClassNamed: superclassName asSymbol subclassOf: superclass category: categoryName! !
@@ -1021,12 +1032,12 @@ editorClassFor: textGetter
 
 	^DenotativeObjectSmalltalkEditor! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 7/18/2017 21:08:22'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 9/23/2020 19:07:40'!
 fileInSystemCategory
 
 	[| fileName |
 
-	fileName := FillInTheBlankMorph request: 'Enter file name' onCancel: [ ^self ].
+	fileName := StringRequestMorph request: 'Enter file name' orCancel: [ ^self ].
 	ChangeSet fileIn: fileName asFileEntry ]
 		on: FileDoesNotExistException
 		do: [:anError |
@@ -1179,7 +1190,7 @@ recentClasses
 	
 	^RecentDenotativeObjects ! !
 
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 20:20:49'!
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 9/23/2020 19:12:41'!
 askForCategoryIn: aClass default: aString
 
 	| categories index category |
@@ -1189,8 +1200,11 @@ askForCategoryIn: aClass default: aString
 	index := PopUpMenu withCaption: 'Please provide a good category for the new method!!'
 						chooseFrom: categories.
 	index = 0 ifTrue: [^ aString].
-	category := index = 1 ifTrue: [FillInTheBlankMorph request: 'Enter category name:']
-						ifFalse: [categories at: index].
+	
+	category := index = 1 
+		ifTrue: [StringRequestMorph request: 'Enter category name:' orCancel: [ '' ] ]
+		ifFalse: [categories at: index].
+		
 	^ category isEmpty ifTrue: [aString] ifFalse: [category]! !
 
 !DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 10:54:42'!
@@ -4828,13 +4842,13 @@ sendAndWithResultDo: aBlock
 		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:07:23'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 9/23/2020 19:08:01'!
 stringToEvalSending: aSymbol to: aDenotativeObject onCancel: aCancelBlock
 
 	| externalCollaborators |
 	
 	externalCollaborators := (aDenotativeObject class >> aSymbol) methodNode arguments collect: [ :anArgumentNode |
-		FillInTheBlankMorph request: 'Enter collaborator ', anArgumentNode name onCancel: [^aCancelBlock value] ].
+		StringRequestMorph request: 'Enter collaborator ', anArgumentNode name orCancel: [^aCancelBlock value] ].
 	
 	^String streamContents: [ :stream |
 		stream 
