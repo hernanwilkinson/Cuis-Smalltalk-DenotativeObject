@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4383] on 29 September 2020 at 6:04:35 pm'!
-'Description Inspector fix'!
-!provides: 'DenotativeObject' 1 92!
+'From Cuis 5.0 [latest update: #4532] on 18 August 2021 at 8:13:43 pm'!
+'Description DenotativeObjectMorph>>#doesNotUnderstand: fix'!
+!provides: 'DenotativeObject' 1 93!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject-Tools'!
@@ -123,6 +123,16 @@ DenotativeObjectSmalltalkEditor subclass: #DenotativeObjectWorkspaceEditor
 DenotativeObjectWorkspaceEditor class
 	instanceVariableNames: ''!
 
+!classDefinition: #DenotativeObjectNameRequestMorph category: 'DenotativeObject-Tools'!
+ClassNameRequestMorph subclass: #DenotativeObjectNameRequestMorph
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectNameRequestMorph class' category: 'DenotativeObject-Tools'!
+DenotativeObjectNameRequestMorph class
+	instanceVariableNames: ''!
+
 !classDefinition: #DenotativeObjectTestResultWindow category: 'DenotativeObject-TestSupport'!
 TestResultWindow subclass: #DenotativeObjectTestResultWindow
 	instanceVariableNames: ''
@@ -171,16 +181,6 @@ InspectorWindow subclass: #DenotativeObjectInspectorWindow
 	category: 'DenotativeObject-Tools'!
 !classDefinition: 'DenotativeObjectInspectorWindow class' category: 'DenotativeObject-Tools'!
 DenotativeObjectInspectorWindow class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectNameRequestMorph category: 'DenotativeObject-Tools'!
-ClassNameRequestMorph subclass: #DenotativeObjectNameRequestMorph
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectNameRequestMorph class' category: 'DenotativeObject-Tools'!
-DenotativeObjectNameRequestMorph class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectDarkTheme category: 'DenotativeObject'!
@@ -1896,6 +1896,11 @@ getMenu
 			} asDictionary.
 		}`! !
 
+!DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 16:15:49'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectNameCompleter! !
+
 !DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 7/14/2017 20:19:56'!
 debug
 
@@ -2590,30 +2595,6 @@ optionalButtonTuples
 
 	^ aList! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'world menu options' stamp: 'HAW 7/5/2018 18:34:09'!
-worldMenuOptions 
-
-	^`{
-	{
-		#itemGroup 	-> 		0.
-		#itemOrder 		-> 		10.
-		#label 			-> 		'DenotativeObject Browser'.
-		#selector 		-> 		#openBrowser.
-		#object 			-> 		DenotativeObjectBrowserWindow.
-		#icon 			-> 		#morphsIcon.
-		#balloonText 	-> 		'To work with denotative objects (without classes)'.
-	} asDictionary.
-	{
-		#itemGroup 	-> 		0.
-		#itemOrder 		-> 		20.
-		#label 			-> 		'Class Browser'.
-		#selector 		-> 		#openBrowser.
-		#object 			-> 		BrowserWindow.
-		#icon 			-> 		#editFindReplaceIcon.
-		#balloonText 	-> 		'Classical Smalltalk class browser'.
-	} asDictionary. 
-	}`! !
-
 !DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:40:24'!
 browseContextSelection
 	
@@ -2840,11 +2821,6 @@ buildEvaluatorText
 	^super buildEvaluatorText 
 		doNotShowBalloonHelp;
 		yourself ! !
-
-!DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 16:15:49'!
-autoCompleterClassFor: textGetter
-	
-	^DenotativeObjectNameCompleter! !
 
 !DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/5/2018 15:13:12'!
 pseudoVariables
@@ -4412,7 +4388,7 @@ test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 		signal: Error
 		withDescription: errorDescription ! !
 
-!DenotativeObjectMorph class methodsFor: 'message forwarding - private' stamp: 'HAW 12/30/2019 12:36:02'!
+!DenotativeObjectMorph class methodsFor: 'message forwarding - private' stamp: 'HAW 6/18/2021 11:02:03'!
 doesNotUnderstand: aMessage
 
 	| deproxifiedArguments |
@@ -4423,7 +4399,7 @@ doesNotUnderstand: aMessage
 	deproxifiedArguments := aMessage arguments collect: [ :anArgument | 
 		anArgument morphIfDenotativeObjectMorph ].
 	
-	^morph perform: aMessage selector withArguments: deproxifiedArguments! !
+	^self morph perform: aMessage selector withArguments: deproxifiedArguments! !
 
 !DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 3/25/2019 20:42:51'!
 clearMorph
