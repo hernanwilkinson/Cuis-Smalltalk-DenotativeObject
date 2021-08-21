@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4532] on 18 August 2021 at 8:13:43 pm'!
-'Description DenotativeObjectMorph>>#doesNotUnderstand: fix'!
-!provides: 'DenotativeObject' 1 93!
+'From Cuis 5.0 [latest update: #4782] on 21 August 2021 at 5:30:54 pm'!
+'Description worldMenuOptions fix'!
+!provides: 'DenotativeObject' 1 94!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject-Tools'!
@@ -2594,6 +2594,30 @@ optionalButtonTuples
 	(10	'show...'				offerWhatToShowMenu		'menu of what to show in lower pane')).
 
 	^ aList! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'world menu options' stamp: 'HAW 8/21/2021 17:28:01'!
+worldMenuOptions 
+
+	^`{
+	{
+		#itemGroup 	-> 		0.
+		#itemOrder 		-> 		10.
+		#label 			-> 		'DenotativeObject Browser'.
+		#selector 		-> 		#openBrowser.
+		#object 			-> 		DenotativeObjectBrowserWindow.
+		#icon 			-> 		#morphsIcon.
+		#balloonText 	-> 		'To work with denotative objects (without classes)'.
+	} asDictionary.
+	{
+		#itemGroup 	-> 		0.
+		#itemOrder 		-> 		20.
+		#label 			-> 		'Class Browser'.
+		#selector 		-> 		#openBrowser.
+		#object 			-> 		BrowserWindow.
+		#icon 			-> 		#editFindReplaceIcon.
+		#balloonText 	-> 		'Classical Smalltalk class browser'.
+	} asDictionary. 
+	}`! !
 
 !DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:40:24'!
 browseContextSelection
