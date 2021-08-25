@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4782] on 21 August 2021 at 5:30:54 pm'!
-'Description worldMenuOptions fix'!
-!provides: 'DenotativeObject' 1 94!
+'From Cuis 5.0 [latest update: #4809] on 25 August 2021 at 10:53:10 am'!
+'Description initializeCollaboratorsFromFile uses a specific category to remove it after fileout'!
+!provides: 'DenotativeObject' 1 95!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject-Tools'!
@@ -3424,22 +3424,30 @@ initializeCollaboratorsFromFile
 	
 	"It does nothing - it is here just in case there is an error an a DO does not automatically implement it, to avoid getting a MNU when sending initializeAfterFileIn - Hernan"! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:24:18'!
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 8/25/2021 10:48:39'!
 removeInitializeCollaboratorsFromFile
 
 	"This check is to be sure not to remove DenotativeObject class>>#initializeCollaboratorsFromFile - Hernan"
 	
-	(self is: #DenotativeObject) ifTrue: [ self class removeSelector: self initializeCollaboratorsFromFileMessageName ] ! !
+	(self is: #DenotativeObject) ifTrue: [ 
+		self class removeCategory: self initializeCollaboratorsFromFileMessageCategory ] ! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 8/23/2018 16:43:24'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 8/25/2021 10:47:57'!
 compileInitializeCollaboratorsFromFile
 	
-	self class compile: self initializeCollaboratorsFromFileSourceCode ! !
+	self class 
+		compile: self initializeCollaboratorsFromFileSourceCode 
+		classified: self initializeCollaboratorsFromFileMessageCategory! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:25:16'!
 initializeAfterFileInMessageName
 	
 	^ #initializeAfterFileIn! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 8/25/2021 10:47:36'!
+initializeCollaboratorsFromFileMessageCategory
+	
+	^'--** private fileout/in **--'! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:24:31'!
 initializeCollaboratorsFromFileMessageName
