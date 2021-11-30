@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #4809] on 25 August 2021 at 10:53:10 am'!
-'Description initializeCollaboratorsFromFile uses a specific category to remove it after fileout'!
-!provides: 'DenotativeObject' 1 95!
+'From Cuis 5.0 [latest update: #4972] on 30 November 2021 at 7:37:47 pm'!
+'Description Sync with changeset 4993'!
+!provides: 'DenotativeObject' 1 96!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject-Tools'!
@@ -1571,11 +1571,12 @@ browseIt
 		ifFalse:
 			[DenotativeObjectBrowserWindow browseAllImplementorsOf: aSymbol]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:27:41'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 11/30/2021 17:01:00'!
 implementorsOfIt
 
 	self
 		withSelectorUnderCursorDo: [ :aSelector | DenotativeObjectBrowserWindow browseAllImplementorsOf: aSelector ]
+		ifBehavior: [:behavior | DenotativeObjectBrowserWindow fullOnClass: behavior selector: nil ] 
 		otherwise: [ self implementorsOfItWhenErrorsParsing ]
 	! !
 
@@ -1608,11 +1609,12 @@ referencesToIt
 
 	DenotativeObjectBrowserWindow browseReferencesTo: reference! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:29:07'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 11/30/2021 16:59:34'!
 sendersOfIt
 
 	self
 		withSelectorUnderCursorDo: [ :aSelector | DenotativeObjectBrowserWindow browseSendersOf: aSelector ]
+		ifBehavior: [:behavior | DenotativeObjectBrowserWindow browseReferencesTo: (Smalltalk bindingOf: behavior name)] 
 		otherwise: [ self sendersOfItWhenErrorsParsing ]
 	! !
 
