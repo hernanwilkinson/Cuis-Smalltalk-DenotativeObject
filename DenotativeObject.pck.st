@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5053] on 27 January 2022 at 7:29:38 pm'!
-'Description Remove findClass'!
-!provides: 'DenotativeObject' 1 98!
+'From Cuis 6.0 [latest update: #5057] on 1 February 2022 at 6:12:01 pm'!
+'Description fix due to 5057 change set'!
+!provides: 'DenotativeObject' 1 99!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -1075,7 +1075,7 @@ and all its objects?'])
 			self systemCategoryListIndex: 0.
 			self changed: #systemCategoryList ]! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 18:26:18'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 2/1/2022 18:11:15'!
 renameSystemCategory
 	
 	"I have to use the old version, the one before hierarchy list was used for categories - Hernan"
@@ -1092,7 +1092,7 @@ renameSystemCategory
 			newName _ aString asSymbol.
 			systemOrganizer
 				renameCategory: oldName
-				toBe: newName.
+				to: newName.
 			"self systemCategoryListIndex: oldIndex."
 			self changed: #systemCategoryList.
 			self systemCategoryListIndex: (self systemCategoryList indexOf: newName)]! !
