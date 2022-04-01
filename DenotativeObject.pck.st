@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5057] on 1 February 2022 at 6:12:01 pm'!
-'Description fix due to 5057 change set'!
-!provides: 'DenotativeObject' 1 99!
+'From Cuis 6.0 [latest update: #5093] on 1 April 2022 at 7:31:39 pm'!
+'Description Fix due to change in the class migration order'!
+!provides: 'DenotativeObject' 1 100!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -4560,7 +4560,7 @@ assertIsValidParent: aParentDenotativeObject
 	(self isValidParent: aParentDenotativeObject) ifFalse: [ self signalInvalidParent: aParentDenotativeObject ]
 	! !
 
-!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 1/3/2019 16:12:02'!
+!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 4/1/2022 19:31:01'!
 create: anObject asChildOf: aParentDenotativeObject collaboratorNames: variablesDefinition in: aCategory
 
 	| newClass |
@@ -4568,6 +4568,11 @@ create: anObject asChildOf: aParentDenotativeObject collaboratorNames: variables
 	self assertIsValidName: anObject.
 	self assertIsValidParent: aParentDenotativeObject.
 	
+	"I have to change the shape of the metaclass if already exists before recreating the class due to changes Juan
+	made to the migration order when changing the shape of a class - Hernan"
+	(Smalltalk classNamed: anObject)
+		ifNotNil: [ :existingClass | existingClass class instanceVariableNames: variablesDefinition ].
+		
 	newClass := aParentDenotativeObject 
 		subclass: anObject asSymbol
 		instanceVariableNames: ''
@@ -4575,6 +4580,8 @@ create: anObject asChildOf: aParentDenotativeObject collaboratorNames: variables
 		poolDictionaries: ''
 		category: aCategory.
 
+	"If the class did not exists, it will define the inst vars here. If existed, they were already defined
+	before but it does not do any harm to send the message anyway - Hernan"
 	newClass class instanceVariableNames: variablesDefinition.
 
 	^newClass ! !
