@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5093] on 1 April 2022 at 7:31:39 pm'!
-'Description Fix due to change in the class migration order'!
-!provides: 'DenotativeObject' 1 100!
+'From Cuis 6.0 [latest update: #5443] on 13 August 2022 at 5:26:00 pm'!
+'Description Migration to submenus'!
+!provides: 'DenotativeObject' 1 101!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -513,64 +513,6 @@ ProtoObject subclass: #DelegatorBuilder
 DelegatorBuilder class
 	instanceVariableNames: ''!
 
-
-!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:54:14'!
-releaseClassCachedState
-	"
-	DenotativeObjectBrowser  releaseClassCachedState
-	"
-	RecentDenotativeObjects _ nil! !
-
-!DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
-parserClass
-
-	^DenotativeObjectParser ! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
-removeSelector: messageName
-
-	model selectedClassOrMetaClass removeSelector: messageName.
-	model
-		messageListIndex: 0;
-		changed: #messageList;
-		setClassOrganizer.
-	! !
-
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:28:34'!
-fileOutInitializerOn: aStream
-
-	super fileOutInitializerOn: aStream.
-	(self class methodDict includesKey: self initializeCollaboratorsFromFileMessageName) ifTrue: [
-		aStream 
-			newLine;
-		 	nextChunkPut: self name , ' ', self initializeAfterFileInMessageName asString.
-			
-		self removeInitializeCollaboratorsFromFile ].! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:25:58'!
-fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
-
-	self collaboratorNames isEmpty ifFalse: [ self compileInitializeCollaboratorsFromFile ].
-	super fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool.
-	! !
-
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 9/7/2017 16:44:18'!
-storeOn: aStream
-
-	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
-
-!Collaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
-printOn: aStream
-
-	aStream 
-		nextPutAll: name;
-		nextPutAll: ' at ';
-		print: owner! !
-
-!Collaborator methodsFor: 'name' stamp: 'HAW 9/14/2018 13:32:56'!
-name
-
-	^ name! !
 
 !DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:10:50'!
 autoCompleterClass
@@ -1250,6 +1192,13 @@ recentClasses
 	
 	^RecentDenotativeObjects ! !
 
+!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:54:14'!
+releaseClassCachedState
+	"
+	DenotativeObjectBrowser  releaseClassCachedState
+	"
+	RecentDenotativeObjects _ nil! !
+
 !DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 9/23/2020 19:12:41'!
 askForCategoryIn: aClass default: aString
 
@@ -1478,6 +1427,11 @@ doesClassNameStartWithUppercase: aClassName
 
 	"To allow denotative objects to start with lowercase - Hernan"
 	^true! !
+
+!DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
+parserClass
+
+	^DenotativeObjectParser ! !
 
 !DenotativeObjectParser methodsFor: 'public access' stamp: 'HAW 8/27/2017 20:14:07'!
 encoder
@@ -1737,126 +1691,10 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 			context isNil ifTrue: [ self error: 'can not debug' ].
 			DenotativeObjectDebugger openOn: Processor activeProcess context: context label: anError printString fullView: false ]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 1/2/2020 09:58:31'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 8/13/2022 17:22:35'!
 getMenu
 	
-	^(MenuMorph new defaultTarget: self)
-		addTitle: self class name;
-		addStayUpIcons;
-		addItemsFromDictionaries: `{
-			{
-				#label 			-> 		'Help...'.
-				#selector 		-> 		#openHelp.
-				#icon 			-> 		#helpIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'Do it (d)'.
-				#selector 		-> 		#doIt.
-				#icon 			-> 		#doItIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Print it (p)'.
-				#selector 		-> 		#printIt.
-				#icon 			-> 		#printIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Inspect it (i)'.
-				#selector 		-> 		#inspectIt.
-				#icon 			-> 		#inspectIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Explore it (I)'.
-				#selector 		-> 		#exploreIt.
-				#icon 			-> 		#exploreIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Debug it (D)'.	
-				#selector 		-> 		#debugIt.
-				#icon 			-> 		#debugIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'Browse it (b)'.
-				#selector 		-> 		#browseIt.
-				#icon 			-> 		#editFindReplaceIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Senders of it (n)'.
-				#selector 		-> 		#sendersOfIt.
-				#icon 			-> 		#mailForwardIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Implementors of it (m)'.
-				#selector 		-> 		#implementorsOfIt.
-				#icon 			-> 		#developmentIcon
-			} asDictionary.
-			{
-				#label 			-> 		'References to it (N)'.
-				#selector 		-> 		#referencesToIt.
-				#icon 			-> 		#addressBookIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'Rename... (R)'.
-				#selector 		-> 		#contextualRename.
-				#icon 			-> 		#saveAsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Extract Method... (K)'.
-				#selector 		-> 		#extractMethod.
-				#icon 			-> 		#saveAsIcon
-			} asDictionary.
-			}, LiveTyping smalltalkEditorMenuOptions, {
-			nil.
-			{
-				#label 			-> 		'Accept (s)'.
-				#selector 		-> 		#acceptContents.
-				#icon 			-> 		#acceptIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Cancel (l)'.
-				#selector 		-> 		#cancelEdits.
-				#icon 			-> 		#cancelIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'Accept and Send (t)'.
-				#selector 		-> 		#acceptAndTest.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Accept, Send and Inspect (e)'.
-				#selector 		-> 		#acceptSendAndInspect.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Accept and Debug (r)'.
-				#selector 		-> 		#acceptAndDebugTest.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Accept, Debug and Inspect (q)'.
-				#selector 		-> 		#acceptDebugAndInspect.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Accept and Run Test in Category (y)'.
-				#selector 		-> 		#acceptAndTestAll.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Next test name (Y)'.
-				#selector 		-> 		#nextTestName.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.			
-			nil.
-			{
-				#label 			-> 		'More...'.
-				#selector 		-> 		#openMenu2.
-				#icon 			-> 		#listAddIcon
-			} asDictionary.
-		}`! !
+	^self createMenuCollectingOptionsWith: #denotativeObjectEditorMenuOptions! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 12/4/2019 12:03:12'!
 renameClassOn: aBrowser for: aClassToRefactor
@@ -1880,6 +1718,159 @@ denotativeObjectSmalltalkEditorCmdShortcutsSpec
 		#($e	#acceptSendAndInspect:  	'')
 		#($q	#acceptDebugAndInspect:   	'')
 		#($Y   #nextTestName: 				''))`! !
+
+!DenotativeObjectSmalltalkEditor class methodsFor: 'menu' stamp: 'HAW 8/13/2022 17:20:48'!
+denotativeObjectEditorMenuOptions
+	
+	^`{
+			{
+				#itemGroup 		-> 		10.
+				#itemOrder 		-> 		10.
+				#label 			-> 		'Help...'.
+				#selector 		-> 		#openHelp.
+				#icon 			-> 		#helpIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		20.
+				#itemOrder 		-> 		10.
+				#label 			-> 		'Do it (d)'.
+				#selector 		-> 		#doIt.
+				#icon 			-> 		#doItIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		20.
+				#itemOrder 		-> 		20.
+				#label 			-> 		'Print it (p)'.
+				#selector 		-> 		#printIt.
+				#icon 			-> 		#printIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		20.
+				#itemOrder 		-> 		30.
+				#label 			-> 		'Inspect it (i)'.
+				#selector 		-> 		#inspectIt.
+				#icon 			-> 		#inspectIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		20.
+				#itemOrder 		-> 		40.
+				#label 			-> 		'Explore it (I)'.
+				#selector 		-> 		#exploreIt.
+				#icon 			-> 		#exploreIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		20.
+				#itemOrder 		-> 		50.
+				#label 			-> 		'Debug it (D)'.	
+				#selector 		-> 		#debugIt.
+				#icon 			-> 		#debugIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		30.
+				#itemOrder 		-> 		5.
+				#label 			-> 		SmalltalkEditor editingMenuLabel.
+				#selector 		-> 		#yourself.
+				#icon 			-> 		#textEditorIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		30.
+				#itemOrder 		-> 		10.
+				#label 			-> 		'Browse it (b)'.
+				#selector 		-> 		#browseIt.
+				#icon 			-> 		#editFindReplaceIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		30.
+				#itemOrder 		-> 		20.
+				#label 			-> 		'Senders of it (n)'.
+				#selector 		-> 		#sendersOfIt.
+				#icon 			-> 		#mailForwardIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		30.
+				#itemOrder 		-> 		30.
+				#label 			-> 		'Implementors of it (m)'.
+				#selector 		-> 		#implementorsOfIt.
+				#icon 			-> 		#developmentIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		30.
+				#itemOrder 		-> 		40.
+				#label 			-> 		'References to it (N)'.
+				#selector 		-> 		#referencesToIt.
+				#icon 			-> 		#addressBookIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		40.
+				#itemOrder 		-> 		10.
+				#label 			-> 		'Rename... (R)'.
+				#selector 		-> 		#contextualRename.
+				#icon 			-> 		#saveAsIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		40.
+				#itemOrder 		-> 		20.
+				#label 			-> 		'Extract Method... (K)'.
+				#selector 		-> 		#extractMethod.
+				#icon 			-> 		#saveAsIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		50.
+				#itemOrder 		-> 		10.
+				#label 			-> 		'Accept (s)'.
+				#selector 		-> 		#acceptContents.
+				#icon 			-> 		#acceptIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		50.
+				#itemOrder 		-> 		20.
+				#label 			-> 		'Cancel (l)'.
+				#selector 		-> 		#cancelEdits.
+				#icon 			-> 		#cancelIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		60.
+				#itemOrder 		-> 		10.
+				#label 			-> 		'Accept and Send (t)'.
+				#selector 		-> 		#acceptAndTest.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		60.
+				#itemOrder 		-> 		20.
+				#label 			-> 		'Accept, Send and Inspect (e)'.
+				#selector 		-> 		#acceptSendAndInspect.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		60.
+				#itemOrder 		-> 		30.
+				#label 			-> 		'Accept and Debug (r)'.
+				#selector 		-> 		#acceptAndDebugTest.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		60.
+				#itemOrder 		-> 		40.
+				#label 			-> 		'Accept, Debug and Inspect (q)'.
+				#selector 		-> 		#acceptDebugAndInspect.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		60.
+				#itemOrder 		-> 		50.
+				#label 			-> 		'Accept and Run Test in Category (y)'.
+				#selector 		-> 		#acceptAndTestAll.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.
+			{
+				#itemGroup 		-> 		60.
+				#itemOrder 		-> 		60.
+				#label 			-> 		'Next test name (Y)'.
+				#selector 		-> 		#nextTestName.
+				#icon 			-> 		#weatherFewCloudsIcon
+			} asDictionary.			
+		}, LiveTyping smalltalkEditorMenuOptions, SmalltalkEditor smalltalkEditorEditingMenuOptions `! !
 
 !DenotativeObjectWorkspaceEditor methodsFor: 'system category list' stamp: 'HAW 8/21/2017 18:58:29'!
 selectedSystemCategoryName
@@ -2137,6 +2128,16 @@ removeMessage
 	(confirmation = 1 or: [ confirmation = 2 ]) ifTrue: [self removeSelector: messageName ].
 	(confirmation = 2 or: [ confirmation = 3 ]) ifTrue: [self browseSendersOf: messageName ].
 
+	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+removeSelector: messageName
+
+	model selectedClassOrMetaClass removeSelector: messageName.
+	model
+		messageListIndex: 0;
+		changed: #messageList;
+		setClassOrganizer.
 	! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:45:38'!
@@ -3477,6 +3478,17 @@ newNameMustStartWithRightLetterErrorMessage
 
 	^'New object name must start with a letter'! !
 
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:28:34'!
+fileOutInitializerOn: aStream
+
+	super fileOutInitializerOn: aStream.
+	(self class methodDict includesKey: self initializeCollaboratorsFromFileMessageName) ifTrue: [
+		aStream 
+			newLine;
+		 	nextChunkPut: self name , ' ', self initializeAfterFileInMessageName asString.
+			
+		self removeInitializeCollaboratorsFromFile ].! !
+
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:12:18'!
 initializeAfterFileIn
 
@@ -3502,6 +3514,13 @@ compileInitializeCollaboratorsFromFile
 	self class 
 		compile: self initializeCollaboratorsFromFileSourceCode 
 		classified: self initializeCollaboratorsFromFileMessageCategory! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:25:58'!
+fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
+
+	self collaboratorNames isEmpty ifFalse: [ self compileInitializeCollaboratorsFromFile ].
+	super fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool.
+	! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:25:16'!
 initializeAfterFileInMessageName
@@ -3529,6 +3548,11 @@ initializeCollaboratorsFromFileSourceCode
 			writeCollaboratorsInitializationOn: sourceStream ].
 		
 	^sourceCode! !
+
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 9/7/2017 16:44:18'!
+storeOn: aStream
+
+	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
 
 !DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:14:52'!
 writeCollaboratorsInitializationOn: sourceStream 
@@ -4627,6 +4651,19 @@ signalNameCanNotHaveSpaces
 isValidParent: aParentDenotativeObject
 
 	^aParentDenotativeObject includesBehavior: DenotativeObject ! !
+
+!Collaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
+printOn: aStream
+
+	aStream 
+		nextPutAll: name;
+		nextPutAll: ' at ';
+		print: owner! !
+
+!Collaborator methodsFor: 'name' stamp: 'HAW 9/14/2018 13:32:56'!
+name
+
+	^ name! !
 
 !Collaborator methodsFor: 'initialization' stamp: 'HAW 8/24/2017 08:29:25'!
 initializeNamed: aName on: anObject
