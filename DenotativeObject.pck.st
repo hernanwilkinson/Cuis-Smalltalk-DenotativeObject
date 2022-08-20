@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5443] on 13 August 2022 at 5:26:00 pm'!
-'Description Migration to submenus'!
-!provides: 'DenotativeObject' 1 101!
+'From Cuis 6.0 [latest update: #5461] on 20 August 2022 at 5:35:33 pm'!
+'Description Edit Menu rename'!
+!provides: 'DenotativeObject' 1 102!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -1719,7 +1719,7 @@ denotativeObjectSmalltalkEditorCmdShortcutsSpec
 		#($q	#acceptDebugAndInspect:   	'')
 		#($Y   #nextTestName: 				''))`! !
 
-!DenotativeObjectSmalltalkEditor class methodsFor: 'menu' stamp: 'HAW 8/13/2022 17:20:48'!
+!DenotativeObjectSmalltalkEditor class methodsFor: 'menu' stamp: 'HAW 8/20/2022 17:34:38'!
 denotativeObjectEditorMenuOptions
 	
 	^`{
@@ -1768,7 +1768,7 @@ denotativeObjectEditorMenuOptions
 			{
 				#itemGroup 		-> 		30.
 				#itemOrder 		-> 		5.
-				#label 			-> 		SmalltalkEditor editingMenuLabel.
+				#label 			-> 		SmalltalkEditor editMenuLabel.
 				#selector 		-> 		#yourself.
 				#icon 			-> 		#textEditorIcon
 			} asDictionary.
