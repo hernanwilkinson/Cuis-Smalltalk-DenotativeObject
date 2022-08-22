@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5461] on 20 August 2022 at 5:35:33 pm'!
-'Description Edit Menu rename'!
-!provides: 'DenotativeObject' 1 102!
+'From Cuis 6.0 [latest update: #5463] on 22 August 2022 at 12:37:03 pm'!
+'Description Sync with debugger changes'!
+!provides: 'DenotativeObject' 1 103!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -1351,6 +1351,18 @@ canNotDebugErrorMessage
 
 	^'Cannot debug a message sent to an object that is not a DenotativeObject'! !
 
+!DenotativeObjectDebugger class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2022 12:00:27'!
+openDebugging: aBlock to: aCompiledMethod label: aString
+	"Create a new process to debug aBlock, and step into it."
+
+	| processToDebug debugger |
+	debugger _ self new.
+	processToDebug _ aBlock newProcess name: 'debugIt'.
+	debugger process: processToDebug context: processToDebug suspendedContext.
+	debugger openFullMorphicLabel: aString.
+	[debugger interruptedContext method == aCompiledMethod]
+		whileFalse: [debugger originalSend]! !
+
 !DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:02'!
 alwaysPresentFieldList
 
@@ -1634,50 +1646,18 @@ sendersOfItWhenErrorsParsing
 
 	DenotativeObjectBrowserWindow browseSendersOf: aSelector! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 3/26/2019 16:34:04'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/22/2022 11:58:08'!
 debug: aCompiledMethod receiver: anObject in: evalContext
 
-	| guineaPig debugger context |
+	^DenotativeObjectDebugger 
+		openDebugging: [
+			aCompiledMethod
+				valueWithReceiver: anObject
+				arguments: (evalContext ifNil: [ #() ] ifNotNil: [ { evalContext } ])]
+		to: aCompiledMethod
+		label: 'Debug it'.! !
 
-	debugger := DenotativeObjectDebugger new.
-	guineaPig := [
-		[aCompiledMethod
-			valueWithReceiver: anObject
-			arguments: (evalContext ifNil: [ #() ] ifNotNil: [ { evalContext } ]).
-		debugger sendProceeds.]
-			on: Error
-			do: [:anError |
-				self inform: anError printString.
-				debugger inStep 
-					ifTrue: [ anError pass ]
-					ifFalse: [
-						| activeProcess toDebugContext  |
-
-						debugger triggerEvent: #closeViews.
-
-						activeProcess := Processor activeProcess.
-						debugger := DenotativeObjectDebugger new.
-						toDebugContext := thisContext.
-						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-						toDebugContext isNil 
-							ifTrue: [ anError pass ]
-							ifFalse: [
-								debugger process: activeProcess context: toDebugContext.
-								debugger openFullNoSuspendLabel: anError printString.
-								activeProcess suspend ]	
-						] ]
-	 ] newProcess name: 'debugIt'.
-	context := guineaPig suspendedContext.
-
-	debugger process: guineaPig context: context.
-	debugger openFullNoSuspendLabel: 'Debug it'.
-
-	[ [debugger originalSend.
-	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: DenotativeObjectDebugger canNotDebugErrorMessage. ^self ] ] whileFalse.
-
-	! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/4/2019 21:22:44'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/22/2022 12:31:49'!
 evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 	[[[ ^super evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile ]
 		on: UndeclaredVariable 
@@ -1689,7 +1669,7 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 			context := thisContext.
 			[context notNil and: [(context receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ context := context sender ].
 			context isNil ifTrue: [ self error: 'can not debug' ].
-			DenotativeObjectDebugger openOn: Processor activeProcess context: context label: anError printString fullView: false ]! !
+			DenotativeObjectDebugger openProcess: Processor activeProcess context: context label: anError printString.]! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 8/13/2022 17:22:35'!
 getMenu
@@ -2967,7 +2947,7 @@ asMethodReference
 		recalculateStringVersionForDenotativeObject;
 		yourself.! !
 
-!DenotativeObjectTestCase methodsFor: 'running' stamp: 'HAW 7/29/2017 19:31:00'!
+!DenotativeObjectTestCase methodsFor: 'running' stamp: 'HAW 8/22/2022 11:42:42'!
 debug
 
 	| debugger |
@@ -2995,7 +2975,7 @@ debug
 							ifTrue: [ anError pass ]
 							ifFalse: [
 								debugger process: activeProcess context: toDebugContext.
-								debugger openFullNoSuspendLabel: anError printString.
+								debugger openWindowLabel: anError printString usePreDebugWindow: false preDebugMessage: nil.
 								activeProcess suspend ]	
 						] ]
 ! !
@@ -3039,26 +3019,18 @@ isSameAs: aTestCase
 
 	^ denotativeObject = aTestCase denotativeObject and: [ realTestSelector = aTestCase realTestSelector ].! !
 
-!DenotativeObjectTestCase methodsFor: 'private' stamp: 'HAW 7/29/2017 10:54:56'!
+!DenotativeObjectTestCase methodsFor: 'private' stamp: 'HAW 8/22/2022 12:36:45'!
 openDebuggerOnFailingTestMethod
 
-	| processToDebug context compiledMethod debugger |
-
-	compiledMethod := self methodForTest.
-
-	processToDebug := [ [ self performTest ] ensure: [
-		self tearDown.
-		self tearDownResources.
-		debugger sendProceeds. ]] newProcess.
-	context := processToDebug suspendedContext.
-
-	debugger := DenotativeObjectDebugger new
-		process: processToDebug
-		context: context.
-	debugger openFullNoSuspendLabel: 'Debug failed test ', self printString.
-
-	[debugger interruptedContext method == compiledMethod] whileFalse: [debugger originalSend].
-! !
+	DenotativeObjectDebugger
+		openDebugging: [
+			[ self performTest ] ensure: [
+			self tearDown.
+			self tearDownResources.]]
+		to: self methodForTest
+		label: 'Debug failed test ', self printString.
+		
+	! !
 
 !DenotativeObjectTestCase methodsFor: 'exceptions' stamp: 'HAW 7/29/2017 19:30:14'!
 signalFailure: aString
@@ -4811,49 +4783,18 @@ debug
 	
 	self debugAndWithResultDo: [:result | ]! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 3/26/2019 16:33:44'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2022 12:06:42'!
 debug: aCompiledMethod receiver: anObject in: evalContext withResultDo: aBlock
 
-	| guineaPig debugger context |
-
-	debugger := DenotativeObjectDebugger new.
-	guineaPig := [
-		[| result |
-		result := aCompiledMethod
-			valueWithReceiver: anObject
-			arguments: (evalContext ifNil: [ #() ] ifNotNil: [ { evalContext } ]).
-		debugger sendProceeds.
-		aBlock value: result ]
-			on: Error
-			do: [:anError |
-				self inform: anError printString.
-				debugger inStep 
-					ifTrue: [ anError pass ]
-					ifFalse: [
-						| activeProcess toDebugContext  |
-
-						debugger triggerEvent: #closeViews.
-
-						activeProcess := Processor activeProcess.
-						debugger := DenotativeObjectDebugger new.
-						toDebugContext := thisContext.
-						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-						toDebugContext isNil 
-							ifTrue: [ anError pass ]
-							ifFalse: [
-								debugger process: activeProcess context: toDebugContext.
-								debugger openFullNoSuspendLabel: anError printString.
-								activeProcess suspend ]	
-						] ]
-	 ] newProcess name: 'debugIt'.
-	context := guineaPig suspendedContext.
-
-	debugger process: guineaPig context: context.
-	debugger openFullNoSuspendLabel: 'Debug it'.
-
-	[ [debugger originalSend.
-	(debugger receiver is: #DenotativeObject)] on: Exception do: [ :anException | self inform: DenotativeObjectDebugger canNotDebugErrorMessage. ^self ] ] whileFalse.
-! !
+	DenotativeObjectDebugger 
+		openDebugging: [ | result |
+			result := aCompiledMethod
+				valueWithReceiver: anObject
+				arguments: (evalContext ifNil: [ #() ] ifNotNil: [ { evalContext } ]).
+			aBlock value: result ]
+		to: aCompiledMethod
+		label: 'Debug it'.
+	! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:04:21'!
 debugAndInspect
@@ -4947,17 +4888,17 @@ sendAndInspect
 
 	self sendAndWithResultDo: [ :result | result inspect ]! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:06:42'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2022 12:22:20'!
 sendAndWithResultDo: aBlock
 	
-	| receiver context stringToEval method debugger |
+	| receiver context stringToEval method |
 	
 	receiver := self doItReceiver.
 	context := self doItContext.
 	stringToEval := self stringToEvalSending: self selectedMessageName to: receiver onCancel: [^self].
-	debugger := nil.
+	
 	[ method := self compile: stringToEval receiver: receiver in: context.
-	method ifNotNil: [[ 
+	method ifNotNil: [ 
 		[| result |
 		result := method
 			valueWithReceiver: receiver
@@ -4965,26 +4906,14 @@ sendAndWithResultDo: aBlock
 		aBlock value: result ]
 			on: Error
 			do: [ :anError |
-				self inform: anError printString.
-				(debugger notNil and: [ debugger inStep ])
-					ifTrue: [ anError pass ]
-					ifFalse: [
-						| activeProcess toDebugContext  |
-
-						debugger notNil ifTrue: [ debugger triggerEvent: #closeViews ].
-
-						activeProcess := Processor activeProcess.
-						debugger := DenotativeObjectDebugger new.
-						toDebugContext := thisContext.
-						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-						toDebugContext isNil 
-							ifTrue: [ anError pass ]
-							ifFalse: [
-								debugger process: activeProcess context: toDebugContext.
-								debugger openFullNoSuspendLabel: anError printString.
-								activeProcess suspend ]	
-						] ]
-				] fork. ]]
+				DenotativeObjectDebugger 
+					openDebugging: [ | result |
+						result := method
+							valueWithReceiver: receiver
+							arguments: (context ifNil: [ #() ] ifNotNil: [ { context } ]).
+							aBlock value: result ]
+					to: method
+					label: 'Debug it']] fork. ]
 		on: SyntaxErrorNotification 
 		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
 	! !
