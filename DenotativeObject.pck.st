@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5463] on 22 August 2022 at 12:37:03 pm'!
-'Description Sync with debugger changes'!
-!provides: 'DenotativeObject' 1 103!
+'From Cuis 6.0 [latest update: #5509] on 25 October 2022 at 5:15:26 pm'!
+'Description Use of isTestSelector'!
+!provides: 'DenotativeObject' 1 104!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -1469,18 +1469,13 @@ acceptThenTestMethodAndSuite: aSuiteBuilder
 	self acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: [:result | ]
 ! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:16:11'!
-isTest: aSelector
-
-	^self codeProvider isTest: aSelector! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 9/10/2017 14:59:58'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:36:40'!
 nextTestName
 	
 	| testNames |
 	
-	testNames := self codeProvider selectedClassOrMetaClass selectors select: [ :selector | self isTest: selector ].
-	self addString: 'test', ((testNames size + 1)  printStringBase: 10 length: 2 padded: true)! !
+	testNames := self codeProvider selectedClassOrMetaClass selectors select: [ :selector | selector isTestSelector ].
+	self addString: Symbol testSelectorPrefix, ((testNames size + 1)  printStringBase: 10 length: 2 padded: true)! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 9/10/2017 14:52:25'!
 nextTestName: aKeyboardEvent
@@ -1488,10 +1483,10 @@ nextTestName: aKeyboardEvent
 	self nextTestName.
 	^true! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 7/19/2017 21:37:51'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:06'!
 runAndDebuggIfNecessary: aPotencialTestMethod
 
-	(self isTest: aPotencialTestMethod selector) ifTrue: [
+	aPotencialTestMethod selector isTestSelector ifTrue: [
 		(DenotativeObjectTestCase for: aPotencialTestMethod) debug ]! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 7/19/2017 21:38:55'!
@@ -1501,7 +1496,7 @@ runTestSuite: aTestSuite
 
 	! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 7/19/2017 21:43:19'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:16'!
 testSuiteForCategoryOf: aClass
 
  	| suite classes |
@@ -1511,26 +1506,26 @@ testSuiteForCategoryOf: aClass
 	classes notEmpty ifTrue: [
 		classes do: [ :aClassInCategory |
 			aClassInCategory class selectors do: [ :aSelector |
-				(self isTest: aSelector) ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aClassInCategory class>>aSelector)]]]].
+				aSelector isTestSelector ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aClassInCategory class>>aSelector)]]]].
 
 	^suite! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 7/19/2017 21:36:52'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:27'!
 testSuiteOf: aDenotativeObject
 
  	| suite |
 
 	suite := TestSuite named: 'Tests of ', aDenotativeObject soleInstance name asString.
 	aDenotativeObject selectors do: [ :aSelector |
-			(self isTest: aSelector) ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aDenotativeObject>>aSelector)]].
+			aSelector isTestSelector ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aDenotativeObject>>aSelector)]].
 
 	^suite! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 11:05:50'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 10/25/2022 16:24:18'!
 acceptAndDebugTestOr: aBlock
 
 	^self acceptAndWithMethodDo: [ :aPotencialTestMethod |
-		(self isTest: aPotencialTestMethod selector) 
+		aPotencialTestMethod selector isTestSelector 
 			ifTrue: [
 				(DenotativeObjectTestCase 
 					for: aPotencialTestMethod) 
@@ -1560,11 +1555,11 @@ acceptSendAndInspect: aKeyboardEvent
 	self acceptSendAndInspect.
 	^true! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 10:50:11'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 10/25/2022 16:24:31'!
 acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: aBlock
 	
 	self acceptAndWithMethodDo: [ :aPotencialTestMethod |
-		(self isTest: aPotencialTestMethod selector) 
+		aPotencialTestMethod selector isTestSelector 
 			ifTrue: [
 				self runAndDebuggIfNecessary: aPotencialTestMethod.
 				self runTestSuite: (aSuiteBuilder value: aPotencialTestMethod) ]
@@ -4815,10 +4810,10 @@ debugAndWithResultDo: aBlock
 		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
 ! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:23:21'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:22:53'!
 debugDenotativeObjectMethodTest
 
-	(self isTest: currentCompiledMethod selector)
+	currentCompiledMethod selector isTestSelector
 		ifTrue: [ 
 			| test |
 			test := DenotativeObjectTestCase for: currentCompiledMethod.
@@ -4826,27 +4821,22 @@ debugDenotativeObjectMethodTest
 		ifFalse: [ self debug ]
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:16:58'!
-isTest: aSelector
-
-	^ (aSelector beginsWith: 'test') and: [ aSelector numArgs = 0 ]! !
-
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:28:15'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:23:14'!
 runDenotativeObjectMessageCategoryTests
 
 	selectedMessageCategory ifNotNil: [ | classlessObject suite |
 		classlessObject := (Smalltalk classNamed: selectedClassName) class.
 		suite := TestSuite named: 'Tests of ', selectedMessageCategory.
 		(metaClassOrganizer listAtCategoryNamed: selectedMessageCategory) do: [ :selector |
-			(self isTest: selector) ifTrue: [ suite addTest: (DenotativeObjectTestCase for: classlessObject>>selector)]].
+			selector isTestSelector ifTrue: [ suite addTest: (DenotativeObjectTestCase for: classlessObject>>selector)]].
 		(DenotativeObjectProgessiveTestRunner for: suite) value ]
 
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:29:21'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:23:42'!
 runDenotativeObjectMethodTest
 
-	(self isTest: currentCompiledMethod selector) 
+	currentCompiledMethod selector isTestSelector 
 		ifTrue: [ | suite |
 			suite := TestSuite named: currentCompiledMethod methodClass soleInstance name, ' ', currentCompiledMethod selector asString.
 			suite addTest: (DenotativeObjectTestCase for: currentCompiledMethod).
@@ -4854,7 +4844,7 @@ runDenotativeObjectMethodTest
 		ifFalse: [ self send ].
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:30:49'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:23:54'!
 runDenotativeObjectSystemCategoryTests
 
 	selectedSystemCategory ifNotNil: [ | suite classes |
@@ -4863,17 +4853,17 @@ runDenotativeObjectSystemCategoryTests
 		classes notEmpty ifTrue: [
 			classes do: [ :aClass |
 				aClass class selectors do: [ :aSelector |
-					(self isTest: aSelector) ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aClass class>>aSelector)]]].
+					aSelector isTestSelector ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aClass class>>aSelector)]]].
 			(DenotativeObjectProgessiveTestRunner for: suite) value ]]
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:26:03'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:24:07'!
 runDenotativeObjectTests
 
 	self selectedClassOrMetaClass ifNotNil: [ :aDenotativeObject | | suite |
 		suite := TestSuite named: 'Tests of ', aDenotativeObject soleInstance name asString.
 		aDenotativeObject selectors do: [ :aSelector |
-			(self isTest: aSelector) ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aDenotativeObject>>aSelector)]].
+			aSelector isTestSelector ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aDenotativeObject>>aSelector)]].
 		(DenotativeObjectProgessiveTestRunner for: suite) value ]
 
 	! !
