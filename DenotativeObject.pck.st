@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5509] on 25 October 2022 at 5:15:26 pm'!
-'Description Use of isTestSelector'!
-!provides: 'DenotativeObject' 1 104!
+'From Cuis 6.0 [latest update: #5510] on 28 December 2022 at 10:45:37 am'!
+'Description New color scheme '!
+!provides: 'DenotativeObject' 1 106!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -2897,6 +2897,30 @@ pseudoVariables
 debugger
 
 	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:12'!
+finderSearchBarResultsColor
+	"Answer the FinderSearchBar color."
+
+	^ `Color veryVeryLightGray`! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:20'!
+finderSearchBarSearchBoxColor
+	"Answer the FinderSearchBar results color."
+
+	^ self textPane.! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:26'!
+finderSearchBarToolbarButtonColor
+	"Answer the FinderSearchBar toolbar button color."
+
+	^ `Color veryLightGray`.! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:32'!
+finderSearchBarToolbarColor
+	"Answer the FinderSearchBar toolbar button color."
+
+	^ `Color veryVeryLightGray`! !
 
 !DenotativeObjectLightTheme methodsFor: 'private - shout mappings' stamp: 'HAW 10/9/2019 11:21:58'!
 pseudoVariables
