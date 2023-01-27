@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5510] on 28 December 2022 at 10:45:37 am'!
-'Description New color scheme '!
-!provides: 'DenotativeObject' 1 106!
+'From Cuis 6.0 [latest update: #5609] on 27 January 2023 at 9:17:03 am'!
+'Description changes due to UnicodeString'!
+!provides: 'DenotativeObject' 1 107!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -4979,32 +4979,32 @@ typeName
 		ifTrue: [ self soleInstance name ]
 		ifFalse: [ self name ]! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:05:08'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:49'!
 asMessage
 
 	^self asMessageWithAll: #()! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:32:22'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:54'!
 asMessageWith: aCollaborator
 
 	^self asMessageWithAll: (Array with: aCollaborator)! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:32:30'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:59'!
 asMessageWithAll: aCollaborators
 
-	^Message selector: self arguments: aCollaborators ! !
+	^Message selector: self asSymbol arguments: aCollaborators ! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2017 17:06:29'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:03'!
 sendTo: aReceiver
 
 	^self asMessage sendTo: aReceiver ! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:32:35'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:08'!
 sendTo: aReceiver with: aCollaborator
 
 	^(self asMessageWith: aCollaborator) sendTo: aReceiver ! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:32:41'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:12'!
 sendTo: aReceiver withAll: aCollaborators
 
 	^(self asMessageWithAll: aCollaborators) sendTo: aReceiver ! !
