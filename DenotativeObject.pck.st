@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5609] on 27 January 2023 at 9:17:03 am'!
-'Description changes due to UnicodeString'!
-!provides: 'DenotativeObject' 1 107!
+'From Cuis 6.0 [latest update: #5778] on 27 April 2023 at 6:20:44 pm'!
+'Description Update to autoHighlightString:allOccurrences:'!
+!provides: 'DenotativeObject' 1 108!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -1962,7 +1962,7 @@ messageListMenu
 
 ! !
 
-!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 8/1/2018 19:53:14'!
+!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 4/27/2023 18:18:30'!
 openMessageList: messageList label: labelString autoSelect: autoSelectString
 
 	| messageSet |
@@ -1970,7 +1970,7 @@ openMessageList: messageList label: labelString autoSelect: autoSelectString
 	messageList do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
 	
 	messageSet _ DenotativeObjectMessageSet messageList: messageList.
-	messageSet autoSelectString: autoSelectString.
+	messageSet autoHighlightString: autoSelectString allOccurrences: true.
 	
 	^self open: messageSet label: labelString ! !
 
