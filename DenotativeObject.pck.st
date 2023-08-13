@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5778] on 27 April 2023 at 6:20:44 pm'!
-'Description Update to autoHighlightString:allOccurrences:'!
-!provides: 'DenotativeObject' 1 108!
+'From Cuis 6.0 [latest update: #5980] on 13 August 2023 at 7:09:17 pm'!
+'Description Change to redefine cmd+e shortcut'!
+!provides: 'DenotativeObject' 1 109!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -1846,6 +1846,13 @@ denotativeObjectEditorMenuOptions
 				#icon 			-> 		#weatherFewCloudsIcon
 			} asDictionary.			
 		}, LiveTyping smalltalkEditorMenuOptions, SmalltalkEditor smalltalkEditorEditingMenuOptions `! !
+
+!DenotativeObjectSmalltalkEditor class methodsFor: 'class initialization' stamp: 'HAW 8/13/2023 19:07:26'!
+initializeCmdShortcuts
+	
+	"This is becuase I want to redefine cmd+e - Hernan"
+	super initializeCmdShortcuts.
+	cmdShortcuts at: $e asciiValue + 1 put: #acceptSendAndInspect:! !
 
 !DenotativeObjectWorkspaceEditor methodsFor: 'system category list' stamp: 'HAW 8/21/2017 18:58:29'!
 selectedSystemCategoryName
