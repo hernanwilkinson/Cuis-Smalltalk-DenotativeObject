@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5980] on 13 August 2023 at 7:09:17 pm'!
-'Description Change to redefine cmd+e shortcut'!
-!provides: 'DenotativeObject' 1 109!
+'From Cuis 6.0 [latest update: #5981] on 14 September 2023 at 9:01:56 am'!
+'Description Method category menu'!
+!provides: 'DenotativeObject' 1 110!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: 'DenotativeObject'!
@@ -2340,6 +2340,15 @@ classListMenu
 		}`.
 	^ aMenu! !
 
+!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/14/2023 06:23:16'!
+messageCategoryMenu
+
+	^DynamicMenuBuilder 
+		buildTitled: 'Message Category' 
+		targeting: self 
+		collectingMenuOptionsWith: #denotativeObjectMessageCategoryMenuOptions.
+! !
+
 !DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 5/10/2019 11:30:17'!
 messageListMenu
 	"Answer the message-list menu"
@@ -2665,6 +2674,11 @@ worldMenuOptions
 		#balloonText 	-> 		'Classical Smalltalk class browser'.
 	} asDictionary. 
 	}`! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'menu building' stamp: 'HAW 9/14/2023 06:22:48'!
+denotativeObjectMessageCategoryMenuOptions
+
+	^self messageCategoryMenuOptions! !
 
 !DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:40:24'!
 browseContextSelection
