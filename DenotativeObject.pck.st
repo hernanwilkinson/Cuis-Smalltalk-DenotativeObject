@@ -1,6 +1,6 @@
-'From Cuis6.3 [latest update: #6304] on 30 March 2024 at 6:35:00 pm'!
-'Description Change Open Class Browser menu'!
-!provides: 'DenotativeObject' 1 111!
+'From Cuis6.3 [latest update: #6311] on 16 April 2024 at 12:49:53 pm'!
+'Description Update to 6311'!
+!provides: 'DenotativeObject' 1 112!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #DenotativeObject!
@@ -31,6 +31,16 @@ Browser subclass: #DenotativeObjectBrowser
 	category: 'DenotativeObject-Tools'!
 !classDefinition: 'DenotativeObjectBrowser class' category: #'DenotativeObject-Tools'!
 DenotativeObjectBrowser class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectMessageSet category: #'DenotativeObject-Tools'!
+MethodSet subclass: #DenotativeObjectMessageSet
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectMessageSet class' category: #'DenotativeObject-Tools'!
+DenotativeObjectMessageSet class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectDebugger category: #'DenotativeObject-Tools'!
@@ -151,6 +161,16 @@ TestResultWindow subclass: #DenotativeObjectTestResultWindow
 	category: 'DenotativeObject-TestSupport'!
 !classDefinition: 'DenotativeObjectTestResultWindow class' category: #'DenotativeObject-TestSupport'!
 DenotativeObjectTestResultWindow class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectMessageSetWindow category: #'DenotativeObject-Tools'!
+MethodSetWindow subclass: #DenotativeObjectMessageSetWindow
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectMessageSetWindow class' category: #'DenotativeObject-Tools'!
+DenotativeObjectMessageSetWindow class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectInspectorWindow category: #'DenotativeObject-Tools'!
@@ -493,26 +513,6 @@ ProtoObject subclass: #DelegatorBuilder
 DelegatorBuilder class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectMessageSet category: #'DenotativeObject-Tools'!
-ProtoObject subclass: #DenotativeObjectMessageSet
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectMessageSet class' category: #'DenotativeObject-Tools'!
-DenotativeObjectMessageSet class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectMessageSetWindow category: #'DenotativeObject-Tools'!
-ProtoObject subclass: #DenotativeObjectMessageSetWindow
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectMessageSetWindow class' category: #'DenotativeObject-Tools'!
-DenotativeObjectMessageSetWindow class
-	instanceVariableNames: ''!
-
 
 !DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:10:50'!
 autoCompleterClass
@@ -524,7 +524,7 @@ editorClass
 
 	^DenotativeObjectWorkspaceEditor ! !
 
-!DenotativeObjectBrowser methodsFor: 'accessing' stamp: 'HAW 7/22/2017 09:08:17'!
+!DenotativeObjectBrowser methodsFor: 'accessing' stamp: 'HAW 4/16/2024 12:41:35'!
 acceptedStringOrText
 	"Depending on the current selection, different information is retrieved.
 	Answer a string description of that information. This information is the
@@ -553,8 +553,6 @@ acceptedStringOrText
 			^ comment size = 0
 				ifTrue: ['This class has not yet been commented.']
 				ifFalse: [comment]].
-	editSelection == #hierarchy
-		ifTrue: [^ self selectedClassOrMetaClass printHierarchy].
 	editSelection == #editMessageCategories
 		ifTrue: [^ self classOrMetaClassOrganizer printString].
 	editSelection == #newMessage
@@ -885,14 +883,14 @@ systemOrganizer: aSystemOrganizer
 	self setClassOrganizer.
 	self editSelection: #none.! !
 
-!DenotativeObjectBrowser methodsFor: 'message functions' stamp: 'HAW 8/1/2017 09:48:21'!
+!DenotativeObjectBrowser methodsFor: 'message functions' stamp: 'HAW 4/8/2024 16:49:25'!
 defineMessageFrom: aString notifying: aRequestor
 
 	| selectedMessageName selector category oldMessageList |
 
-	selectedMessageName _ self selectedMessageName.
-	oldMessageList _ self messageList.
-	selector _ self selectedClassOrMetaClass parserClass selectorFrom: aString.
+	selectedMessageName := self selectedMessageName.
+	oldMessageList := self messageList.
+	selector := self selectedClassOrMetaClass parserClass selectorFrom: aString.
 	(self metaClassIndicated
 		and: [ selector ~= #printOn: 
 		and: [(self selectedClassOrMetaClass includesSelector: selector) not
@@ -903,9 +901,9 @@ Overriding it could cause serious problems.
 Is this really what you want to do?'))
 				ifFalse: [^nil]].
 			
-	[ selector _ self selectedClassOrMetaClass
+	[ selector := self selectedClassOrMetaClass
 				compile: aString
-				classified: (category _ self selectedMessageCategoryName)
+				classified: (category := self selectedMessageCategoryName)
 				notifying: aRequestor ]
 		on: UndeclaredVariable 
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
@@ -914,7 +912,7 @@ Is this really what you want to do?'))
 		ifNil: [^ nil].
 	selector ~~ selectedMessageName
 		ifTrue: [
-			category = ClassOrganizer nullCategory
+			category = ClassOrganizer defaultMethodCategory
 				ifTrue: [self changed: #classSelectionChanged.
 						self changed: #classList.
 						self messageCategoryListIndex: 1].
@@ -1150,6 +1148,54 @@ releaseClassCachedState
 	DenotativeObjectBrowser  releaseClassCachedState
 	"
 	RecentDenotativeObjects _ nil! !
+
+!DenotativeObjectMessageSet methodsFor: 'private' stamp: 'HAW 8/21/2017 21:56:59'!
+contents: aText notifying: aController
+
+	^[ super contents: aText notifying: aController ]
+		on: UndeclaredVariable 
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
+! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:24:15'!
+debugMethodTest
+
+	^self debugDenotativeObjectMethodTest! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:26:57'!
+runClassTests
+
+	^self runDenotativeObjectTests! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:28:37'!
+runMessageCategoryTests
+
+	^self runDenotativeObjectMessageCategoryTests! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:29:59'!
+runMethodTest
+
+	^self runDenotativeObjectMethodTest! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:31:13'!
+runSystemCategoryTests
+
+	^self runDenotativeObjectSystemCategoryTests! !
+
+!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 16:56:52'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
+
+!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 21:57:20'!
+editorClassFor: textGetter
+
+	^DenotativeObjectSmalltalkEditor! !
+
+!DenotativeObjectMessageSet methodsFor: 'system category list' stamp: 'HAW 8/21/2017 22:00:50'!
+selectedSystemCategoryName
+
+	^selectedMessage ifNil: [ 'MessageList-Objects' ] ifNotNil: [ selectedMessage actualClass category ]! !
 
 !DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 9/23/2020 19:12:41'!
 askForCategoryIn: aClass default: aString
@@ -2788,6 +2834,35 @@ runSuite
 methodReferencesOf: tests
 
 	^tests collect: [:aTest | aTest asMethodReference]! !
+
+!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'HAW 7/13/2017 19:10:04'!
+buildLowerPanes
+	| codeAndButtons |
+
+	codeAndButtons := LayoutMorph newColumn.
+	codeAndButtons addMorph: self buildMorphicCodePane proportionalHeight: 1.0.
+
+	^codeAndButtons
+	! !
+
+!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'HAW 9/10/2017 19:12:56'!
+messageListMenu
+
+	^MenuMorph new defaultTarget: self.
+
+! !
+
+!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 4/27/2023 18:18:30'!
+openMessageList: messageList label: labelString autoSelect: autoSelectString
+
+	| messageSet |
+
+	messageList do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
+	
+	messageSet _ DenotativeObjectMessageSet messageList: messageList.
+	messageSet autoHighlightString: autoSelectString allOccurrences: true.
+	
+	^self open: messageSet label: labelString ! !
 
 !DenotativeObjectInspectorWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:17:35'!
 browseMethodFull
@@ -4696,83 +4771,6 @@ inspectorClass
 for: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
 
 	^self new initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase! !
-
-!DenotativeObjectMessageSet methodsFor: 'private' stamp: 'HAW 8/21/2017 21:56:59'!
-contents: aText notifying: aController
-
-	^[ super contents: aText notifying: aController ]
-		on: UndeclaredVariable 
-		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
-! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:24:15'!
-debugMethodTest
-
-	^self debugDenotativeObjectMethodTest! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:26:57'!
-runClassTests
-
-	^self runDenotativeObjectTests! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:28:37'!
-runMessageCategoryTests
-
-	^self runDenotativeObjectMessageCategoryTests! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:29:59'!
-runMethodTest
-
-	^self runDenotativeObjectMethodTest! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:31:13'!
-runSystemCategoryTests
-
-	^self runDenotativeObjectSystemCategoryTests! !
-
-!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 16:56:52'!
-autoCompleterClassFor: textGetter
-	
-	^DenotativeObjectCompleter! !
-
-!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 21:57:20'!
-editorClassFor: textGetter
-
-	^DenotativeObjectSmalltalkEditor! !
-
-!DenotativeObjectMessageSet methodsFor: 'system category list' stamp: 'HAW 8/21/2017 22:00:50'!
-selectedSystemCategoryName
-
-	^selectedMessage ifNil: [ 'MessageList-Objects' ] ifNotNil: [ selectedMessage actualClass category ]! !
-
-!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'HAW 7/13/2017 19:10:04'!
-buildLowerPanes
-	| codeAndButtons |
-
-	codeAndButtons := LayoutMorph newColumn.
-	codeAndButtons addMorph: self buildMorphicCodePane proportionalHeight: 1.0.
-
-	^codeAndButtons
-	! !
-
-!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'HAW 9/10/2017 19:12:56'!
-messageListMenu
-
-	^MenuMorph new defaultTarget: self.
-
-! !
-
-!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 4/27/2023 18:18:30'!
-openMessageList: messageList label: labelString autoSelect: autoSelectString
-
-	| messageSet |
-
-	messageList do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
-	
-	messageSet _ DenotativeObjectMessageSet messageList: messageList.
-	messageSet autoHighlightString: autoSelectString allOccurrences: true.
-	
-	^self open: messageSet label: labelString ! !
 
 !Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:51:46'!
 isEqualTo: aDenotativeObject
