@@ -1,6 +1,6 @@
-'From Cuis6.3 [latest update: #6311] on 16 April 2024 at 12:49:53 pm'!
-'Description Update to 6311'!
-!provides: 'DenotativeObject' 1 112!
+'From Cuis7.1 [latest update: #6578] on 10 August 2024 at 4:35:53 pm'!
+'Description Udated to Cuis 7.1'!
+!provides: 'DenotativeObject' 1 113!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #DenotativeObject!
@@ -12,6 +12,176 @@ SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
 SystemOrganization addCategory: #'DenotativeObject-Tests'!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 
+
+!classDefinition: #DelegatorBuilder category: #'DenotativeObject-Meta'!
+ProtoObject subclass: #DelegatorBuilder
+	instanceVariableNames: 'receiver lookupBase'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Meta'!
+!classDefinition: 'DelegatorBuilder class' category: #'DenotativeObject-Meta'!
+DelegatorBuilder class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectCompiler category: #'DenotativeObject-Compiler'!
+Compiler subclass: #DenotativeObjectCompiler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Compiler'!
+!classDefinition: 'DenotativeObjectCompiler class' category: #'DenotativeObject-Compiler'!
+DenotativeObjectCompiler class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectParser category: #'DenotativeObject-Compiler'!
+Parser subclass: #DenotativeObjectParser
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Compiler'!
+!classDefinition: 'DenotativeObjectParser class' category: #'DenotativeObject-Compiler'!
+DenotativeObjectParser class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectEncoder category: #'DenotativeObject-Compiler'!
+EncoderForV3PlusClosures subclass: #DenotativeObjectEncoder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Compiler'!
+!classDefinition: 'DenotativeObjectEncoder class' category: #'DenotativeObject-Compiler'!
+DenotativeObjectEncoder class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObject category: #DenotativeObject!
+Object subclass: #DenotativeObject
+	instanceVariableNames: ''
+	classVariableNames: 'CloneNumber'
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObject class' category: #DenotativeObject!
+DenotativeObject class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectMorph category: #'DenotativeObject-Morph'!
+DenotativeObject subclass: #DenotativeObjectMorph
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'DenotativeObjectMorph class' category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph class
+	instanceVariableNames: 'morph'!
+
+!classDefinition: #Light category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #Light
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'Light class' category: #'DenotativeObject-Morph'!
+Light class
+	instanceVariableNames: ''!
+
+!classDefinition: #ThreeLightsContainer category: #'DenotativeObject-Morph'!
+DenotativeObjectMorph subclass: #ThreeLightsContainer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Morph'!
+!classDefinition: 'ThreeLightsContainer class' category: #'DenotativeObject-Morph'!
+ThreeLightsContainer class
+	instanceVariableNames: ''!
+
+!classDefinition: #Assert category: #'DenotativeObject-TestSupport'!
+DenotativeObject subclass: #Assert
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-TestSupport'!
+!classDefinition: 'Assert class' category: #'DenotativeObject-TestSupport'!
+Assert class
+	instanceVariableNames: ''!
+
+!classDefinition: #AssertTest category: #'DenotativeObject-TestSupport'!
+DenotativeObject subclass: #AssertTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-TestSupport'!
+!classDefinition: 'AssertTest class' category: #'DenotativeObject-TestSupport'!
+AssertTest class
+	instanceVariableNames: ''!
+
+!classDefinition: #ObjectBuilder category: #DenotativeObject!
+Object subclass: #ObjectBuilder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'ObjectBuilder class' category: #DenotativeObject!
+ObjectBuilder class
+	instanceVariableNames: ''!
+
+!classDefinition: #Collaborator category: #'DenotativeObject-Meta'!
+Object subclass: #Collaborator
+	instanceVariableNames: 'owner name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Meta'!
+!classDefinition: 'Collaborator class' category: #'DenotativeObject-Meta'!
+Collaborator class
+	instanceVariableNames: ''!
+
+!classDefinition: #Delegator category: #'DenotativeObject-Meta'!
+Object subclass: #Delegator
+	instanceVariableNames: 'currentMethodClass selector receiver arguments'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Meta'!
+!classDefinition: 'Delegator class' category: #'DenotativeObject-Meta'!
+Delegator class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectTheme category: #DenotativeObject!
+Theme subclass: #DenotativeObjectTheme
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectTheme class' category: #DenotativeObject!
+DenotativeObjectTheme class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectDarkTheme category: #DenotativeObject!
+DarkTheme subclass: #DenotativeObjectDarkTheme
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectDarkTheme class' category: #DenotativeObject!
+DenotativeObjectDarkTheme class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectLightTheme category: #DenotativeObject!
+LightTheme subclass: #DenotativeObjectLightTheme
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectLightTheme class' category: #DenotativeObject!
+DenotativeObjectLightTheme class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectBuilder category: #DenotativeObject!
+ClassBuilder subclass: #DenotativeObjectBuilder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectBuilder class' category: #DenotativeObject!
+DenotativeObjectBuilder class
+	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectWorkspace category: #'DenotativeObject-Tools'!
 Workspace subclass: #DenotativeObjectWorkspace
@@ -63,66 +233,6 @@ Inspector subclass: #DenotativeObjectInspector
 DenotativeObjectInspector class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectBuilder category: #DenotativeObject!
-ClassBuilder subclass: #DenotativeObjectBuilder
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectBuilder class' category: #DenotativeObject!
-DenotativeObjectBuilder class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectCompiler category: #'DenotativeObject-Compiler'!
-Compiler subclass: #DenotativeObjectCompiler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Compiler'!
-!classDefinition: 'DenotativeObjectCompiler class' category: #'DenotativeObject-Compiler'!
-DenotativeObjectCompiler class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectParser category: #'DenotativeObject-Compiler'!
-Parser subclass: #DenotativeObjectParser
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Compiler'!
-!classDefinition: 'DenotativeObjectParser class' category: #'DenotativeObject-Compiler'!
-DenotativeObjectParser class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectEncoder category: #'DenotativeObject-Compiler'!
-EncoderForV3PlusClosures subclass: #DenotativeObjectEncoder
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Compiler'!
-!classDefinition: 'DenotativeObjectEncoder class' category: #'DenotativeObject-Compiler'!
-DenotativeObjectEncoder class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectSmalltalkEditor category: #'DenotativeObject-Tools'!
-SmalltalkEditor subclass: #DenotativeObjectSmalltalkEditor
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectSmalltalkEditor class' category: #'DenotativeObject-Tools'!
-DenotativeObjectSmalltalkEditor class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectWorkspaceEditor category: #'DenotativeObject-Tools'!
-DenotativeObjectSmalltalkEditor subclass: #DenotativeObjectWorkspaceEditor
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Tools'!
-!classDefinition: 'DenotativeObjectWorkspaceEditor class' category: #'DenotativeObject-Tools'!
-DenotativeObjectWorkspaceEditor class
-	instanceVariableNames: ''!
-
 !classDefinition: #DenotativeObjectNameRequestMorph category: #'DenotativeObject-Tools'!
 ClassNameRequestMorph subclass: #DenotativeObjectNameRequestMorph
 	instanceVariableNames: ''
@@ -153,16 +263,6 @@ DebuggerWindow subclass: #DenotativeObjectDebuggerWindow
 DenotativeObjectDebuggerWindow class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectTestResultWindow category: #'DenotativeObject-TestSupport'!
-TestResultWindow subclass: #DenotativeObjectTestResultWindow
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'DenotativeObjectTestResultWindow class' category: #'DenotativeObject-TestSupport'!
-DenotativeObjectTestResultWindow class
-	instanceVariableNames: ''!
-
 !classDefinition: #DenotativeObjectMessageSetWindow category: #'DenotativeObject-Tools'!
 MethodSetWindow subclass: #DenotativeObjectMessageSetWindow
 	instanceVariableNames: ''
@@ -171,6 +271,16 @@ MethodSetWindow subclass: #DenotativeObjectMessageSetWindow
 	category: 'DenotativeObject-Tools'!
 !classDefinition: 'DenotativeObjectMessageSetWindow class' category: #'DenotativeObject-Tools'!
 DenotativeObjectMessageSetWindow class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectTestResultWindow category: #'DenotativeObject-TestSupport'!
+TestResultWindow subclass: #DenotativeObjectTestResultWindow
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-TestSupport'!
+!classDefinition: 'DenotativeObjectTestResultWindow class' category: #'DenotativeObject-TestSupport'!
+DenotativeObjectTestResultWindow class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectInspectorWindow category: #'DenotativeObject-Tools'!
@@ -183,84 +293,24 @@ InspectorWindow subclass: #DenotativeObjectInspectorWindow
 DenotativeObjectInspectorWindow class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectDarkTheme category: #DenotativeObject!
-DarkTheme subclass: #DenotativeObjectDarkTheme
+!classDefinition: #DenotativeObjectSmalltalkEditor category: #'DenotativeObject-Tools'!
+SmalltalkEditor subclass: #DenotativeObjectSmalltalkEditor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectDarkTheme class' category: #DenotativeObject!
-DenotativeObjectDarkTheme class
+	category: 'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectSmalltalkEditor class' category: #'DenotativeObject-Tools'!
+DenotativeObjectSmalltalkEditor class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectLightTheme category: #DenotativeObject!
-LightTheme subclass: #DenotativeObjectLightTheme
+!classDefinition: #DenotativeObjectWorkspaceEditor category: #'DenotativeObject-Tools'!
+DenotativeObjectSmalltalkEditor subclass: #DenotativeObjectWorkspaceEditor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectLightTheme class' category: #DenotativeObject!
-DenotativeObjectLightTheme class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectTheme category: #DenotativeObject!
-Theme subclass: #DenotativeObjectTheme
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectTheme class' category: #DenotativeObject!
-DenotativeObjectTheme class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectProgessiveTestRunner category: #'DenotativeObject-TestSupport'!
-ProgressiveTestRunner subclass: #DenotativeObjectProgessiveTestRunner
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'DenotativeObjectProgessiveTestRunner class' category: #'DenotativeObject-TestSupport'!
-DenotativeObjectProgessiveTestRunner class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectTestCase category: #'DenotativeObject-TestSupport'!
-TestCase subclass: #DenotativeObjectTestCase
-	instanceVariableNames: 'testMethod realTest realTestSelector denotativeObject'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'DenotativeObjectTestCase class' category: #'DenotativeObject-TestSupport'!
-DenotativeObjectTestCase class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectRenameMethodApplierTest category: #'DenotativeObject-Tests'!
-TestCase subclass: #DenotativeObjectRenameMethodApplierTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Tests'!
-!classDefinition: 'DenotativeObjectRenameMethodApplierTest class' category: #'DenotativeObject-Tests'!
-DenotativeObjectRenameMethodApplierTest class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectTest category: #'DenotativeObject-Tests'!
-TestCase subclass: #DenotativeObjectTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Tests'!
-!classDefinition: 'DenotativeObjectTest class' category: #'DenotativeObject-Tests'!
-DenotativeObjectTest class
-	instanceVariableNames: ''!
-
-!classDefinition: #ZeroDivideExtentionsTest category: #'DenotativeObject-Tests'!
-TestCase subclass: #ZeroDivideExtentionsTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Tests'!
-!classDefinition: 'ZeroDivideExtentionsTest class' category: #'DenotativeObject-Tests'!
-ZeroDivideExtentionsTest class
+	category: 'DenotativeObject-Tools'!
+!classDefinition: 'DenotativeObjectWorkspaceEditor class' category: #'DenotativeObject-Tools'!
+DenotativeObjectWorkspaceEditor class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectNameCompleter category: #'DenotativeObject-Tools'!
@@ -413,1030 +463,77 @@ NewClassPrecondition subclass: #NewDenotativeObjectPrecondition
 NewDenotativeObjectPrecondition class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObject category: #DenotativeObject!
-Object subclass: #DenotativeObject
-	instanceVariableNames: ''
-	classVariableNames: 'CloneNumber'
-	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObject class' category: #DenotativeObject!
-DenotativeObject class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectMorph category: #'DenotativeObject-Morph'!
-DenotativeObject subclass: #DenotativeObjectMorph
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'DenotativeObjectMorph class' category: #'DenotativeObject-Morph'!
-DenotativeObjectMorph class
-	instanceVariableNames: 'morph'!
-
-!classDefinition: #Light category: #'DenotativeObject-Morph'!
-DenotativeObjectMorph subclass: #Light
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'Light class' category: #'DenotativeObject-Morph'!
-Light class
-	instanceVariableNames: ''!
-
-!classDefinition: #ThreeLightsContainer category: #'DenotativeObject-Morph'!
-DenotativeObjectMorph subclass: #ThreeLightsContainer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Morph'!
-!classDefinition: 'ThreeLightsContainer class' category: #'DenotativeObject-Morph'!
-ThreeLightsContainer class
-	instanceVariableNames: ''!
-
-!classDefinition: #Assert category: #'DenotativeObject-TestSupport'!
-DenotativeObject subclass: #Assert
+!classDefinition: #DenotativeObjectProgessiveTestRunner category: #'DenotativeObject-TestSupport'!
+ProgressiveTestRunner subclass: #DenotativeObjectProgessiveTestRunner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'Assert class' category: #'DenotativeObject-TestSupport'!
-Assert class
+!classDefinition: 'DenotativeObjectProgessiveTestRunner class' category: #'DenotativeObject-TestSupport'!
+DenotativeObjectProgessiveTestRunner class
 	instanceVariableNames: ''!
 
-!classDefinition: #AssertTest category: #'DenotativeObject-TestSupport'!
-DenotativeObject subclass: #AssertTest
-	instanceVariableNames: ''
+!classDefinition: #DenotativeObjectTestCase category: #'DenotativeObject-TestSupport'!
+TestCase subclass: #DenotativeObjectTestCase
+	instanceVariableNames: 'testMethod realTest realTestSelector denotativeObject'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DenotativeObject-TestSupport'!
-!classDefinition: 'AssertTest class' category: #'DenotativeObject-TestSupport'!
-AssertTest class
+!classDefinition: 'DenotativeObjectTestCase class' category: #'DenotativeObject-TestSupport'!
+DenotativeObjectTestCase class
 	instanceVariableNames: ''!
 
-!classDefinition: #ObjectBuilder category: #DenotativeObject!
-Object subclass: #ObjectBuilder
+!classDefinition: #DenotativeObjectRenameMethodApplierTest category: #'DenotativeObject-Tests'!
+TestCase subclass: #DenotativeObjectRenameMethodApplierTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'ObjectBuilder class' category: #DenotativeObject!
-ObjectBuilder class
+	category: 'DenotativeObject-Tests'!
+!classDefinition: 'DenotativeObjectRenameMethodApplierTest class' category: #'DenotativeObject-Tests'!
+DenotativeObjectRenameMethodApplierTest class
 	instanceVariableNames: ''!
 
-!classDefinition: #Collaborator category: #'DenotativeObject-Meta'!
-Object subclass: #Collaborator
-	instanceVariableNames: 'owner name'
+!classDefinition: #DenotativeObjectTest category: #'DenotativeObject-Tests'!
+TestCase subclass: #DenotativeObjectTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'!
-!classDefinition: 'Collaborator class' category: #'DenotativeObject-Meta'!
-Collaborator class
+	category: 'DenotativeObject-Tests'!
+!classDefinition: 'DenotativeObjectTest class' category: #'DenotativeObject-Tests'!
+DenotativeObjectTest class
 	instanceVariableNames: ''!
 
-!classDefinition: #Delegator category: #'DenotativeObject-Meta'!
-Object subclass: #Delegator
-	instanceVariableNames: 'currentMethodClass selector receiver arguments'
+!classDefinition: #ZeroDivideExtentionsTest category: #'DenotativeObject-Tests'!
+TestCase subclass: #ZeroDivideExtentionsTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'!
-!classDefinition: 'Delegator class' category: #'DenotativeObject-Meta'!
-Delegator class
-	instanceVariableNames: ''!
-
-!classDefinition: #DelegatorBuilder category: #'DenotativeObject-Meta'!
-ProtoObject subclass: #DelegatorBuilder
-	instanceVariableNames: 'receiver lookupBase'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'!
-!classDefinition: 'DelegatorBuilder class' category: #'DenotativeObject-Meta'!
-DelegatorBuilder class
+	category: 'DenotativeObject-Tests'!
+!classDefinition: 'ZeroDivideExtentionsTest class' category: #'DenotativeObject-Tests'!
+ZeroDivideExtentionsTest class
 	instanceVariableNames: ''!
 
 
-!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:10:50'!
-autoCompleterClass
-	
-	^DenotativeObjectCompleter ! !
+!DelegatorBuilder methodsFor: 'building' stamp: 'HAW 9/10/2017 18:14:21'!
+doesNotUnderstand: aMessage
 
-!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:11:31'!
-editorClass
+	^(Delegator delegate: aMessage selector to: receiver with: aMessage arguments startingLookupOnParentOf: lookupBase) value! !
 
-	^DenotativeObjectWorkspaceEditor ! !
+!DelegatorBuilder methodsFor: 'initialize' stamp: 'HAW 9/10/2017 18:16:13'!
+initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
 
-!DenotativeObjectBrowser methodsFor: 'accessing' stamp: 'HAW 4/16/2024 12:41:35'!
-acceptedStringOrText
-	"Depending on the current selection, different information is retrieved.
-	Answer a string description of that information. This information is the
-	method of the currently selected class and message."
+	receiver := aReceiver.
+	lookupBase := aDenotativeObjectBase ! !
 
-	| comment theClass latestCompiledMethod |
-	latestCompiledMethod := currentCompiledMethod.
-	currentCompiledMethod := nil.
+!DelegatorBuilder methodsFor: 'inspecting' stamp: 'HAW 9/10/2017 18:23:30'!
+inspectorClass
 
-	editSelection == #none ifTrue: [^ ''].
-	editSelection == #editSystemCategories
-		ifTrue: [^ systemOrganizer printString].
-	editSelection == #newClass
-		ifTrue: [
-			theClass := self selectedClass.
-			^DenotativeObject template: selectedSystemCategory].
+	^Inspector ! !
 
-	editSelection == #editClass
-		ifTrue: [
-			^ self classDefinitionText ].
-	editSelection == #editComment
-		ifTrue: [
-			(theClass := self selectedClass) ifNil: [^ ''].
-			comment := theClass comment.
-			currentCompiledMethod := theClass organization commentRemoteStr.
-			^ comment size = 0
-				ifTrue: ['This class has not yet been commented.']
-				ifFalse: [comment]].
-	editSelection == #editMessageCategories
-		ifTrue: [^ self classOrMetaClassOrganizer printString].
-	editSelection == #newMessage
-		ifTrue: [
-			^ (theClass := self selectedClassOrMetaClass)
-				ifNil: ['']
-				ifNotNil: [theClass sourceCodeTemplate]].
-	editSelection == #editMessage
-		ifTrue: [
-			self showingByteCodes ifTrue: [^ self selectedBytecodes].
-			currentCompiledMethod := latestCompiledMethod.
-			^ self selectedMessage].
+!DelegatorBuilder class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:15:49'!
+for: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
 
-	self error: 'Browser internal error: unknown edit selection.'! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:25:37'!
-addChildDenotativeObject
-	
-	self withSelectedCategoryNameDo: [ :systemCategoryName |
-		self withObjectNameDo: [ :objectName |
-			self withParentNameDo: [ :parentName |
-				self addDenotativeObjectNamed: objectName asChildOf: parentName inCategory:  systemCategoryName ]]]! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:55'!
-addChildDenotativeObjectInCategory
-	
-	self withObjectNameDo: [ :objectName |
-		self withParentNameDo: [ :parentName |
-			self withCategoryNameDo: [ :categoryName |
-				self addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName ]]]
-	! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:24:11'!
-addDenotativeObject
-	
-	self withSelectedCategoryNameDo: [ :systemCategoryName | 
-		self withObjectNameDo: [ :objectName |
-			self addDenotativeObjectNamed: objectName inCategory:  systemCategoryName ]]! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:13:46'!
-addDenotativeObjectInCategory
-	
-	self withObjectNameDo: [ :objectName |
-		self withCategoryNameDo: [ :categoryName |
-			self addDenotativeObjectNamed: objectName inCategory: categoryName ]]
-	! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/7/2017 15:30:59'!
-addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName
-	
-	| definitionString collaborators |
-
-	collaborators := Array 
-		with: '#', objectName 
-		with: parentName
-		with: ''''''
-		with: '''', categoryName, ''''.
-	
-	definitionString := String streamContents: [ :stream |
-		stream  nextPutAll:  ObjectBuilder name asString.		
-		#create:asChildOf:collaboratorNames:in: keywords withIndexDo: [ :keyword :index |
-			stream
-				space;
-				nextPutAll: keyword;
-				space;
-				nextPutAll: (collaborators at: index) ]].
-	
-	self defineClass: definitionString  notifying: nil 
-	! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:13:21'!
-addDenotativeObjectNamed: objectName inCategory: categoryName
-	
-	^self addDenotativeObjectNamed: objectName asChildOf: DenotativeObject name asString inCategory: categoryName ! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 1/27/2022 17:16:21'!
-classDefinitionText
-	"return the text to display for the definition of the currently selected class"
-	| theClass |
-	
-	^(theClass := self selectedClassOrMetaClass theMetaClass) ifNil: [''] ifNotNil: [DenotativeObject definitionOf: theClass]! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:05:55'!
-collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning
-	
-	^String streamContents: [:stream |
-		stream
-			nextPutAll: 'The collaborator ';
-			nextPutAll: anUndeclareVariableWarning variableName;
-			nextPutAll: ' is reference in ';
-			nextPutAll: anUndeclareVariableWarning classImplementingSelector theNonMetaClass name;
-			nextPutAll: '>>';
-			nextPutAll: anUndeclareVariableWarning selector;
-			newLine;
-			nextPutAll: 'Do you want to continue?' ]! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 7/22/2017 13:32:34'!
-copyClass
-
-	| originalClass originalName copysName  |
-
-	selectedClassName ifNil: [^ self].
-	originalClass := self selectedClass.
-	originalName := originalClass name.
-	copysName _ self request: 'Please type new object name' initialAnswer: originalName.
-	copysName = '' ifTrue: [^ self].  " Cancel returns '' "
-	
-	[ originalClass cloneNamed: copysName.
-	self classListIndex: 0.
-	self changed: #classList ]
-		on: Error
-		do: [ :anError | self inform: anError printString ].
-			
-	! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/23/2020 19:08:23'!
-createClass
-
-	self selectedClass ifNotNil: [ :aDenotativeObject | | superclass className categoryName |	
-		className := ClassNameRequestMorph request: 'Class for ', aDenotativeObject name orCancel: [ ^self ].
-		(Smalltalk classNamed: className) ifNotNil: [
-			(PopUpMenu 
-				confirm: className, ' already exist. Do you want to recreate?' 
-				trueChoice: 'Recreate it' 
-				falseChoice: 'Do not continue') ifFalse: [ ^self ]].			
-		categoryName := StringRequestMorph 
-			request: 'Enter category name' 
-			initialAnswer: aDenotativeObject category 
-			orCancel: [ ^self ].
-		
-		[ superclass := self createSuperclassOf: aDenotativeObject onCancel: [ ^self ].
-		aDenotativeObject createClassNamed: className asSymbol subclassOf: superclass category: categoryName ]
-			on: Error
-			do: [ :anError | self inform: anError messageText ]]! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/23/2020 19:07:23'!
-createSuperclassOf: aDenotativeObject onCancel: aBlock
-
-	| denotativeObjectParent categoryName superclass superclassName |
-	
-	denotativeObjectParent := aDenotativeObject parentIfNone: [ ^Object ].
-	
-	superclassName := ClassNameRequestMorph request: 'Class for ', denotativeObjectParent name orCancel: [ ^aBlock value ].
-	(Smalltalk classNamed: superclassName) ifNotNil: [ :alreadyExistingSuperclass |
-		(PopUpMenu 
-			confirm: superclassName, ' already exist. Do you want to recreate or reuse it?' 
-			trueChoice: 'Recreate it' 
-			falseChoice: 'Reuse it') ifFalse: [ ^alreadyExistingSuperclass ]].
-		
-	categoryName := StringRequestMorph 
-		request: 'Enter category name' 
-		initialAnswer: denotativeObjectParent category 
-		orCancel: [ ^aBlock value ].	
-		
-	superclass := self createSuperclassOf: denotativeObjectParent onCancel: aBlock.
-	
-	^denotativeObjectParent createClassNamed: superclassName asSymbol subclassOf: superclass category: categoryName! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:02:36'!
-defineClass: defString notifying: aRequestor
-
-	^[self defineClassWithoutHandlingWarning: defString notifying: aRequestor]		
-		on: Warning
-		do: [ :aWarning |
-			(self confirm: aWarning printString) 
-				ifTrue: [ aWarning resume ]
-				ifFalse: [ aWarning return: false ]].! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:54'!
-defineClassWihoutHandlingErrors: defString notifying: aRequestor 
-		
- 	| class classCreated |
-	
-	self validateDefinitionString: defString.
-	class := Compiler evaluate: defString notifying: aRequestor logged: true.
-	
-	classCreated := class isKindOf: Behavior.
-	classCreated ifTrue: [ self newClassCreated: class ].
-	
-	^classCreated! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 5/10/2019 12:34:39'!
-defineClassWithoutHandlingParseNotification: defString notifying: aRequestor 
-		
-	^[self defineClassWihoutHandlingErrors: defString notifying: aRequestor ]
-		on: Error - MessageNotUnderstood 
-		do: [ :anError | 
-			self filterErrorMessagesWithClassStringFrom: anError.
-			self inform: anError messageText.
-			anError return: false ]! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 15:57:26'!
-defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor 
-			
-	^[self defineClassWithoutHandlingParseNotification: defString notifying: aRequestor ]
-		on: ParserNotification 
-		do: [ :parserNotification |
-			self inform: self invalidDefinitionErrorDescription.
-			parserNotification return: false ]! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:04:07'!
-defineClassWithoutHandlingWarning: defString notifying: aRequestor
-	
-	^[self defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor ]
-		on: UndeclaredVariableWarning 
-		do: [ :anUndeclareVariableWarning |
-			(self confirm: (self collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning)) 
-				ifTrue: [ anUndeclareVariableWarning resume ]
-				ifFalse: [ anUndeclareVariableWarning return: false ]]! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:06:59'!
-filterErrorMessagesWithClassStringFrom: anError
-		
-	anError messageText = 'Class names must be capitalized' ifTrue: [ ^anError messageText: 'Object names must be capitalized' ].
-	anError messageText: (anError messageText copyReplaceAll: ' class' with: '').
-	anError messageText: (anError messageText copyReplaceAll: ' inherits from ' with: ' is child of ').
-	anError messageText: (anError messageText copyReplaceAll: ' subclass ' with: ' child ').! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:32'!
-newClassCreated: aClass
-	
-	self 
-		changed: #systemCategoryList;
-		changed: #classList;
-		changed: #clearUserEdits;
-		setClass: aClass selector: nil.
-! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/1/2018 17:56:48'!
-removeClass
-	
-	^self safelyRemoveClass ! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 12/4/2019 12:03:06'!
-renameClass
-
-	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
-		(DenotativeObjectRenameApplier for: aBehavior theNonMetaClass) value ].! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/14/2018 13:49:17'!
-safelyRemoveClass
-
-	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
-		(DenotativeObjectSafelyRemoveApplier on: self of: aBehavior theNonMetaClass) value ].
-	
-	! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:10'!
-withObjectNameDo: aBlock
-	
-	^self withObjectNameDo: aBlock label: 'Enter object name' 
-	! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/29/2020 18:08:57'!
-withObjectNameDo: aBlock label: aLabel
-	
-	DenotativeObjectNameRequestMorph 
-		request: aLabel 
-		initialAnswer: '' 
-		do: [ :objectName | | trimmedObjectName |
-			trimmedObjectName := objectName withBlanksTrimmed.
-			"This is just to provide a better error message - Hernan"
-			[ ObjectBuilder assertIsValidName: trimmedObjectName.
-			aBlock value: trimmedObjectName ]
-		 		on: Error 
-				do: [:anError | ^self inform: anError messageText ]].! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:23'!
-withParentNameDo: aBlock
-	
-	^self withObjectNameDo: aBlock label: 'Enter parent name' 
-! !
-
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:24:57'!
-withSelectedCategoryNameDo: aBlock
-
-	^self selectedSystemCategoryName 
-		ifNil: [ self inform: 'An object category must be selected' ]
-		ifNotNil: aBlock 
-! !
-
-!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 2/21/2019 16:37:48'!
-defaultClassList
-
-	^super defaultClassList select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ] ! !
-
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:23:05'!
-debugMethodTest
-
-	^self debugDenotativeObjectMethodTest! !
-
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:26:31'!
-runClassTests
-
-	^self runDenotativeObjectTests! !
-
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:28:28'!
-runMessageCategoryTests
-
-	^self runDenotativeObjectMessageCategoryTests! !
-
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:29:35'!
-runMethodTest
-
-	^self runDenotativeObjectMethodTest! !
-
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:31:02'!
-runSystemCategoryTests
-
-	^self runDenotativeObjectSystemCategoryTests! !
-
-!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 4/11/2018 15:30:27'!
-defaultBrowserTitle
-	^ 'DenotativeObject Browser'! !
-
-!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 7/9/2017 12:18:37'!
-systemOrganizer: aSystemOrganizer
-	"Initialize the receiver as a perspective on the system organizer,
-	aSystemOrganizer. Typically there is only one--the system variable
-	SystemOrganization."
-
-	systemOrganizer := aSystemOrganizer.
-	selectedSystemCategory := nil.
-	selectedClassName := nil.
-	selectedMessageCategory := nil.
-	selectedMessage := nil.
-	metaClassIndicated := true.
-	self setClassOrganizer.
-	self editSelection: #none.! !
-
-!DenotativeObjectBrowser methodsFor: 'message functions' stamp: 'HAW 4/8/2024 16:49:25'!
-defineMessageFrom: aString notifying: aRequestor
-
-	| selectedMessageName selector category oldMessageList |
-
-	selectedMessageName := self selectedMessageName.
-	oldMessageList := self messageList.
-	selector := self selectedClassOrMetaClass parserClass selectorFrom: aString.
-	(self metaClassIndicated
-		and: [ selector ~= #printOn: 
-		and: [(self selectedClassOrMetaClass includesSelector: selector) not
-		and: [Metaclass isScarySelector: selector]]])
-		ifTrue: ["A frist-time definition overlaps the protocol of Metaclasses"
-				(self confirm: (selector bold, ' is used in the existing system.
-Overriding it could cause serious problems.
-Is this really what you want to do?'))
-				ifFalse: [^nil]].
-			
-	[ selector := self selectedClassOrMetaClass
-				compile: aString
-				classified: (category := self selectedMessageCategoryName)
-				notifying: aRequestor ]
-		on: UndeclaredVariable 
-		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
-	
-	selector
-		ifNil: [^ nil].
-	selector ~~ selectedMessageName
-		ifTrue: [
-			category = ClassOrganizer defaultMethodCategory
-				ifTrue: [self changed: #classSelectionChanged.
-						self changed: #classList.
-						self messageCategoryListIndex: 1].
-			self setClassOrganizer.  "In case organization not cached"
-			(oldMessageList includes: selector)
-				ifFalse: [self changed: #messageList].
-			self messageListIndex: (self messageList indexOf: selector)].
-	^ selector
-	
-	! !
-
-!DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 15:32:07'!
-autoCompleterClassFor: textGetter
-	
-	^DenotativeObjectCompleter! !
-
-!DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 7/14/2017 20:46:27'!
-editorClassFor: textGetter
-
-	^DenotativeObjectSmalltalkEditor! !
-
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 9/23/2020 19:07:40'!
-fileInSystemCategory
-
-	[| fileName |
-
-	fileName := StringRequestMorph request: 'Enter file name' orCancel: [ ^self ].
-	ChangeSet fileIn: fileName asFileEntry ]
-		on: FileDoesNotExistException
-		do: [:anError |
-			(PopUpMenu confirm: 'File ', anError messageText, ' does not exist. Try again?') ifTrue: [ anError retry ] ifFalse: [ anError return ]]! !
-
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 7/22/2017 11:45:50'!
-firstExperimentCategoryName
-	
-	^'First Experiment'! !
-
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'RNG 5/27/2018 01:03:53'!
-potentialClassNames
-
-	^ DenotativeObject allSubclasses collect: [ :class | class name ]! !
-
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/1/2017 09:31:11'!
-removeSystemCategory
-
-	selectedSystemCategory ifNil: [^ self].
-	(self classList isEmpty or: [ self confirm: 'Are you sure you want to
-remove this system category 
-and all its objects?'])
-		ifTrue: [
-			systemOrganizer removeSystemCategory: selectedSystemCategory.
-			self systemCategoryListIndex: 0.
-			self changed: #systemCategoryList ]! !
-
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 2/1/2022 18:11:15'!
-renameSystemCategory
-	
-	"I have to use the old version, the one before hierarchy list was used for categories - Hernan"
-	
-	| oldName newName |
-
-	selectedSystemCategory ifNil: [ ^ self].  
-	oldName _ selectedSystemCategory.
-	newName _ self
-		request: 'New category name?'
-		initialAnswer: oldName
-		verifying: [:aString| aString notEmpty and: [aString ~= oldName]]
-		do: [:aString|
-			newName _ aString asSymbol.
-			systemOrganizer
-				renameCategory: oldName
-				to: newName.
-			"self systemCategoryListIndex: oldIndex."
-			self changed: #systemCategoryList.
-			self systemCategoryListIndex: (self systemCategoryList indexOf: newName)]! !
-
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 18:05:22'!
-selectCategoryForClass: theClass
-
-	self systemCategoryListIndex: (self systemCategoryList indexOf: theClass category)
-! !
-
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 18:00:48'!
-selectedSystemCategoryName
-	"Answer the name of the selected system category or nil."
-
-	^selectedSystemCategory! !
-
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 17:23:32'!
-systemCategoryListIndex
-	"Answer the index of the selected class category."
-
-	systemOrganizer ifNil: [ ^0 ].
-	selectedSystemCategory ifNil: [ ^0 ].
-	^self systemCategoryList indexOf: selectedSystemCategory! !
-
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/29/2020 18:18:18'!
-withCategoryNameDo: aBlock
-	
-	self 
-		request: 'Enter category name' 
-		do: [ :categoryName | | trimmedCategoryName |
-			trimmedCategoryName := categoryName withBlanksTrimmed.
-			trimmedCategoryName isEmpty 
-				ifTrue: [ self inform: 'Category name can not be empty' ]
-				ifFalse: [ aBlock value: categoryName ]]! !
-
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:35:22'!
-invalidDefinitionErrorDescription
-
-	^'Invalid definition'! !
-
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/6/2017 11:09:34'!
-invalidObjectErrorDescription: name
-
-	^name, ' is not a denotative object'! !
-
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 5/10/2019 11:45:38'!
-objectNameMustBeSymbolErrorDescription
-	
-	^'Object name must be symbol. It has to start wiht #'! !
-
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 9/13/2017 15:11:23'!
-validateDefinitionString: defString
-
-	| defTokens |
-	
-	defTokens := defString findTokens: Character separators.
-	defTokens isEmpty ifTrue: [ self error: self invalidDefinitionErrorDescription ].
-	
-	defTokens first = ObjectBuilder name asString 
-		ifTrue: [ self validateObjectCreation: defTokens ]
-		ifFalse: [ self validateObjectRedefinition: defTokens ]! !
-
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 5/10/2019 12:36:46'!
-validateObjectCreation: defTokens 
-
-	| denotativeObjectName nameIndex |
-	
-	nameIndex := defTokens findFirst: [ :token | token beginsWith: '#' ].
-	nameIndex = 0 ifTrue: [ self error: self objectNameMustBeSymbolErrorDescription ].
-	
-	denotativeObjectName := (defTokens at: nameIndex) copyWithoutAll: '#()'.
-	(NewDenotativeObjectPrecondition for: denotativeObjectName asSymbol in: Smalltalk undeclared: Undeclared) value.
-! !
-
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 2/21/2019 16:41:15'!
-validateObjectRedefinition: defTokens 
-
-	(Smalltalk isDenotativeObjectNamed: defTokens first asSymbol) ifFalse: [ self error: (self invalidObjectErrorDescription: defTokens first)]
-
-		! !
-
-!DenotativeObjectBrowser methodsFor: 'metaclass' stamp: 'HAW 7/9/2017 12:17:35'!
-metaClassIndicated: trueOrFalse
-	"Indicate whether browsing instance or class messages."
-
-	^super metaClassIndicated: true! !
-
-!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 1/27/2022 18:03:19'!
-setSelectedSystemCategory: aString
-	
-	super setSelectedSystemCategory: aString.
-	
-	self changed: #systemCategoryListIndex.	"update my selection"
-	! !
-
-!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 7/22/2017 11:45:30'!
-systemCategoryList
-
-	| denotativeObjecCategories |
-	
-	denotativeObjecCategories := (systemOrganizer categories select: [:aCategory | 
-		(systemOrganizer classesAt: aCategory) anySatisfy: [ :aClass | aClass is: #DenotativeObject ]]) asSortedCollection.
-	
-	^denotativeObjecCategories isEmpty ifTrue: [ {self firstExperimentCategoryName} ] ifFalse: [ denotativeObjecCategories ]
-
-! !
-
-!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 3/31/2018 19:46:57'!
-systemCategoryListIndex: anInteger
-	"Set the selected system category index to be anInteger. Update all other
-	selections to be deselected."
-
-	| index systemCategoryList |
-	
-	systemCategoryList _ self systemCategoryList.
-	index _ systemCategoryList ifInBounds: anInteger ifNot: 0.
-
-	selectedSystemCategory _ index = 0 ifFalse: [ systemCategoryList at: index ].
-	selectedClassName := nil.
-	selectedMessageCategory := nil.
-	selectedMessage := nil.
-	self editSelection: ( index = 0 ifTrue: [#none] ifFalse: [#newClass]).
-	metaClassIndicated := true.
-	self setClassOrganizer.
-	self changed: #systemCategorySelectionChanged.
-	self changed: #systemCategoryListIndex.	"update my selection"
-	self changed: #classList.
-	self changed: #messageCategoryList.
-	self changed: #messageList.
-	self changed: #relabel.
-	self changed: #instanceMessagesIndicated.
-	self changed: #classCommentIndicated.
-	self changed: #classMessagesIndicated.
-	self acceptedContentsChanged! !
-
-!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'HAW 9/27/2018 15:07:14'!
-hasMorphObjectSelected
-
-	^ self selectedClass notNil and: [ self selectedClass isDescendantOf: DenotativeObjectMorph ]! !
-
-!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 9/27/2018 11:18:46'!
-hideSelectedMorph
-
-	self selectedClass delete! !
-
-!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 9/27/2018 11:18:58'!
-showSelectedMorph
-
-	self selectedClass openInWorld! !
-
-!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:53:49'!
-recentClasses
-
-	RecentDenotativeObjects ifNil: [ RecentDenotativeObjects := OrderedCollection new ].
-	
-	^RecentDenotativeObjects ! !
-
-!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:54:14'!
-releaseClassCachedState
-	"
-	DenotativeObjectBrowser  releaseClassCachedState
-	"
-	RecentDenotativeObjects _ nil! !
-
-!DenotativeObjectMessageSet methodsFor: 'private' stamp: 'HAW 8/21/2017 21:56:59'!
-contents: aText notifying: aController
-
-	^[ super contents: aText notifying: aController ]
-		on: UndeclaredVariable 
-		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
-! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:24:15'!
-debugMethodTest
-
-	^self debugDenotativeObjectMethodTest! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:26:57'!
-runClassTests
-
-	^self runDenotativeObjectTests! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:28:37'!
-runMessageCategoryTests
-
-	^self runDenotativeObjectMessageCategoryTests! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:29:59'!
-runMethodTest
-
-	^self runDenotativeObjectMethodTest! !
-
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:31:13'!
-runSystemCategoryTests
-
-	^self runDenotativeObjectSystemCategoryTests! !
-
-!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 16:56:52'!
-autoCompleterClassFor: textGetter
-	
-	^DenotativeObjectCompleter! !
-
-!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 21:57:20'!
-editorClassFor: textGetter
-
-	^DenotativeObjectSmalltalkEditor! !
-
-!DenotativeObjectMessageSet methodsFor: 'system category list' stamp: 'HAW 8/21/2017 22:00:50'!
-selectedSystemCategoryName
-
-	^selectedMessage ifNil: [ 'MessageList-Objects' ] ifNotNil: [ selectedMessage actualClass category ]! !
-
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 9/23/2020 19:12:41'!
-askForCategoryIn: aClass default: aString
-
-	| categories index category |
-	
-	categories := OrderedCollection with: 'new ...'. 
-	categories addAll: (aClass allMethodCategoriesIntegratedThrough: aClass).	
-	index := PopUpMenu withCaption: 'Please provide a good category for the new method!!'
-						chooseFrom: categories.
-	index = 0 ifTrue: [^ aString].
-	
-	category := index = 1 
-		ifTrue: [StringRequestMorph request: 'Enter category name:' orCancel: [ '' ] ]
-		ifFalse: [categories at: index].
-		
-	^ category isEmpty ifTrue: [aString] ifFalse: [category]! !
-
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 10:54:42'!
-originalSend
-
-	^super send! !
-
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 18:18:10'!
-restart
-
-	^[ super restart ]
-		on: Error
-		do: [ :anError | self inform: 'Can not continue debugging' ]
-	! !
-
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 3/26/2019 16:33:14'!
-send
-
-	"Sends until receiver is a denotative object.
-	Proceeds if a message not understood was send to accelerate the process - Hernan"
-	
-	^[
-		inStep := true.
-		[ super send ] on: Exception do: [ :anException | self inform: self class canNotDebugErrorMessage. ^self ].
-		(contextStackTop receiver is: #DenotativeObject)
-			ifFalse: [ self stepIntoBlock ]] ensure: [ inStep := false ]
-		
-		
-	"[super send.
-	(sendProceeds or: [ contextStackTop selector = #doesNotUnderstand: ]) ifTrue: [ ^self proceed ].
-	self selectedContext methodClass inheritsFrom: DenotativeObject class ] whileFalse.
-"
-
-! !
-
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/30/2017 10:05:36'!
-stepIntoBlock
-
-	[ | toDebugContext |
-	
-	inStep := true.
-	super stepIntoBlock.
-
-	toDebugContext := contextStackTop.	
-	[toDebugContext notNil and: [(toDebugContext receiver is: #DenotativeObject) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-	toDebugContext isNil
-		ifTrue: [ self proceed ]
-	 	ifFalse: [ self resetContext: toDebugContext ]] ensure: [ inStep := false ].
-	! !
-
-!DenotativeObjectDebugger methodsFor: 'method creation' stamp: 'HAW 8/26/2017 19:17:29'!
-askForSuperclassOf: aClass upTo: aSuperclass toImplement: aSelector ifCancel: cancelBlock
-
-	| classes chosenClassIndex |
-
-	classes := aClass soleInstance withParents collect: [ :denotativeObject | denotativeObject class ].
-	classes size = 1 ifTrue: [ ^aClass ].
-	
-	chosenClassIndex := PopUpMenu
-		withCaption: 'Define #', aSelector, ' in which object?'
-		chooseFrom: (classes collect: [:c | c soleInstance name]).
-	chosenClassIndex = 0 ifTrue: [^ cancelBlock value].
-
-	^ classes at: chosenClassIndex
-
-	! !
-
-!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 8/21/2017 19:06:38'!
-contents: aText notifying: aController
-
-	^[ super contents: aText notifying: aController ]
-		on: UndeclaredVariable 
-		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
-! !
-
-!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 7/29/2017 17:29:24'!
-inStep
-
-	^inStep ! !
-
-!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 8/21/2017 19:08:57'!
-selectedSystemCategoryName
-	
-	^self receiver ifNil: [ 'Debugger-Objects' ] ifNotNil: [ :receiver | receiver isBehavior ifTrue: [ receiver category ] ifFalse: [ receiver class category ]]! !
-
-!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 18:06:23'!
-autoCompleterClassFor: textGetter
-	
-	^DenotativeObjectCompleter! !
-
-!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 12:43:55'!
-editorClassFor: textGetter
-
-	^DenotativeObjectSmalltalkEditor ! !
-
-!DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 7/29/2017 17:29:17'!
-initialize
-
-	super initialize.
-	inStep := false.! !
-
-!DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 7/29/2017 18:02:49'!
-openFullMorphicLabel: aLabelString
-	"Open a full morphic debugger with the given label"
-
-	| oldContextStackIndex |
-	
-	oldContextStackIndex := contextStackIndex.
-	self expandStack. "Sets contextStackIndex to zero."
-
-	DenotativeObjectDebuggerWindow open: self label: aLabelString.
-	self toggleContextStackIndex: oldContextStackIndex! !
-
-!DenotativeObjectDebugger methodsFor: 'private' stamp: 'HAW 8/4/2019 21:26:31'!
-newStack: stack
-
-	| denotativeObjectContexts |
-
-	denotativeObjectContexts := stack select: [ :context | 
-		(context methodClass inheritsFrom: DenotativeObject class) 
-		or: [ context selector = #doesNotUnderstand: 
-		or: [ context selector = Scanner doItSelector 
-		or: [ context selector = Scanner doItInSelector ]]]].
-
-	denotativeObjectContexts isEmpty
-		ifTrue: [ super newStack: stack ] 
-		ifFalse: [ 
-			super newStack: denotativeObjectContexts.
-			contextStackList := contextStackList collect: [:aString | aString copyReplaceAll: ' class' with: '' ]]
-		
-	! !
-
-!DenotativeObjectDebugger class methodsFor: 'error messages' stamp: 'HAW 3/26/2019 16:32:37'!
-canNotDebugErrorMessage
-
-	^'Cannot debug a message sent to an object that is not a DenotativeObject'! !
-
-!DenotativeObjectDebugger class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2022 12:00:27'!
-openDebugging: aBlock to: aCompiledMethod label: aString
-	"Create a new process to debug aBlock, and step into it."
-
-	| processToDebug debugger |
-	debugger _ self new.
-	processToDebug _ aBlock newProcess name: 'debugIt'.
-	debugger process: processToDebug context: processToDebug suspendedContext.
-	debugger openFullMorphicLabel: aString.
-	[debugger interruptedContext method == aCompiledMethod]
-		whileFalse: [debugger originalSend]! !
-
-!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:02'!
-alwaysPresentFieldList
-
-	^ #('self' 'all collaborators')! !
-
-!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:15'!
-baseFieldList
-
-	^ self alwaysPresentFieldList, object collaboratorNames ! !
-
-!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 9/29/2020 17:44:57'!
-object
-
-	^object ! !
-
-!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 18:44:01'!
-autoCompleterClassFor: textGetter
-	
-	^DenotativeObjectCompleter! !
-
-!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 3/21/2019 14:41:51'!
-editorClassFor: textGetter
-
-	^DenotativeObjectSmalltalkEditor ! !
-
-!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:41:59'!
-instVarBase
-
-	^DenotativeObject class instSize - self alwaysPresentFieldList size
-	
-	! !
-
-!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:42:10'!
-replaceSelectionValue: anObject
-	"The receiver has a list of variables of its inspected object. One of these
-	is selected. The value of the selected variable is set to the value,
-	anObject."
-	| si instVarIndex |
-	selectionIndex <= self alwaysPresentFieldList size ifTrue: [
-		self toggleIndex: (si := selectionIndex).
-		self toggleIndex: si.
-		^ object].
-	instVarIndex := selectionIndex + self instVarBase.
-	instVarIndex > object class instSize
-		ifFalse: [^ object instVarAt: instVarIndex put: anObject].
-	self error: 'Cannot replace selection'.
-	! !
-
-!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:42:26'!
-selection
-	"The receiver has a list of variables of its inspected object.
-	One of these is selected. Answer the value of the selected variable."
-	
-	selectionIndex = 0 ifTrue: [^ ''].
-	selectionIndex = 1 ifTrue: [^ object].
-	selectionIndex = 2 ifTrue: [^ object longPrintStringLimitedTo: 20000].
-	
-	^ object instVarAt: selectionIndex + self instVarBase
-	! !
-
-!DenotativeObjectInspector class methodsFor: 'instance creation' stamp: 'HAW 7/13/2017 00:01:59'!
-openOn: anObject
-	^ self openOn: anObject withLabel: anObject name! !
-
-!DenotativeObjectInspector class methodsFor: 'instance creation' stamp: 'HAW 8/20/2017 15:12:07'!
-openOn: anObject withLabel: label
-
-	DenotativeObjectInspectorWindow open: (self inspect: anObject) label: label
-	
-! !
-
-!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 1/7/2019 16:23:10'!
-doesClassNameStartWithUppercase: aClassName
-
-	"To allow denotative objects to start with lowercase - Hernan"
-	^true! !
+	^self new initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase! !
 
 !DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
 parserClass
@@ -1455,2038 +552,6 @@ initScopeAndLiteralTables
 	scopeTable at: 'parent' put: (scopeTable at: 'super').
 	scopeTable removeKey: 'super'.
 	! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 8/22/2017 11:06:01'!
-acceptAndDebugTest
-
-	^self acceptAndDebugTestOr: [ self codeProvider debug ]! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 8/22/2017 10:50:30'!
-acceptThenTestMethodAndSuite: aSuiteBuilder
-	
-	self acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: [:result | ]
-! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:36:40'!
-nextTestName
-	
-	| testNames |
-	
-	testNames := self codeProvider selectedClassOrMetaClass selectors select: [ :selector | selector isTestSelector ].
-	self addString: Symbol testSelectorPrefix, ((testNames size + 1)  printStringBase: 10 length: 2 padded: true)! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 9/10/2017 14:52:25'!
-nextTestName: aKeyboardEvent
-
-	self nextTestName.
-	^true! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:06'!
-runAndDebuggIfNecessary: aPotencialTestMethod
-
-	aPotencialTestMethod selector isTestSelector ifTrue: [
-		(DenotativeObjectTestCase for: aPotencialTestMethod) debug ]! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 7/19/2017 21:38:55'!
-runTestSuite: aTestSuite
-
-	(DenotativeObjectProgessiveTestRunner for: aTestSuite) value
-
-	! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:16'!
-testSuiteForCategoryOf: aClass
-
- 	| suite classes |
-
-	suite := TestSuite named: 'Tests of ', aClass category.
-	classes := SystemOrganization classesAt: aClass category.
-	classes notEmpty ifTrue: [
-		classes do: [ :aClassInCategory |
-			aClassInCategory class selectors do: [ :aSelector |
-				aSelector isTestSelector ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aClassInCategory class>>aSelector)]]]].
-
-	^suite! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:27'!
-testSuiteOf: aDenotativeObject
-
- 	| suite |
-
-	suite := TestSuite named: 'Tests of ', aDenotativeObject soleInstance name asString.
-	aDenotativeObject selectors do: [ :aSelector |
-			aSelector isTestSelector ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aDenotativeObject>>aSelector)]].
-
-	^suite! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 10/25/2022 16:24:18'!
-acceptAndDebugTestOr: aBlock
-
-	^self acceptAndWithMethodDo: [ :aPotencialTestMethod |
-		aPotencialTestMethod selector isTestSelector 
-			ifTrue: [
-				(DenotativeObjectTestCase 
-					for: aPotencialTestMethod) 
-					debugAsFailureIfCanNot: [ PopUpMenu inform: TestCase canNotDebugMethodErrorDescription ]]
-			ifFalse: aBlock]! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 11:06:19'!
-acceptDebugAndInspect
-
-	^self acceptAndDebugTestOr: [ self codeProvider debugAndInspect ]! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 11:07:05'!
-acceptDebugAndInspect: aKeyboardEvent 
-	
-	self acceptDebugAndInspect.
-	^true! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 10:51:34'!
-acceptSendAndInspect
-	
-	self acceptThenTestMethodAndSuite:  [ :aMethod | self testSuiteOf: aMethod methodClass ] orSendAndWithResultDo: [:result | result inspect ]
-! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 10:55:50'!
-acceptSendAndInspect: aKeyboardEvent 
-	
-	self acceptSendAndInspect.
-	^true! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 10/25/2022 16:24:31'!
-acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: aBlock
-	
-	self acceptAndWithMethodDo: [ :aPotencialTestMethod |
-		aPotencialTestMethod selector isTestSelector 
-			ifTrue: [
-				self runAndDebuggIfNecessary: aPotencialTestMethod.
-				self runTestSuite: (aSuiteBuilder value: aPotencialTestMethod) ]
-			ifFalse: [ self codeProvider sendAndWithResultDo: aBlock ]]! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 7/22/2017 06:23:19'!
-browseIt
-
-	| aSymbol aClassToBrowse |
-
-	self wordSelectAndEmptyCheck: [^ self].
-	aSymbol := self selectedSymbol.
-	aSymbol ifNil: [^ morph flash].
-
-	aSymbol first isUppercase
-		ifTrue: [
-			aClassToBrowse := Smalltalk at: aSymbol ifAbsent: [ ^DenotativeObjectBrowserWindow browseAllImplementorsOf: aSymbol ].
-			(aClassToBrowse isKindOf: Class) ifFalse: [aClassToBrowse := aClassToBrowse class].
-			DenotativeObjectBrowserWindow fullOnClass: aClassToBrowse selector: nil ]
-		ifFalse:
-			[DenotativeObjectBrowserWindow browseAllImplementorsOf: aSymbol]! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 11/30/2021 17:01:00'!
-implementorsOfIt
-
-	self
-		withSelectorUnderCursorDo: [ :aSelector | DenotativeObjectBrowserWindow browseAllImplementorsOf: aSelector ]
-		ifBehavior: [:behavior | DenotativeObjectBrowserWindow fullOnClass: behavior selector: nil ] 
-		otherwise: [ self implementorsOfItWhenErrorsParsing ]
-	! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:27:07'!
-implementorsOfItWhenErrorsParsing
-
-	| aSelector |
-
-	self lineSelectAndEmptyCheck: [^ self].
-
-	aSelector := self selectedSelector.
-	aSelector ifNil: [^ morph flash].
-
-	DenotativeObjectBrowserWindow browseAllImplementorsOf: aSelector! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 7/22/2017 06:23:27'!
-referencesToIt
-	"Open a references browser on the selected symbol: a variable name or class name"
-
-	| symbol reference |
-
-	"super referencesToIt.
-	"
-
-	self selectWord.	"look for exactly a whole word"
-	symbol := self selectedSymbol ifNil: [ ^ morph flash ].
-
-	"convenient access to class variables, including those in SharedPools"
-	reference := (Smalltalk bindingOf: symbol) ifNil: [ ^ morph flash ].
-
-	DenotativeObjectBrowserWindow browseReferencesTo: reference! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 11/30/2021 16:59:34'!
-sendersOfIt
-
-	self
-		withSelectorUnderCursorDo: [ :aSelector | DenotativeObjectBrowserWindow browseSendersOf: aSelector ]
-		ifBehavior: [:behavior | DenotativeObjectBrowserWindow browseReferencesTo: (Smalltalk bindingOf: behavior name)] 
-		otherwise: [ self sendersOfItWhenErrorsParsing ]
-	! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:28:15'!
-sendersOfItWhenErrorsParsing
-
-	| aSelector |
-
-	self lineSelectAndEmptyCheck: [^ self].
-
-	aSelector := self selectedSelector.
-	aSelector ifNil: [^ morph flash].
-
-	DenotativeObjectBrowserWindow browseSendersOf: aSelector! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/22/2022 11:58:08'!
-debug: aCompiledMethod receiver: anObject in: evalContext
-
-	^DenotativeObjectDebugger 
-		openDebugging: [
-			aCompiledMethod
-				valueWithReceiver: anObject
-				arguments: (evalContext ifNil: [ #() ] ifNotNil: [ { evalContext } ])]
-		to: aCompiledMethod
-		label: 'Debug it'.! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/22/2022 12:31:49'!
-evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
-	[[[ ^super evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile ]
-		on: UndeclaredVariable 
-		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ]]
-		on: OutOfScopeNotification
-		do: [ :ex | ex resume: true]]
-		on: Error
-		do: [ :anError | | context  |
-			context := thisContext.
-			[context notNil and: [(context receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ context := context sender ].
-			context isNil ifTrue: [ self error: 'can not debug' ].
-			DenotativeObjectDebugger openProcess: Processor activeProcess context: context label: anError printString.]! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu' stamp: 'HAW 8/13/2022 17:22:35'!
-getMenu
-	
-	^self createMenuCollectingOptionsWith: #denotativeObjectEditorMenuOptions! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 12/4/2019 12:03:12'!
-renameClassOn: aBrowser for: aClassToRefactor
-
-	(DenotativeObjectRenameApplier for: aClassToRefactor) value ! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 11/29/2018 20:20:21'!
-renameInstanceVariableOn: aBrowser for: anInstanceVariableName at: aClassToRefactor 
-	
-	(DenotativeObjectRenameCollaboratorApplier on: aBrowser for: anInstanceVariableName at: aClassToRefactor) value! !
-
-!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 1/7/2019 15:34:00'!
-renameSelectorFor: aSelector in: aClassToRefactor
-
-	DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [DenotativeObjectRenameSelectorApplier on: model textProvider for: aSelector in: aClassToRefactor ]! !
-
-!DenotativeObjectSmalltalkEditor class methodsFor: 'keyboard shortcut tables' stamp: 'HAW 2/21/2019 00:05:04'!
-denotativeObjectSmalltalkEditorCmdShortcutsSpec
-
-	^RefactoringMenues smalltalkEditorCmdShortcutsSpec, LiveTyping smalltalkEditorCmdShortcutsSpec, `#(
-		#($e	#acceptSendAndInspect:  	'')
-		#($q	#acceptDebugAndInspect:   	'')
-		#($Y   #nextTestName: 				''))`! !
-
-!DenotativeObjectSmalltalkEditor class methodsFor: 'menu' stamp: 'HAW 8/20/2022 17:34:38'!
-denotativeObjectEditorMenuOptions
-	
-	^`{
-			{
-				#itemGroup 		-> 		10.
-				#itemOrder 		-> 		10.
-				#label 			-> 		'Help...'.
-				#selector 		-> 		#openHelp.
-				#icon 			-> 		#helpIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		20.
-				#itemOrder 		-> 		10.
-				#label 			-> 		'Do it (d)'.
-				#selector 		-> 		#doIt.
-				#icon 			-> 		#doItIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		20.
-				#itemOrder 		-> 		20.
-				#label 			-> 		'Print it (p)'.
-				#selector 		-> 		#printIt.
-				#icon 			-> 		#printIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		20.
-				#itemOrder 		-> 		30.
-				#label 			-> 		'Inspect it (i)'.
-				#selector 		-> 		#inspectIt.
-				#icon 			-> 		#inspectIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		20.
-				#itemOrder 		-> 		40.
-				#label 			-> 		'Explore it (I)'.
-				#selector 		-> 		#exploreIt.
-				#icon 			-> 		#exploreIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		20.
-				#itemOrder 		-> 		50.
-				#label 			-> 		'Debug it (D)'.	
-				#selector 		-> 		#debugIt.
-				#icon 			-> 		#debugIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		30.
-				#itemOrder 		-> 		5.
-				#label 			-> 		SmalltalkEditor editMenuLabel.
-				#selector 		-> 		#yourself.
-				#icon 			-> 		#textEditorIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		30.
-				#itemOrder 		-> 		10.
-				#label 			-> 		'Browse it (b)'.
-				#selector 		-> 		#browseIt.
-				#icon 			-> 		#editFindReplaceIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		30.
-				#itemOrder 		-> 		20.
-				#label 			-> 		'Senders of it (n)'.
-				#selector 		-> 		#sendersOfIt.
-				#icon 			-> 		#mailForwardIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		30.
-				#itemOrder 		-> 		30.
-				#label 			-> 		'Implementors of it (m)'.
-				#selector 		-> 		#implementorsOfIt.
-				#icon 			-> 		#developmentIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		30.
-				#itemOrder 		-> 		40.
-				#label 			-> 		'References to it (N)'.
-				#selector 		-> 		#referencesToIt.
-				#icon 			-> 		#addressBookIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		40.
-				#itemOrder 		-> 		10.
-				#label 			-> 		'Rename... (R)'.
-				#selector 		-> 		#contextualRename.
-				#icon 			-> 		#saveAsIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		40.
-				#itemOrder 		-> 		20.
-				#label 			-> 		'Extract Method... (K)'.
-				#selector 		-> 		#extractMethod.
-				#icon 			-> 		#saveAsIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		50.
-				#itemOrder 		-> 		10.
-				#label 			-> 		'Accept (s)'.
-				#selector 		-> 		#acceptContents.
-				#icon 			-> 		#acceptIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		50.
-				#itemOrder 		-> 		20.
-				#label 			-> 		'Cancel (l)'.
-				#selector 		-> 		#cancelEdits.
-				#icon 			-> 		#cancelIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		60.
-				#itemOrder 		-> 		10.
-				#label 			-> 		'Accept and Send (t)'.
-				#selector 		-> 		#acceptAndTest.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		60.
-				#itemOrder 		-> 		20.
-				#label 			-> 		'Accept, Send and Inspect (e)'.
-				#selector 		-> 		#acceptSendAndInspect.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		60.
-				#itemOrder 		-> 		30.
-				#label 			-> 		'Accept and Debug (r)'.
-				#selector 		-> 		#acceptAndDebugTest.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		60.
-				#itemOrder 		-> 		40.
-				#label 			-> 		'Accept, Debug and Inspect (q)'.
-				#selector 		-> 		#acceptDebugAndInspect.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		60.
-				#itemOrder 		-> 		50.
-				#label 			-> 		'Accept and Run Test in Category (y)'.
-				#selector 		-> 		#acceptAndTestAll.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#itemGroup 		-> 		60.
-				#itemOrder 		-> 		60.
-				#label 			-> 		'Next test name (Y)'.
-				#selector 		-> 		#nextTestName.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.			
-		}, LiveTyping smalltalkEditorMenuOptions, SmalltalkEditor smalltalkEditorEditingMenuOptions `! !
-
-!DenotativeObjectSmalltalkEditor class methodsFor: 'class initialization' stamp: 'HAW 8/13/2023 19:07:26'!
-initializeCmdShortcuts
-	
-	"This is becuase I want to redefine cmd+e - Hernan"
-	super initializeCmdShortcuts.
-	cmdShortcuts at: $e asciiValue + 1 put: #acceptSendAndInspect:! !
-
-!DenotativeObjectWorkspaceEditor methodsFor: 'system category list' stamp: 'HAW 8/21/2017 18:58:29'!
-selectedSystemCategoryName
-	
-	^'Workspace-Objects'! !
-
-!DenotativeObjectWorkspaceEditor methodsFor: 'menu' stamp: 'HAW 7/7/2018 20:13:59'!
-getMenu
-	
-	^(MenuMorph new defaultTarget: self)
-		addTitle: self class name;
-		addStayUpIcons;
-		addItemsFromDictionaries: `{
-			{
-				#label 			-> 		'Help...'.
-				#selector 		-> 		#openHelp.
-				#icon 			-> 		#helpIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'Do it (d)'.
-				#selector 		-> 		#doIt.
-				#icon 			-> 		#doItIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Print it (p)'.
-				#selector 		-> 		#printIt.
-				#icon 			-> 		#printIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Inspect it (i)'.
-				#selector 		-> 		#inspectIt.
-				#icon 			-> 		#inspectIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Debug it (D)'.	
-				#selector 		-> 		#debugIt.
-				#icon 			-> 		#debugIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'Browse it (b)'.
-				#selector 		-> 		#browseIt.
-				#icon 			-> 		#editFindReplaceIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Senders of it (n)'.
-				#selector 		-> 		#sendersOfIt.
-				#icon 			-> 		#mailForwardIcon
-			} asDictionary.
-			{
-				#label 			-> 		'Implementors of it (m)'.
-				#selector 		-> 		#implementorsOfIt.
-				#icon 			-> 		#developmentIcon
-			} asDictionary.
-			{
-				#label 			-> 		'References to it (N)'.
-				#selector 		-> 		#referencesToIt.
-				#icon 			-> 		#addressBookIcon
-			} asDictionary.			
-			nil.
-			{
-				#label 			-> 		'More...'.
-				#selector 		-> 		#openMenu2.
-				#icon 			-> 		#listAddIcon
-			} asDictionary.
-		}`! !
-
-!DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 16:15:49'!
-autoCompleterClassFor: textGetter
-	
-	^DenotativeObjectNameCompleter! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:47:11'!
-addInstVar
-
-	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		(DenotativeObjectAddCollaboratorApplier on: model for: aClass) value ].! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:29:15'!
-browseAllAccessesTo: aVar from: aClass
-
-	^self class browseAllAccessesTo: aVar from: aClass
-! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:32:41'!
-browseAllImplementorsOf: aSelector
-
-	^self class browseAllImplementorsOf: aSelector
-! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 14:40:52'!
-browseClassRefs
-
-	model selectedClassOrMetaClass ifNotNil: [ :selectedDenotativeObject | 
-		self class browseReferencesTo: (Smalltalk bindingOf: selectedDenotativeObject theNonMetaClass name) ]
-	! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:33:08'!
-browseImplementorsOfSelectedSelector
-
-	^model selectedMessageName ifNotNil: [:selector | self browseAllImplementorsOf: selector ] ! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:43:17'!
-browseInstVarRefs
-
-	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		aClass 
-			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators' 
-			thenDo: [:aVar | self browseAllAccessesTo: aVar from: aClass]
-			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:32:47'!
-browseMessages
-
-	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: self ! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
-browseMethodFull
-	"Create and schedule a full Browser and then select the current class and message."
-
-	model selectedClassOrMetaClass ifNotNil: [ :myClass |
-		self class fullOnClass: myClass selector: model selectedMessageName]! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
-browseSendersOf: aSymbol
-
-	^self class browseSendersOf: aSymbol ! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:27:46'!
-browseSendersOfMessages
-
-	self getSelectorAndSendQuery: #browseSendersOf: to: self class.
-
-	! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:31:06'!
-browseSendersOfSelectedSelector
-
-	^model selectedMessageName ifNotNil: [:selector | self class browseSendersOf: selector ] ! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:09:03'!
-confirmRemovalOf: aSelector on: aClass
-
-	^ (self has: aSelector noSenderOrIsItselfOn: aClass)
-		ifTrue: [self confirmRemovalWhenNoSenders ]
-		ifFalse: [self confirmRemovalWhenHasSenders ].
-! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:09:39'!
-confirmRemovalWhenHasSenders
-
-	| menu |
-	
-	menu := PopUpMenu 
-		labels: 'Remove it
-Remove, then browse senders
-Don''t remove, but show me those senders
-Forget it -- do nothing -- sorry I asked'
-		icons: #(acceptIcon acceptIcon cancelIcon cancelIcon).
-			
-	^menu startUpWithCaption: 'This message has sender(s)' ! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:08:29'!
-confirmRemovalWhenNoSenders
-	
-	^ (self confirm: 'This message has no senders. Remove it anyway?') ifTrue: [1] ifFalse: [0]! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:05:30'!
-has: aSelector noSenderOrIsItselfOn: aClass
-
-	| count allSenders |
-
-	allSenders := self sendersOf: aSelector.
-	count := allSenders size.
-
-	^count = 0 or: [ count = 1 and: [(allSenders first actualClass == aClass and: [allSenders first methodSymbol == aSelector])]]
-! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 07:36:04'!
-inspectIt
-	
-	model selectedClass inspect! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:50:38'!
-removeInstVar
-	
-	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		(DenotativeObjectRemoveCollaboratorApplier on: model for: aClass) value ].! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 10:46:42'!
-removeMessage
-
-	| messageName confirmation |
-
-	model selectedMessage ifNil: [ ^self ].
-	messageName := model selectedMessageName.
-	confirmation := self confirmRemovalOf: messageName on: model selectedClassOrMetaClass.
-
-	(confirmation = 1 or: [ confirmation = 2 ]) ifTrue: [self removeSelector: messageName ].
-	(confirmation = 2 or: [ confirmation = 3 ]) ifTrue: [self browseSendersOf: messageName ].
-
-	! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
-removeSelector: messageName
-
-	model selectedClassOrMetaClass removeSelector: messageName.
-	model
-		messageListIndex: 0;
-		changed: #messageList;
-		setClassOrganizer.
-	! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:45:38'!
-renameInstVar
-	
-	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		(DenotativeObjectRenameCollaboratorApplier on: model at: aClass) value ].! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 1/7/2019 15:33:15'!
-renameSelector
-
-	model selectedMessageName ifNotNil: [ :oldSelector |
-		DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [ DenotativeObjectRenameSelectorApplier on: model for: oldSelector in: model selectedClassOrMetaClass ]]! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
-sendersOf: aSymbol
-
-	^self class sendersOf: aSymbol ! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:44:03'!
-buildLowerPanes
-
-	| codeAndButtons workspace separator |
-
-	workspace := TextModelMorph withModel: DenotativeObjectWorkspace new.
-	workspace 
-		askBeforeDiscardingEdits: false;
-		doNotShowBalloonHelp.
-
-	separator := LayoutAdjustingMorph new.
-
-	codeAndButtons := LayoutMorph newColumn.
-	codeAndButtons
-		addMorph: self optionalButtonRow fixedHeight: self defaultButtonPaneHeight;
-		addAdjusterMorph.
-	codePane := self buildMorphicCodePane.
-	codePane doNotShowBalloonHelp.
-	codeAndButtons
-		addMorph: codePane proportionalHeight: 2.0;
-		addMorph: separator fixedHeight: 4;
-		addMorph: workspace proportionalHeight: 2.0.
-
-	^codeAndButtons ! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/28/2018 11:41:57'!
-buildMorphicClassColumnWith: aClassList
-
-	| column |
-
-	column := LayoutMorph newColumn.
-	column addMorphUseAll: aClassList.
-	
-	^column! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 1/27/2022 17:22:02'!
-buildMorphicSystemCategoryList
-
-	^PluggableListMorph
-		model: model
-		listGetter: #systemCategoryList
-		indexGetter: #systemCategoryListIndex
-		indexSetter: #systemCategoryListIndex:
-		mainView: self
-		menuGetter: #systemCategoryMenu
-		keystrokeAction: #systemCatListKey:from:! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:22:49'!
-optionalButtonTuples
-
-	^self class optionalButtonTuples
-	! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 12/4/2019 12:09:32'!
-classListKey: aChar from: view 
-
-	aChar = $a ifTrue: [ ^model addDenotativeObject ].
-	aChar = $A ifTrue: [ ^model addDenotativeObjectInCategory ].
-	aChar = $h ifTrue: [ ^model addChildDenotativeObject ].
-	aChar = $H ifTrue: [ ^model addChildDenotativeObjectInCategory ].
-	aChar = $i ifTrue: [ ^self inspectIt ].
-	aChar = $x ifTrue: [ ^model removeClass].
-	aChar = $t ifTrue: [ ^model runClassTests ].
-	aChar = $R ifTrue: [ ^model renameClass ].
-
-	^self messageListKey: aChar from: view ! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 5/10/2019 11:29:44'!
-messageListKey: aChar from: view
-
-	 model selectedMessageName ifNotNil: [ :selector |
-		aChar = $D ifTrue: [ ^ model toggleDiffing].
-		aChar = $m ifTrue: [ ^self browseAllImplementorsOf: selector ].
-		aChar = $n ifTrue: [ ^self browseSendersOf: selector ].
-		aChar = $o ifTrue: [ ^ model fileOutMessage].
-		aChar = $c ifTrue: [ ^ model copySelector].
-		aChar = $v ifTrue: [ ^ self browseVersions].
-		aChar = $x ifTrue: [ ^ self removeMessage].
-		aChar = $t ifTrue: [ ^ model runMethodTest].
-		aChar = $r ifTrue: [ ^ model debugMethodTest].
-		aChar = $e ifTrue: [ ^model sendAndInspect ].
-		aChar = $q ifTrue: [ ^model debugAndInspect ].
-		aChar = $R ifTrue: [ ^self renameSelector ] ].
-	! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 12/4/2019 12:09:15'!
-systemCatListKey: aChar from: view
-
-	aChar = $o ifTrue: [^ model fileOutSystemCategory].
-	
-	^ super systemCatListKey: aChar from: view
-! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 12/4/2019 12:07:51'!
-classListMenu
-
-	| aMenu |
-	aMenu := MenuMorph new defaultTarget: self.
-	aMenu addTitle: 'Objects'.
-	aMenu
-		addItemsFromDictionaries: self morphMenuItems , `{
-			{
-				#label 			-> 		'add object... (a)'.
-				#selector 		-> 		#addDenotativeObject.
-				#object 			->		#model.
-				#icon 			-> 		#listAddIcon
-			} asDictionary.
-			{
-				#label 			-> 		'add object in category... (A)'.
-				#selector 		-> 		#addDenotativeObjectInCategory.
-				#object 			->		#model.
-				#icon 			-> 		#listAddIcon
-			} asDictionary.
-			{
-				#label 			-> 		'add child object... (h)'.
-				#selector 		-> 		#addChildDenotativeObject.
-				#object 			->		#model.
-				#icon 			-> 		#listAddIcon
-			} asDictionary.
-			{
-				#label 			-> 		'add child object in category... (H)'.
-				#selector 		-> 		#addChildDenotativeObjectInCategory.
-				#object 			->		#model.
-				#icon 			-> 		#listAddIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'show as family tree'.
-				#object 			->		#model.
-				#selector 		-> 		#enableListClassesHierarchically.
-				#icon 			-> 		#goTopIcon
-			} asDictionary.
-			{
-				#label 			-> 		'show alphabetically'.
-				#object 			-> 		#model.
-				#selector 		-> 		#enableListClassesAlphabetically.
-				#icon 			-> 		#sendReceiveIcon
-			} asDictionary.
-			nil.
-
-			{
-				#label 			-> 		'inspect (i)'.
-				#selector 		-> 		#inspectIt.
-				#icon 			-> 		#inspectIcon
-			} asDictionary.
-			{
-				#label 			-> 		'references (N)'.
-				#selector 		-> 		#browseClassRefs.
-				#icon 			-> 		#mailForwardIcon
-			} asDictionary.
-			{
-				#label 			-> 		'rename... (R)'.
-				#selector 		-> 		#renameClass.
-				#object 			->		#model.
-				#icon 			-> 		#saveAsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'clone...'.
-				#selector 		-> 		#copyClass.
-				#object 			->		#model.
-				#icon 			-> 		#copyIcon
-			} asDictionary.
-			{
-				#label 			-> 		'remove (x)'.
-				#selector 		-> 		#removeClass.
-				#object 			->		#model.
-				#icon 			-> 		#deleteIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'add collaborator...'.
-				#selector 		-> 		#addInstVar.
-				#icon 			-> 		#listAddIcon
-			} asDictionary.
-			{
-				#label 			-> 		'rename collaborator...'.
-				#selector 		-> 		#renameInstVar.
-				#icon 			-> 		#saveAsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'remove collaborator...'.
-				#selector 		-> 		#removeInstVar.
-				#icon 			-> 		#deleteIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'run tests (t)'.
-				#selector 		-> 		#runClassTests.
-				#object 			->		#model.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'create class'.
-				#selector 		-> 		#createClass.
-				#object 			->		#model.
-				#icon 			-> 		#morphsIcon
-			} asDictionary.
-		}`.
-	^ aMenu! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 9/14/2023 06:23:16'!
-messageCategoryMenu
-
-	^DynamicMenuBuilder 
-		buildTitled: 'Message Category' 
-		targeting: self 
-		collectingMenuOptionsWith: #denotativeObjectMessageCategoryMenuOptions.
-! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 5/10/2019 11:30:17'!
-messageListMenu
-	"Answer the message-list menu"
-	"Changed by emm to include menu-item for breakpoints"
-
-	| aMenu |
-	aMenu _ MenuMorph new defaultTarget: self.
-	aMenu addTitle: 'Message List'.
-	aMenu
-		addItemsFromDictionaries: `{
-			{
-				#label 			-> 		'fileOut (o)'.
-				#object 			-> 		#model.
-				#selector 		-> 		#fileOutMessage.
-				#icon 			-> 		#fileOutIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'senders of... (n)'.
-				#selector 		-> 		#browseSendersOfSelectedSelector.
-				#icon 			-> 		#mailForwardIcon
-			} asDictionary.
-			{
-				#label 			-> 		'implementors of... (m)'.
-				#selector 		-> 		#browseImplementorsOfSelectedSelector.
-				#icon 			-> 		#developmentIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'rename (R)'.
-				#selector 		-> 		#renameSelector.
-				#icon 			-> 		#saveAsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'remove (x)'.
-				#selector 		-> 		#removeMessage.
-				#icon 			-> 		#deleteIcon
-			} asDictionary.
-			{				 
-				#label 			-> 		'versions (v)'.
-				#selector 		-> 		#browseVersions.
-				#icon 			-> 		#clockIcon
-			} asDictionary.
-			nil.		
-			{
-				#label 			-> 		'change category...'.
-				#object 			-> 		#model.
-				#selector 		-> 		#changeCategory.
-				#icon 			-> 		#editFindReplaceIcon
-			} asDictionary.
-			{
-				#label 			-> 		'show category'.
-				#object 			-> 		#model.
-				#selector 		-> 		#showHomeCategory.
-				#icon 			-> 		#helpIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'send (t)'.
-				#object 			-> 		#model.
-				#selector 		-> 		#runMethodTest.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'send and inspect (e)'.
-				#object 			-> 		#model.
-				#selector 		-> 		#sendAndInspect.
-				#icon 			-> 		#inspectIcon
-			} asDictionary.
-			{
-				#label 			-> 		'debug (r)'.
-				#object 			-> 		#model.
-				#selector 		-> 		#debugMethodTest.
-				#icon 			-> 		#debugIcon
-			} asDictionary.
-			{
-				#label 			-> 		'debug and inspect (q)'.
-				#object 			-> 		#model.
-				#selector 		-> 		#debugAndInspect.
-				#icon 			-> 		#debugIcon
-			} asDictionary.
-		}`.
-	^ aMenu! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 4/23/2020 16:36:40'!
-morphMenuItems
-
-	^ (model hasMorphObjectSelected) ifTrue: [
-		| toggleDisplayOption showOption hideOption |
-		showOption _ {
-			#label 			-> 		'show!!'.
-			#selector 		-> 		#showSelectedMorph.
-			#object 			->			#model.
-			#icon 			-> 		#weatherClearIcon
-		} asDictionary.
-		hideOption _ {
-			#label 			-> 		'hide!!'.
-			#selector 		-> 		#hideSelectedMorph.
-			#object 			->			#model.
-			#icon 			-> 		#weatherOvercastIcon
-		} asDictionary.
-		toggleDisplayOption _ model selectedClass morph owner ifNil: [ showOption ] ifNotNil: [ hideOption ].
-		{ toggleDisplayOption. nil }
-	] ifFalse: [ {} ]! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'HAW 7/22/2017 06:22:49'!
-systemCatSingletonMenu
-
-	^self systemCategoryMenu! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu building' stamp: 'RNG 5/27/2018 21:39:39'!
-systemCategoryMenu
-
-	| aMenu |
-	aMenu _ MenuMorph new defaultTarget: self.
-	aMenu addTitle: 'Categories'.
-	aMenu
-		addItemsFromDictionaries: `{
-			{
-				#label 			-> 		'find object... (f)'.
-				#selector 		-> 		#findClass.
-				#icon 			-> 		#findIcon
-			} asDictionary.
-			{
-				#label 			-> 		'recent objects... (r)'.
-				#object 			-> 		#model.
-				#selector 		-> 		#recent.
-				#icon 			-> 		#clockIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'fileOut'.
-				#object 			-> 		#model.
-				#selector 		-> 		#fileOutSystemCategory.
-				#icon 			-> 		#fileOutIcon
-			} asDictionary.
-			{
-				#label 			-> 		'fileIn'.
-				#object 			-> 		#model.
-				#selector 		-> 		#fileInSystemCategory.
-				#icon 			-> 		#scriptIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'rename...'.
-				#object 			-> 		#model.
-				#selector 		-> 		#renameSystemCategory.
-				#icon 			-> 		#saveAsIcon
-			} asDictionary.
-			{
-				#label 			-> 		'remove (x)'.
-				#object 			-> 		#model.
-				#selector 		-> 		#removeSystemCategory.
-				#icon 			-> 		#deleteIcon
-			} asDictionary.
-			nil.
-			{
-				#label 			-> 		'Run tests (t)'.
-				#object 			-> 		#model.
-				#selector 		-> 		#runSystemCategoryTests.
-				#icon 			-> 		#weatherFewCloudsIcon
-			} asDictionary.
-		}`.
-	^aMenu! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:54:38'!
-browseAllAccessesTo: aVar from: aClass
-
-	| methods label |
-
-	methods := (aClass whichSelectorsAccess: aVar) collect: [:selector | MethodReference class: aClass selector: selector ].
-
-	label := 'Access to ' , aVar.
-	methods isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label].
-
-	label := '[', methods size printString, '] ', label.
-
-	DenotativeObjectMessageSetWindow
-		openMessageList: methods asArray sort
-		label: label
-		autoSelect: aVar ! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:54:55'!
-browseAllImplementorsOf: aSymbol
-
-	| implementors label |
-
-	implementors := (Smalltalk allImplementorsOf: aSymbol) select: [ :aMethodReference | aMethodReference actualClass inheritsFrom: DenotativeObject class ].
-
-	label := 'Implementors of ' , aSymbol.
-	implementors isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label ].
-
-	label := '[', implementors size printString, '] ', label.
-
-	DenotativeObjectMessageSetWindow
-		openMessageList: implementors asArray sort
-		label: label
-		autoSelect: aSymbol keywords first! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/22/2017 06:22:49'!
-browseReferencesTo: anAssociation
-
-	| references label |
-
-	references := self sendersOf: anAssociation.
-
-	label := 'References to ' , anAssociation value name.
-	references isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label ].
-
-	label := '[', references size printString, '] ', label.
-
-	DenotativeObjectMessageSetWindow
-		openMessageList: references asArray sort
-		label: label
-		autoSelect: anAssociation value name.! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/22/2017 06:22:49'!
-browseSendersOf: aSymbol
-
-	| senders label |
-
-	senders := self sendersOf: aSymbol.
-
-	label := 'Senders of ' , aSymbol.
-	senders isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label ].
-
-	label := '[', senders size printString, '] ', label.
-
-	DenotativeObjectMessageSetWindow
-		openMessageList: senders asArray sort
-		label: label
-		autoSelect: aSymbol keywords first! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/20/2017 15:34:07'!
-fullOnDenotativeObject: aDenotativeObject selector: aSelector 
-		
-	| browser |
-	
-	browser := DenotativeObjectBrowser new.
-	browser setClass: aDenotativeObject selector: aSelector.
-	self open: browser label: browser labelString! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:55:50'!
-sendersOf: aSymbol
-
-	| senders |
-
-	senders := (Smalltalk allCallsOn: aSymbol) select: [ :aMethodReference | aMethodReference actualClass inheritsFrom: DenotativeObject class ].
-
-	^senders ! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 6/18/2020 09:28:01'!
-classNameRequester 
-
-	^DenotativeObjectNameRequestMorph! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 6/18/2020 09:16:45'!
-findClassDialogTitle
-
-	^ 'Denotative object name or fragment?'! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 8/21/2017 12:46:32'!
-fullOnClass: aClass selector: aSelector
-
-	"This is to be sure that we are going to browse a denotative object, if not we open
-	the classic browser. This is important because if in an inspector the Browse option on a no denotative object
-	is selected, then the denotative browser will be open for a no denotative object - Hernan"	
-	
-	(aClass theNonMetaClass is: #DenotativeObject)
-		ifTrue: [ self fullOnDenotativeObject: aClass selector: aSelector ]
-		ifFalse: [ BrowserWindow fullOnClass: aClass selector: aSelector ]! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:22:49'!
-openBrowser
-
-	| browser |
-
-	browser := DenotativeObjectBrowser new systemOrganizer: SystemOrganization.
-	browser indicateClassMessages.
-
-	^ self open: browser label: browser defaultBrowserTitle! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 9/7/2017 15:22:59'!
-optionalButtonTuples
-
-	"Answer a tuple buttons, in the format:
-			button label
-			selector to send
-			help message"
-
-	| aList |
-
-	aList := #(
-	(10	'browse'			browseMethodFull				'view this method in a browser')
-	(11	'senders' 			browseSendersOfMessages	'browse senders of...')
-	(16	'implementors'		browseMessages				'browse implementors of...')
-	(12	'versions'			browseVersions					'browse versions')
-	(10	'collaborators'			browseInstVarRefs				'collaborator refs...')
-	(10	'show...'				offerWhatToShowMenu		'menu of what to show in lower pane')).
-
-	^ aList! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'world menu options' stamp: 'HAW 3/30/2024 18:34:16'!
-worldMenuOptions 
-
-	^`{
-	{
-		#itemGroup 	-> 		0.
-		#itemOrder 		-> 		10.
-		#label 			-> 		'DenotativeObject Browser'.
-		#selector 		-> 		#openBrowser.
-		#object 			-> 		DenotativeObjectBrowserWindow.
-		#icon 			-> 		#morphsIcon.
-		#balloonText 	-> 		'To work with denotative objects (without classes)'.
-	} asDictionary.
-	{
-		#itemGroup 	-> 		0.
-		#itemOrder 		-> 		20.
-		#label 			-> 		'Class Browser'.
-		#selector 		-> 		#open.
-		#object 			-> 		Browser.
-		#icon 			-> 		#editFindReplaceIcon.
-		#balloonText 	-> 		'Classical Smalltalk class browser'.
-	} asDictionary. 
-	}`! !
-
-!DenotativeObjectBrowserWindow class methodsFor: 'menu building' stamp: 'HAW 9/14/2023 06:22:48'!
-denotativeObjectMessageCategoryMenuOptions
-
-	^self messageCategoryMenuOptions! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:40:24'!
-browseContextSelection
-	
-	model contextVariablesInspector selectionIndex = 0 ifTrue: [^ self flash].
-	^self browseMethodFullIn: model contextVariablesInspector
-	! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:44:06'!
-browseInstVarRefs
-
-	model selectedClassOrMetaClass ifNotNil: [ :aClass |
-		aClass 
-			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators' 
-			thenDo: [:aVar | DenotativeObjectBrowserWindow browseAllAccessesTo: aVar from: aClass]
-			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]			
-		! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:26:26'!
-browseMessages
-
-	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: DenotativeObjectBrowserWindow 
-	! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:22:29'!
-browseMethodFull
-	"Create and schedule a full Browser and then select the current class and message."
-
-	model selectedClassOrMetaClass ifNotNil: [ :myClass |
-		DenotativeObjectBrowserWindow fullOnClass: myClass selector: model selectedMessageName]! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:38:21'!
-browseReceiver
-
-	self browseMethodFullIn: model receiverInspector
-
-! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:25:20'!
-browseSendersOfMessages
-
-	self getSelectorAndSendQuery: #browseSendersOf: to: DenotativeObjectBrowserWindow 
-	! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:36:58'!
-inspectContextSelection
-	
-	model contextVariablesInspector selectionIndex = 0 ifTrue: [^ self flash].
-	^ model contextVariablesInspector selection inspect! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:24:44'!
-inspectReceiverSelection
-
-	model receiverInspector selectionIndex = 0 ifTrue: [^ self flash].
-	^ model receiverInspector selection inspect! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/20/2017 15:38:47'!
-browseMethodFullIn: anInspector
-
-	anInspector selectedClassOrMetaClass ifNotNil: [ :denotativeObject |
-		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]
-	! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 4/22/2018 19:54:41'!
-contextStackKey: aChar from: view
-	"Respond to a keystroke in the context list"
-
-	aChar == $e ifTrue: [^ self send].
-	aChar == $t ifTrue: [^ self stepIntoBlock].
-	aChar == $p ifTrue: [^ self proceed].
-	aChar == $r ifTrue: [^ self restart].
-	aChar == $w ifTrue: [^ self where].
-
-	^ self messageListKey: aChar from: view! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/21/2017 12:41:12'!
-messageListKey: aChar from: view
-
-	| sel class |
-
-	sel _ model selectedMessageName.
-	aChar == $m ifTrue: [  "These next two put up a type in if no message selected"
-		^ self useSelector: sel orGetSelectorAndSendQuery: #browseAllImplementorsOf: to: DenotativeObjectBrowserWindow ].
-	aChar == $n ifTrue: [
-		^ self useSelector: sel orGetSelectorAndSendQuery: #browseSendersOf: to: DenotativeObjectBrowserWindow ].
-
-	"The following require a class selection"
-	(class _ model selectedClassOrMetaClass) ifNil: [^ self ].
-	aChar == $b ifTrue: [^ DenotativeObjectBrowserWindow fullOnClass: class selector: sel].
-	aChar == $N ifTrue: [^ DenotativeObjectBrowserWindow browseReferencesTo: (Smalltalk bindingOf: class theNonMetaClass name)].
-
-	"The following require a method selection"
-	sel ifNotNil: [
-		aChar == $v ifTrue: [^ self browseVersions]]! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 7/20/2017 18:27:20'!
-buildLowerPanes
-
-	| codeAndButtons twoRowsOfButtons |
-
-	twoRowsOfButtons := LayoutMorph newColumn.
-
-	twoRowsOfButtons
-		addMorph: self optionalButtonRow proportionalHeight: 1.0;
-		addAdjusterMorph;
-		addMorph: self customButtonRow proportionalHeight: 1.0.
-
-	codeAndButtons := LayoutMorph newColumn.
-	codeAndButtons
-		addMorph: twoRowsOfButtons fixedHeight: self defaultButtonPaneHeight * 2;
-		addAdjusterMorph;
-		addMorph: self buildMorphicCodePane proportionalHeight: 1.0.
-
-	^codeAndButtons ! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 7/20/2017 18:25:21'!
-customButtonSpecs
-	"Answer an array of elements of the form wording, selector, help-message, that characterize the custom button row of a debugger."
-
-	^#(
-		('Restart'		restart				'reset this context to its start.')
-		('Into'			send					'step Into message sends')
-		('Over'			stepIntoBlock		'step Over message sends')
-		('Where'		where				'select current pc range')
-		('Create'		createMethod		'create method'))! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:23:10'!
-optionalButtonTuples
-
-	^DenotativeObjectBrowserWindow optionalButtonTuples reject: [ :tuple | tuple third = #offerWhatToShowMenu ]! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 3/26/2019 16:00:51'!
-contextFieldListMenu
-
-	| aMenu |
-
-	aMenu := MenuMorph new defaultTarget: self.
-	aMenu addItemsFromDictionaries: `{
-			{
-				#label 			-> 		'inspect (i)'.
-				#selector 		-> 		#inspectContextSelection.
-				#icon 			-> 		#inspectIcon
-			} asDictionary.
-			{
-				#label 			-> 		'browse (b)'.
-				#selector 		-> 		#browseContextSelection.
-				#icon 			-> 		#editFindReplaceIcon
-			} asDictionary. }`.
-	
-	^ aMenu! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 3/26/2019 15:59:55'!
-contextStackMenu
-	"Set up the menu appropriately for the context-stack-list, either shifted or unshifted as per the parameter provided"
-
-	| aMenu |
-	aMenu _ MenuMorph new defaultTarget: self.
-	aMenu addItemsFromDictionaries: `{
-			{ #label -> 'proceed (p)'. #selector -> #proceed } asDictionary. 
-			{ #label -> 'restart (r)'. #selector -> #restart } asDictionary. 
-			{ #label -> 'into (e)'. #selector -> #send } asDictionary. 
-			{ #label -> 'over (t)'. #selector -> #stepIntoBlock } asDictionary. 
-			{ #label -> 'where (w)'. #selector -> #where } asDictionary. }`.
-
-	^aMenu! !
-
-!DenotativeObjectDebuggerWindow methodsFor: 'menu building' stamp: 'HAW 3/26/2019 15:56:27'!
-receiverFieldListMenu
-
-	| aMenu |
-
-	aMenu := MenuMorph new defaultTarget: self.
-	
-	aMenu addItemsFromDictionaries: `{
-			{
-				#label 			-> 		'inspect (i)'.
-				#selector 		-> 		#inspectReceiverSelection.
-				#icon 			-> 		#inspectIcon
-			} asDictionary.
-			{
-				#label 			-> 		'browse (b)'.
-				#selector 		-> 		#browseReceiver.
-				#icon 			-> 		#editFindReplaceIcon
-			} asDictionary. }`.
-	
-	^ aMenu! !
-
-!DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 7/14/2017 20:19:56'!
-debug
-
-	model selection ifNotNil: [ :selection | | test |
-		test := DenotativeObjectTestCase for: selection compiledMethod.
-		test debug.
-		testResult removeFromDefectsAndAddToPassed: test.
-		model removeMessageFromBrowserKeepingLabel.
-		self setLabel: testResult printString ]! !
-
-!DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 7/14/2017 20:21:21'!
-runSuite
-
-	| suite |
-
-	suite := TestSuite new.
-	suite addTests: testResult tests.
-	self delete.
-	(DenotativeObjectProgessiveTestRunner for: suite) value.
-	! !
-
-!DenotativeObjectTestResultWindow class methodsFor: 'instance creation' stamp: 'HAW 7/14/2017 20:03:44'!
-methodReferencesOf: tests
-
-	^tests collect: [:aTest | aTest asMethodReference]! !
-
-!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'HAW 7/13/2017 19:10:04'!
-buildLowerPanes
-	| codeAndButtons |
-
-	codeAndButtons := LayoutMorph newColumn.
-	codeAndButtons addMorph: self buildMorphicCodePane proportionalHeight: 1.0.
-
-	^codeAndButtons
-	! !
-
-!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'HAW 9/10/2017 19:12:56'!
-messageListMenu
-
-	^MenuMorph new defaultTarget: self.
-
-! !
-
-!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 4/27/2023 18:18:30'!
-openMessageList: messageList label: labelString autoSelect: autoSelectString
-
-	| messageSet |
-
-	messageList do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
-	
-	messageSet _ DenotativeObjectMessageSet messageList: messageList.
-	messageSet autoHighlightString: autoSelectString allOccurrences: true.
-	
-	^self open: messageSet label: labelString ! !
-
-!DenotativeObjectInspectorWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:17:35'!
-browseMethodFull
-
-	model selectedClassOrMetaClass ifNotNil: [ :denotativeObject |
-		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]! !
-
-!DenotativeObjectInspectorWindow methodsFor: 'menu building' stamp: 'HAW 3/26/2019 15:48:58'!
-fieldListMenu
-
-	| aMenu |
-
-	aMenu _ MenuMorph new defaultTarget: self.
-
-	aMenu addItemsFromDictionaries: `{
-			{
-				#label 			-> 		'inspect (i)'.
-				#selector 		-> 		#inspectSelection.
-				#icon 			-> 		#inspectIcon
-			} asDictionary.
-			{
-				#label 			-> 		'browse (b)'.
-				#selector 		-> 		#browseMethodFull.
-				#icon 			-> 		#editFindReplaceIcon
-			} asDictionary. }`.
-			
-	^ aMenu! !
-
-!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:40:48'!
-buildContentsText
-
-	^super buildContentsText 
-		doNotShowBalloonHelp;
-		yourself ! !
-
-!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:38:01'!
-buildEvaluatorText
-
-	^super buildEvaluatorText 
-		doNotShowBalloonHelp;
-		yourself ! !
-
-!DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/5/2018 15:13:12'!
-pseudoVariables
-
-	^ (OrderedCollection withAll: super pseudoVariables) 
-		add: #parent;
-		asArray! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 10/9/2019 11:21:58'!
-debugger
-
-	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:12'!
-finderSearchBarResultsColor
-	"Answer the FinderSearchBar color."
-
-	^ `Color veryVeryLightGray`! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:20'!
-finderSearchBarSearchBoxColor
-	"Answer the FinderSearchBar results color."
-
-	^ self textPane.! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:26'!
-finderSearchBarToolbarButtonColor
-	"Answer the FinderSearchBar toolbar button color."
-
-	^ `Color veryLightGray`.! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:32'!
-finderSearchBarToolbarColor
-	"Answer the FinderSearchBar toolbar button color."
-
-	^ `Color veryVeryLightGray`! !
-
-!DenotativeObjectLightTheme methodsFor: 'private - shout mappings' stamp: 'HAW 10/9/2019 11:21:58'!
-pseudoVariables
-
-	^ (OrderedCollection withAll: super pseudoVariables) 
-		add: #parent;
-		asArray! !
-
-!DenotativeObjectLightTheme class methodsFor: 'icons by menu' stamp: 'HAW 10/9/2019 11:21:58'!
-addBasicIconsTo: aCollectorCollection
-
-	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
-! !
-
-!DenotativeObjectTheme methodsFor: 'tool colors' stamp: 'HAW 8/22/2017 11:42:56'!
-debugger
-
-	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
-
-!DenotativeObjectTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/27/2017 22:11:47'!
-pseudoVariables
-
-	^ (OrderedCollection withAll: super pseudoVariables) 
-		add: #parent;
-		asArray! !
-
-!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'HAW 4/12/2018 15:48:17'!
-addBasicIconsTo: aCollectorCollection
-
-	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
-! !
-
-!DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
-openTestResultWindow
-
-	DenotativeObjectTestResultWindow openFor: testResult
-	! !
-
-!DenotativeObjectTestCase methodsFor: 'converting' stamp: 'HAW 9/10/2017 19:02:44'!
-asMethodReference
-
-	^ (MethodReference class: denotativeObject class selector: realTestSelector)
-		recalculateStringVersionForDenotativeObject;
-		yourself.! !
-
-!DenotativeObjectTestCase methodsFor: 'running' stamp: 'HAW 8/22/2022 11:42:42'!
-debug
-
-	| debugger |
-	
-	debugger := nil.
-
-	[ self setUpResources.
-
-	[self runCase] ensure: [self tearDownResources]]
-		on: Error
-		do: [ :anError |
-				self inform: anError printString.
-				(debugger notNil and: [ debugger inStep ])
-					ifTrue: [ anError pass ]
-					ifFalse: [
-						| activeProcess toDebugContext  |
-
-						debugger notNil ifTrue: [ debugger triggerEvent: #closeViews ].
-
-						activeProcess := Processor activeProcess.
-						debugger := DenotativeObjectDebugger new.
-						toDebugContext := thisContext.
-						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
-						toDebugContext isNil 
-							ifTrue: [ anError pass ]
-							ifFalse: [
-								debugger process: activeProcess context: toDebugContext.
-								debugger openWindowLabel: anError printString usePreDebugWindow: false preDebugMessage: nil.
-								activeProcess suspend ]	
-						] ]
-! !
-
-!DenotativeObjectTestCase methodsFor: 'running' stamp: 'HAW 7/19/2017 21:51:34'!
-debugAsFailureIfCanNot: handler
-
-	self ifCanNotDebugDo: [ ^handler value].
-
-	self runCaseAsFailure! !
-
-!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:28'!
-denotativeObject
-
-	^ denotativeObject.! !
-
-!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:16'!
-methodForTest
-
-	^ denotativeObject class lookupSelector: realTestSelector.! !
-
-!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:25'!
-realTest: aCompiledMethod
-
-	denotativeObject := aCompiledMethod methodClass soleInstance.
-	realTestSelector := aCompiledMethod selector.! !
-
-!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 7/14/2017 20:18:46'!
-realTestSelector
-
-	^realTestSelector ! !
-
-!DenotativeObjectTestCase methodsFor: 'initialization' stamp: 'HAW 9/10/2017 19:02:11'!
-initializeFor: aClass test: aMethod
-
-	denotativeObject := aClass.
-	testMethod := aMethod.! !
-
-!DenotativeObjectTestCase methodsFor: 'testing' stamp: 'HAW 9/10/2017 19:02:31'!
-isSameAs: aTestCase
-
-	^ denotativeObject = aTestCase denotativeObject and: [ realTestSelector = aTestCase realTestSelector ].! !
-
-!DenotativeObjectTestCase methodsFor: 'private' stamp: 'HAW 8/22/2022 12:36:45'!
-openDebuggerOnFailingTestMethod
-
-	DenotativeObjectDebugger
-		openDebugging: [
-			[ self performTest ] ensure: [
-			self tearDown.
-			self tearDownResources.]]
-		to: self methodForTest
-		label: 'Debug failed test ', self printString.
-		
-	! !
-
-!DenotativeObjectTestCase methodsFor: 'exceptions' stamp: 'HAW 7/29/2017 19:30:14'!
-signalFailure: aString
-
-	failureString _ aString.
-	Error signal: aString 
-	! !
-
-!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/6/2018 09:53:25'!
-performRealTest
-
-	[ denotativeObject perform: realTestSelector ]
-		on: MessageNotUnderstood
-		do: [ :aMNU |
-			(aMNU receiver = denotativeObject and: [ self respondsTo: aMNU message selector ])
-				ifTrue: [ aMNU message sendTo: self ]
-				ifFalse: [ aMNU pass ]].! !
-
-!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/5/2018 09:46:38'!
-setUp
-
-	denotativeObject setUp! !
-
-!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/5/2018 09:49:42'!
-tearDown
-
-	denotativeObject tearDown! !
-
-!DenotativeObjectTestCase class methodsFor: 'instance creation' stamp: 'HAW 4/6/2018 09:53:14'!
-for: aCompiledMethod
-
-	| test |
-
-	test := super selector: #performRealTest.
-	test realTest: aCompiledMethod.
-
-	^test! !
-
-!DenotativeObjectRenameMethodApplierTest methodsFor: 'tests' stamp: 'HAW 8/15/2018 11:59:44'!
-test01ScopeOptionsAreTheSame
-
-	self
-		assert: DenotativeObjectRenameSelectorApplier new scopeOptionLabels size
-		equals: DenotativeObjectRenameSelectorApplier superclass new scopeOptionLabels size.! !
-
-!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 2/21/2019 16:36:56'!
-test01IsDenotativeObjectNamedReturnsTrueForADenotativeObject
-
-	self assert: (Smalltalk isDenotativeObjectNamed: Assert name) ! !
-
-!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 2/21/2019 16:37:14'!
-test02IsDenotativeObjectNamedReturnsFalseForANoDenotativeObject
-
-	self deny: (Smalltalk isDenotativeObjectNamed: Object name) ! !
-
-!ZeroDivideExtentionsTest methodsFor: 'tests' stamp: 'HAW 9/29/2020 18:03:10'!
-testMessageTextWithFraction
-
-	self 
-		should: [Fraction new setNumerator: 20 denominator: 0]
-		raise: ZeroDivide 
-		withMessageText: (ZeroDivide canNotDivideByZeroErrorDescription: 20)! !
-
-!ZeroDivideExtentionsTest methodsFor: 'tests' stamp: 'HAW 9/29/2020 18:02:52'!
-testMessageTextWithNumbers
-
-	self 
-		should: [10/0]
-		raise: ZeroDivide 
-		withMessageText: (ZeroDivide canNotDivideByZeroErrorDescription: 10)! !
-
-!DenotativeObjectNameCompleter methodsFor: 'entries' stamp: 'HAW 2/21/2019 16:58:47'!
-computeEntries
-
-	super computeEntries.
-	entries := entries select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ].! !
-
-!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 3/21/2019 07:16:56'!
-computeIdentifierEntries
-
-	| entriesSet addBlock instVarToExclude |
-
-	canShowSelectorDocumentation _ false.
-	entriesSet := Set new.
-	addBlock := [ :identifier :kindOfIdentifierTitle| (identifier beginsWith: prefix) ifTrue: [ entriesSet add: identifier]].
-	instVarToExclude := DenotativeObject class allInstVarNames asSet.
-
-	parser 
-		blockArgNamesDo: addBlock;
-		blockTempNamesDo: addBlock;
-		methodArgNamesDo: addBlock;
-		methodTempNamesDo: addBlock;
-		instVarNamesDo: [ :identifier :kindOfIdentifierTitle | (instVarToExclude includes: identifier) ifFalse: [ addBlock value: identifier value: kindOfIdentifierTitle ]].
-	parser reservedNames do: [ :identifier | identifier = 'super' ifFalse: [ addBlock value: identifier value: '' ]].	
-	
-	parser namesBeginningWith: prefix do: [ :identifier :kindOfIdentifierTitle | 
-		"I want to show global objects as meter, second, etc. and denotative objects only - Hernan"
-		((Smalltalk classNamed: identifier) ifNil: [ true ] ifNotNil: [ :aClass | aClass is: #DenotativeObject]) ifTrue: [ entriesSet add: identifier ]].
-	
-	entries := entriesSet asArray sort! !
-
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:44:22'!
-computeMessageEntriesForClass: aClass  
-
-	(aClass isMeta and: [ aClass soleInstance is: #DenotativeObject])
-		ifTrue: [ self computeMessageEntriesForDenotativeObject: aClass ]
-		ifFalse: [ super computeMessageEntriesForClass: aClass ]
-		! !
-
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:49:36'!
-computeMessageEntriesForDenotativeObject: aDenotativeObject 
-
-	self isPreviousMessageSendBinary
-		ifTrue: [ self 
-			computeMessageEntriesWithBinaryMessageForClass: aDenotativeObject 
-			collectingWith: (DenotativeObjectAutoCompleterSelectorsCollector for: prefix) 
-			asRoot: DenotativeObject class superclass ]
-		ifFalse: [ self computeMessageEntriesWithoutBinaryMessageForDenotativeObject: aDenotativeObject ].
-		
-	self ifEmptyEntriesShowAllPrefixedSelectors
-
-	
-
-! !
-
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:44:04'!
-computeMessageEntriesWithoutBinaryMessageForDenotativeObject: aDenotativeObject
-
-	selectorsClasses := Array with: aDenotativeObject.
-	
-	entries := (DenotativeObjectAutoCompleterSelectorsCollector for: prefix) 
-		addSelectorsOf: aDenotativeObject upTo: (DenotativeObject class superclass);
-		entriesToShow.
-	
-! !
-
-!DenotativeObjectCompleter class methodsFor: 'instance creation' stamp: 'HAW 2/19/2019 15:19:16'!
-withModel: aStringHolder
-
-	^self new setModel: aStringHolder! !
-
-!DenotativeObjectAutoCompleterSelectorsCollector methodsFor: 'collecting - private' stamp: 'HAW 2/19/2019 15:46:24'!
-addCategory: aCategory of: classOrganization
-
-	(aCategory includesSubString: 'private') ifFalse: [ super addCategory: aCategory of: classOrganization ]! !
-
-!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:21'!
-errorMessageForInvalidInstanceVariable: aName
-
-	^ '''' , aName , ''' is not a valid collaborator name'.! !
-
-!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:26'!
-errorMessageForNewInstanceVariable: aName alreadyDefinedInAll: classes
-
-	| denotativeObjects |
-	
-	denotativeObjects := classes collect: [:aClass | aClass theNonMetaClass ].
-	
-	^ 'Collaborator ''' , aName , ''' is already defined in ' , denotativeObjects asCommaStringAnd.! !
-
-!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:30'!
-newVariableCanNotBeEmptyErrorMessage
-	
-	^'New collaborator name can not be empty'! !
-
-!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 3/7/2019 23:09:55'!
-errorMessageForNewVariable: newVariable willBeHiddenAtAll: methods
- 
-	^String streamContents: [ :stream |
-		stream 
-			nextPutAll: newVariable;
-			nextPutAll: ' can not be named as temporary/collaborator in '.
-		methods asCommaSeparated: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] on: stream ]! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
-addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
-	
-	"Only do it on the class side - Hernan"
-	self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor theMetaClass.
-
-! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/5/2019 15:39:54'!
-addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inHierarchyOf: aClass doingPerClass: aBlock
-
-	| highestClassImplementingOldSelector |
-	
-	highestClassImplementingOldSelector := aClass highestClassImplementing: anOldSelector ifNone: [ aClass ].
-	highestClassImplementingOldSelector theNonMetaClass withAllSubclassesDo: [ :aPotentialClassToRefactor |
-		(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
-			self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor.
-			aBlock value: aPotentialClassToRefactor ]]
-	! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:15:51'!
-addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inSystem: aSystem
-
-	"Denotative objects are always subclasses of DenotativeObject, so I restrict the search to those clases - Hernan"
-	DenotativeObject class allSubclassesDo: [ :aPotentialClassToRefactor | 
-		self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ].
-! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:20:04'!
-addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor
-	
-	"This is just to be sure that no denotative object is included to rename - Hernan"
-	^(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
-		super addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ]! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 1/7/2019 10:51:35'!
-errorMessageForInvalidImplementors: aCollectionOfInvalidImplementors
-
-	^String streamContents: [ :stream |
-		stream 
-			nextPutAll: (aCollectionOfInvalidImplementors size = 1 ifTrue: [ 'This method' ] ifFalse: [ 'These methods']);
-		 	nextPutAll: ' do not have same the same selector to rename: '.
-		aCollectionOfInvalidImplementors asCommaSeparated: [:anImplementor | anImplementor printTheNonMetaClassAndSelectorOn: stream ] on: stream ] ! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 1/7/2019 10:51:35'!
-errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
-
-	^String streamContents: [ :stream |
-		stream 
-			nextPutAll: 'Message #';
-			nextPutAll: anOldSelector;
-			nextPutAll: ' is not send by: '.
-		aCollectionOfInvalidSenders asCommaSeparated: [:aSender | aSender printTheNonMetaClassAndSelectorOn: stream ] on: stream ] ! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 8/31/2017 15:28:03'!
-errorMessageForNewSelector: aNewSelector implementedInAll: classesImplementingNewSelector
-
-	| denotativeObjectImplementingNewSelector |
-	
-	denotativeObjectImplementingNewSelector := classesImplementingNewSelector collect: [ :aClass | aClass theNonMetaClass ].
-	
-	^'Can not rename because #', aNewSelector, ' is implemented in: ', denotativeObjectImplementingNewSelector asCommaStringAnd ! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 09:16:25'!
-warnImplementionOf: aNewSelector in: aClass willOverrideImplementationIn: aSuperclass
-	
-	(DenotativeObject class includesBehavior: aSuperclass)
-		ifTrue: [ self refactoringWarning: (self warningMessageForRedefinitionOfSystemMessageOf: aNewSelector) ]
-		ifFalse: [ 
-			"I remove the 'class' string from the object name - Hernan"
-			self refactoringWarning: (self warningMessageForImplementationOf: aNewSelector in: aClass theNonMetaClass willOverrideImplementationIn: aSuperclass theNonMetaClass) ].! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 09:20:46'!
-warningMessageForRedefinitionOfSystemMessageOf: aNewSelector
-
-	^aNewSelector, ' is defined in the core system. Overriding it can cause unexpected behavior.'
-	! !
-
-!DenotativeObjectRenameSelector class methodsFor: 'as yet unclassified' stamp: 'HAW 5/2/2020 00:02:39'!
-initialize
-
-	self addAllowedToRefactorClassCompiler: DenotativeObjectCompiler ! !
-
-!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
-errorMessageForInstanceVariable: aName notDefinedIn: aClass
-
-	^ 'Collaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
-
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:23:18'!
-classToRenameCanNotBeMetaclassErrorMessage
-	
-	^'Invalid Object to rename'! !
-
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
-newNameEqualsOldNameErrorMessage
-	
-	^'New object name equals old one'! !
-
-!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 5/10/2019 12:25:43'!
-newClassPreconditionClass
-
-	^NewDenotativeObjectPrecondition! !
-
-!DenotativeObjectSafelyRemove class methodsFor: 'warnings' stamp: 'HAW 8/1/2018 18:26:06'!
-warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
-
-	^String streamContents: [ :stream |
-		stream nextPutAll: aClassToSafelyRemove name asString.
-		allSubclasses size = 1
-			ifTrue: [ stream nextPutAll: ' has a child' ]
-			ifFalse: [ stream 
-					nextPutAll: ' has ';
-					print:  allSubclasses size;
-					nextPutAll: ' children' ].
-		stream nextPutAll: ' that will be removed'].
-! !
-
-!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:26:52'!
-createRefactoring
-
-	^ DenotativeObjectAddCollaborator named: newInstanceVariable to: classToRefactor.! !
-
-!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:22:34'!
-newVariableNameLabel
-	
-	^'Enter new collaborator name:'! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:24:09'!
-closeBrowser
-	
-	! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 15:44:08'!
-messageSetWindowClass
-		
-	^DenotativeObjectMessageSetWindow ! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/18/2018 16:56:23'!
-refactoringClass
-
-	^DenotativeObjectRenameSelector ! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 3/12/2019 22:26:21'!
-askForImplementosAndSenders
-
-	self 
-		askScope;
-		initializeImplementorsAndSenders;
-		calculateImplementorsAndSenders;
-		createAndApplyRefactoring! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/31/2017 15:39:08'!
-scopeOptionLabels
-
-	"They have to be the same number and in the same order as super. If not, a different way to redefine the scope must be implemented
-	for denotative objects - Hernan"
-	
-	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
-	! !
-
-!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:29:01'!
-createRefactoring
-
-	^ DenotativeObjectRemoveCollaborator named: variableToRemove from: classToRefactor.! !
-
-!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:09'!
-selectVariableLabel
-	
-	^'Select collaborator to remove'! !
-
-!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 4/30/2019 17:14:00'!
-browseReferencesOn: aCanNotRefactorDueToReferencesError
-
-	DenotativeObjectMessageSetWindow
-		openMessageList: aCanNotRefactorDueToReferencesError references
-		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
-		autoSelect: aCanNotRefactorDueToReferencesError referencee  
-! !
-
-!DenotativeObjectRenameApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/8/2017 19:49:48'!
-openChangedMethods
-
-	changes ifNotEmpty: [ 
-		DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newClassName ]
-! !
-
-!DenotativeObjectRenameApplier methodsFor: 'refactoring - creation' stamp: 'HAW 4/4/2018 20:25:33'!
-createRefactoring
-
-	^ DenotativeObjectRename from: classToRename to: newClassName in: Smalltalk undeclared: Undeclared.! !
-
-!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/30/2017 17:29:44'!
-openChangedMethodsWhenChangesNotEmpty 
-
-	DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newInstanceVariable! !
-
-!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:14'!
-selectVariableLabel
-	
-	^'Select collaborator to rename'! !
-
-!DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 4/30/2019 17:12:36'!
-browseReferencesOn: aCanNotRefactorDueToReferencesError
-
-	DenotativeObjectMessageSetWindow
-		openMessageList: aCanNotRefactorDueToReferencesError references
-		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
-		autoSelect: aCanNotRefactorDueToReferencesError referencee name asString
-! !
-
-!DenotativeObjectSafelyRemoveApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/1/2018 18:12:15'!
-createRefactoring
-		
-	^DenotativeObjectSafelyRemove of: classToRemove ! !
-
-!NewDenotativeObjectPrecondition methodsFor: 'evaluating - private' stamp: 'HAW 5/10/2019 12:32:56'!
-assertNewClassNameStartsWithRightLetter
-
-	newClassName first isLetter ifFalse: [ self signalNewNameMustStartWithRightLetter ]! !
-
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 5/10/2019 12:45:35'!
-errorMessageForAlreadyExistClassNamed: anObjectName
-
-	^'Object named ', anObjectName, ' already exist in the system'! !
-
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:48:06'!
-newClassNameCanNotBeEmptyErrorMessage
-	
-	^'New object name can not be empty'! !
-
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:49:09'!
-newClassNameCanNotHaveSpacesErrorMessage
-	
-	^'New object name can not have spaces'! !
-
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:49:32'!
-newNameMustBeSymbolErrorMessage
-	
-	^'New object name must be a symbol'! !
-
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 5/10/2019 12:32:07'!
-newNameMustStartWithRightLetterErrorMessage
-
-	^'New object name must start with a letter'! !
 
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:28:34'!
 fileOutInitializerOn: aStream
@@ -4751,26 +1816,2546 @@ from: aContext
 
 	^self delegate: aContext selector to: aContext receiver with: aContext arguments startingLookupOnParentOf: aContext methodClass! !
 
-!DelegatorBuilder methodsFor: 'building' stamp: 'HAW 9/10/2017 18:14:21'!
-doesNotUnderstand: aMessage
+!DenotativeObjectTheme methodsFor: 'tool colors' stamp: 'HAW 8/22/2017 11:42:56'!
+debugger
 
-	^(Delegator delegate: aMessage selector to: receiver with: aMessage arguments startingLookupOnParentOf: lookupBase) value! !
+	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
 
-!DelegatorBuilder methodsFor: 'initialize' stamp: 'HAW 9/10/2017 18:16:13'!
-initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
+!DenotativeObjectTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/27/2017 22:11:47'!
+pseudoVariables
 
-	receiver := aReceiver.
-	lookupBase := aDenotativeObjectBase ! !
+	^ (OrderedCollection withAll: super pseudoVariables) 
+		add: #parent;
+		asArray! !
 
-!DelegatorBuilder methodsFor: 'inspecting' stamp: 'HAW 9/10/2017 18:23:30'!
-inspectorClass
+!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'HAW 4/12/2018 15:48:17'!
+addBasicIconsTo: aCollectorCollection
 
-	^Inspector ! !
+	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
+! !
 
-!DelegatorBuilder class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:15:49'!
-for: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
+!DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/5/2018 15:13:12'!
+pseudoVariables
 
-	^self new initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase! !
+	^ (OrderedCollection withAll: super pseudoVariables) 
+		add: #parent;
+		asArray! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 10/9/2019 11:21:58'!
+debugger
+
+	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:12'!
+finderSearchBarResultsColor
+	"Answer the FinderSearchBar color."
+
+	^ `Color veryVeryLightGray`! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:20'!
+finderSearchBarSearchBoxColor
+	"Answer the FinderSearchBar results color."
+
+	^ self textPane.! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:26'!
+finderSearchBarToolbarButtonColor
+	"Answer the FinderSearchBar toolbar button color."
+
+	^ `Color veryLightGray`.! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:32'!
+finderSearchBarToolbarColor
+	"Answer the FinderSearchBar toolbar button color."
+
+	^ `Color veryVeryLightGray`! !
+
+!DenotativeObjectLightTheme methodsFor: 'private - shout mappings' stamp: 'HAW 10/9/2019 11:21:58'!
+pseudoVariables
+
+	^ (OrderedCollection withAll: super pseudoVariables) 
+		add: #parent;
+		asArray! !
+
+!DenotativeObjectLightTheme class methodsFor: 'icons by menu' stamp: 'HAW 10/9/2019 11:21:58'!
+addBasicIconsTo: aCollectorCollection
+
+	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
+! !
+
+!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 1/7/2019 16:23:10'!
+doesClassNameStartWithUppercase: aClassName
+
+	"To allow denotative objects to start with lowercase - Hernan"
+	^true! !
+
+!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:10:50'!
+autoCompleterClass
+	
+	^DenotativeObjectCompleter ! !
+
+!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:11:31'!
+editorClass
+
+	^DenotativeObjectWorkspaceEditor ! !
+
+!DenotativeObjectBrowser methodsFor: 'accessing' stamp: 'HAW 4/16/2024 12:41:35'!
+acceptedStringOrText
+	"Depending on the current selection, different information is retrieved.
+	Answer a string description of that information. This information is the
+	method of the currently selected class and message."
+
+	| comment theClass latestCompiledMethod |
+	latestCompiledMethod := currentCompiledMethod.
+	currentCompiledMethod := nil.
+
+	editSelection == #none ifTrue: [^ ''].
+	editSelection == #editSystemCategories
+		ifTrue: [^ systemOrganizer printString].
+	editSelection == #newClass
+		ifTrue: [
+			theClass := self selectedClass.
+			^DenotativeObject template: selectedSystemCategory].
+
+	editSelection == #editClass
+		ifTrue: [
+			^ self classDefinitionText ].
+	editSelection == #editComment
+		ifTrue: [
+			(theClass := self selectedClass) ifNil: [^ ''].
+			comment := theClass comment.
+			currentCompiledMethod := theClass organization commentRemoteStr.
+			^ comment size = 0
+				ifTrue: ['This class has not yet been commented.']
+				ifFalse: [comment]].
+	editSelection == #editMessageCategories
+		ifTrue: [^ self classOrMetaClassOrganizer printString].
+	editSelection == #newMessage
+		ifTrue: [
+			^ (theClass := self selectedClassOrMetaClass)
+				ifNil: ['']
+				ifNotNil: [theClass sourceCodeTemplate]].
+	editSelection == #editMessage
+		ifTrue: [
+			self showingByteCodes ifTrue: [^ self selectedBytecodes].
+			currentCompiledMethod := latestCompiledMethod.
+			^ self selectedMessage].
+
+	self error: 'Browser internal error: unknown edit selection.'! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:25:37'!
+addChildDenotativeObject
+	
+	self withSelectedCategoryNameDo: [ :systemCategoryName |
+		self withObjectNameDo: [ :objectName |
+			self withParentNameDo: [ :parentName |
+				self addDenotativeObjectNamed: objectName asChildOf: parentName inCategory:  systemCategoryName ]]]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:55'!
+addChildDenotativeObjectInCategory
+	
+	self withObjectNameDo: [ :objectName |
+		self withParentNameDo: [ :parentName |
+			self withCategoryNameDo: [ :categoryName |
+				self addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName ]]]
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:24:11'!
+addDenotativeObject
+	
+	self withSelectedCategoryNameDo: [ :systemCategoryName | 
+		self withObjectNameDo: [ :objectName |
+			self addDenotativeObjectNamed: objectName inCategory:  systemCategoryName ]]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:13:46'!
+addDenotativeObjectInCategory
+	
+	self withObjectNameDo: [ :objectName |
+		self withCategoryNameDo: [ :categoryName |
+			self addDenotativeObjectNamed: objectName inCategory: categoryName ]]
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/7/2017 15:30:59'!
+addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName
+	
+	| definitionString collaborators |
+
+	collaborators := Array 
+		with: '#', objectName 
+		with: parentName
+		with: ''''''
+		with: '''', categoryName, ''''.
+	
+	definitionString := String streamContents: [ :stream |
+		stream  nextPutAll:  ObjectBuilder name asString.		
+		#create:asChildOf:collaboratorNames:in: keywords withIndexDo: [ :keyword :index |
+			stream
+				space;
+				nextPutAll: keyword;
+				space;
+				nextPutAll: (collaborators at: index) ]].
+	
+	self defineClass: definitionString  notifying: nil 
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:13:21'!
+addDenotativeObjectNamed: objectName inCategory: categoryName
+	
+	^self addDenotativeObjectNamed: objectName asChildOf: DenotativeObject name asString inCategory: categoryName ! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 1/27/2022 17:16:21'!
+classDefinitionText
+	"return the text to display for the definition of the currently selected class"
+	| theClass |
+	
+	^(theClass := self selectedClassOrMetaClass theMetaClass) ifNil: [''] ifNotNil: [DenotativeObject definitionOf: theClass]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:05:55'!
+collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning
+	
+	^String streamContents: [:stream |
+		stream
+			nextPutAll: 'The collaborator ';
+			nextPutAll: anUndeclareVariableWarning variableName;
+			nextPutAll: ' is reference in ';
+			nextPutAll: anUndeclareVariableWarning classImplementingSelector theNonMetaClass name;
+			nextPutAll: '>>';
+			nextPutAll: anUndeclareVariableWarning selector;
+			newLine;
+			nextPutAll: 'Do you want to continue?' ]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 7/22/2017 13:32:34'!
+copyClass
+
+	| originalClass originalName copysName  |
+
+	selectedClassName ifNil: [^ self].
+	originalClass := self selectedClass.
+	originalName := originalClass name.
+	copysName _ self request: 'Please type new object name' initialAnswer: originalName.
+	copysName = '' ifTrue: [^ self].  " Cancel returns '' "
+	
+	[ originalClass cloneNamed: copysName.
+	self classListIndex: 0.
+	self changed: #classList ]
+		on: Error
+		do: [ :anError | self inform: anError printString ].
+			
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/23/2020 19:08:23'!
+createClass
+
+	self selectedClass ifNotNil: [ :aDenotativeObject | | superclass className categoryName |	
+		className := ClassNameRequestMorph request: 'Class for ', aDenotativeObject name orCancel: [ ^self ].
+		(Smalltalk classNamed: className) ifNotNil: [
+			(PopUpMenu 
+				confirm: className, ' already exist. Do you want to recreate?' 
+				trueChoice: 'Recreate it' 
+				falseChoice: 'Do not continue') ifFalse: [ ^self ]].			
+		categoryName := StringRequestMorph 
+			request: 'Enter category name' 
+			initialAnswer: aDenotativeObject category 
+			orCancel: [ ^self ].
+		
+		[ superclass := self createSuperclassOf: aDenotativeObject onCancel: [ ^self ].
+		aDenotativeObject createClassNamed: className asSymbol subclassOf: superclass category: categoryName ]
+			on: Error
+			do: [ :anError | self inform: anError messageText ]]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/23/2020 19:07:23'!
+createSuperclassOf: aDenotativeObject onCancel: aBlock
+
+	| denotativeObjectParent categoryName superclass superclassName |
+	
+	denotativeObjectParent := aDenotativeObject parentIfNone: [ ^Object ].
+	
+	superclassName := ClassNameRequestMorph request: 'Class for ', denotativeObjectParent name orCancel: [ ^aBlock value ].
+	(Smalltalk classNamed: superclassName) ifNotNil: [ :alreadyExistingSuperclass |
+		(PopUpMenu 
+			confirm: superclassName, ' already exist. Do you want to recreate or reuse it?' 
+			trueChoice: 'Recreate it' 
+			falseChoice: 'Reuse it') ifFalse: [ ^alreadyExistingSuperclass ]].
+		
+	categoryName := StringRequestMorph 
+		request: 'Enter category name' 
+		initialAnswer: denotativeObjectParent category 
+		orCancel: [ ^aBlock value ].	
+		
+	superclass := self createSuperclassOf: denotativeObjectParent onCancel: aBlock.
+	
+	^denotativeObjectParent createClassNamed: superclassName asSymbol subclassOf: superclass category: categoryName! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:02:36'!
+defineClass: defString notifying: aRequestor
+
+	^[self defineClassWithoutHandlingWarning: defString notifying: aRequestor]		
+		on: Warning
+		do: [ :aWarning |
+			(self confirm: aWarning printString) 
+				ifTrue: [ aWarning resume ]
+				ifFalse: [ aWarning return: false ]].! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:54'!
+defineClassWihoutHandlingErrors: defString notifying: aRequestor 
+		
+ 	| class classCreated |
+	
+	self validateDefinitionString: defString.
+	class := Compiler evaluate: defString notifying: aRequestor logged: true.
+	
+	classCreated := class isKindOf: Behavior.
+	classCreated ifTrue: [ self newClassCreated: class ].
+	
+	^classCreated! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 5/10/2019 12:34:39'!
+defineClassWithoutHandlingParseNotification: defString notifying: aRequestor 
+		
+	^[self defineClassWihoutHandlingErrors: defString notifying: aRequestor ]
+		on: Error - MessageNotUnderstood 
+		do: [ :anError | 
+			self filterErrorMessagesWithClassStringFrom: anError.
+			self inform: anError messageText.
+			anError return: false ]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 15:57:26'!
+defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor 
+			
+	^[self defineClassWithoutHandlingParseNotification: defString notifying: aRequestor ]
+		on: ParserNotification 
+		do: [ :parserNotification |
+			self inform: self invalidDefinitionErrorDescription.
+			parserNotification return: false ]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:04:07'!
+defineClassWithoutHandlingWarning: defString notifying: aRequestor
+	
+	^[self defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor ]
+		on: UndeclaredVariableWarning 
+		do: [ :anUndeclareVariableWarning |
+			(self confirm: (self collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning)) 
+				ifTrue: [ anUndeclareVariableWarning resume ]
+				ifFalse: [ anUndeclareVariableWarning return: false ]]! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:06:59'!
+filterErrorMessagesWithClassStringFrom: anError
+		
+	anError messageText = 'Class names must be capitalized' ifTrue: [ ^anError messageText: 'Object names must be capitalized' ].
+	anError messageText: (anError messageText copyReplaceAll: ' class' with: '').
+	anError messageText: (anError messageText copyReplaceAll: ' inherits from ' with: ' is child of ').
+	anError messageText: (anError messageText copyReplaceAll: ' subclass ' with: ' child ').! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:32'!
+newClassCreated: aClass
+	
+	self 
+		changed: #systemCategoryList;
+		changed: #classList;
+		changed: #clearUserEdits;
+		setClass: aClass selector: nil.
+! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/1/2018 17:56:48'!
+removeClass
+	
+	^self safelyRemoveClass ! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 12/4/2019 12:03:06'!
+renameClass
+
+	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
+		(DenotativeObjectRenameApplier for: aBehavior theNonMetaClass) value ].! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/14/2018 13:49:17'!
+safelyRemoveClass
+
+	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
+		(DenotativeObjectSafelyRemoveApplier on: self of: aBehavior theNonMetaClass) value ].
+	
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:10'!
+withObjectNameDo: aBlock
+	
+	^self withObjectNameDo: aBlock label: 'Enter object name' 
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/29/2020 18:08:57'!
+withObjectNameDo: aBlock label: aLabel
+	
+	DenotativeObjectNameRequestMorph 
+		request: aLabel 
+		initialAnswer: '' 
+		do: [ :objectName | | trimmedObjectName |
+			trimmedObjectName := objectName withBlanksTrimmed.
+			"This is just to provide a better error message - Hernan"
+			[ ObjectBuilder assertIsValidName: trimmedObjectName.
+			aBlock value: trimmedObjectName ]
+		 		on: Error 
+				do: [:anError | ^self inform: anError messageText ]].! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:23'!
+withParentNameDo: aBlock
+	
+	^self withObjectNameDo: aBlock label: 'Enter parent name' 
+! !
+
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:24:57'!
+withSelectedCategoryNameDo: aBlock
+
+	^self selectedSystemCategoryName 
+		ifNil: [ self inform: 'An object category must be selected' ]
+		ifNotNil: aBlock 
+! !
+
+!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 2/21/2019 16:37:48'!
+defaultClassList
+
+	^super defaultClassList select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ] ! !
+
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:23:05'!
+debugMethodTest
+
+	^self debugDenotativeObjectMethodTest! !
+
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:26:31'!
+runClassTests
+
+	^self runDenotativeObjectTests! !
+
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:28:28'!
+runMessageCategoryTests
+
+	^self runDenotativeObjectMessageCategoryTests! !
+
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:29:35'!
+runMethodTest
+
+	^self runDenotativeObjectMethodTest! !
+
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:31:02'!
+runSystemCategoryTests
+
+	^self runDenotativeObjectSystemCategoryTests! !
+
+!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 4/11/2018 15:30:27'!
+defaultBrowserTitle
+	^ 'DenotativeObject Browser'! !
+
+!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 7/9/2017 12:18:37'!
+systemOrganizer: aSystemOrganizer
+	"Initialize the receiver as a perspective on the system organizer,
+	aSystemOrganizer. Typically there is only one--the system variable
+	SystemOrganization."
+
+	systemOrganizer := aSystemOrganizer.
+	selectedSystemCategory := nil.
+	selectedClassName := nil.
+	selectedMessageCategory := nil.
+	selectedMessage := nil.
+	metaClassIndicated := true.
+	self setClassOrganizer.
+	self editSelection: #none.! !
+
+!DenotativeObjectBrowser methodsFor: 'message functions' stamp: 'HAW 4/8/2024 16:49:25'!
+defineMessageFrom: aString notifying: aRequestor
+
+	| selectedMessageName selector category oldMessageList |
+
+	selectedMessageName := self selectedMessageName.
+	oldMessageList := self messageList.
+	selector := self selectedClassOrMetaClass parserClass selectorFrom: aString.
+	(self metaClassIndicated
+		and: [ selector ~= #printOn: 
+		and: [(self selectedClassOrMetaClass includesSelector: selector) not
+		and: [Metaclass isScarySelector: selector]]])
+		ifTrue: ["A frist-time definition overlaps the protocol of Metaclasses"
+				(self confirm: (selector bold, ' is used in the existing system.
+Overriding it could cause serious problems.
+Is this really what you want to do?'))
+				ifFalse: [^nil]].
+			
+	[ selector := self selectedClassOrMetaClass
+				compile: aString
+				classified: (category := self selectedMessageCategoryName)
+				notifying: aRequestor ]
+		on: UndeclaredVariable 
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
+	
+	selector
+		ifNil: [^ nil].
+	selector ~~ selectedMessageName
+		ifTrue: [
+			category = ClassOrganizer defaultMethodCategory
+				ifTrue: [self changed: #classSelectionChanged.
+						self changed: #classList.
+						self messageCategoryListIndex: 1].
+			self setClassOrganizer.  "In case organization not cached"
+			(oldMessageList includes: selector)
+				ifFalse: [self changed: #messageList].
+			self messageListIndex: (self messageList indexOf: selector)].
+	^ selector
+	
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 15:32:07'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
+
+!DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 7/14/2017 20:46:27'!
+editorClassFor: textGetter
+
+	^DenotativeObjectSmalltalkEditor! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 9/23/2020 19:07:40'!
+fileInSystemCategory
+
+	[| fileName |
+
+	fileName := StringRequestMorph request: 'Enter file name' orCancel: [ ^self ].
+	ChangeSet fileIn: fileName asFileEntry ]
+		on: FileDoesNotExistException
+		do: [:anError |
+			(PopUpMenu confirm: 'File ', anError messageText, ' does not exist. Try again?') ifTrue: [ anError retry ] ifFalse: [ anError return ]]! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 7/22/2017 11:45:50'!
+firstExperimentCategoryName
+	
+	^'First Experiment'! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'RNG 5/27/2018 01:03:53'!
+potentialClassNames
+
+	^ DenotativeObject allSubclasses collect: [ :class | class name ]! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/1/2017 09:31:11'!
+removeSystemCategory
+
+	selectedSystemCategory ifNil: [^ self].
+	(self classList isEmpty or: [ self confirm: 'Are you sure you want to
+remove this system category 
+and all its objects?'])
+		ifTrue: [
+			systemOrganizer removeSystemCategory: selectedSystemCategory.
+			self systemCategoryListIndex: 0.
+			self changed: #systemCategoryList ]! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 2/1/2022 18:11:15'!
+renameSystemCategory
+	
+	"I have to use the old version, the one before hierarchy list was used for categories - Hernan"
+	
+	| oldName newName |
+
+	selectedSystemCategory ifNil: [ ^ self].  
+	oldName _ selectedSystemCategory.
+	newName _ self
+		request: 'New category name?'
+		initialAnswer: oldName
+		verifying: [:aString| aString notEmpty and: [aString ~= oldName]]
+		do: [:aString|
+			newName _ aString asSymbol.
+			systemOrganizer
+				renameCategory: oldName
+				to: newName.
+			"self systemCategoryListIndex: oldIndex."
+			self changed: #systemCategoryList.
+			self systemCategoryListIndex: (self systemCategoryList indexOf: newName)]! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 18:05:22'!
+selectCategoryForClass: theClass
+
+	self systemCategoryListIndex: (self systemCategoryList indexOf: theClass category)
+! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 18:00:48'!
+selectedSystemCategoryName
+	"Answer the name of the selected system category or nil."
+
+	^selectedSystemCategory! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 17:23:32'!
+systemCategoryListIndex
+	"Answer the index of the selected class category."
+
+	systemOrganizer ifNil: [ ^0 ].
+	selectedSystemCategory ifNil: [ ^0 ].
+	^self systemCategoryList indexOf: selectedSystemCategory! !
+
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/29/2020 18:18:18'!
+withCategoryNameDo: aBlock
+	
+	self 
+		request: 'Enter category name' 
+		do: [ :categoryName | | trimmedCategoryName |
+			trimmedCategoryName := categoryName withBlanksTrimmed.
+			trimmedCategoryName isEmpty 
+				ifTrue: [ self inform: 'Category name can not be empty' ]
+				ifFalse: [ aBlock value: categoryName ]]! !
+
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:35:22'!
+invalidDefinitionErrorDescription
+
+	^'Invalid definition'! !
+
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/6/2017 11:09:34'!
+invalidObjectErrorDescription: name
+
+	^name, ' is not a denotative object'! !
+
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 5/10/2019 11:45:38'!
+objectNameMustBeSymbolErrorDescription
+	
+	^'Object name must be symbol. It has to start wiht #'! !
+
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 9/13/2017 15:11:23'!
+validateDefinitionString: defString
+
+	| defTokens |
+	
+	defTokens := defString findTokens: Character separators.
+	defTokens isEmpty ifTrue: [ self error: self invalidDefinitionErrorDescription ].
+	
+	defTokens first = ObjectBuilder name asString 
+		ifTrue: [ self validateObjectCreation: defTokens ]
+		ifFalse: [ self validateObjectRedefinition: defTokens ]! !
+
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 5/10/2019 12:36:46'!
+validateObjectCreation: defTokens 
+
+	| denotativeObjectName nameIndex |
+	
+	nameIndex := defTokens findFirst: [ :token | token beginsWith: '#' ].
+	nameIndex = 0 ifTrue: [ self error: self objectNameMustBeSymbolErrorDescription ].
+	
+	denotativeObjectName := (defTokens at: nameIndex) copyWithoutAll: '#()'.
+	(NewDenotativeObjectPrecondition for: denotativeObjectName asSymbol in: Smalltalk undeclared: Undeclared) value.
+! !
+
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 2/21/2019 16:41:15'!
+validateObjectRedefinition: defTokens 
+
+	(Smalltalk isDenotativeObjectNamed: defTokens first asSymbol) ifFalse: [ self error: (self invalidObjectErrorDescription: defTokens first)]
+
+		! !
+
+!DenotativeObjectBrowser methodsFor: 'metaclass' stamp: 'HAW 7/9/2017 12:17:35'!
+metaClassIndicated: trueOrFalse
+	"Indicate whether browsing instance or class messages."
+
+	^super metaClassIndicated: true! !
+
+!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 1/27/2022 18:03:19'!
+setSelectedSystemCategory: aString
+	
+	super setSelectedSystemCategory: aString.
+	
+	self changed: #systemCategoryListIndex.	"update my selection"
+	! !
+
+!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 7/22/2017 11:45:30'!
+systemCategoryList
+
+	| denotativeObjecCategories |
+	
+	denotativeObjecCategories := (systemOrganizer categories select: [:aCategory | 
+		(systemOrganizer classesAt: aCategory) anySatisfy: [ :aClass | aClass is: #DenotativeObject ]]) asSortedCollection.
+	
+	^denotativeObjecCategories isEmpty ifTrue: [ {self firstExperimentCategoryName} ] ifFalse: [ denotativeObjecCategories ]
+
+! !
+
+!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 3/31/2018 19:46:57'!
+systemCategoryListIndex: anInteger
+	"Set the selected system category index to be anInteger. Update all other
+	selections to be deselected."
+
+	| index systemCategoryList |
+	
+	systemCategoryList _ self systemCategoryList.
+	index _ systemCategoryList ifInBounds: anInteger ifNot: 0.
+
+	selectedSystemCategory _ index = 0 ifFalse: [ systemCategoryList at: index ].
+	selectedClassName := nil.
+	selectedMessageCategory := nil.
+	selectedMessage := nil.
+	self editSelection: ( index = 0 ifTrue: [#none] ifFalse: [#newClass]).
+	metaClassIndicated := true.
+	self setClassOrganizer.
+	self changed: #systemCategorySelectionChanged.
+	self changed: #systemCategoryListIndex.	"update my selection"
+	self changed: #classList.
+	self changed: #messageCategoryList.
+	self changed: #messageList.
+	self changed: #relabel.
+	self changed: #instanceMessagesIndicated.
+	self changed: #classCommentIndicated.
+	self changed: #classMessagesIndicated.
+	self acceptedContentsChanged! !
+
+!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'HAW 9/27/2018 15:07:14'!
+hasMorphObjectSelected
+
+	^ self selectedClass notNil and: [ self selectedClass isDescendantOf: DenotativeObjectMorph ]! !
+
+!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 9/27/2018 11:18:46'!
+hideSelectedMorph
+
+	self selectedClass delete! !
+
+!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 9/27/2018 11:18:58'!
+showSelectedMorph
+
+	self selectedClass openInWorld! !
+
+!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:53:49'!
+recentClasses
+
+	RecentDenotativeObjects ifNil: [ RecentDenotativeObjects := OrderedCollection new ].
+	
+	^RecentDenotativeObjects ! !
+
+!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:54:14'!
+releaseClassCachedState
+	"
+	DenotativeObjectBrowser  releaseClassCachedState
+	"
+	RecentDenotativeObjects _ nil! !
+
+!DenotativeObjectMessageSet methodsFor: 'private' stamp: 'HAW 8/21/2017 21:56:59'!
+contents: aText notifying: aController
+
+	^[ super contents: aText notifying: aController ]
+		on: UndeclaredVariable 
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
+! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:24:15'!
+debugMethodTest
+
+	^self debugDenotativeObjectMethodTest! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:26:57'!
+runClassTests
+
+	^self runDenotativeObjectTests! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:28:37'!
+runMessageCategoryTests
+
+	^self runDenotativeObjectMessageCategoryTests! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:29:59'!
+runMethodTest
+
+	^self runDenotativeObjectMethodTest! !
+
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:31:13'!
+runSystemCategoryTests
+
+	^self runDenotativeObjectSystemCategoryTests! !
+
+!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 16:56:52'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
+
+!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 21:57:20'!
+editorClassFor: textGetter
+
+	^DenotativeObjectSmalltalkEditor! !
+
+!DenotativeObjectMessageSet methodsFor: 'system category list' stamp: 'HAW 8/21/2017 22:00:50'!
+selectedSystemCategoryName
+
+	^selectedMessage ifNil: [ 'MessageList-Objects' ] ifNotNil: [ selectedMessage actualClass category ]! !
+
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 9/23/2020 19:12:41'!
+askForCategoryIn: aClass default: aString
+
+	| categories index category |
+	
+	categories := OrderedCollection with: 'new ...'. 
+	categories addAll: (aClass allMethodCategoriesIntegratedThrough: aClass).	
+	index := PopUpMenu withCaption: 'Please provide a good category for the new method!!'
+						chooseFrom: categories.
+	index = 0 ifTrue: [^ aString].
+	
+	category := index = 1 
+		ifTrue: [StringRequestMorph request: 'Enter category name:' orCancel: [ '' ] ]
+		ifFalse: [categories at: index].
+		
+	^ category isEmpty ifTrue: [aString] ifFalse: [category]! !
+
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 10:54:42'!
+originalSend
+
+	^super send! !
+
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 18:18:10'!
+restart
+
+	^[ super restart ]
+		on: Error
+		do: [ :anError | self inform: 'Can not continue debugging' ]
+	! !
+
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 3/26/2019 16:33:14'!
+send
+
+	"Sends until receiver is a denotative object.
+	Proceeds if a message not understood was send to accelerate the process - Hernan"
+	
+	^[
+		inStep := true.
+		[ super send ] on: Exception do: [ :anException | self inform: self class canNotDebugErrorMessage. ^self ].
+		(contextStackTop receiver is: #DenotativeObject)
+			ifFalse: [ self stepIntoBlock ]] ensure: [ inStep := false ]
+		
+		
+	"[super send.
+	(sendProceeds or: [ contextStackTop selector = #doesNotUnderstand: ]) ifTrue: [ ^self proceed ].
+	self selectedContext methodClass inheritsFrom: DenotativeObject class ] whileFalse.
+"
+
+! !
+
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/30/2017 10:05:36'!
+stepIntoBlock
+
+	[ | toDebugContext |
+	
+	inStep := true.
+	super stepIntoBlock.
+
+	toDebugContext := contextStackTop.	
+	[toDebugContext notNil and: [(toDebugContext receiver is: #DenotativeObject) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
+	toDebugContext isNil
+		ifTrue: [ self proceed ]
+	 	ifFalse: [ self resetContext: toDebugContext ]] ensure: [ inStep := false ].
+	! !
+
+!DenotativeObjectDebugger methodsFor: 'method creation' stamp: 'HAW 8/26/2017 19:17:29'!
+askForSuperclassOf: aClass upTo: aSuperclass toImplement: aSelector ifCancel: cancelBlock
+
+	| classes chosenClassIndex |
+
+	classes := aClass soleInstance withParents collect: [ :denotativeObject | denotativeObject class ].
+	classes size = 1 ifTrue: [ ^aClass ].
+	
+	chosenClassIndex := PopUpMenu
+		withCaption: 'Define #', aSelector, ' in which object?'
+		chooseFrom: (classes collect: [:c | c soleInstance name]).
+	chosenClassIndex = 0 ifTrue: [^ cancelBlock value].
+
+	^ classes at: chosenClassIndex
+
+	! !
+
+!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 8/21/2017 19:06:38'!
+contents: aText notifying: aController
+
+	^[ super contents: aText notifying: aController ]
+		on: UndeclaredVariable 
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
+! !
+
+!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 7/29/2017 17:29:24'!
+inStep
+
+	^inStep ! !
+
+!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 8/21/2017 19:08:57'!
+selectedSystemCategoryName
+	
+	^self receiver ifNil: [ 'Debugger-Objects' ] ifNotNil: [ :receiver | receiver isBehavior ifTrue: [ receiver category ] ifFalse: [ receiver class category ]]! !
+
+!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 18:06:23'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
+
+!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 12:43:55'!
+editorClassFor: textGetter
+
+	^DenotativeObjectSmalltalkEditor ! !
+
+!DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 7/29/2017 17:29:17'!
+initialize
+
+	super initialize.
+	inStep := false.! !
+
+!DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 7/29/2017 18:02:49'!
+openFullMorphicLabel: aLabelString
+	"Open a full morphic debugger with the given label"
+
+	| oldContextStackIndex |
+	
+	oldContextStackIndex := contextStackIndex.
+	self expandStack. "Sets contextStackIndex to zero."
+
+	DenotativeObjectDebuggerWindow open: self label: aLabelString.
+	self toggleContextStackIndex: oldContextStackIndex! !
+
+!DenotativeObjectDebugger methodsFor: 'private' stamp: 'HAW 8/4/2019 21:26:31'!
+newStack: stack
+
+	| denotativeObjectContexts |
+
+	denotativeObjectContexts := stack select: [ :context | 
+		(context methodClass inheritsFrom: DenotativeObject class) 
+		or: [ context selector = #doesNotUnderstand: 
+		or: [ context selector = Scanner doItSelector 
+		or: [ context selector = Scanner doItInSelector ]]]].
+
+	denotativeObjectContexts isEmpty
+		ifTrue: [ super newStack: stack ] 
+		ifFalse: [ 
+			super newStack: denotativeObjectContexts.
+			contextStackList := contextStackList collect: [:aString | aString copyReplaceAll: ' class' with: '' ]]
+		
+	! !
+
+!DenotativeObjectDebugger class methodsFor: 'error messages' stamp: 'HAW 3/26/2019 16:32:37'!
+canNotDebugErrorMessage
+
+	^'Cannot debug a message sent to an object that is not a DenotativeObject'! !
+
+!DenotativeObjectDebugger class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2022 12:00:27'!
+openDebugging: aBlock to: aCompiledMethod label: aString
+	"Create a new process to debug aBlock, and step into it."
+
+	| processToDebug debugger |
+	debugger _ self new.
+	processToDebug _ aBlock newProcess name: 'debugIt'.
+	debugger process: processToDebug context: processToDebug suspendedContext.
+	debugger openFullMorphicLabel: aString.
+	[debugger interruptedContext method == aCompiledMethod]
+		whileFalse: [debugger originalSend]! !
+
+!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:02'!
+alwaysPresentFieldList
+
+	^ #('self' 'all collaborators')! !
+
+!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:15'!
+baseFieldList
+
+	^ self alwaysPresentFieldList, object collaboratorNames ! !
+
+!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 9/29/2020 17:44:57'!
+object
+
+	^object ! !
+
+!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 18:44:01'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectCompleter! !
+
+!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 3/21/2019 14:41:51'!
+editorClassFor: textGetter
+
+	^DenotativeObjectSmalltalkEditor ! !
+
+!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:41:59'!
+instVarBase
+
+	^DenotativeObject class instSize - self alwaysPresentFieldList size
+	
+	! !
+
+!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:42:10'!
+replaceSelectionValue: anObject
+	"The receiver has a list of variables of its inspected object. One of these
+	is selected. The value of the selected variable is set to the value,
+	anObject."
+	| si instVarIndex |
+	selectionIndex <= self alwaysPresentFieldList size ifTrue: [
+		self toggleIndex: (si := selectionIndex).
+		self toggleIndex: si.
+		^ object].
+	instVarIndex := selectionIndex + self instVarBase.
+	instVarIndex > object class instSize
+		ifFalse: [^ object instVarAt: instVarIndex put: anObject].
+	self error: 'Cannot replace selection'.
+	! !
+
+!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:42:26'!
+selection
+	"The receiver has a list of variables of its inspected object.
+	One of these is selected. Answer the value of the selected variable."
+	
+	selectionIndex = 0 ifTrue: [^ ''].
+	selectionIndex = 1 ifTrue: [^ object].
+	selectionIndex = 2 ifTrue: [^ object longPrintStringLimitedTo: 20000].
+	
+	^ object instVarAt: selectionIndex + self instVarBase
+	! !
+
+!DenotativeObjectInspector class methodsFor: 'instance creation' stamp: 'HAW 7/13/2017 00:01:59'!
+openOn: anObject
+	^ self openOn: anObject withLabel: anObject name! !
+
+!DenotativeObjectInspector class methodsFor: 'instance creation' stamp: 'HAW 8/20/2017 15:12:07'!
+openOn: anObject withLabel: label
+
+	DenotativeObjectInspectorWindow open: (self inspect: anObject) label: label
+	
+! !
+
+!DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 16:15:49'!
+autoCompleterClassFor: textGetter
+	
+	^DenotativeObjectNameCompleter! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:47:11'!
+addInstVar
+
+	model selectedClassOrMetaClass ifNotNil: [ :aClass |
+		(DenotativeObjectAddCollaboratorApplier on: model for: aClass) value ].! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:29:15'!
+browseAllAccessesTo: aVar from: aClass
+
+	^self class browseAllAccessesTo: aVar from: aClass
+! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:32:41'!
+browseAllImplementorsOf: aSelector
+
+	^self class browseAllImplementorsOf: aSelector
+! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 14:40:52'!
+browseClassRefs
+
+	model selectedClassOrMetaClass ifNotNil: [ :selectedDenotativeObject | 
+		self class browseReferencesTo: (Smalltalk bindingOf: selectedDenotativeObject theNonMetaClass name) ]
+	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:33:08'!
+browseImplementorsOfSelectedSelector
+
+	^model selectedMessageName ifNotNil: [:selector | self browseAllImplementorsOf: selector ] ! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:43:17'!
+browseInstVarRefs
+
+	model selectedClassOrMetaClass ifNotNil: [ :aClass |
+		aClass 
+			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators' 
+			thenDo: [:aVar | self browseAllAccessesTo: aVar from: aClass]
+			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:32:47'!
+browseMessages
+
+	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: self ! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+browseMethodFull
+	"Create and schedule a full Browser and then select the current class and message."
+
+	model selectedClassOrMetaClass ifNotNil: [ :myClass |
+		self class fullOnClass: myClass selector: model selectedMessageName]! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+browseSendersOf: aSymbol
+
+	^self class browseSendersOf: aSymbol ! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:27:46'!
+browseSendersOfMessages
+
+	self getSelectorAndSendQuery: #browseSendersOf: to: self class.
+
+	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:31:06'!
+browseSendersOfSelectedSelector
+
+	^model selectedMessageName ifNotNil: [:selector | self class browseSendersOf: selector ] ! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:09:03'!
+confirmRemovalOf: aSelector on: aClass
+
+	^ (self has: aSelector noSenderOrIsItselfOn: aClass)
+		ifTrue: [self confirmRemovalWhenNoSenders ]
+		ifFalse: [self confirmRemovalWhenHasSenders ].
+! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:09:39'!
+confirmRemovalWhenHasSenders
+
+	| menu |
+	
+	menu := PopUpMenu 
+		labels: 'Remove it
+Remove, then browse senders
+Don''t remove, but show me those senders
+Forget it -- do nothing -- sorry I asked'
+		icons: #(acceptIcon acceptIcon cancelIcon cancelIcon).
+			
+	^menu startUpWithCaption: 'This message has sender(s)' ! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:08:29'!
+confirmRemovalWhenNoSenders
+	
+	^ (self confirm: 'This message has no senders. Remove it anyway?') ifTrue: [1] ifFalse: [0]! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:05:30'!
+has: aSelector noSenderOrIsItselfOn: aClass
+
+	| count allSenders |
+
+	allSenders := self sendersOf: aSelector.
+	count := allSenders size.
+
+	^count = 0 or: [ count = 1 and: [(allSenders first actualClass == aClass and: [allSenders first methodSymbol == aSelector])]]
+! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 07:36:04'!
+inspectIt
+	
+	model selectedClass inspect! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:50:38'!
+removeInstVar
+	
+	model selectedClassOrMetaClass ifNotNil: [ :aClass |
+		(DenotativeObjectRemoveCollaboratorApplier on: model for: aClass) value ].! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 10:46:42'!
+removeMessage
+
+	| messageName confirmation |
+
+	model selectedMessage ifNil: [ ^self ].
+	messageName := model selectedMessageName.
+	confirmation := self confirmRemovalOf: messageName on: model selectedClassOrMetaClass.
+
+	(confirmation = 1 or: [ confirmation = 2 ]) ifTrue: [self removeSelector: messageName ].
+	(confirmation = 2 or: [ confirmation = 3 ]) ifTrue: [self browseSendersOf: messageName ].
+
+	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+removeSelector: messageName
+
+	model selectedClassOrMetaClass removeSelector: messageName.
+	model
+		messageListIndex: 0;
+		changed: #messageList;
+		setClassOrganizer.
+	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:45:38'!
+renameInstVar
+	
+	model selectedClassOrMetaClass ifNotNil: [ :aClass |
+		(DenotativeObjectRenameCollaboratorApplier on: model at: aClass) value ].! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 1/7/2019 15:33:15'!
+renameSelector
+
+	model selectedMessageName ifNotNil: [ :oldSelector |
+		DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [ DenotativeObjectRenameSelectorApplier on: model for: oldSelector in: model selectedClassOrMetaClass ]]! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+sendersOf: aSymbol
+
+	^self class sendersOf: aSymbol ! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:44:03'!
+buildLowerPanes
+
+	| codeAndButtons workspace separator |
+
+	workspace := TextModelMorph withModel: DenotativeObjectWorkspace new.
+	workspace 
+		askBeforeDiscardingEdits: false;
+		doNotShowBalloonHelp.
+
+	separator := LayoutAdjustingMorph new.
+
+	codeAndButtons := LayoutMorph newColumn.
+	codeAndButtons
+		addMorph: self optionalButtonRow fixedHeight: self defaultButtonPaneHeight;
+		addAdjusterMorph.
+	codePane := self buildMorphicCodePane.
+	codePane doNotShowBalloonHelp.
+	codeAndButtons
+		addMorph: codePane proportionalHeight: 2.0;
+		addMorph: separator fixedHeight: 4;
+		addMorph: workspace proportionalHeight: 2.0.
+
+	^codeAndButtons ! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/28/2018 11:41:57'!
+buildMorphicClassColumnWith: aClassList
+
+	| column |
+
+	column := LayoutMorph newColumn.
+	column addMorphUseAll: aClassList.
+	
+	^column! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'jmv 6/4/2024 15:54:44'!
+buildMorphicSystemCategoryList
+
+	^(PluggableListMorph
+		withModel: model
+		listGetter: #systemCategoryList
+		indexGetter: #systemCategoryListIndex
+		indexSetter: #systemCategoryListIndex:)
+			menuNshortcutsKey: #systemCategoriesListMenuSpec.! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:22:49'!
+optionalButtonTuples
+
+	^self class optionalButtonTuples
+	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 6/4/2024 17:35:40'!
+classListMenuSpec
+	"Spec for the menu and shortcut keys for the class list.
+	See coment at Morph >> #getMenu
+	"
+	^#(
+		#(0 		'Objects' 					false)),
+		self morphMenuItemsSpec,
+	#(
+		#(30		'add object... (a)' 									$a 	model 			addDenotativeObject 										listAddIcon)
+		#(40		'add object in category... (A)' 									$A 	model 			addDenotativeObjectInCategory 										listAddIcon)
+		#(50		'add child object... (h)' 									$h 	model 			addChildDenotativeObject 										listAddIcon)
+		#(60		'add child object in category... (H)' 									$H 	model 			addChildDenotativeObjectInCategory 										listAddIcon)
+		#(70 		'-----')
+		#(80		'show as family tree' 									nil 	model 			enableListClassesHierarchically 										goTopIcon)
+		#(90		'show alphabetically' 									nil 	model 			enableListClassesAlphabetically 										sendReceiveIcon)
+		#(100 		'-----')
+		#(110		'inspect (i)' 									$i 	window 			inspectIt 										inspectIcon)
+		#(120		'references (N)' 									$N 	window 			browseClassRefs 										mailForwardIcon)
+		#(130		'rename... (R)' 									$R 	model 			renameClass 										saveAsIcon)
+		#(140		'clone...' 									nil 	model 			copyClass 										copyIcon)
+		#(150		'remove (x)' 									$x 	model 			removeClass 										deleteIcon)
+		#(160 		'-----')
+		#(170		'add collaborator...' 									nil 	window 			addInstVar 										listAddIcon)
+		#(180		'rename collaborator...' 									nil 	window 			renameInstVar 										saveAsIcon)
+		#(190		'remove collaborator...' 									nil 	window 			removeInstVar 										deleteIcon)
+		#(200 		'-----')
+		#(210		'run tests (t)' 									$t 	model 			runClassTests 										weatherFewCloudsIcon)
+		#(220 		'-----')
+		#(230		'create class' 									nil 	model 			createClass 										morphsIcon)
+	)! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/30/2024 14:15:05'!
+messageListMenuSpec
+	"Spec for the menu and shortcut keys for the messages list.
+	See coment at Morph >> #getMenu
+	"
+	^#(
+		#(0 		'Message List' 					false)
+		#(10		'fileOut (o)' 							$o 	model 			fileOutMessage 											fileOutIcon)
+		#(20 		'-----')
+		#(30		'senders (n)' 							$n 	window 			browseSendersOfSelectedSelector 											mailForwardIcon)
+		#(40		'implementors (m)' 							$m 	window 			browseImplementorsOfSelectedSelector 											developmentIcon)
+		#(50 		'-----')
+		#(60		'rename (R)' 							$R 	window 			renameSelector 											saveAsIcon)
+		#(70		'remove (x)' 							$x 	window 			removeMessage 											deleteIcon)
+		#(80		'versions (v)' 							$v 	window 			browseVersions 											clockIcon)
+		#(90 		'-----')
+		#(100		'change category...' 							nil 	model 			changeCategory 											editFindReplaceIcon)
+		#(110		'show category' 							nil 	model 			showHomeCategory 											helpIcon)
+		#(120 		'-----')
+		#(130		'send (t)' 							$t 	model 			runMethodTest 											weatherFewCloudsIcon)
+		#(140		'send and inspect (e)' 							$e 	model 			sendAndInspect 											inspectIcon)
+		#(150		'debug (r)' 							$r 	model 			debugMethodTest 											debugIcon)
+		#(160		'debug and inspect (q)' 							$q 	model 			debugAndInspect 											debugIcon)
+		"shortcuts"
+		#(179		nil 							$D 	model 			toggleDiffing)
+		#(189		nil 							$c 	model 			copySelector)
+	)
+	! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 6/4/2024 17:35:57'!
+morphMenuItemsSpec
+	^(model hasMorphObjectSelected) ifTrue: [
+		| toggleDisplayOption showOption hideOption |
+		showOption := 				#(10		'show!!' 		nil 	model 			showSelectedMorph 						weatherClearIcon).
+		hideOption := 				#(10		'hide!!' 		nil 	model 			hideSelectedMorph 						weatherOvercastIcon).
+		toggleDisplayOption := model selectedClass morph owner ifNil: [ showOption ] ifNotNil: [ hideOption ].
+		{
+			toggleDisplayOption.
+			#(20 		'-----')
+		 }
+		]
+	ifFalse: [ #() ].
+! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 6/4/2024 16:00:00'!
+systemCatSingletonMenuSpec
+
+	^self systemCategoriesListMenuSpec! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/19/2024 14:56:57'!
+systemCategoriesListMenuSpec
+	"Spec for the menu and shortcut keys for the system categories list.
+	See coment at Morph >> #getMenu
+	"
+	^#(
+		#(0 		'Categories' 					false)
+		#(10		'find object... (f)' 						$f 	window 			findClass 									findIcon)
+		#(20		'recent objects... (r)' 						$r 	model 			recent 									clockIcon)
+		#(30 		'-----')
+		#(40		'fileOut (o)' 						$o 	model 			fileOutSystemCategory 									fileOutIcon)
+		#(50		'fileIn' 						nil 	model 			fileInSystemCategory 									scriptIcon)
+		#(60 		'-----')
+		#(70		'rename...' 						nil 	model 			renameSystemCategory 									saveAsIcon)
+		#(80		'remove (x)' 						$x 	model 			removeSystemCategory 									deleteIcon)
+		#(90 		'-----')
+		#(100		'Run tests (t)' 						$t 	model 			runSystemCategoryTests 									weatherFewCloudsIcon)
+	)! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:54:38'!
+browseAllAccessesTo: aVar from: aClass
+
+	| methods label |
+
+	methods := (aClass whichSelectorsAccess: aVar) collect: [:selector | MethodReference class: aClass selector: selector ].
+
+	label := 'Access to ' , aVar.
+	methods isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label].
+
+	label := '[', methods size printString, '] ', label.
+
+	DenotativeObjectMessageSetWindow
+		openMessageList: methods asArray sort
+		label: label
+		autoSelect: aVar ! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:54:55'!
+browseAllImplementorsOf: aSymbol
+
+	| implementors label |
+
+	implementors := (Smalltalk allImplementorsOf: aSymbol) select: [ :aMethodReference | aMethodReference actualClass inheritsFrom: DenotativeObject class ].
+
+	label := 'Implementors of ' , aSymbol.
+	implementors isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label ].
+
+	label := '[', implementors size printString, '] ', label.
+
+	DenotativeObjectMessageSetWindow
+		openMessageList: implementors asArray sort
+		label: label
+		autoSelect: aSymbol keywords first! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/22/2017 06:22:49'!
+browseReferencesTo: anAssociation
+
+	| references label |
+
+	references := self sendersOf: anAssociation.
+
+	label := 'References to ' , anAssociation value name.
+	references isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label ].
+
+	label := '[', references size printString, '] ', label.
+
+	DenotativeObjectMessageSetWindow
+		openMessageList: references asArray sort
+		label: label
+		autoSelect: anAssociation value name.! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/22/2017 06:22:49'!
+browseSendersOf: aSymbol
+
+	| senders label |
+
+	senders := self sendersOf: aSymbol.
+
+	label := 'Senders of ' , aSymbol.
+	senders isEmpty ifTrue: [^ (PopUpMenu labels: ' OK ') startUpWithCaption: 'There are no ' , label ].
+
+	label := '[', senders size printString, '] ', label.
+
+	DenotativeObjectMessageSetWindow
+		openMessageList: senders asArray sort
+		label: label
+		autoSelect: aSymbol keywords first! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/20/2017 15:34:07'!
+fullOnDenotativeObject: aDenotativeObject selector: aSelector 
+		
+	| browser |
+	
+	browser := DenotativeObjectBrowser new.
+	browser setClass: aDenotativeObject selector: aSelector.
+	self open: browser label: browser labelString! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:55:50'!
+sendersOf: aSymbol
+
+	| senders |
+
+	senders := (Smalltalk allCallsOn: aSymbol) select: [ :aMethodReference | aMethodReference actualClass inheritsFrom: DenotativeObject class ].
+
+	^senders ! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 6/18/2020 09:28:01'!
+classNameRequester 
+
+	^DenotativeObjectNameRequestMorph! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 6/18/2020 09:16:45'!
+findClassDialogTitle
+
+	^ 'Denotative object name or fragment?'! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 8/21/2017 12:46:32'!
+fullOnClass: aClass selector: aSelector
+
+	"This is to be sure that we are going to browse a denotative object, if not we open
+	the classic browser. This is important because if in an inspector the Browse option on a no denotative object
+	is selected, then the denotative browser will be open for a no denotative object - Hernan"	
+	
+	(aClass theNonMetaClass is: #DenotativeObject)
+		ifTrue: [ self fullOnDenotativeObject: aClass selector: aSelector ]
+		ifFalse: [ BrowserWindow fullOnClass: aClass selector: aSelector ]! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:22:49'!
+openBrowser
+
+	| browser |
+
+	browser := DenotativeObjectBrowser new systemOrganizer: SystemOrganization.
+	browser indicateClassMessages.
+
+	^ self open: browser label: browser defaultBrowserTitle! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 9/7/2017 15:22:59'!
+optionalButtonTuples
+
+	"Answer a tuple buttons, in the format:
+			button label
+			selector to send
+			help message"
+
+	| aList |
+
+	aList := #(
+	(10	'browse'			browseMethodFull				'view this method in a browser')
+	(11	'senders' 			browseSendersOfMessages	'browse senders of...')
+	(16	'implementors'		browseMessages				'browse implementors of...')
+	(12	'versions'			browseVersions					'browse versions')
+	(10	'collaborators'			browseInstVarRefs				'collaborator refs...')
+	(10	'show...'				offerWhatToShowMenu		'menu of what to show in lower pane')).
+
+	^ aList! !
+
+!DenotativeObjectBrowserWindow class methodsFor: 'world menu options' stamp: 'HAW 3/30/2024 18:34:16'!
+worldMenuOptions 
+
+	^`{
+	{
+		#itemGroup 	-> 		0.
+		#itemOrder 		-> 		10.
+		#label 			-> 		'DenotativeObject Browser'.
+		#selector 		-> 		#openBrowser.
+		#object 			-> 		DenotativeObjectBrowserWindow.
+		#icon 			-> 		#morphsIcon.
+		#balloonText 	-> 		'To work with denotative objects (without classes)'.
+	} asDictionary.
+	{
+		#itemGroup 	-> 		0.
+		#itemOrder 		-> 		20.
+		#label 			-> 		'Class Browser'.
+		#selector 		-> 		#open.
+		#object 			-> 		Browser.
+		#icon 			-> 		#editFindReplaceIcon.
+		#balloonText 	-> 		'Classical Smalltalk class browser'.
+	} asDictionary. 
+	}`! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:40:24'!
+browseContextSelection
+	
+	model contextVariablesInspector selectionIndex = 0 ifTrue: [^ self flash].
+	^self browseMethodFullIn: model contextVariablesInspector
+	! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:44:06'!
+browseInstVarRefs
+
+	model selectedClassOrMetaClass ifNotNil: [ :aClass |
+		aClass 
+			chooseDefiningInstanceVariableAlphabeticallyWith: 'Collaborators' 
+			thenDo: [:aVar | DenotativeObjectBrowserWindow browseAllAccessesTo: aVar from: aClass]
+			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]			
+		! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:26:26'!
+browseMessages
+
+	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: DenotativeObjectBrowserWindow 
+	! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:22:29'!
+browseMethodFull
+	"Create and schedule a full Browser and then select the current class and message."
+
+	model selectedClassOrMetaClass ifNotNil: [ :myClass |
+		DenotativeObjectBrowserWindow fullOnClass: myClass selector: model selectedMessageName]! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:38:21'!
+browseReceiver
+
+	self browseMethodFullIn: model receiverInspector
+
+! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'jmv 7/30/2024 16:25:19'!
+browseReferences
+
+	| class |
+	(class := model selectedClassOrMetaClass) ifNil: [^ self ].
+	DenotativeObjectBrowserWindow browseReferencesTo: (Smalltalk bindingOf: class theNonMetaClass name)! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:25:20'!
+browseSendersOfMessages
+
+	self getSelectorAndSendQuery: #browseSendersOf: to: DenotativeObjectBrowserWindow 
+	! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:36:58'!
+inspectContextSelection
+	
+	model contextVariablesInspector selectionIndex = 0 ifTrue: [^ self flash].
+	^ model contextVariablesInspector selection inspect! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:24:44'!
+inspectReceiverSelection
+
+	model receiverInspector selectionIndex = 0 ifTrue: [^ self flash].
+	^ model receiverInspector selection inspect! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/20/2017 15:38:47'!
+browseMethodFullIn: anInspector
+
+	anInspector selectedClassOrMetaClass ifNotNil: [ :denotativeObject |
+		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]
+	! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 7/20/2017 18:27:20'!
+buildLowerPanes
+
+	| codeAndButtons twoRowsOfButtons |
+
+	twoRowsOfButtons := LayoutMorph newColumn.
+
+	twoRowsOfButtons
+		addMorph: self optionalButtonRow proportionalHeight: 1.0;
+		addAdjusterMorph;
+		addMorph: self customButtonRow proportionalHeight: 1.0.
+
+	codeAndButtons := LayoutMorph newColumn.
+	codeAndButtons
+		addMorph: twoRowsOfButtons fixedHeight: self defaultButtonPaneHeight * 2;
+		addAdjusterMorph;
+		addMorph: self buildMorphicCodePane proportionalHeight: 1.0.
+
+	^codeAndButtons ! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 7/20/2017 18:25:21'!
+customButtonSpecs
+	"Answer an array of elements of the form wording, selector, help-message, that characterize the custom button row of a debugger."
+
+	^#(
+		('Restart'		restart				'reset this context to its start.')
+		('Into'			send					'step Into message sends')
+		('Over'			stepIntoBlock		'step Over message sends')
+		('Where'		where				'select current pc range')
+		('Create'		createMethod		'create method'))! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:23:10'!
+optionalButtonTuples
+
+	^DenotativeObjectBrowserWindow optionalButtonTuples reject: [ :tuple | tuple third = #offerWhatToShowMenu ]! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/19/2024 15:44:19'!
+contextStackMenuSpec
+	"Spec for the menu and shortcut keys for call stack list.
+	See coment at Morph >> #getMenu
+	"
+	^#(
+		#(20		'proceed (p)' 						$p 	window 			proceed 						nil 	'close the debugger and proceed')
+		#(30		'restart (r)' 						$r 	window 			restart 						nil 	'reset this context to its start')
+		#(40		'into (e)' 						$e 	window 			send 						nil 	'step into message sends')
+		#(60		'over (t)' 						$t 	window 			stepIntoBlock 						nil 	'step into a code block')
+		#(80		'where (w)' 						$w 	window 			where 						nil 	'select current pc range')
+
+		#(110		nil 						$m 	window 			browseImplementors)
+		#(120		nil 						$n 	window 			browseSenders)
+		#(130		nil 						$b 	window 			browseReceiver)
+		#(140		nil 						$N 	window 			browseReferences)
+		#(150		nil 						$v 	window 			browseVersions)
+	)! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/19/2024 15:46:40'!
+contextVariablesListMenuSpec
+	"Spec for the menu and shortcut keys for the list of variables in this context.
+	See coment at Morph >> #getMenu
+	"
+	^#(
+		#(10		'inspect (i)' 						$i 	window 			inspectContextSelection 							inspectIcon)
+		#(20 		'-----')
+		#(30		'browser (b)' 						$b 	window 			browseContextSelection 							editFindReplaceIcon)
+	)! !
+
+!DenotativeObjectDebuggerWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/19/2024 15:47:22'!
+receiverVariablesListMenuSpec
+	"Spec for the menu and shortcut keys for the list of instance variables in the receiver.
+	See coment at Morph >> #getMenu
+	"
+	^#(
+		#(10		'inspect (i)' 						$i 	window 			inspectReceiverSelection 							inspectIcon)
+		#(20 		'-----')
+		#(30		'browser (b)' 						$b 	window 			browseReceiver 							editFindReplaceIcon)
+	)! !
+
+!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'HAW 7/13/2017 19:10:04'!
+buildLowerPanes
+	| codeAndButtons |
+
+	codeAndButtons := LayoutMorph newColumn.
+	codeAndButtons addMorph: self buildMorphicCodePane proportionalHeight: 1.0.
+
+	^codeAndButtons
+	! !
+
+!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'jmv 7/19/2024 15:25:04'!
+messageListMenuSpec
+	"Spec for the menu and shortcut keys for the messages list.
+	See coment at Morph >> #getMenu
+	"
+	^#()! !
+
+!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 4/27/2023 18:18:30'!
+openMessageList: messageList label: labelString autoSelect: autoSelectString
+
+	| messageSet |
+
+	messageList do: [:aMethodReference | aMethodReference recalculateStringVersionForDenotativeObject ].
+	
+	messageSet _ DenotativeObjectMessageSet messageList: messageList.
+	messageSet autoHighlightString: autoSelectString allOccurrences: true.
+	
+	^self open: messageSet label: labelString ! !
+
+!DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 7/14/2017 20:19:56'!
+debug
+
+	model selection ifNotNil: [ :selection | | test |
+		test := DenotativeObjectTestCase for: selection compiledMethod.
+		test debug.
+		testResult removeFromDefectsAndAddToPassed: test.
+		model removeMessageFromBrowserKeepingLabel.
+		self setLabel: testResult printString ]! !
+
+!DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 7/14/2017 20:21:21'!
+runSuite
+
+	| suite |
+
+	suite := TestSuite new.
+	suite addTests: testResult tests.
+	self delete.
+	(DenotativeObjectProgessiveTestRunner for: suite) value.
+	! !
+
+!DenotativeObjectTestResultWindow class methodsFor: 'instance creation' stamp: 'HAW 7/14/2017 20:03:44'!
+methodReferencesOf: tests
+
+	^tests collect: [:aTest | aTest asMethodReference]! !
+
+!DenotativeObjectInspectorWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:17:35'!
+browseMethodFull
+
+	model selectedClassOrMetaClass ifNotNil: [ :denotativeObject |
+		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]! !
+
+!DenotativeObjectInspectorWindow methodsFor: 'menu building' stamp: 'jmv 7/19/2024 16:16:18'!
+fieldListMenuSpec
+	"Spec for the menu and shortcut keys for the list of variables in our object.
+	See coment at Morph >> #getMenu
+	"
+	^ #(
+		#(10		'inspect (i)' 						$i 	window 			inspectSelection 							inspectIcon)
+		#(20		'browse (b)' 						$b 	window 			browseMethodFull 							editFindReplaceIcon)
+	).! !
+
+!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:40:48'!
+buildContentsText
+
+	^super buildContentsText 
+		doNotShowBalloonHelp;
+		yourself ! !
+
+!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:38:01'!
+buildEvaluatorText
+
+	^super buildEvaluatorText 
+		doNotShowBalloonHelp;
+		yourself ! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 8/22/2017 11:06:01'!
+acceptAndDebugTest
+
+	^self acceptAndDebugTestOr: [ self codeProvider debug ]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 8/22/2017 10:50:30'!
+acceptThenTestMethodAndSuite: aSuiteBuilder
+	
+	self acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: [:result | ]
+! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'jmv 7/29/2024 14:56:07'!
+nextTestName
+	
+	| testNames |
+	
+	testNames := self codeProvider selectedClassOrMetaClass selectors select: [ :selector | selector isTestSelector ].
+	self addString: TestCase testSelectorPrefix, ((testNames size + 1)  printStringBase: 10 length: 2 padded: true)! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:06'!
+runAndDebuggIfNecessary: aPotencialTestMethod
+
+	aPotencialTestMethod selector isTestSelector ifTrue: [
+		(DenotativeObjectTestCase for: aPotencialTestMethod) debug ]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 7/19/2017 21:38:55'!
+runTestSuite: aTestSuite
+
+	(DenotativeObjectProgessiveTestRunner for: aTestSuite) value
+
+	! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:16'!
+testSuiteForCategoryOf: aClass
+
+ 	| suite classes |
+
+	suite := TestSuite named: 'Tests of ', aClass category.
+	classes := SystemOrganization classesAt: aClass category.
+	classes notEmpty ifTrue: [
+		classes do: [ :aClassInCategory |
+			aClassInCategory class selectors do: [ :aSelector |
+				aSelector isTestSelector ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aClassInCategory class>>aSelector)]]]].
+
+	^suite! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:27'!
+testSuiteOf: aDenotativeObject
+
+ 	| suite |
+
+	suite := TestSuite named: 'Tests of ', aDenotativeObject soleInstance name asString.
+	aDenotativeObject selectors do: [ :aSelector |
+			aSelector isTestSelector ifTrue: [ suite addTest: (DenotativeObjectTestCase for: aDenotativeObject>>aSelector)]].
+
+	^suite! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 10/25/2022 16:24:18'!
+acceptAndDebugTestOr: aBlock
+
+	^self acceptAndWithMethodDo: [ :aPotencialTestMethod |
+		aPotencialTestMethod selector isTestSelector 
+			ifTrue: [
+				(DenotativeObjectTestCase 
+					for: aPotencialTestMethod) 
+					debugAsFailureIfCanNot: [ PopUpMenu inform: TestCase canNotDebugMethodErrorDescription ]]
+			ifFalse: aBlock]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 11:06:19'!
+acceptDebugAndInspect
+
+	^self acceptAndDebugTestOr: [ self codeProvider debugAndInspect ]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 10:51:34'!
+acceptSendAndInspect
+	
+	self acceptThenTestMethodAndSuite:  [ :aMethod | self testSuiteOf: aMethod methodClass ] orSendAndWithResultDo: [:result | result inspect ]
+! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 10/25/2022 16:24:31'!
+acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: aBlock
+	
+	self acceptAndWithMethodDo: [ :aPotencialTestMethod |
+		aPotencialTestMethod selector isTestSelector 
+			ifTrue: [
+				self runAndDebuggIfNecessary: aPotencialTestMethod.
+				self runTestSuite: (aSuiteBuilder value: aPotencialTestMethod) ]
+			ifFalse: [ self codeProvider sendAndWithResultDo: aBlock ]]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 7/22/2017 06:23:19'!
+browseIt
+
+	| aSymbol aClassToBrowse |
+
+	self wordSelectAndEmptyCheck: [^ self].
+	aSymbol := self selectedSymbol.
+	aSymbol ifNil: [^ morph flash].
+
+	aSymbol first isUppercase
+		ifTrue: [
+			aClassToBrowse := Smalltalk at: aSymbol ifAbsent: [ ^DenotativeObjectBrowserWindow browseAllImplementorsOf: aSymbol ].
+			(aClassToBrowse isKindOf: Class) ifFalse: [aClassToBrowse := aClassToBrowse class].
+			DenotativeObjectBrowserWindow fullOnClass: aClassToBrowse selector: nil ]
+		ifFalse:
+			[DenotativeObjectBrowserWindow browseAllImplementorsOf: aSymbol]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 11/30/2021 17:01:00'!
+implementorsOfIt
+
+	self
+		withSelectorUnderCursorDo: [ :aSelector | DenotativeObjectBrowserWindow browseAllImplementorsOf: aSelector ]
+		ifBehavior: [:behavior | DenotativeObjectBrowserWindow fullOnClass: behavior selector: nil ] 
+		otherwise: [ self implementorsOfItWhenErrorsParsing ]
+	! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:27:07'!
+implementorsOfItWhenErrorsParsing
+
+	| aSelector |
+
+	self lineSelectAndEmptyCheck: [^ self].
+
+	aSelector := self selectedSelector.
+	aSelector ifNil: [^ morph flash].
+
+	DenotativeObjectBrowserWindow browseAllImplementorsOf: aSelector! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 7/22/2017 06:23:27'!
+referencesToIt
+	"Open a references browser on the selected symbol: a variable name or class name"
+
+	| symbol reference |
+
+	"super referencesToIt.
+	"
+
+	self selectWord.	"look for exactly a whole word"
+	symbol := self selectedSymbol ifNil: [ ^ morph flash ].
+
+	"convenient access to class variables, including those in SharedPools"
+	reference := (Smalltalk bindingOf: symbol) ifNil: [ ^ morph flash ].
+
+	DenotativeObjectBrowserWindow browseReferencesTo: reference! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 11/30/2021 16:59:34'!
+sendersOfIt
+
+	self
+		withSelectorUnderCursorDo: [ :aSelector | DenotativeObjectBrowserWindow browseSendersOf: aSelector ]
+		ifBehavior: [:behavior | DenotativeObjectBrowserWindow browseReferencesTo: (Smalltalk bindingOf: behavior name)] 
+		otherwise: [ self sendersOfItWhenErrorsParsing ]
+	! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:28:15'!
+sendersOfItWhenErrorsParsing
+
+	| aSelector |
+
+	self lineSelectAndEmptyCheck: [^ self].
+
+	aSelector := self selectedSelector.
+	aSelector ifNil: [^ morph flash].
+
+	DenotativeObjectBrowserWindow browseSendersOf: aSelector! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/22/2022 11:58:08'!
+debug: aCompiledMethod receiver: anObject in: evalContext
+
+	^DenotativeObjectDebugger 
+		openDebugging: [
+			aCompiledMethod
+				valueWithReceiver: anObject
+				arguments: (evalContext ifNil: [ #() ] ifNotNil: [ { evalContext } ])]
+		to: aCompiledMethod
+		label: 'Debug it'.! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/22/2022 12:31:49'!
+evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
+	[[[ ^super evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile ]
+		on: UndeclaredVariable 
+		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ]]
+		on: OutOfScopeNotification
+		do: [ :ex | ex resume: true]]
+		on: Error
+		do: [ :anError | | context  |
+			context := thisContext.
+			[context notNil and: [(context receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ context := context sender ].
+			context isNil ifTrue: [ self error: 'can not debug' ].
+			DenotativeObjectDebugger openProcess: Processor activeProcess context: context label: anError printString.]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 12/4/2019 12:03:12'!
+renameClassOn: aBrowser for: aClassToRefactor
+
+	(DenotativeObjectRenameApplier for: aClassToRefactor) value ! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 11/29/2018 20:20:21'!
+renameInstanceVariableOn: aBrowser for: anInstanceVariableName at: aClassToRefactor 
+	
+	(DenotativeObjectRenameCollaboratorApplier on: aBrowser for: anInstanceVariableName at: aClassToRefactor) value! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 1/7/2019 15:34:00'!
+renameSelectorFor: aSelector in: aClassToRefactor
+
+	DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [DenotativeObjectRenameSelectorApplier on: model textProvider for: aSelector in: aClassToRefactor ]! !
+
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/29/2024 14:48:01'!
+defaultMenuSpec
+	"Spec for the menu and shortcut keys for the regular text editors.
+	See coment at Morph >> #getMenu
+	"
+	^#(
+		#(0 		'DenotativeObject Editor' 					true)
+		#(10		'Help... (h)' 							$h 	editor 			openHelp 						helpIcon 							'Open Help')
+		#(20 		'-----')
+		#(30		'Do it (d)' 							$d 	editor 			doIt 						doItIcon 							'Do it (selection is a valid expression)')
+		#(40		'Print it (p)' 							$p 	editor 			printIt 						printIcon 							'Print it (selection is a valid expression)')
+		#(50		'Inspect it (i)' 							$i 	editor 			inspectIt 						inspectIcon 							'Inspect it (selection is a valid expression, or selection is over an inspect-ilst)')
+		#(60		'Explore it (I)' 							$I 	editor 			exploreIt 						exploreIcon
+					'Inspect via Object Explorer')
+		#(70		'Debug it (D)' 							$D 	editor 			debugIt 						debugIcon
+					'Debug it')
+		#(80		'Profile it' 							nil 	editor 			profileIt 						clockIcon)
+		#(90 		'-----')
+		#(100		'Edit' 							nil 	nil 			1000 						textEditorIcon)
+		#(110 		'-----')
+		#(130		'Browse it (b)' 							$b 	editor 			browseIt 						editFindReplaceIcon 							'Browse it (selection is a class name or cursor is over a class-list or message-list)')
+		#(140		'Senders of it (n)' 							$n 	editor 			sendersOfIt 						mailForwardIcon 							'Senders of it (selection is a message selector or cursor is over a class-list or message-list)')
+		#(150		'Implementors of it (m)' 							$m 	editor 			implementorsOfIt 						developmentIcon 							'Implementors of it (selection is a message selector or cursor is over a class-list or message-list)')
+		#(160		'References to it (N)' 							$N 	editor 			referencesToIt 						addressBookIcon 							'References to it (selection is a class name, or cursor is over a class-list or message-list)')
+		#(170 		'-----')
+		#(180		'LiveTyping' 							nil 	nil 			2000 						acceptIcon)
+		#(190 		'-----')
+		#(200		'Rename... (R)' 							$R 	editor 			contextualRename 						saveAsIcon 							'Renames what is under cursor')
+		#(210		'Extract Method... (K)' 							$K 	editor 			extractMethod 						saveAsIcon 							'Extracts the selected code as a method')
+		#(220		'Accept (s)' 							$s 	editor 			acceptContents 						acceptIcon)
+		#(230		'Cancel (l)' 							$l 	editor 			cancelEdits 						cancelIcon)
+		#(240 		'-----')
+		#(250		'Accept and Send (t)' 									$t	editor 			acceptAndTest 								weatherFewCloudsIcon)
+		#(260		'Accept, Send and Inspect (e)' 									$e 	editor 			acceptSendAndInspect 								weatherFewCloudsIcon)
+		#(270		'Accept and Debug (r)' 									$r 	editor 			acceptAndDebugTest 								weatherFewCloudsIcon)
+		#(280		'Accept, Debug and Inspect (q)' 									$q 	editor 			acceptDebugAndInspect 								weatherFewCloudsIcon)
+		#(200		'Accept and Run Test in Category (y)' 									$y 	editor 			acceptAndTestAll 								weatherFewCloudsIcon)
+		#(300		'Next test name (Y)' 									$Y 	editor 			nextTestName 								weatherFewCloudsIcon)
+
+		" 'Edit' SubMenu"
+		#(1010 		'-----')
+		#(1020		'Find...(f)' 							$f 	editor 			find 						findIcon 									'Find')
+		#(1030		'Find Again (g)' 							$g 	editor 			findAgain 						systemIcon 									'Find again')
+		#(1040		'Use Selection for Find (j)' 							$j 	editor 			setSearchString 						saveAsIcon 									'Set selection as search string for find again')
+		#(1050 		'-----')
+		#(1060		'Undo - multiple (z)' 							$z 	editor 			undo 						undoIcon 									'Undo (multiple levels)')
+		#(1070		'Redo - multiple (Z)' 							$Z 	editor 			redo 						redoIcon 									'Redo (multiple levels)')
+		#(1080		'Undo / Redo history' 							nil 	editor 			offerUndoHistory 						changesIcon)
+		#(1090 		'-----')
+		#(1100		'Copy (c)' 							$c 	editor 			copySelection 						copyIcon 									'Copy selection to the Clipboard')
+		#(1110		'Cut (x)' 							$x 	editor 			cut 						cutIcon 									'Cut selection and store it in the Clipboard')
+		#(1120		'Paste (v)' 							$v 	editor 			paste 						pasteIcon 									'Paste Clipboard contents')
+		#(1130		'Paste without Format' 							nil 	editor 			pasteString 						pasteIcon)
+		#(1140		'Paste...' 							nil 	editor 			pasteRecent 						worldIcon)
+		#(1150 		'-----')
+		#(1160		'Toggle WordWrap' 							nil 	editor 			wrapOnOff 						genericTextIcon)
+		#(1170		'Clear Font' 							nil 	editor 			clearFont 						newIcon)
+		#(1180		'Set Font... (k)' 							$k 	editor 			offerFontMenu 						preferencesDesktopFontIcon 									'Set font')
+		#(1190		'Set Font Size' 							nil 	editor 			offerFontSizeMenu 						preferencesDesktopFontIcon)
+
+		"Keyboard shortcuts only"
+		#(1500		nil 							$0 	editor 			changeEmphasisNormal 									nil 		'Normal')
+		#(1501		nil 							$1 	editor 			changeEmphasisBold 									nil 		'Bold')
+		#(1502		nil 							$2 	editor 			changeEmphasisItalic 									nil 		'Italic')
+		#(1503		nil 							$3 	editor 			changeEmphasisUnderlined 									nil 		'Underlined')
+		#(1504		nil 							$4 	editor 			changeEmphasisStruckThrough 									nil 		'Struck Through')
+		#(1505		nil 							$5 	editor 			changeEmphasisSuperscript 									nil 		'Superscript')
+		#(1506		nil 							$6 	editor 			changeEmphasisSubscript 									nil 		'Subscript')
+		#(1507		nil 							$l 	editor 			cancel 									nil 		'Cancel all edits')
+		#(1508		nil 							$Q 	editor 			argPrev 									nil 		'Previous argument')
+		#(1509		nil 							$W 	editor 			argNext 									nil 		'Next argument')
+		#(1510		nil 							$T 	editor 			displayIfTrue)
+		#(1511		nil 							$F 	editor 			displayIfFalse)
+		#(1601 		nil 							$a 	editor 			selectAll 									nil 		'Select all')
+		#(1602 		nil 							$C 	editor 			compareToClipboard 									nil 		'Compare argument to clipboard')
+		#(1603 		nil 							$U 	editor 			changeLineEndsToLf 									nil 		'Convert line endings to LF characters (Cuis convention) in selection')
+		#(1604 		nil 							$( 	editor 			encloseWithParenthesis 									nil 		'Enclose within ( and ), or remove enclosing ( and )')
+		#(1605 		nil 							$[ 	editor 			encloseWithSquareBrackets 									nil 		'Enclose within [ and ], or remove enclosing [ and ]')
+		#(1606 		nil 							${ 	editor 			encloseWithCurlyBrackets 									nil 		'Enclose within { and }, or remove enclosing { and }')
+		#(1607 		nil 							$' 	editor 			encloseWithSingleQuotes 									nil 		'Enclose within single quotes, or remove enclosing single quotes')
+		#(1608 		nil 							$" 	editor 			encloseWithDoubleQuotes 									nil 		'Enclose within double quotes, or remove enclosing double quotes')
+		#(1609 		nil 							$` 	editor 			encloseWithBackTicks 									nil 		'Enclose within backticks, or remove enclosing backticks')
+		"#(1610 		nil 							$< 	editor 			encloseWithAngleBrackets 									nil 		'Enclose within < and >, or remove enclosing ( and )')"
+		#(1611 		nil 							$H 	editor 			cursorTopHome 									nil 		'Move cursor to start of text')
+
+		" 'LiveTyping' SubMenu"
+		#(2010 		'-----')
+		#(2020		'Show type info (P)' 									$P 	editor 			showSelectionTypeInfo 										helpIcon 				'')
+		#(2030		'Actual Senders of it (B)' 									$B 	editor 			actualSendersOfIt 										mailForwardIcon 				'')
+		#(2040		'Actual Implementors of it (M)' 									$M 	editor 			actualImplementorsOfIt 										developmentIcon 				'')
+		#(2050		'Actual Local Implementors of it (L)' 									$L 	editor 			actualLocalImplementorsOfIt 										developmentIcon '')
+		#(2060 		'-----')
+		#(2070		'Type Check (T)' 									$T 	editor 			typeCheckMethod 										acceptIcon 				'')
+		#(2080		'Reset types' 									nil 	editor 			resetMethodTypes 										deleteIcon 				'')
+	).
+! !
+
+!DenotativeObjectWorkspaceEditor methodsFor: 'system category list' stamp: 'HAW 8/21/2017 18:58:29'!
+selectedSystemCategoryName
+	
+	^'Workspace-Objects'! !
+
+!DenotativeObjectWorkspaceEditor methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/29/2024 15:04:10'!
+defaultMenuSpec
+	"Spec for the menu and shortcut keys for the regular text editors.
+	See coment at Morph >> #getMenu
+	"
+	^#(
+		#(0 		'DenotativeObject Workspace' 					true)
+		#(10		'Help... (h)' 							$h 	editor 			openHelp 						helpIcon 							'Open Help')
+		#(20 		'-----')
+		#(30		'Do it (d)' 							$d 	editor 			doIt 						doItIcon 							'Do it (selection is a valid expression)')
+		#(40		'Print it (p)' 							$p 	editor 			printIt 						printIcon 							'Print it (selection is a valid expression)')
+		#(50		'Inspect it (i)' 							$i 	editor 			inspectIt 						inspectIcon 							'Inspect it (selection is a valid expression, or selection is over an inspect-ilst)')
+		#(70		'Debug it (D)' 							$D 	editor 			debugIt 						debugIcon							'Debug it')
+		#(90 		'-----')
+		#(130		'Browse it (b)' 							$b 	editor 			browseIt 						editFindReplaceIcon 							'Browse it (selection is a class name or cursor is over a class-list or message-list)')
+		#(140		'Senders of it (n)' 							$n 	editor 			sendersOfIt 						mailForwardIcon 							'Senders of it (selection is a message selector or cursor is over a class-list or message-list)')
+		#(150		'Implementors of it (m)' 							$m 	editor 			implementorsOfIt 						developmentIcon 							'Implementors of it (selection is a message selector or cursor is over a class-list or message-list)')
+		#(160		'References to it (N)' 							$N 	editor 			referencesToIt 						addressBookIcon 							'References to it (selection is a class name, or cursor is over a class-list or message-list)')
+	).
+! !
+
+!DenotativeObjectNameCompleter methodsFor: 'entries' stamp: 'HAW 2/21/2019 16:58:47'!
+computeEntries
+
+	super computeEntries.
+	entries := entries select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ].! !
+
+!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 3/21/2019 07:16:56'!
+computeIdentifierEntries
+
+	| entriesSet addBlock instVarToExclude |
+
+	canShowSelectorDocumentation _ false.
+	entriesSet := Set new.
+	addBlock := [ :identifier :kindOfIdentifierTitle| (identifier beginsWith: prefix) ifTrue: [ entriesSet add: identifier]].
+	instVarToExclude := DenotativeObject class allInstVarNames asSet.
+
+	parser 
+		blockArgNamesDo: addBlock;
+		blockTempNamesDo: addBlock;
+		methodArgNamesDo: addBlock;
+		methodTempNamesDo: addBlock;
+		instVarNamesDo: [ :identifier :kindOfIdentifierTitle | (instVarToExclude includes: identifier) ifFalse: [ addBlock value: identifier value: kindOfIdentifierTitle ]].
+	parser reservedNames do: [ :identifier | identifier = 'super' ifFalse: [ addBlock value: identifier value: '' ]].	
+	
+	parser namesBeginningWith: prefix do: [ :identifier :kindOfIdentifierTitle | 
+		"I want to show global objects as meter, second, etc. and denotative objects only - Hernan"
+		((Smalltalk classNamed: identifier) ifNil: [ true ] ifNotNil: [ :aClass | aClass is: #DenotativeObject]) ifTrue: [ entriesSet add: identifier ]].
+	
+	entries := entriesSet asArray sort! !
+
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:44:22'!
+computeMessageEntriesForClass: aClass  
+
+	(aClass isMeta and: [ aClass soleInstance is: #DenotativeObject])
+		ifTrue: [ self computeMessageEntriesForDenotativeObject: aClass ]
+		ifFalse: [ super computeMessageEntriesForClass: aClass ]
+		! !
+
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:49:36'!
+computeMessageEntriesForDenotativeObject: aDenotativeObject 
+
+	self isPreviousMessageSendBinary
+		ifTrue: [ self 
+			computeMessageEntriesWithBinaryMessageForClass: aDenotativeObject 
+			collectingWith: (DenotativeObjectAutoCompleterSelectorsCollector for: prefix) 
+			asRoot: DenotativeObject class superclass ]
+		ifFalse: [ self computeMessageEntriesWithoutBinaryMessageForDenotativeObject: aDenotativeObject ].
+		
+	self ifEmptyEntriesShowAllPrefixedSelectors
+
+	
+
+! !
+
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:44:04'!
+computeMessageEntriesWithoutBinaryMessageForDenotativeObject: aDenotativeObject
+
+	selectorsClasses := Array with: aDenotativeObject.
+	
+	entries := (DenotativeObjectAutoCompleterSelectorsCollector for: prefix) 
+		addSelectorsOf: aDenotativeObject upTo: (DenotativeObject class superclass);
+		entriesToShow.
+	
+! !
+
+!DenotativeObjectCompleter class methodsFor: 'instance creation' stamp: 'HAW 2/19/2019 15:19:16'!
+withModel: aStringHolder
+
+	^self new setModel: aStringHolder! !
+
+!DenotativeObjectAutoCompleterSelectorsCollector methodsFor: 'collecting - private' stamp: 'HAW 2/19/2019 15:46:24'!
+addCategory: aCategory of: classOrganization
+
+	(aCategory includesSubString: 'private') ifFalse: [ super addCategory: aCategory of: classOrganization ]! !
+
+!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:21'!
+errorMessageForInvalidInstanceVariable: aName
+
+	^ '''' , aName , ''' is not a valid collaborator name'.! !
+
+!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:26'!
+errorMessageForNewInstanceVariable: aName alreadyDefinedInAll: classes
+
+	| denotativeObjects |
+	
+	denotativeObjects := classes collect: [:aClass | aClass theNonMetaClass ].
+	
+	^ 'Collaborator ''' , aName , ''' is already defined in ' , denotativeObjects asCommaStringAnd.! !
+
+!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:30'!
+newVariableCanNotBeEmptyErrorMessage
+	
+	^'New collaborator name can not be empty'! !
+
+!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 3/7/2019 23:09:55'!
+errorMessageForNewVariable: newVariable willBeHiddenAtAll: methods
+ 
+	^String streamContents: [ :stream |
+		stream 
+			nextPutAll: newVariable;
+			nextPutAll: ' can not be named as temporary/collaborator in '.
+		methods asCommaSeparated: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] on: stream ]! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
+addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
+	
+	"Only do it on the class side - Hernan"
+	self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor theMetaClass.
+
+! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/5/2019 15:39:54'!
+addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inHierarchyOf: aClass doingPerClass: aBlock
+
+	| highestClassImplementingOldSelector |
+	
+	highestClassImplementingOldSelector := aClass highestClassImplementing: anOldSelector ifNone: [ aClass ].
+	highestClassImplementingOldSelector theNonMetaClass withAllSubclassesDo: [ :aPotentialClassToRefactor |
+		(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
+			self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor.
+			aBlock value: aPotentialClassToRefactor ]]
+	! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:15:51'!
+addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inSystem: aSystem
+
+	"Denotative objects are always subclasses of DenotativeObject, so I restrict the search to those clases - Hernan"
+	DenotativeObject class allSubclassesDo: [ :aPotentialClassToRefactor | 
+		self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ].
+! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:20:04'!
+addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor
+	
+	"This is just to be sure that no denotative object is included to rename - Hernan"
+	^(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
+		super addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ]! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 1/7/2019 10:51:35'!
+errorMessageForInvalidImplementors: aCollectionOfInvalidImplementors
+
+	^String streamContents: [ :stream |
+		stream 
+			nextPutAll: (aCollectionOfInvalidImplementors size = 1 ifTrue: [ 'This method' ] ifFalse: [ 'These methods']);
+		 	nextPutAll: ' do not have same the same selector to rename: '.
+		aCollectionOfInvalidImplementors asCommaSeparated: [:anImplementor | anImplementor printTheNonMetaClassAndSelectorOn: stream ] on: stream ] ! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 1/7/2019 10:51:35'!
+errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
+
+	^String streamContents: [ :stream |
+		stream 
+			nextPutAll: 'Message #';
+			nextPutAll: anOldSelector;
+			nextPutAll: ' is not send by: '.
+		aCollectionOfInvalidSenders asCommaSeparated: [:aSender | aSender printTheNonMetaClassAndSelectorOn: stream ] on: stream ] ! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 8/31/2017 15:28:03'!
+errorMessageForNewSelector: aNewSelector implementedInAll: classesImplementingNewSelector
+
+	| denotativeObjectImplementingNewSelector |
+	
+	denotativeObjectImplementingNewSelector := classesImplementingNewSelector collect: [ :aClass | aClass theNonMetaClass ].
+	
+	^'Can not rename because #', aNewSelector, ' is implemented in: ', denotativeObjectImplementingNewSelector asCommaStringAnd ! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 09:16:25'!
+warnImplementionOf: aNewSelector in: aClass willOverrideImplementationIn: aSuperclass
+	
+	(DenotativeObject class includesBehavior: aSuperclass)
+		ifTrue: [ self refactoringWarning: (self warningMessageForRedefinitionOfSystemMessageOf: aNewSelector) ]
+		ifFalse: [ 
+			"I remove the 'class' string from the object name - Hernan"
+			self refactoringWarning: (self warningMessageForImplementationOf: aNewSelector in: aClass theNonMetaClass willOverrideImplementationIn: aSuperclass theNonMetaClass) ].! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 09:20:46'!
+warningMessageForRedefinitionOfSystemMessageOf: aNewSelector
+
+	^aNewSelector, ' is defined in the core system. Overriding it can cause unexpected behavior.'
+	! !
+
+!DenotativeObjectRenameSelector class methodsFor: 'as yet unclassified' stamp: 'HAW 5/2/2020 00:02:39'!
+initialize
+
+	self addAllowedToRefactorClassCompiler: DenotativeObjectCompiler ! !
+
+!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
+errorMessageForInstanceVariable: aName notDefinedIn: aClass
+
+	^ 'Collaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:23:18'!
+classToRenameCanNotBeMetaclassErrorMessage
+	
+	^'Invalid Object to rename'! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
+newNameEqualsOldNameErrorMessage
+	
+	^'New object name equals old one'! !
+
+!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 5/10/2019 12:25:43'!
+newClassPreconditionClass
+
+	^NewDenotativeObjectPrecondition! !
+
+!DenotativeObjectSafelyRemove class methodsFor: 'warnings' stamp: 'HAW 8/1/2018 18:26:06'!
+warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
+
+	^String streamContents: [ :stream |
+		stream nextPutAll: aClassToSafelyRemove name asString.
+		allSubclasses size = 1
+			ifTrue: [ stream nextPutAll: ' has a child' ]
+			ifFalse: [ stream 
+					nextPutAll: ' has ';
+					print:  allSubclasses size;
+					nextPutAll: ' children' ].
+		stream nextPutAll: ' that will be removed'].
+! !
+
+!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:26:52'!
+createRefactoring
+
+	^ DenotativeObjectAddCollaborator named: newInstanceVariable to: classToRefactor.! !
+
+!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:22:34'!
+newVariableNameLabel
+	
+	^'Enter new collaborator name:'! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:24:09'!
+closeBrowser
+	
+	! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 15:44:08'!
+messageSetWindowClass
+		
+	^DenotativeObjectMessageSetWindow ! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/18/2018 16:56:23'!
+refactoringClass
+
+	^DenotativeObjectRenameSelector ! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 3/12/2019 22:26:21'!
+askForImplementosAndSenders
+
+	self 
+		askScope;
+		initializeImplementorsAndSenders;
+		calculateImplementorsAndSenders;
+		createAndApplyRefactoring! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/31/2017 15:39:08'!
+scopeOptionLabels
+
+	"They have to be the same number and in the same order as super. If not, a different way to redefine the scope must be implemented
+	for denotative objects - Hernan"
+	
+	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
+	! !
+
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:29:01'!
+createRefactoring
+
+	^ DenotativeObjectRemoveCollaborator named: variableToRemove from: classToRefactor.! !
+
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:09'!
+selectVariableLabel
+	
+	^'Select collaborator to remove'! !
+
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 4/30/2019 17:14:00'!
+browseReferencesOn: aCanNotRefactorDueToReferencesError
+
+	DenotativeObjectMessageSetWindow
+		openMessageList: aCanNotRefactorDueToReferencesError references
+		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
+		autoSelect: aCanNotRefactorDueToReferencesError referencee  
+! !
+
+!DenotativeObjectRenameApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/8/2017 19:49:48'!
+openChangedMethods
+
+	changes ifNotEmpty: [ 
+		DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newClassName ]
+! !
+
+!DenotativeObjectRenameApplier methodsFor: 'refactoring - creation' stamp: 'HAW 4/4/2018 20:25:33'!
+createRefactoring
+
+	^ DenotativeObjectRename from: classToRename to: newClassName in: Smalltalk undeclared: Undeclared.! !
+
+!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/30/2017 17:29:44'!
+openChangedMethodsWhenChangesNotEmpty 
+
+	DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newInstanceVariable! !
+
+!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:14'!
+selectVariableLabel
+	
+	^'Select collaborator to rename'! !
+
+!DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 4/30/2019 17:12:36'!
+browseReferencesOn: aCanNotRefactorDueToReferencesError
+
+	DenotativeObjectMessageSetWindow
+		openMessageList: aCanNotRefactorDueToReferencesError references
+		label: (self referencesBrowserTitleOn: aCanNotRefactorDueToReferencesError)
+		autoSelect: aCanNotRefactorDueToReferencesError referencee name asString
+! !
+
+!DenotativeObjectSafelyRemoveApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/1/2018 18:12:15'!
+createRefactoring
+		
+	^DenotativeObjectSafelyRemove of: classToRemove ! !
+
+!NewDenotativeObjectPrecondition methodsFor: 'evaluating - private' stamp: 'HAW 5/10/2019 12:32:56'!
+assertNewClassNameStartsWithRightLetter
+
+	newClassName first isLetter ifFalse: [ self signalNewNameMustStartWithRightLetter ]! !
+
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 5/10/2019 12:45:35'!
+errorMessageForAlreadyExistClassNamed: anObjectName
+
+	^'Object named ', anObjectName, ' already exist in the system'! !
+
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:48:06'!
+newClassNameCanNotBeEmptyErrorMessage
+	
+	^'New object name can not be empty'! !
+
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:49:09'!
+newClassNameCanNotHaveSpacesErrorMessage
+	
+	^'New object name can not have spaces'! !
+
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:49:32'!
+newNameMustBeSymbolErrorMessage
+	
+	^'New object name must be a symbol'! !
+
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 5/10/2019 12:32:07'!
+newNameMustStartWithRightLetterErrorMessage
+
+	^'New object name must start with a letter'! !
+
+!DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
+openTestResultWindow
+
+	DenotativeObjectTestResultWindow openFor: testResult
+	! !
+
+!DenotativeObjectTestCase methodsFor: 'converting' stamp: 'HAW 9/10/2017 19:02:44'!
+asMethodReference
+
+	^ (MethodReference class: denotativeObject class selector: realTestSelector)
+		recalculateStringVersionForDenotativeObject;
+		yourself.! !
+
+!DenotativeObjectTestCase methodsFor: 'running' stamp: 'HAW 8/22/2022 11:42:42'!
+debug
+
+	| debugger |
+	
+	debugger := nil.
+
+	[ self setUpResources.
+
+	[self runCase] ensure: [self tearDownResources]]
+		on: Error
+		do: [ :anError |
+				self inform: anError printString.
+				(debugger notNil and: [ debugger inStep ])
+					ifTrue: [ anError pass ]
+					ifFalse: [
+						| activeProcess toDebugContext  |
+
+						debugger notNil ifTrue: [ debugger triggerEvent: #closeViews ].
+
+						activeProcess := Processor activeProcess.
+						debugger := DenotativeObjectDebugger new.
+						toDebugContext := thisContext.
+						[toDebugContext notNil and: [(toDebugContext receiver isKindOf: DenotativeObject class) not] ] whileTrue: [ toDebugContext := toDebugContext sender ].
+						toDebugContext isNil 
+							ifTrue: [ anError pass ]
+							ifFalse: [
+								debugger process: activeProcess context: toDebugContext.
+								debugger openWindowLabel: anError printString usePreDebugWindow: false preDebugMessage: nil.
+								activeProcess suspend ]	
+						] ]
+! !
+
+!DenotativeObjectTestCase methodsFor: 'running' stamp: 'HAW 7/19/2017 21:51:34'!
+debugAsFailureIfCanNot: handler
+
+	self ifCanNotDebugDo: [ ^handler value].
+
+	self runCaseAsFailure! !
+
+!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:28'!
+denotativeObject
+
+	^ denotativeObject.! !
+
+!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:16'!
+methodForTest
+
+	^ denotativeObject class lookupSelector: realTestSelector.! !
+
+!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:25'!
+realTest: aCompiledMethod
+
+	denotativeObject := aCompiledMethod methodClass soleInstance.
+	realTestSelector := aCompiledMethod selector.! !
+
+!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 7/14/2017 20:18:46'!
+realTestSelector
+
+	^realTestSelector ! !
+
+!DenotativeObjectTestCase methodsFor: 'initialization' stamp: 'HAW 9/10/2017 19:02:11'!
+initializeFor: aClass test: aMethod
+
+	denotativeObject := aClass.
+	testMethod := aMethod.! !
+
+!DenotativeObjectTestCase methodsFor: 'testing' stamp: 'HAW 9/10/2017 19:02:31'!
+isSameAs: aTestCase
+
+	^ denotativeObject = aTestCase denotativeObject and: [ realTestSelector = aTestCase realTestSelector ].! !
+
+!DenotativeObjectTestCase methodsFor: 'private' stamp: 'HAW 8/22/2022 12:36:45'!
+openDebuggerOnFailingTestMethod
+
+	DenotativeObjectDebugger
+		openDebugging: [
+			[ self performTest ] ensure: [
+			self tearDown.
+			self tearDownResources.]]
+		to: self methodForTest
+		label: 'Debug failed test ', self printString.
+		
+	! !
+
+!DenotativeObjectTestCase methodsFor: 'exceptions' stamp: 'HAW 7/29/2017 19:30:14'!
+signalFailure: aString
+
+	failureString _ aString.
+	Error signal: aString 
+	! !
+
+!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/6/2018 09:53:25'!
+performRealTest
+
+	[ denotativeObject perform: realTestSelector ]
+		on: MessageNotUnderstood
+		do: [ :aMNU |
+			(aMNU receiver = denotativeObject and: [ self respondsTo: aMNU message selector ])
+				ifTrue: [ aMNU message sendTo: self ]
+				ifFalse: [ aMNU pass ]].! !
+
+!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/5/2018 09:46:38'!
+setUp
+
+	denotativeObject setUp! !
+
+!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/5/2018 09:49:42'!
+tearDown
+
+	denotativeObject tearDown! !
+
+!DenotativeObjectTestCase class methodsFor: 'instance creation' stamp: 'HAW 4/6/2018 09:53:14'!
+for: aCompiledMethod
+
+	| test |
+
+	test := super selector: #performRealTest.
+	test realTest: aCompiledMethod.
+
+	^test! !
+
+!DenotativeObjectRenameMethodApplierTest methodsFor: 'tests' stamp: 'HAW 8/15/2018 11:59:44'!
+test01ScopeOptionsAreTheSame
+
+	self
+		assert: DenotativeObjectRenameSelectorApplier new scopeOptionLabels size
+		equals: DenotativeObjectRenameSelectorApplier superclass new scopeOptionLabels size.! !
+
+!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 2/21/2019 16:36:56'!
+test01IsDenotativeObjectNamedReturnsTrueForADenotativeObject
+
+	self assert: (Smalltalk isDenotativeObjectNamed: Assert name) ! !
+
+!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 2/21/2019 16:37:14'!
+test02IsDenotativeObjectNamedReturnsFalseForANoDenotativeObject
+
+	self deny: (Smalltalk isDenotativeObjectNamed: Object name) ! !
+
+!ZeroDivideExtentionsTest methodsFor: 'tests' stamp: 'HAW 9/29/2020 18:03:10'!
+testMessageTextWithFraction
+
+	self 
+		should: [Fraction new setNumerator: 20 denominator: 0]
+		raise: ZeroDivide 
+		withMessageText: (ZeroDivide canNotDivideByZeroErrorDescription: 20)! !
+
+!ZeroDivideExtentionsTest methodsFor: 'tests' stamp: 'HAW 9/29/2020 18:02:52'!
+testMessageTextWithNumbers
+
+	self 
+		should: [10/0]
+		raise: ZeroDivide 
+		withMessageText: (ZeroDivide canNotDivideByZeroErrorDescription: 10)! !
 
 !Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:51:46'!
 isEqualTo: aDenotativeObject
@@ -4796,6 +4381,183 @@ isNotIdenticalTo: aDenotativeObject
 morphIfDenotativeObjectMorph
 
 	^self! !
+
+!CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 8/30/2017 18:19:32'!
+printTheNonMetaClassAndSelectorOn: aStream 
+	
+	aStream 
+		print: self methodClass theNonMetaClass; 
+		nextPutAll: '>>'; 
+		nextPutAll: self selector storeString! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:49'!
+asMessage
+
+	^self asMessageWithAll: #()! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:54'!
+asMessageWith: aCollaborator
+
+	^self asMessageWithAll: (Array with: aCollaborator)! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:59'!
+asMessageWithAll: aCollaborators
+
+	^Message selector: self asSymbol arguments: aCollaborators ! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:03'!
+sendTo: aReceiver
+
+	^self asMessage sendTo: aReceiver ! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:08'!
+sendTo: aReceiver with: aCollaborator
+
+	^(self asMessageWith: aCollaborator) sendTo: aReceiver ! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:12'!
+sendTo: aReceiver withAll: aCollaborators
+
+	^(self asMessageWithAll: aCollaborators) sendTo: aReceiver ! !
+
+!Symbol methodsFor: '*DenotativeObject' stamp: 'jmv 7/29/2024 14:55:12'!
+isTestSelector
+	^TestCase isTestSelector: self! !
+
+!UnicodeSymbol methodsFor: '*DenotativeObject' stamp: 'jmv 7/29/2024 14:55:23'!
+isTestSelector
+	^TestCase isTestSelector: self! !
+
+!SystemDictionary methodsFor: '*DenotativeObject' stamp: 'HAW 2/21/2019 16:35:05'!
+isDenotativeObjectNamed: aName
+
+	^(self classNamed: aName) is: #DenotativeObject! !
+
+!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:00:03'!
+dividend
+
+	^ arguments size = 1 ifTrue: [ receiver ] ifFalse: [ arguments first ]! !
+
+!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:01:40'!
+messageText
+
+	^self class canNotDivideByZeroErrorDescription: self dividend! !
+
+!ZeroDivide class methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:02:37'!
+canNotDivideByZeroErrorDescription: dividend
+
+	^ dividend printString, ' can not be divided by 0'! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:09:04'!
+addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
+
+	labels add: 'declare block-local temp'.
+	actions add: [ parser declareTemp: name at: #block ].
+			
+	labels add: 'declare method temp'.
+	actions add: [ parser declareTemp: name at: #method ].
+			
+	parser canDeclareInstanceVariable ifTrue: [
+		labels add: 'declare collaborator'.
+		actions add: [ parser declareInstVar: name ]].
+	
+	labels add: 'define new denotative object'.
+	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
+
+! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 16:18:06'!
+addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
+
+	labels add: 'define new denotative object'.
+	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
+	
+	labels add: 'declare global'.
+	actions add: [ parser declareGlobal: name ].
+
+! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 14:42:30'!
+defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
+ 
+	| newClass |
+
+	newClass := DenotativeObject
+		subclass: anObjectName asSymbol
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: aDenotativeObjectBrowser selectedSystemCategoryName.
+		
+	aDenotativeObjectBrowser changed: #classList.
+	
+	^parser encoder
+		global: (Smalltalk associationAt: newClass name)
+		name: newClass name
+		! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:08:55'!
+handleForDenotativeObjectIn: aDenotativeObjectBrowser
+
+	| alternatives labels actions lines caption choice |
+	
+	alternatives := parser possibleVariablesFor: name.
+	labels := OrderedCollection new.
+	actions := OrderedCollection new.
+	lines := OrderedCollection new.
+
+	name first isLowercase
+		ifTrue: [ self addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ]
+		ifFalse: [ self addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ].
+
+	lines add: labels size.
+	alternatives do: [ :each |
+		labels add: each.
+		actions add: [ parser substituteVariable: each atInterval: interval ]].
+	
+	lines add: labels size.
+	labels add: 'cancel'.
+	
+	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
+	choice := (PopUpMenu labelArray: labels lines: lines) startUpWithCaption: caption.
+	
+	self resume: (actions at: choice ifAbsent: [ ]).
+
+! !
+
+!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:12'!
+weatherClearIcon
+
+	^ self fetch: #( '16x16' 'status' 'weather-clear' )
+! !
+
+!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:09'!
+weatherOvercastIcon
+
+	^ self fetch: #( '16x16' 'status' 'weather-overcast' )
+! !
+
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/20/2017 10:41:58'!
+allRealInstances
+	
+	^super allInstances ! !
+
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 22:06:25'!
+compilerClass
+
+	^(thisClass is: #DenotativeObject) 
+		ifTrue: [ DenotativeObjectCompiler ]
+		ifFalse: [ super compilerClass ]! !
+
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 2/19/2019 17:53:31'!
+typeName
+
+	"The only downside of this implementation is that when not working in a Denotative Object Browser, it will show
+	the messages as DenotativeObject instead of DenotativeObject class - Hernan"
+	
+	^(self soleInstance includesBehavior: DenotativeObject)
+		ifTrue: [ self soleInstance name ]
+		ifFalse: [ self name ]! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 6/17/2019 19:56:57'!
 compile: aString receiver: receiver in: evalContext
@@ -4975,175 +4737,6 @@ stringToEvalSending: aSymbol to: aDenotativeObject onCancel: aCancelBlock
 						nextPutAll: ') ' ]]]
 					
 	! !
-
-!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/20/2017 10:41:58'!
-allRealInstances
-	
-	^super allInstances ! !
-
-!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 22:06:25'!
-compilerClass
-
-	^(thisClass is: #DenotativeObject) 
-		ifTrue: [ DenotativeObjectCompiler ]
-		ifFalse: [ super compilerClass ]! !
-
-!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 2/19/2019 17:53:31'!
-typeName
-
-	"The only downside of this implementation is that when not working in a Denotative Object Browser, it will show
-	the messages as DenotativeObject instead of DenotativeObject class - Hernan"
-	
-	^(self soleInstance includesBehavior: DenotativeObject)
-		ifTrue: [ self soleInstance name ]
-		ifFalse: [ self name ]! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:49'!
-asMessage
-
-	^self asMessageWithAll: #()! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:54'!
-asMessageWith: aCollaborator
-
-	^self asMessageWithAll: (Array with: aCollaborator)! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:59'!
-asMessageWithAll: aCollaborators
-
-	^Message selector: self asSymbol arguments: aCollaborators ! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:03'!
-sendTo: aReceiver
-
-	^self asMessage sendTo: aReceiver ! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:08'!
-sendTo: aReceiver with: aCollaborator
-
-	^(self asMessageWith: aCollaborator) sendTo: aReceiver ! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:12'!
-sendTo: aReceiver withAll: aCollaborators
-
-	^(self asMessageWithAll: aCollaborators) sendTo: aReceiver ! !
-
-!CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 8/30/2017 18:19:32'!
-printTheNonMetaClassAndSelectorOn: aStream 
-	
-	aStream 
-		print: self methodClass theNonMetaClass; 
-		nextPutAll: '>>'; 
-		nextPutAll: self selector storeString! !
-
-!SystemDictionary methodsFor: '*DenotativeObject' stamp: 'HAW 2/21/2019 16:35:05'!
-isDenotativeObjectNamed: aName
-
-	^(self classNamed: aName) is: #DenotativeObject! !
-
-!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:00:03'!
-dividend
-
-	^ arguments size = 1 ifTrue: [ receiver ] ifFalse: [ arguments first ]! !
-
-!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:01:40'!
-messageText
-
-	^self class canNotDivideByZeroErrorDescription: self dividend! !
-
-!ZeroDivide class methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:02:37'!
-canNotDivideByZeroErrorDescription: dividend
-
-	^ dividend printString, ' can not be divided by 0'! !
-
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:09:04'!
-addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
-
-	labels add: 'declare block-local temp'.
-	actions add: [ parser declareTemp: name at: #block ].
-			
-	labels add: 'declare method temp'.
-	actions add: [ parser declareTemp: name at: #method ].
-			
-	parser canDeclareInstanceVariable ifTrue: [
-		labels add: 'declare collaborator'.
-		actions add: [ parser declareInstVar: name ]].
-	
-	labels add: 'define new denotative object'.
-	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
-
-! !
-
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 16:18:06'!
-addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
-
-	labels add: 'define new denotative object'.
-	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
-	
-	labels add: 'declare global'.
-	actions add: [ parser declareGlobal: name ].
-
-! !
-
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 14:42:30'!
-defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
- 
-	| newClass |
-
-	newClass := DenotativeObject
-		subclass: anObjectName asSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: aDenotativeObjectBrowser selectedSystemCategoryName.
-		
-	aDenotativeObjectBrowser changed: #classList.
-	
-	^parser encoder
-		global: (Smalltalk associationAt: newClass name)
-		name: newClass name
-		! !
-
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:08:55'!
-handleForDenotativeObjectIn: aDenotativeObjectBrowser
-
-	| alternatives labels actions lines caption choice |
-	
-	alternatives := parser possibleVariablesFor: name.
-	labels := OrderedCollection new.
-	actions := OrderedCollection new.
-	lines := OrderedCollection new.
-
-	name first isLowercase
-		ifTrue: [ self addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ]
-		ifFalse: [ self addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ].
-
-	lines add: labels size.
-	alternatives do: [ :each |
-		labels add: each.
-		actions add: [ parser substituteVariable: each atInterval: interval ]].
-	
-	lines add: labels size.
-	labels add: 'cancel'.
-	
-	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
-	choice := (PopUpMenu labelArray: labels lines: lines) startUpWithCaption: caption.
-	
-	self resume: (actions at: choice ifAbsent: [ ]).
-
-! !
-
-!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:12'!
-weatherClearIcon
-
-	^ self fetch: #( '16x16' 'status' 'weather-clear' )
-! !
-
-!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:09'!
-weatherOvercastIcon
-
-	^ self fetch: #( '16x16' 'status' 'weather-overcast' )
-! !
 
 !MethodReference methodsFor: '*DenotativeObject' stamp: 'HAW 7/28/2017 19:48:44'!
 recalculateStringVersionForDenotativeObject
