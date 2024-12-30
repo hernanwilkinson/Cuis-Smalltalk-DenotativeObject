@@ -1,6 +1,6 @@
-'From Cuis7.1 [latest update: #6578] on 10 August 2024 at 4:35:53 pm'!
-'Description Udated to Cuis 7.1'!
-!provides: 'DenotativeObject' 1 113!
+'From Cuis7.3 [latest update: #6959] on 30 December 2024 at 8:14:51 pm'!
+'Description Udated to Cuis 7.3'!
+!provides: 'DenotativeObject' 1 114!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #DenotativeObject!
@@ -2209,10 +2209,10 @@ withSelectedCategoryNameDo: aBlock
 		ifNotNil: aBlock 
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 2/21/2019 16:37:48'!
-defaultClassList
+!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 12/30/2024 18:01:02'!
+basicClassList
 
-	^super defaultClassList select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ] ! !
+	^super basicClassList select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ] ! !
 
 !DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:23:05'!
 debugMethodTest
@@ -3005,7 +3005,41 @@ buildMorphicClassColumnWith: aClassList
 	
 	^column! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'jmv 6/4/2024 15:54:44'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/30/2024 18:51:54'!
+buildMorphicClassList
+
+	^(PluggableListMorph
+		withModel: model
+		listGetter: #classList
+		indexGetter: #classListIndex
+		indexSetter: #classListIndex:)
+			menuNshortcutsKey: #denotativeObjectClassListMenuSpec;
+			doubleClickSelector: #browseMethodFull.! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/30/2024 19:04:13'!
+buildMorphicMessageCatList
+
+	^(PluggableListMorph
+		withModel: model
+		listGetter: #messageCategoryList
+		indexGetter: #messageCategoryListIndex
+		indexSetter: #messageCategoryListIndex:)
+			menuNshortcutsKey: #denotativeObjectMessageCatListMenuSpec.
+! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/30/2024 19:00:07'!
+buildMorphicMessageList
+	"Build a morphic message list, with #messageList as its list-getter"
+
+	^(PluggableListMorph
+		withModel: model
+		listGetter: #messageList
+		indexGetter: #messageListIndex
+		indexSetter: #messageListIndex:)
+			menuNshortcutsKey: #denotativeObjectMessageListMenuSpec;
+			doubleClickSelector: #browseMethodFull.! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/30/2024 18:40:31'!
 buildMorphicSystemCategoryList
 
 	^(PluggableListMorph
@@ -3013,7 +3047,7 @@ buildMorphicSystemCategoryList
 		listGetter: #systemCategoryList
 		indexGetter: #systemCategoryListIndex
 		indexSetter: #systemCategoryListIndex:)
-			menuNshortcutsKey: #systemCategoriesListMenuSpec.! !
+			menuNshortcutsKey: #denotativeObjectSystemCategoriesListMenuSpec.! !
 
 !DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:22:49'!
 optionalButtonTuples
@@ -3021,11 +3055,12 @@ optionalButtonTuples
 	^self class optionalButtonTuples
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 6/4/2024 17:35:40'!
-classListMenuSpec
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 18:52:34'!
+denotativeObjectClassListMenuSpec
 	"Spec for the menu and shortcut keys for the class list.
 	See coment at Morph >> #getMenu
 	"
+	
 	^#(
 		#(0 		'Objects' 					false)),
 		self morphMenuItemsSpec,
@@ -3053,8 +3088,29 @@ classListMenuSpec
 		#(230		'create class' 									nil 	model 			createClass 										morphsIcon)
 	)! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/30/2024 14:15:05'!
-messageListMenuSpec
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 19:05:36'!
+denotativeObjectMessageCatListMenuSpec
+	"Spec for the menu and shortcut keys for the method categories list.
+	See coment at Morph >> #getMenu
+	"
+	^#(
+		#(0 		'Message Categories' 			false)
+		#(10	'File Out (o)' 						$o 	model 		fileOutMessageCategories 				fileOutIcon)
+		#(20 	'-----')
+		#(30	'Reorganize (r)' 					$r 	model 		editMessageCategories 				sendReceiveIcon)
+		#(40	'Alphabetize (a)' 					$a 	model 		alphabetizeMessageCategories 		fontXGenericIcon)
+		#(50	'Remove empty Categories (e)' 	$e 	model 		removeEmptyCategories 				listRemoveIcon)
+		#(60	'Categorize all Uncategorized (c)' 	$c 	model 		categorizeAllUncategorizedMethods 	packageIcon)
+		#(70	'New Category... (n)' 				$n 	model 		addCategory 							newIcon)
+		#(90 	'-----')
+		#(110	'Rename... (R)' 					$R 	model 		renameCategory 						saveAsIcon)
+		#(120	'Remove (x)' 					$x 	model 		removeMessageCategory 				deleteIcon)
+		#(130 	'-----')
+		#(140	'Run Tests (t)' 					$t 	model 		runMessageCategoryTests 			weatherFewCloudsIcon)
+	)! !
+
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 19:00:13'!
+denotativeObjectMessageListMenuSpec
 	"Spec for the menu and shortcut keys for the messages list.
 	See coment at Morph >> #getMenu
 	"
@@ -3082,6 +3138,26 @@ messageListMenuSpec
 	)
 	! !
 
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 18:42:05'!
+denotativeObjectSystemCategoriesListMenuSpec
+	"Spec for the menu and shortcut keys for the system categories list.
+	See coment at Morph >> #getMenu
+	"
+	
+	^#(
+		#(0 		'Categories' 					false)
+		#(10		'find object... (f)' 						$f 	window 			findClass 									findIcon)
+		#(20		'recent objects... (r)' 						$r 	model 			recent 									clockIcon)
+		#(30 		'-----')
+		#(40		'fileOut (o)' 						$o 	model 			fileOutSystemCategory 									fileOutIcon)
+		#(50		'fileIn' 						nil 	model 			fileInSystemCategory 									scriptIcon)
+		#(60 		'-----')
+		#(70		'rename...' 						nil 	model 			renameSystemCategory 									saveAsIcon)
+		#(80		'remove (x)' 						$x 	model 			removeSystemCategory 									deleteIcon)
+		#(90 		'-----')
+		#(100		'Run tests (t)' 						$t 	model 			runSystemCategoryTests 									weatherFewCloudsIcon)
+	)! !
+
 !DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 6/4/2024 17:35:57'!
 morphMenuItemsSpec
 	^(model hasMorphObjectSelected) ifTrue: [
@@ -3097,29 +3173,10 @@ morphMenuItemsSpec
 	ifFalse: [ #() ].
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 6/4/2024 16:00:00'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 18:40:12'!
 systemCatSingletonMenuSpec
 
-	^self systemCategoriesListMenuSpec! !
-
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/19/2024 14:56:57'!
-systemCategoriesListMenuSpec
-	"Spec for the menu and shortcut keys for the system categories list.
-	See coment at Morph >> #getMenu
-	"
-	^#(
-		#(0 		'Categories' 					false)
-		#(10		'find object... (f)' 						$f 	window 			findClass 									findIcon)
-		#(20		'recent objects... (r)' 						$r 	model 			recent 									clockIcon)
-		#(30 		'-----')
-		#(40		'fileOut (o)' 						$o 	model 			fileOutSystemCategory 									fileOutIcon)
-		#(50		'fileIn' 						nil 	model 			fileInSystemCategory 									scriptIcon)
-		#(60 		'-----')
-		#(70		'rename...' 						nil 	model 			renameSystemCategory 									saveAsIcon)
-		#(80		'remove (x)' 						$x 	model 			removeSystemCategory 									deleteIcon)
-		#(90 		'-----')
-		#(100		'Run tests (t)' 						$t 	model 			runSystemCategoryTests 									weatherFewCloudsIcon)
-	)! !
+	^self denotativeObjectSystemCategoriesListMenuSpec! !
 
 !DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:54:38'!
 browseAllAccessesTo: aVar from: aClass
