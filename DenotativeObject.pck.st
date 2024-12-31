@@ -1,6 +1,6 @@
-'From Cuis7.3 [latest update: #6959] on 30 December 2024 at 8:14:51 pm'!
-'Description Udated to Cuis 7.3'!
-!provides: 'DenotativeObject' 1 114!
+'From Cuis7.3 [latest update: #6960] on 31 December 2024 at 7:05:14 pm'!
+'Description Udated to Cuis 7.3 - Menu changes'!
+!provides: 'DenotativeObject' 1 115!
 !requires: 'Theme-Themes' 1 2 nil!
 !requires: 'LiveTyping' 1 5 nil!
 SystemOrganization addCategory: #DenotativeObject!
@@ -3775,7 +3775,7 @@ renameSelectorFor: aSelector in: aClassToRefactor
 
 	DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [DenotativeObjectRenameSelectorApplier on: model textProvider for: aSelector in: aClassToRefactor ]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/29/2024 14:48:01'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/31/2024 18:17:20'!
 defaultMenuSpec
 	"Spec for the menu and shortcut keys for the regular text editors.
 	See coment at Morph >> #getMenu
@@ -3791,7 +3791,6 @@ defaultMenuSpec
 					'Inspect via Object Explorer')
 		#(70		'Debug it (D)' 							$D 	editor 			debugIt 						debugIcon
 					'Debug it')
-		#(80		'Profile it' 							nil 	editor 			profileIt 						clockIcon)
 		#(90 		'-----')
 		#(100		'Edit' 							nil 	nil 			1000 						textEditorIcon)
 		#(110 		'-----')
@@ -3800,10 +3799,8 @@ defaultMenuSpec
 		#(150		'Implementors of it (m)' 							$m 	editor 			implementorsOfIt 						developmentIcon 							'Implementors of it (selection is a message selector or cursor is over a class-list or message-list)')
 		#(160		'References to it (N)' 							$N 	editor 			referencesToIt 						addressBookIcon 							'References to it (selection is a class name, or cursor is over a class-list or message-list)')
 		#(170 		'-----')
-		#(180		'LiveTyping' 							nil 	nil 			2000 						acceptIcon)
-		#(190 		'-----')
 		#(200		'Rename... (R)' 							$R 	editor 			contextualRename 						saveAsIcon 							'Renames what is under cursor')
-		#(210		'Extract Method... (K)' 							$K 	editor 			extractMethod 						saveAsIcon 							'Extracts the selected code as a method')
+		#(203		'Extract Method... (K)' 							$K 	editor 			extractMethod 						saveAsIcon 							'Extracts the selected code as a method')
 		#(220		'Accept (s)' 							$s 	editor 			acceptContents 						acceptIcon)
 		#(230		'Cancel (l)' 							$l 	editor 			cancelEdits 						cancelIcon)
 		#(240 		'-----')
@@ -3811,7 +3808,7 @@ defaultMenuSpec
 		#(260		'Accept, Send and Inspect (e)' 									$e 	editor 			acceptSendAndInspect 								weatherFewCloudsIcon)
 		#(270		'Accept and Debug (r)' 									$r 	editor 			acceptAndDebugTest 								weatherFewCloudsIcon)
 		#(280		'Accept, Debug and Inspect (q)' 									$q 	editor 			acceptDebugAndInspect 								weatherFewCloudsIcon)
-		#(200		'Accept and Run Test in Category (y)' 									$y 	editor 			acceptAndTestAll 								weatherFewCloudsIcon)
+		#(290		'Accept and Run Test in Category (y)' 									$y 	editor 			acceptAndTestAll 								weatherFewCloudsIcon)
 		#(300		'Next test name (Y)' 									$Y 	editor 			nextTestName 								weatherFewCloudsIcon)
 
 		" 'Edit' SubMenu"
