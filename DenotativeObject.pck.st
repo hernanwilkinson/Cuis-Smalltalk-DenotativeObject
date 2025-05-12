@@ -1,8 +1,6 @@
-'From Cuis7.3 [latest update: #6960] on 31 December 2024 at 7:05:14 pm'!
-'Description Udated to Cuis 7.3 - Menu changes'!
-!provides: 'DenotativeObject' 1 115!
-!requires: 'Theme-Themes' 1 2 nil!
-!requires: 'LiveTyping' 1 5 nil!
+'From Cuis7.3 [latest update: #7146] on 12 May 2025 at 11:41:23 am'!
+'Description No requierements but the really need ones'!
+!provides: 'DenotativeObject' 1 116!
 SystemOrganization addCategory: #DenotativeObject!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-Meta'!
@@ -353,16 +351,6 @@ AddInstanceVariable subclass: #DenotativeObjectAddCollaborator
 DenotativeObjectAddCollaborator class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectRenameSelector category: #'DenotativeObject-Refactorings'!
-RenameSelector subclass: #DenotativeObjectRenameSelector
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRenameSelector class' category: #'DenotativeObject-Refactorings'!
-DenotativeObjectRenameSelector class
-	instanceVariableNames: ''!
-
 !classDefinition: #DenotativeObjectRemoveCollaborator category: #'DenotativeObject-Refactorings'!
 RemoveInstanceVariable subclass: #DenotativeObjectRemoveCollaborator
 	instanceVariableNames: ''
@@ -393,6 +381,16 @@ SafelyRemoveClass subclass: #DenotativeObjectSafelyRemove
 DenotativeObjectSafelyRemove class
 	instanceVariableNames: ''!
 
+!classDefinition: #DenotativeObjectRenameSelector category: #'DenotativeObject-Refactorings'!
+RenameSelector subclass: #DenotativeObjectRenameSelector
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRenameSelector class' category: #'DenotativeObject-Refactorings'!
+DenotativeObjectRenameSelector class
+	instanceVariableNames: ''!
+
 !classDefinition: #DenotativeObjectAddCollaboratorApplier category: #'DenotativeObject-Refactorings'!
 AddInstanceVariableApplier subclass: #DenotativeObjectAddCollaboratorApplier
 	instanceVariableNames: ''
@@ -401,16 +399,6 @@ AddInstanceVariableApplier subclass: #DenotativeObjectAddCollaboratorApplier
 	category: 'DenotativeObject-Refactorings'!
 !classDefinition: 'DenotativeObjectAddCollaboratorApplier class' category: #'DenotativeObject-Refactorings'!
 DenotativeObjectAddCollaboratorApplier class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectRenameSelectorApplier category: #'DenotativeObject-Refactorings'!
-RenameSelectorApplier subclass: #DenotativeObjectRenameSelectorApplier
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Refactorings'!
-!classDefinition: 'DenotativeObjectRenameSelectorApplier class' category: #'DenotativeObject-Refactorings'!
-DenotativeObjectRenameSelectorApplier class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectRemoveCollaboratorApplier category: #'DenotativeObject-Refactorings'!
@@ -451,6 +439,16 @@ SafelyRemoveClassApplier subclass: #DenotativeObjectSafelyRemoveApplier
 	category: 'DenotativeObject-Refactorings'!
 !classDefinition: 'DenotativeObjectSafelyRemoveApplier class' category: #'DenotativeObject-Refactorings'!
 DenotativeObjectSafelyRemoveApplier class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectRenameSelectorApplier category: #'DenotativeObject-Refactorings'!
+RenameSelectorApplier subclass: #DenotativeObjectRenameSelectorApplier
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Refactorings'!
+!classDefinition: 'DenotativeObjectRenameSelectorApplier class' category: #'DenotativeObject-Refactorings'!
+DenotativeObjectRenameSelectorApplier class
 	instanceVariableNames: ''!
 
 !classDefinition: #NewDenotativeObjectPrecondition category: #'DenotativeObject-Refactorings'!
@@ -3998,6 +3996,40 @@ errorMessageForNewVariable: newVariable willBeHiddenAtAll: methods
 			nextPutAll: ' can not be named as temporary/collaborator in '.
 		methods asCommaSeparated: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] on: stream ]! !
 
+!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
+errorMessageForInstanceVariable: aName notDefinedIn: aClass
+
+	^ 'Collaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:23:18'!
+classToRenameCanNotBeMetaclassErrorMessage
+	
+	^'Invalid Object to rename'! !
+
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
+newNameEqualsOldNameErrorMessage
+	
+	^'New object name equals old one'! !
+
+!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 5/10/2019 12:25:43'!
+newClassPreconditionClass
+
+	^NewDenotativeObjectPrecondition! !
+
+!DenotativeObjectSafelyRemove class methodsFor: 'warnings' stamp: 'HAW 8/1/2018 18:26:06'!
+warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
+
+	^String streamContents: [ :stream |
+		stream nextPutAll: aClassToSafelyRemove name asString.
+		allSubclasses size = 1
+			ifTrue: [ stream nextPutAll: ' has a child' ]
+			ifFalse: [ stream 
+					nextPutAll: ' has ';
+					print:  allSubclasses size;
+					nextPutAll: ' children' ].
+		stream nextPutAll: ' that will be removed'].
+! !
+
 !DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
 	
@@ -4081,40 +4113,6 @@ initialize
 
 	self addAllowedToRefactorClassCompiler: DenotativeObjectCompiler ! !
 
-!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
-errorMessageForInstanceVariable: aName notDefinedIn: aClass
-
-	^ 'Collaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
-
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:23:18'!
-classToRenameCanNotBeMetaclassErrorMessage
-	
-	^'Invalid Object to rename'! !
-
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
-newNameEqualsOldNameErrorMessage
-	
-	^'New object name equals old one'! !
-
-!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 5/10/2019 12:25:43'!
-newClassPreconditionClass
-
-	^NewDenotativeObjectPrecondition! !
-
-!DenotativeObjectSafelyRemove class methodsFor: 'warnings' stamp: 'HAW 8/1/2018 18:26:06'!
-warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
-
-	^String streamContents: [ :stream |
-		stream nextPutAll: aClassToSafelyRemove name asString.
-		allSubclasses size = 1
-			ifTrue: [ stream nextPutAll: ' has a child' ]
-			ifFalse: [ stream 
-					nextPutAll: ' has ';
-					print:  allSubclasses size;
-					nextPutAll: ' children' ].
-		stream nextPutAll: ' that will be removed'].
-! !
-
 !DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:26:52'!
 createRefactoring
 
@@ -4124,39 +4122,6 @@ createRefactoring
 newVariableNameLabel
 	
 	^'Enter new collaborator name:'! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:24:09'!
-closeBrowser
-	
-	! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 15:44:08'!
-messageSetWindowClass
-		
-	^DenotativeObjectMessageSetWindow ! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/18/2018 16:56:23'!
-refactoringClass
-
-	^DenotativeObjectRenameSelector ! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 3/12/2019 22:26:21'!
-askForImplementosAndSenders
-
-	self 
-		askScope;
-		initializeImplementorsAndSenders;
-		calculateImplementorsAndSenders;
-		createAndApplyRefactoring! !
-
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/31/2017 15:39:08'!
-scopeOptionLabels
-
-	"They have to be the same number and in the same order as super. If not, a different way to redefine the scope must be implemented
-	for denotative objects - Hernan"
-	
-	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
-	! !
 
 !DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:29:01'!
 createRefactoring
@@ -4212,6 +4177,39 @@ browseReferencesOn: aCanNotRefactorDueToReferencesError
 createRefactoring
 		
 	^DenotativeObjectSafelyRemove of: classToRemove ! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:24:09'!
+closeBrowser
+	
+	! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 15:44:08'!
+messageSetWindowClass
+		
+	^DenotativeObjectMessageSetWindow ! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/18/2018 16:56:23'!
+refactoringClass
+
+	^DenotativeObjectRenameSelector ! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 3/12/2019 22:26:21'!
+askForImplementosAndSenders
+
+	self 
+		askScope;
+		initializeImplementorsAndSenders;
+		calculateImplementorsAndSenders;
+		createAndApplyRefactoring! !
+
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/31/2017 15:39:08'!
+scopeOptionLabels
+
+	"They have to be the same number and in the same order as super. If not, a different way to redefine the scope must be implemented
+	for denotative objects - Hernan"
+	
+	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
+	! !
 
 !NewDenotativeObjectPrecondition methodsFor: 'evaluating - private' stamp: 'HAW 5/10/2019 12:32:56'!
 assertNewClassNameStartsWithRightLetter
@@ -4436,149 +4434,6 @@ morphIfDenotativeObjectMorph
 
 	^self! !
 
-!CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 8/30/2017 18:19:32'!
-printTheNonMetaClassAndSelectorOn: aStream 
-	
-	aStream 
-		print: self methodClass theNonMetaClass; 
-		nextPutAll: '>>'; 
-		nextPutAll: self selector storeString! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:49'!
-asMessage
-
-	^self asMessageWithAll: #()! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:54'!
-asMessageWith: aCollaborator
-
-	^self asMessageWithAll: (Array with: aCollaborator)! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:59'!
-asMessageWithAll: aCollaborators
-
-	^Message selector: self asSymbol arguments: aCollaborators ! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:03'!
-sendTo: aReceiver
-
-	^self asMessage sendTo: aReceiver ! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:08'!
-sendTo: aReceiver with: aCollaborator
-
-	^(self asMessageWith: aCollaborator) sendTo: aReceiver ! !
-
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:12'!
-sendTo: aReceiver withAll: aCollaborators
-
-	^(self asMessageWithAll: aCollaborators) sendTo: aReceiver ! !
-
-!Symbol methodsFor: '*DenotativeObject' stamp: 'jmv 7/29/2024 14:55:12'!
-isTestSelector
-	^TestCase isTestSelector: self! !
-
-!UnicodeSymbol methodsFor: '*DenotativeObject' stamp: 'jmv 7/29/2024 14:55:23'!
-isTestSelector
-	^TestCase isTestSelector: self! !
-
-!SystemDictionary methodsFor: '*DenotativeObject' stamp: 'HAW 2/21/2019 16:35:05'!
-isDenotativeObjectNamed: aName
-
-	^(self classNamed: aName) is: #DenotativeObject! !
-
-!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:00:03'!
-dividend
-
-	^ arguments size = 1 ifTrue: [ receiver ] ifFalse: [ arguments first ]! !
-
-!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:01:40'!
-messageText
-
-	^self class canNotDivideByZeroErrorDescription: self dividend! !
-
-!ZeroDivide class methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:02:37'!
-canNotDivideByZeroErrorDescription: dividend
-
-	^ dividend printString, ' can not be divided by 0'! !
-
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:09:04'!
-addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
-
-	labels add: 'declare block-local temp'.
-	actions add: [ parser declareTemp: name at: #block ].
-			
-	labels add: 'declare method temp'.
-	actions add: [ parser declareTemp: name at: #method ].
-			
-	parser canDeclareInstanceVariable ifTrue: [
-		labels add: 'declare collaborator'.
-		actions add: [ parser declareInstVar: name ]].
-	
-	labels add: 'define new denotative object'.
-	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
-
-! !
-
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 16:18:06'!
-addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
-
-	labels add: 'define new denotative object'.
-	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
-	
-	labels add: 'declare global'.
-	actions add: [ parser declareGlobal: name ].
-
-! !
-
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 14:42:30'!
-defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
- 
-	| newClass |
-
-	newClass := DenotativeObject
-		subclass: anObjectName asSymbol
-		instanceVariableNames: ''
-		classVariableNames: ''
-		poolDictionaries: ''
-		category: aDenotativeObjectBrowser selectedSystemCategoryName.
-		
-	aDenotativeObjectBrowser changed: #classList.
-	
-	^parser encoder
-		global: (Smalltalk associationAt: newClass name)
-		name: newClass name
-		! !
-
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:08:55'!
-handleForDenotativeObjectIn: aDenotativeObjectBrowser
-
-	| alternatives labels actions lines caption choice |
-	
-	alternatives := parser possibleVariablesFor: name.
-	labels := OrderedCollection new.
-	actions := OrderedCollection new.
-	lines := OrderedCollection new.
-
-	name first isLowercase
-		ifTrue: [ self addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ]
-		ifFalse: [ self addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ].
-
-	lines add: labels size.
-	alternatives do: [ :each |
-		labels add: each.
-		actions add: [ parser substituteVariable: each atInterval: interval ]].
-	
-	lines add: labels size.
-	labels add: 'cancel'.
-	
-	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
-	choice := (PopUpMenu labelArray: labels lines: lines) startUpWithCaption: caption.
-	
-	self resume: (actions at: choice ifAbsent: [ ]).
-
-! !
-
 !Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:12'!
 weatherClearIcon
 
@@ -4590,28 +4445,6 @@ weatherOvercastIcon
 
 	^ self fetch: #( '16x16' 'status' 'weather-overcast' )
 ! !
-
-!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/20/2017 10:41:58'!
-allRealInstances
-	
-	^super allInstances ! !
-
-!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 22:06:25'!
-compilerClass
-
-	^(thisClass is: #DenotativeObject) 
-		ifTrue: [ DenotativeObjectCompiler ]
-		ifFalse: [ super compilerClass ]! !
-
-!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 2/19/2019 17:53:31'!
-typeName
-
-	"The only downside of this implementation is that when not working in a Denotative Object Browser, it will show
-	the messages as DenotativeObject instead of DenotativeObject class - Hernan"
-	
-	^(self soleInstance includesBehavior: DenotativeObject)
-		ifTrue: [ self soleInstance name ]
-		ifFalse: [ self name ]! !
 
 !Browser methodsFor: '*DenotativeObject' stamp: 'HAW 6/17/2019 19:56:57'!
 compile: aString receiver: receiver in: evalContext
@@ -4791,6 +4624,171 @@ stringToEvalSending: aSymbol to: aDenotativeObject onCancel: aCancelBlock
 						nextPutAll: ') ' ]]]
 					
 	! !
+
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/20/2017 10:41:58'!
+allRealInstances
+	
+	^super allInstances ! !
+
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 22:06:25'!
+compilerClass
+
+	^(thisClass is: #DenotativeObject) 
+		ifTrue: [ DenotativeObjectCompiler ]
+		ifFalse: [ super compilerClass ]! !
+
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 2/19/2019 17:53:31'!
+typeName
+
+	"The only downside of this implementation is that when not working in a Denotative Object Browser, it will show
+	the messages as DenotativeObject instead of DenotativeObject class - Hernan"
+	
+	^(self soleInstance includesBehavior: DenotativeObject)
+		ifTrue: [ self soleInstance name ]
+		ifFalse: [ self name ]! !
+
+!CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 8/30/2017 18:19:32'!
+printTheNonMetaClassAndSelectorOn: aStream 
+	
+	aStream 
+		print: self methodClass theNonMetaClass; 
+		nextPutAll: '>>'; 
+		nextPutAll: self selector storeString! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:49'!
+asMessage
+
+	^self asMessageWithAll: #()! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:54'!
+asMessageWith: aCollaborator
+
+	^self asMessageWithAll: (Array with: aCollaborator)! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:59'!
+asMessageWithAll: aCollaborators
+
+	^Message selector: self asSymbol arguments: aCollaborators ! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:03'!
+sendTo: aReceiver
+
+	^self asMessage sendTo: aReceiver ! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:08'!
+sendTo: aReceiver with: aCollaborator
+
+	^(self asMessageWith: aCollaborator) sendTo: aReceiver ! !
+
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:12'!
+sendTo: aReceiver withAll: aCollaborators
+
+	^(self asMessageWithAll: aCollaborators) sendTo: aReceiver ! !
+
+!UnicodeSymbol methodsFor: '*DenotativeObject' stamp: 'jmv 7/29/2024 14:55:23'!
+isTestSelector
+	^TestCase isTestSelector: self! !
+
+!Symbol methodsFor: '*DenotativeObject' stamp: 'jmv 7/29/2024 14:55:12'!
+isTestSelector
+	^TestCase isTestSelector: self! !
+
+!SystemDictionary methodsFor: '*DenotativeObject' stamp: 'HAW 2/21/2019 16:35:05'!
+isDenotativeObjectNamed: aName
+
+	^(self classNamed: aName) is: #DenotativeObject! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:09:04'!
+addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
+
+	labels add: 'declare block-local temp'.
+	actions add: [ parser declareTemp: name at: #block ].
+			
+	labels add: 'declare method temp'.
+	actions add: [ parser declareTemp: name at: #method ].
+			
+	parser canDeclareInstanceVariable ifTrue: [
+		labels add: 'declare collaborator'.
+		actions add: [ parser declareInstVar: name ]].
+	
+	labels add: 'define new denotative object'.
+	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
+
+! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 16:18:06'!
+addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
+
+	labels add: 'define new denotative object'.
+	actions add: [ self defineDenotativeObjectNamed: name in: aDenotativeObjectBrowser ].
+	
+	labels add: 'declare global'.
+	actions add: [ parser declareGlobal: name ].
+
+! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 14:42:30'!
+defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
+ 
+	| newClass |
+
+	newClass := DenotativeObject
+		subclass: anObjectName asSymbol
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: aDenotativeObjectBrowser selectedSystemCategoryName.
+		
+	aDenotativeObjectBrowser changed: #classList.
+	
+	^parser encoder
+		global: (Smalltalk associationAt: newClass name)
+		name: newClass name
+		! !
+
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:08:55'!
+handleForDenotativeObjectIn: aDenotativeObjectBrowser
+
+	| alternatives labels actions lines caption choice |
+	
+	alternatives := parser possibleVariablesFor: name.
+	labels := OrderedCollection new.
+	actions := OrderedCollection new.
+	lines := OrderedCollection new.
+
+	name first isLowercase
+		ifTrue: [ self addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ]
+		ifFalse: [ self addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser ].
+
+	lines add: labels size.
+	alternatives do: [ :each |
+		labels add: each.
+		actions add: [ parser substituteVariable: each atInterval: interval ]].
+	
+	lines add: labels size.
+	labels add: 'cancel'.
+	
+	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
+	choice := (PopUpMenu labelArray: labels lines: lines) startUpWithCaption: caption.
+	
+	self resume: (actions at: choice ifAbsent: [ ]).
+
+! !
+
+!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:00:03'!
+dividend
+
+	^ arguments size = 1 ifTrue: [ receiver ] ifFalse: [ arguments first ]! !
+
+!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:01:40'!
+messageText
+
+	^self class canNotDivideByZeroErrorDescription: self dividend! !
+
+!ZeroDivide class methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:02:37'!
+canNotDivideByZeroErrorDescription: dividend
+
+	^ dividend printString, ' can not be divided by 0'! !
 
 !MethodReference methodsFor: '*DenotativeObject' stamp: 'HAW 7/28/2017 19:48:44'!
 recalculateStringVersionForDenotativeObject
