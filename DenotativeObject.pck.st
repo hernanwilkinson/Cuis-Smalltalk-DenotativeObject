@@ -1,6 +1,6 @@
-'From Cuis7.3 [latest update: #7146] on 12 May 2025 at 11:41:23 am'!
-'Description No requierements but the really need ones'!
-!provides: 'DenotativeObject' 1 116!
+'From Cuis7.3 [latest update: #7146] on 14 May 2025 at 11:57:49 am'!
+'Description fix sent unimplemented messages'!
+!provides: 'DenotativeObject' 1 117!
 SystemOrganization addCategory: #DenotativeObject!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-Meta'!
@@ -10,6 +10,16 @@ SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
 SystemOrganization addCategory: #'DenotativeObject-Tests'!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
 
+
+!classDefinition: #DenotativeObjectLightTheme category: #DenotativeObject!
+ProtoObject subclass: #DenotativeObjectLightTheme
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject'!
+!classDefinition: 'DenotativeObjectLightTheme class' category: #DenotativeObject!
+DenotativeObjectLightTheme class
+	instanceVariableNames: ''!
 
 !classDefinition: #DelegatorBuilder category: #'DenotativeObject-Meta'!
 ProtoObject subclass: #DelegatorBuilder
@@ -159,16 +169,6 @@ DarkTheme subclass: #DenotativeObjectDarkTheme
 	category: 'DenotativeObject'!
 !classDefinition: 'DenotativeObjectDarkTheme class' category: #DenotativeObject!
 DenotativeObjectDarkTheme class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectLightTheme category: #DenotativeObject!
-LightTheme subclass: #DenotativeObjectLightTheme
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectLightTheme class' category: #DenotativeObject!
-DenotativeObjectLightTheme class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectBuilder category: #DenotativeObject!
@@ -511,6 +511,48 @@ TestCase subclass: #ZeroDivideExtentionsTest
 ZeroDivideExtentionsTest class
 	instanceVariableNames: ''!
 
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 10/9/2019 11:21:58'!
+debugger
+
+	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:12'!
+finderSearchBarResultsColor
+	"Answer the FinderSearchBar color."
+
+	^ `Color veryVeryLightGray`! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:20'!
+finderSearchBarSearchBoxColor
+	"Answer the FinderSearchBar results color."
+
+	^ self textPane.! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:26'!
+finderSearchBarToolbarButtonColor
+	"Answer the FinderSearchBar toolbar button color."
+
+	^ `Color veryLightGray`.! !
+
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:32'!
+finderSearchBarToolbarColor
+	"Answer the FinderSearchBar toolbar button color."
+
+	^ `Color veryVeryLightGray`! !
+
+!DenotativeObjectLightTheme methodsFor: 'private - shout mappings' stamp: 'HAW 10/9/2019 11:21:58'!
+pseudoVariables
+
+	^ (OrderedCollection withAll: super pseudoVariables) 
+		add: #parent;
+		asArray! !
+
+!DenotativeObjectLightTheme class methodsFor: 'icons by menu' stamp: 'HAW 10/9/2019 11:21:58'!
+addBasicIconsTo: aCollectorCollection
+
+	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
+! !
 
 !DelegatorBuilder methodsFor: 'building' stamp: 'HAW 9/10/2017 18:14:21'!
 doesNotUnderstand: aMessage
@@ -1838,48 +1880,6 @@ pseudoVariables
 	^ (OrderedCollection withAll: super pseudoVariables) 
 		add: #parent;
 		asArray! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 10/9/2019 11:21:58'!
-debugger
-
-	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:12'!
-finderSearchBarResultsColor
-	"Answer the FinderSearchBar color."
-
-	^ `Color veryVeryLightGray`! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:20'!
-finderSearchBarSearchBoxColor
-	"Answer the FinderSearchBar results color."
-
-	^ self textPane.! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:26'!
-finderSearchBarToolbarButtonColor
-	"Answer the FinderSearchBar toolbar button color."
-
-	^ `Color veryLightGray`.! !
-
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:32'!
-finderSearchBarToolbarColor
-	"Answer the FinderSearchBar toolbar button color."
-
-	^ `Color veryVeryLightGray`! !
-
-!DenotativeObjectLightTheme methodsFor: 'private - shout mappings' stamp: 'HAW 10/9/2019 11:21:58'!
-pseudoVariables
-
-	^ (OrderedCollection withAll: super pseudoVariables) 
-		add: #parent;
-		asArray! !
-
-!DenotativeObjectLightTheme class methodsFor: 'icons by menu' stamp: 'HAW 10/9/2019 11:21:58'!
-addBasicIconsTo: aCollectorCollection
-
-	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
-! !
 
 !DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 1/7/2019 16:23:10'!
 doesClassNameStartWithUppercase: aClassName
@@ -3625,15 +3625,12 @@ testSuiteOf: aDenotativeObject
 
 	^suite! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 10/25/2022 16:24:18'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 5/14/2025 11:43:46'!
 acceptAndDebugTestOr: aBlock
 
 	^self acceptAndWithMethodDo: [ :aPotencialTestMethod |
 		aPotencialTestMethod selector isTestSelector 
-			ifTrue: [
-				(DenotativeObjectTestCase 
-					for: aPotencialTestMethod) 
-					debugAsFailureIfCanNot: [ PopUpMenu inform: TestCase canNotDebugMethodErrorDescription ]]
+			ifTrue: [ (DenotativeObjectTestCase for: aPotencialTestMethod) debugAsFailure]
 			ifFalse: aBlock]! !
 
 !DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 11:06:19'!
@@ -4286,13 +4283,6 @@ debug
 								activeProcess suspend ]	
 						] ]
 ! !
-
-!DenotativeObjectTestCase methodsFor: 'running' stamp: 'HAW 7/19/2017 21:51:34'!
-debugAsFailureIfCanNot: handler
-
-	self ifCanNotDebugDo: [ ^handler value].
-
-	self runCaseAsFailure! !
 
 !DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:28'!
 denotativeObject
