@@ -1,6 +1,6 @@
-'From Cuis7.3 [latest update: #7146] on 14 May 2025 at 11:57:49 am'!
-'Description fix sent unimplemented messages'!
-!provides: 'DenotativeObject' 1 117!
+'From Cuis7.5 [latest update: #7428] on 20 August 2025 at 11:38:11 am'!
+'Description Various changes and fixes'!
+!provides: 'DenotativeObject' 1 118!
 SystemOrganization addCategory: #DenotativeObject!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-Meta'!
@@ -593,14 +593,15 @@ initScopeAndLiteralTables
 	scopeTable removeKey: 'super'.
 	! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:28:34'!
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'FJG 6/4/2025 20:42:41'!
 fileOutInitializerOn: aStream
 
 	super fileOutInitializerOn: aStream.
 	(self class methodDict includesKey: self initializeCollaboratorsFromFileMessageName) ifTrue: [
 		aStream 
 			newLine;
-		 	nextChunkPut: self name , ' ', self initializeAfterFileInMessageName asString.
+		 	nextChunkPut: self name , ' ', self initializeAfterFileInMessageName asString;
+			newLine.
 			
 		self removeInitializeCollaboratorsFromFile ].! !
 
@@ -734,17 +735,6 @@ allReplicantsSelect: aBlock
 
 	^self allReplicants select: aBlock ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:31:54'!
-assertCanReplicate
-	
-	self isReplicant ifTrue: [ self signalCanNotReplicateReplicant ].
-! !
-
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/30/2017 11:04:12'!
-canNotReplicateReplicantErrorMessage
-
-	^ 'Cannot replicate a replicant' ! !
-
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:32:32'!
 isReplicant
 
@@ -761,26 +751,16 @@ replicantNamePrefix
 
 	^'a replicant of '! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/30/2017 11:03:02'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'FJG 4/28/2025 17:27:14'!
 replicate
 	"A replicant is a copy of myself. My replicants and I have our own state but we all share the same behaviour, hence a change of behaviour in any of us will hold for all.
 	
 	Replicants are anonymous"
 	
-	| replicant |
-	
-	self assertCanReplicate.
-	
-	replicant _ self class basicNew copyFrom: self.
-	replicant setName: self replicantNamePrefix , self name.
-	
-	^ replicant.
+	^ (self class basicNew copyFrom: self)
+		setName: self replicantNamePrefix, self originalSibling name;
+		yourself
 	! !
-
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/30/2017 11:04:04'!
-signalCanNotReplicateReplicant
-
-	self error: self canNotReplicateReplicantErrorMessage! !
 
 !DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:58:54'!
 theOriginalDenotativeObject 
@@ -1220,9 +1200,10 @@ doesNotUnderstand: aMessage
 	
 	^self morph perform: aMessage selector withArguments: deproxifiedArguments! !
 
-!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 3/25/2019 20:42:51'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'FJG 3/16/2025 14:48:36'!
 clearMorph
 
+	morph ifNotNil: [ morph delete ].
 	morph := nil! !
 
 !DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 3/26/2019 16:26:00'!
@@ -1256,18 +1237,51 @@ morphIfDenotativeObjectMorph
 
 	^self morph! !
 
-!Light class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:32:29'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'FJG 3/16/2025 16:31:45'!
+replicate
+	"When replicating a DenotativeObjectMorph, its associated morph should also be copied;
+	otherwise the morph will be the same for both the original denotative object and its replicant.
+	-Facu"
+	
+	| replicant |
+
+	replicant := parent replicate.
+	replicant replicateMorph.
+	
+	^ replicant! !
+
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'FJG 3/16/2025 16:32:05'!
+replicateMorph
+	morph := morph copy! !
+
+!Light class methodsFor: 'morph' stamp: 'FJG 3/16/2025 01:46:16'!
 createMorph
 
 	^EllipseMorph new
 		color: Color black;
+		borderWidth: 0;
+		morphExtent: 50@50;
 		yourself! !
 
-!ThreeLightsContainer class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:31:40'!
+!ThreeLightsContainer class methodsFor: 'morph' stamp: 'HAW 8/20/2025 10:04:24'!
+addLight: aLightMorph
+	| innerContainer outerContainer |
+	
+	self findDeepSubmorphThat: [:submorph | submorph == aLightMorph ] ifAbsent: [
+		outerContainer := LinearLayoutMorph newColumn.
+		innerContainer := LinearLayoutMorph newRow.
+		outerContainer addMorph: innerContainer layoutSpec: LayoutSizeSpec new useMorphWidth.
+		
+		innerContainer addMorph: aLightMorph layoutSpec: LayoutSizeSpec keepMorphExtent.
+		
+		self addMorphUseAll: outerContainer.
+	]! !
+
+!ThreeLightsContainer class methodsFor: 'morph' stamp: 'FJG 3/16/2025 14:45:31'!
 createMorph
 
 	^LayoutMorph newColumn
-		morphExtent: 60 @ 130;
+		morphExtent: 60 @ (56 * 3);
 		yourself
 ! !
 
@@ -1881,11 +1895,21 @@ pseudoVariables
 		add: #parent;
 		asArray! !
 
-!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 1/7/2019 16:23:10'!
-doesClassNameStartWithUppercase: aClassName
+!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 8/20/2025 10:13:33'!
+isValidDenotativeObjectName: aSymbol
 
-	"To allow denotative objects to start with lowercase - Hernan"
-	^true! !
+	^ aSymbol notEmpty and: [ aSymbol allSatisfy: [ :character | character isValidInIdentifiers ]]! !
+
+!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 8/20/2025 10:17:58'!
+validateClassName: aSymbol
+	"Validate the new class name"
+
+	(self isValidDenotativeObjectName: aSymbol) ifFalse: [
+		self error: 'Invalid object name'.
+		^ false
+	].
+
+	^ true! !
 
 !DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:10:50'!
 autoCompleterClass
@@ -2193,8 +2217,10 @@ withObjectNameDo: aBlock label: aLabel
 		 		on: Error 
 				do: [:anError | ^self inform: anError messageText ]].! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:23'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'FJG 3/16/2025 02:09:37'!
 withParentNameDo: aBlock
+
+	self selectedClass ifNotNil: [ ^ aBlock value: self selectedClass name ].
 	
 	^self withObjectNameDo: aBlock label: 'Enter parent name' 
 ! !
@@ -2256,7 +2282,7 @@ systemOrganizer: aSystemOrganizer
 	self setClassOrganizer.
 	self editSelection: #none.! !
 
-!DenotativeObjectBrowser methodsFor: 'message functions' stamp: 'HAW 4/8/2024 16:49:25'!
+!DenotativeObjectBrowser methodsFor: 'message functions' stamp: 'FJG 3/9/2025 19:04:28'!
 defineMessageFrom: aString notifying: aRequestor
 
 	| selectedMessageName selector category oldMessageList |
@@ -2273,10 +2299,16 @@ defineMessageFrom: aString notifying: aRequestor
 Overriding it could cause serious problems.
 Is this really what you want to do?'))
 				ifFalse: [^nil]].
+	
+	category := self selectedMessageCategoryName ifNotNil: [ :n | n asSymbol ].
+	category == ClassOrganizer allCategory ifTrue: [
+		"Current category for existing methods or if a method was selected,
+		nil for new methods when no previous method was selected."
+		category := self categoryOfCurrentMethod ].
 			
 	[ selector := self selectedClassOrMetaClass
 				compile: aString
-				classified: (category := self selectedMessageCategoryName)
+				classified: category
 				notifying: aRequestor ]
 		on: UndeclaredVariable 
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
@@ -2651,6 +2683,15 @@ askForSuperclassOf: aClass upTo: aSuperclass toImplement: aSelector ifCancel: ca
 	^ classes at: chosenClassIndex
 
 	! !
+
+!DenotativeObjectDebugger methodsFor: 'method creation' stamp: 'FJG 5/10/2025 17:07:07'!
+wasInterruptedOnSubclassResponsibility
+
+	^super wasInterruptedOnSubclassResponsibility or: [
+		self interruptedContext sender
+			ifNil: [ false ]
+			ifNotNil: [ :senderContext | senderContext selector == #childResponsibility	]
+	]! !
 
 !DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 8/21/2017 19:06:38'!
 contents: aText notifying: aController
