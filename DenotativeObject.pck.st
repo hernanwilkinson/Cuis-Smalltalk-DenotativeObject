@@ -1,6 +1,6 @@
-'From Cuis7.5 [latest update: #7428] on 20 August 2025 at 11:38:11 am'!
-'Description Various changes and fixes'!
-!provides: 'DenotativeObject' 1 118!
+'From Cuis7.5 [latest update: #7428] on 22 August 2025 at 9:23:58 am'!
+'Description Fix autocomplete on denotatite object workspace when used with self'!
+!provides: 'DenotativeObject' 1 119!
 SystemOrganization addCategory: #DenotativeObject!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-Meta'!
@@ -3961,10 +3961,10 @@ computeIdentifierEntries
 	
 	entries := entriesSet asArray sort! !
 
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:44:22'!
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 8/22/2025 09:14:10'!
 computeMessageEntriesForClass: aClass  
 
-	(aClass isMeta and: [ aClass soleInstance is: #DenotativeObject])
+	(aClass notNil and: [aClass isMeta and: [ aClass soleInstance is: #DenotativeObject]])
 		ifTrue: [ self computeMessageEntriesForDenotativeObject: aClass ]
 		ifFalse: [ super computeMessageEntriesForClass: aClass ]
 		! !
