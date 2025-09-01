@@ -1,6 +1,6 @@
-'From Cuis7.5 [latest update: #7428] on 22 August 2025 at 9:23:58 am'!
-'Description Fix autocomplete on denotatite object workspace when used with self'!
-!provides: 'DenotativeObject' 1 119!
+'From Cuis7.5 [latest update: #7452] on 1 September 2025 at 9:47:25 am'!
+'Description Reorganization - Recompile of DenotativeObjectMorph class>>replicate after loading'!
+!provides: 'DenotativeObject' 1 120!
 SystemOrganization addCategory: #DenotativeObject!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-Meta'!
@@ -9,17 +9,9 @@ SystemOrganization addCategory: #'DenotativeObject-Refactorings'!
 SystemOrganization addCategory: #'DenotativeObject-TestSupport'!
 SystemOrganization addCategory: #'DenotativeObject-Tests'!
 SystemOrganization addCategory: #'DenotativeObject-Tools'!
+SystemOrganization addCategory: #'DenotativeObject-Model'!
+SystemOrganization addCategory: #'DenotativeObject-UI'!
 
-
-!classDefinition: #DenotativeObjectLightTheme category: #DenotativeObject!
-ProtoObject subclass: #DenotativeObjectLightTheme
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectLightTheme class' category: #DenotativeObject!
-DenotativeObjectLightTheme class
-	instanceVariableNames: ''!
 
 !classDefinition: #DelegatorBuilder category: #'DenotativeObject-Meta'!
 ProtoObject subclass: #DelegatorBuilder
@@ -29,6 +21,16 @@ ProtoObject subclass: #DelegatorBuilder
 	category: 'DenotativeObject-Meta'!
 !classDefinition: 'DelegatorBuilder class' category: #'DenotativeObject-Meta'!
 DelegatorBuilder class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObjectLightTheme category: #'DenotativeObject-UI'!
+ProtoObject subclass: #DenotativeObjectLightTheme
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-UI'!
+!classDefinition: 'DenotativeObjectLightTheme class' category: #'DenotativeObject-UI'!
+DenotativeObjectLightTheme class
 	instanceVariableNames: ''!
 
 !classDefinition: #DenotativeObjectCompiler category: #'DenotativeObject-Compiler'!
@@ -61,13 +63,33 @@ EncoderForV3PlusClosures subclass: #DenotativeObjectEncoder
 DenotativeObjectEncoder class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObject category: #DenotativeObject!
+!classDefinition: #Collaborator category: #'DenotativeObject-Meta'!
+Object subclass: #Collaborator
+	instanceVariableNames: 'owner name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Meta'!
+!classDefinition: 'Collaborator class' category: #'DenotativeObject-Meta'!
+Collaborator class
+	instanceVariableNames: ''!
+
+!classDefinition: #Delegator category: #'DenotativeObject-Meta'!
+Object subclass: #Delegator
+	instanceVariableNames: 'currentMethodClass selector receiver arguments'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Meta'!
+!classDefinition: 'Delegator class' category: #'DenotativeObject-Meta'!
+Delegator class
+	instanceVariableNames: ''!
+
+!classDefinition: #DenotativeObject category: #'DenotativeObject-Model'!
 Object subclass: #DenotativeObject
 	instanceVariableNames: ''
 	classVariableNames: 'CloneNumber'
 	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObject class' category: #DenotativeObject!
+	category: 'DenotativeObject-Model'!
+!classDefinition: 'DenotativeObject class' category: #'DenotativeObject-Model'!
 DenotativeObject class
 	instanceVariableNames: ''!
 
@@ -121,63 +143,53 @@ DenotativeObject subclass: #AssertTest
 AssertTest class
 	instanceVariableNames: ''!
 
-!classDefinition: #ObjectBuilder category: #DenotativeObject!
+!classDefinition: #DenotativeObjectPackage category: #'DenotativeObject-Model'!
+Object subclass: #DenotativeObjectPackage
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'DenotativeObject-Model'!
+!classDefinition: 'DenotativeObjectPackage class' category: #'DenotativeObject-Model'!
+DenotativeObjectPackage class
+	instanceVariableNames: ''!
+
+!classDefinition: #ObjectBuilder category: #'DenotativeObject-Model'!
 Object subclass: #ObjectBuilder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'ObjectBuilder class' category: #DenotativeObject!
+	category: 'DenotativeObject-Model'!
+!classDefinition: 'ObjectBuilder class' category: #'DenotativeObject-Model'!
 ObjectBuilder class
 	instanceVariableNames: ''!
 
-!classDefinition: #Collaborator category: #'DenotativeObject-Meta'!
-Object subclass: #Collaborator
-	instanceVariableNames: 'owner name'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'!
-!classDefinition: 'Collaborator class' category: #'DenotativeObject-Meta'!
-Collaborator class
-	instanceVariableNames: ''!
-
-!classDefinition: #Delegator category: #'DenotativeObject-Meta'!
-Object subclass: #Delegator
-	instanceVariableNames: 'currentMethodClass selector receiver arguments'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'DenotativeObject-Meta'!
-!classDefinition: 'Delegator class' category: #'DenotativeObject-Meta'!
-Delegator class
-	instanceVariableNames: ''!
-
-!classDefinition: #DenotativeObjectTheme category: #DenotativeObject!
+!classDefinition: #DenotativeObjectTheme category: #'DenotativeObject-UI'!
 Theme subclass: #DenotativeObjectTheme
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectTheme class' category: #DenotativeObject!
+	category: 'DenotativeObject-UI'!
+!classDefinition: 'DenotativeObjectTheme class' category: #'DenotativeObject-UI'!
 DenotativeObjectTheme class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectDarkTheme category: #DenotativeObject!
+!classDefinition: #DenotativeObjectDarkTheme category: #'DenotativeObject-UI'!
 DarkTheme subclass: #DenotativeObjectDarkTheme
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectDarkTheme class' category: #DenotativeObject!
+	category: 'DenotativeObject-UI'!
+!classDefinition: 'DenotativeObjectDarkTheme class' category: #'DenotativeObject-UI'!
 DenotativeObjectDarkTheme class
 	instanceVariableNames: ''!
 
-!classDefinition: #DenotativeObjectBuilder category: #DenotativeObject!
+!classDefinition: #DenotativeObjectBuilder category: #'DenotativeObject-Model'!
 ClassBuilder subclass: #DenotativeObjectBuilder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'DenotativeObject'!
-!classDefinition: 'DenotativeObjectBuilder class' category: #DenotativeObject!
+	category: 'DenotativeObject-Model'!
+!classDefinition: 'DenotativeObjectBuilder class' category: #'DenotativeObject-Model'!
 DenotativeObjectBuilder class
 	instanceVariableNames: ''!
 
@@ -512,6 +524,27 @@ ZeroDivideExtentionsTest class
 	instanceVariableNames: ''!
 
 
+!DelegatorBuilder methodsFor: 'building' stamp: 'HAW 9/10/2017 18:14:21'!
+doesNotUnderstand: aMessage
+
+	^(Delegator delegate: aMessage selector to: receiver with: aMessage arguments startingLookupOnParentOf: lookupBase) value! !
+
+!DelegatorBuilder methodsFor: 'initialize' stamp: 'HAW 9/10/2017 18:16:13'!
+initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
+
+	receiver := aReceiver.
+	lookupBase := aDenotativeObjectBase ! !
+
+!DelegatorBuilder methodsFor: 'inspecting' stamp: 'HAW 9/10/2017 18:23:30'!
+inspectorClass
+
+	^Inspector ! !
+
+!DelegatorBuilder class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:15:49'!
+for: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
+
+	^self new initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase! !
+
 !DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 10/9/2019 11:21:58'!
 debugger
 
@@ -554,27 +587,6 @@ addBasicIconsTo: aCollectorCollection
 	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
 ! !
 
-!DelegatorBuilder methodsFor: 'building' stamp: 'HAW 9/10/2017 18:14:21'!
-doesNotUnderstand: aMessage
-
-	^(Delegator delegate: aMessage selector to: receiver with: aMessage arguments startingLookupOnParentOf: lookupBase) value! !
-
-!DelegatorBuilder methodsFor: 'initialize' stamp: 'HAW 9/10/2017 18:16:13'!
-initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
-
-	receiver := aReceiver.
-	lookupBase := aDenotativeObjectBase ! !
-
-!DelegatorBuilder methodsFor: 'inspecting' stamp: 'HAW 9/10/2017 18:23:30'!
-inspectorClass
-
-	^Inspector ! !
-
-!DelegatorBuilder class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:15:49'!
-for: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
-
-	^self new initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase! !
-
 !DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
 parserClass
 
@@ -592,6 +604,95 @@ initScopeAndLiteralTables
 	scopeTable at: 'parent' put: (scopeTable at: 'super').
 	scopeTable removeKey: 'super'.
 	! !
+
+!Collaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
+printOn: aStream
+
+	aStream 
+		nextPutAll: name;
+		nextPutAll: ' at ';
+		print: owner! !
+
+!Collaborator methodsFor: 'name' stamp: 'HAW 9/14/2018 13:32:56'!
+name
+
+	^ name! !
+
+!Collaborator methodsFor: 'initialization' stamp: 'HAW 8/24/2017 08:29:25'!
+initializeNamed: aName on: anObject
+
+	owner := anObject.
+	name := aName.
+	! !
+
+!Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:30:32'!
+value
+
+	^owner instVarNamed: name! !
+
+!Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:31:24'!
+value: newValue
+
+	^owner instVarNamed: name put: newValue ! !
+
+!Collaborator class methodsFor: 'assertions' stamp: 'HAW 9/7/2017 15:25:47'!
+assert: aName isCollaboratorOn: anObject
+
+	(anObject class definesInstanceVariableNamed: aName) ifFalse: [ self signal: aName isNotACollaboratorOn: anObject ]
+	 ! !
+
+!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:25:17'!
+collaboratorNamed: aName isNotDefinedIn: anObject
+
+	^'Collaborator named ', aName, ' is not defined in ', anObject printString ! !
+
+!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:25:37'!
+signal: aName isNotACollaboratorOn: anObject
+
+	self error: (self collaboratorNamed: aName isNotDefinedIn: anObject)! !
+
+!Collaborator class methodsFor: 'instance creation' stamp: 'HAW 9/7/2017 15:24:56'!
+named: aName on: anObject
+
+	self assert: aName isCollaboratorOn: anObject.
+	
+	^self new initializeNamed: aName on: anObject ! !
+
+!Delegator methodsFor: 'initialization' stamp: 'HAW 9/10/2017 18:05:13'!
+initializeDelegate: aSelector to: aReceiver with: collaborators startingLookupOnParentOf: aDenotativeObject
+
+	selector := aSelector.
+	receiver := aReceiver.
+	arguments := collaborators.
+	currentMethodClass := aDenotativeObject.! !
+
+!Delegator methodsFor: 'evaluating' stamp: 'HAW 9/10/2017 18:11:30'!
+value
+	
+	| implementor |
+	
+	implementor := currentMethodClass superclass.
+	[ implementor ~= DenotativeObject class ] whileTrue: [
+		(implementor includesSelector: selector) ifTrue: [ | methodToDelegate |
+			methodToDelegate := implementor compiledMethodAt: selector.
+			^ methodToDelegate
+				valueWithReceiver: receiver
+				arguments: arguments ].
+		implementor := implementor superclass ].
+	
+	self error: 'No parent implements ' , selector.
+! !
+
+!Delegator class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:03:48'!
+delegate: aSelector to: aReceiver with: collaborators startingLookupOnParentOf: aDenotativeObject
+
+	^self new initializeDelegate: aSelector to: aReceiver with: collaborators startingLookupOnParentOf: aDenotativeObject
+! !
+
+!Delegator class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:19:35'!
+from: aContext
+
+	^self delegate: aContext selector to: aContext receiver with: aContext arguments startingLookupOnParentOf: aContext methodClass! !
 
 !DenotativeObject class methodsFor: 'file out/in' stamp: 'FJG 6/4/2025 20:42:41'!
 fileOutInitializerOn: aStream
@@ -1701,6 +1802,15 @@ test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 		signal: Error
 		withDescription: errorDescription ! !
 
+!DenotativeObjectPackage class methodsFor: 'class initialization' stamp: 'HAW 9/1/2025 09:45:55'!
+initialize
+
+	"For some reason, DenotativeObjectMorph class>>replicate does not bind parent to super when loading.
+	I think it is becuase the compiler class is not yet defined when loading.
+	This method recompiles that one after everything is loaded using the right compiler - Hernan"
+	
+	DenotativeObjectMorph class recompile: #replicate! !
+
 !ObjectBuilder class methodsFor: 'preconditions' stamp: 'HAW 3/31/2018 20:35:28'!
 assertIsValidName: anObjectName
 
@@ -1780,95 +1890,6 @@ signalNameCanNotHaveSpaces
 isValidParent: aParentDenotativeObject
 
 	^aParentDenotativeObject includesBehavior: DenotativeObject ! !
-
-!Collaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
-printOn: aStream
-
-	aStream 
-		nextPutAll: name;
-		nextPutAll: ' at ';
-		print: owner! !
-
-!Collaborator methodsFor: 'name' stamp: 'HAW 9/14/2018 13:32:56'!
-name
-
-	^ name! !
-
-!Collaborator methodsFor: 'initialization' stamp: 'HAW 8/24/2017 08:29:25'!
-initializeNamed: aName on: anObject
-
-	owner := anObject.
-	name := aName.
-	! !
-
-!Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:30:32'!
-value
-
-	^owner instVarNamed: name! !
-
-!Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:31:24'!
-value: newValue
-
-	^owner instVarNamed: name put: newValue ! !
-
-!Collaborator class methodsFor: 'assertions' stamp: 'HAW 9/7/2017 15:25:47'!
-assert: aName isCollaboratorOn: anObject
-
-	(anObject class definesInstanceVariableNamed: aName) ifFalse: [ self signal: aName isNotACollaboratorOn: anObject ]
-	 ! !
-
-!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:25:17'!
-collaboratorNamed: aName isNotDefinedIn: anObject
-
-	^'Collaborator named ', aName, ' is not defined in ', anObject printString ! !
-
-!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:25:37'!
-signal: aName isNotACollaboratorOn: anObject
-
-	self error: (self collaboratorNamed: aName isNotDefinedIn: anObject)! !
-
-!Collaborator class methodsFor: 'instance creation' stamp: 'HAW 9/7/2017 15:24:56'!
-named: aName on: anObject
-
-	self assert: aName isCollaboratorOn: anObject.
-	
-	^self new initializeNamed: aName on: anObject ! !
-
-!Delegator methodsFor: 'initialization' stamp: 'HAW 9/10/2017 18:05:13'!
-initializeDelegate: aSelector to: aReceiver with: collaborators startingLookupOnParentOf: aDenotativeObject
-
-	selector := aSelector.
-	receiver := aReceiver.
-	arguments := collaborators.
-	currentMethodClass := aDenotativeObject.! !
-
-!Delegator methodsFor: 'evaluating' stamp: 'HAW 9/10/2017 18:11:30'!
-value
-	
-	| implementor |
-	
-	implementor := currentMethodClass superclass.
-	[ implementor ~= DenotativeObject class ] whileTrue: [
-		(implementor includesSelector: selector) ifTrue: [ | methodToDelegate |
-			methodToDelegate := implementor compiledMethodAt: selector.
-			^ methodToDelegate
-				valueWithReceiver: receiver
-				arguments: arguments ].
-		implementor := implementor superclass ].
-	
-	self error: 'No parent implements ' , selector.
-! !
-
-!Delegator class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:03:48'!
-delegate: aSelector to: aReceiver with: collaborators startingLookupOnParentOf: aDenotativeObject
-
-	^self new initializeDelegate: aSelector to: aReceiver with: collaborators startingLookupOnParentOf: aDenotativeObject
-! !
-
-!Delegator class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:19:35'!
-from: aContext
-
-	^self delegate: aContext selector to: aContext receiver with: aContext arguments startingLookupOnParentOf: aContext methodClass! !
 
 !DenotativeObjectTheme methodsFor: 'tool colors' stamp: 'HAW 8/22/2017 11:42:56'!
 debugger
@@ -4825,4 +4846,5 @@ canNotDivideByZeroErrorDescription: dividend
 recalculateStringVersionForDenotativeObject
 	
 	stringVersion := classSymbol asString,' ', methodSymbol ! !
+DenotativeObjectPackage initialize!
 DenotativeObjectRenameSelector initialize!
