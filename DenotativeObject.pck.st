@@ -1,6 +1,6 @@
-'From Cuis7.5 [latest update: #7594] on 22 September 2025 at 12:02:44 pm'!
-'Description Fixex contextual rename in method'!
-!provides: 'DenotativeObject' 1 121!
+'From Cuis7.9 [latest update: #8134] on 10 August 2026 at 8:21:22 am'!
+'Description Update for Cuis 8134'!
+!provides: 'DenotativeObject' 1 122!
 SystemOrganization addCategory: #DenotativeObject!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-Meta'!
@@ -524,80 +524,94 @@ ZeroDivideExtentionsTest class
 	instanceVariableNames: ''!
 
 
-!DelegatorBuilder methodsFor: 'building' stamp: 'HAW 9/10/2017 18:14:21'!
+!DelegatorBuilder methodsFor: 'building' stamp: 'HAW 10/Sep/2017, 9:14:21 pm (UTC)'!
+!methodProperties: {}!
 doesNotUnderstand: aMessage
 
 	^(Delegator delegate: aMessage selector to: receiver with: aMessage arguments startingLookupOnParentOf: lookupBase) value! !
 
-!DelegatorBuilder methodsFor: 'initialize' stamp: 'HAW 9/10/2017 18:16:13'!
+!DelegatorBuilder methodsFor: 'initialize' stamp: 'HAW 10/Sep/2017, 9:16:13 pm (UTC)'!
+!methodProperties: {}!
 initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
 
 	receiver := aReceiver.
 	lookupBase := aDenotativeObjectBase ! !
 
-!DelegatorBuilder methodsFor: 'inspecting' stamp: 'HAW 9/10/2017 18:23:30'!
+!DelegatorBuilder methodsFor: 'inspecting' stamp: 'HAW 10/Sep/2017, 9:23:30 pm (UTC)'!
+!methodProperties: {}!
 inspectorClass
 
 	^Inspector ! !
 
-!DelegatorBuilder class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:15:49'!
+!DelegatorBuilder class methodsFor: 'instance creation' stamp: 'HAW 10/Sep/2017, 9:15:49 pm (UTC)'!
+!methodProperties: {}!
 for: aReceiver startingLookupOnParentOf: aDenotativeObjectBase
 
 	^self new initializeFor: aReceiver startingLookupOnParentOf: aDenotativeObjectBase! !
 
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 10/9/2019 11:21:58'!
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 9/Oct/2019, 2:21:58 pm (UTC)'!
+!methodProperties: {}!
 debugger
 
 	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
 
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:12'!
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 23/Dec/2022, 12:27:12 pm (UTC)'!
+!methodProperties: {}!
 finderSearchBarResultsColor
 	"Answer the FinderSearchBar color."
 
 	^ `Color veryVeryLightGray`! !
 
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:20'!
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 23/Dec/2022, 12:27:20 pm (UTC)'!
+!methodProperties: {}!
 finderSearchBarSearchBoxColor
 	"Answer the FinderSearchBar results color."
 
 	^ self textPane.! !
 
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:26'!
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 23/Dec/2022, 12:27:26 pm (UTC)'!
+!methodProperties: {}!
 finderSearchBarToolbarButtonColor
 	"Answer the FinderSearchBar toolbar button color."
 
 	^ `Color veryLightGray`.! !
 
-!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 12/23/2022 09:27:32'!
+!DenotativeObjectLightTheme methodsFor: 'tool colors' stamp: 'HAW 23/Dec/2022, 12:27:32 pm (UTC)'!
+!methodProperties: {}!
 finderSearchBarToolbarColor
 	"Answer the FinderSearchBar toolbar button color."
 
 	^ `Color veryVeryLightGray`! !
 
-!DenotativeObjectLightTheme methodsFor: 'private - shout mappings' stamp: 'HAW 10/9/2019 11:21:58'!
+!DenotativeObjectLightTheme methodsFor: 'private - shout mappings' stamp: 'HAW 9/Oct/2019, 2:21:58 pm (UTC)'!
+!methodProperties: {}!
 pseudoVariables
 
 	^ (OrderedCollection withAll: super pseudoVariables) 
 		add: #parent;
 		asArray! !
 
-!DenotativeObjectLightTheme class methodsFor: 'icons by menu' stamp: 'HAW 10/9/2019 11:21:58'!
+!DenotativeObjectLightTheme class methodsFor: 'icons by menu' stamp: 'HAW 9/Oct/2019, 2:21:58 pm (UTC)'!
+!methodProperties: {}!
 addBasicIconsTo: aCollectorCollection
 
 	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
 ! !
 
-!DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 8/27/2017 20:06:02'!
+!DenotativeObjectCompiler class methodsFor: 'accessing' stamp: 'HAW 27/Aug/2017, 11:06:02 pm (UTC)'!
+!methodProperties: {}!
 parserClass
 
 	^DenotativeObjectParser ! !
 
-!DenotativeObjectParser methodsFor: 'public access' stamp: 'HAW 8/27/2017 20:14:07'!
+!DenotativeObjectParser methodsFor: 'public access' stamp: 'HAW 27/Aug/2017, 11:14:07 pm (UTC)'!
+!methodProperties: {}!
 encoder
 	encoder ifNil: [encoder := DenotativeObjectEncoder new].
 	^encoder! !
 
-!DenotativeObjectEncoder methodsFor: 'initialization' stamp: 'HAW 8/27/2017 22:09:44'!
+!DenotativeObjectEncoder methodsFor: 'initialization' stamp: 'HAW 28/Aug/2017, 1:09:44 am (UTC)'!
+!methodProperties: {}!
 initScopeAndLiteralTables
 
 	super initScopeAndLiteralTables.
@@ -605,7 +619,8 @@ initScopeAndLiteralTables
 	scopeTable removeKey: 'super'.
 	! !
 
-!Collaborator methodsFor: 'printing' stamp: 'HAW 8/24/2017 08:33:01'!
+!Collaborator methodsFor: 'printing' stamp: 'HAW 24/Aug/2017, 11:33:01 am (UTC)'!
+!methodProperties: {}!
 printOn: aStream
 
 	aStream 
@@ -613,52 +628,61 @@ printOn: aStream
 		nextPutAll: ' at ';
 		print: owner! !
 
-!Collaborator methodsFor: 'name' stamp: 'HAW 9/14/2018 13:32:56'!
+!Collaborator methodsFor: 'name' stamp: 'HAW 14/Sep/2018, 4:32:56 pm (UTC)'!
+!methodProperties: {}!
 name
 
 	^ name! !
 
-!Collaborator methodsFor: 'initialization' stamp: 'HAW 8/24/2017 08:29:25'!
+!Collaborator methodsFor: 'initialization' stamp: 'HAW 24/Aug/2017, 11:29:25 am (UTC)'!
+!methodProperties: {}!
 initializeNamed: aName on: anObject
 
 	owner := anObject.
 	name := aName.
 	! !
 
-!Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:30:32'!
+!Collaborator methodsFor: 'value' stamp: 'HAW 24/Aug/2017, 11:30:32 am (UTC)'!
+!methodProperties: {}!
 value
 
 	^owner instVarNamed: name! !
 
-!Collaborator methodsFor: 'value' stamp: 'HAW 8/24/2017 08:31:24'!
+!Collaborator methodsFor: 'value' stamp: 'HAW 24/Aug/2017, 11:31:24 am (UTC)'!
+!methodProperties: {}!
 value: newValue
 
 	^owner instVarNamed: name put: newValue ! !
 
-!Collaborator class methodsFor: 'assertions' stamp: 'HAW 9/7/2017 15:25:47'!
+!Collaborator class methodsFor: 'assertions' stamp: 'HAW 7/Sep/2017, 6:25:47 pm (UTC)'!
+!methodProperties: {}!
 assert: aName isCollaboratorOn: anObject
 
 	(anObject class definesInstanceVariableNamed: aName) ifFalse: [ self signal: aName isNotACollaboratorOn: anObject ]
 	 ! !
 
-!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:25:17'!
+!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 7/Sep/2017, 6:25:17 pm (UTC)'!
+!methodProperties: {}!
 collaboratorNamed: aName isNotDefinedIn: anObject
 
 	^'Collaborator named ', aName, ' is not defined in ', anObject printString ! !
 
-!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:25:37'!
+!Collaborator class methodsFor: 'exceptions' stamp: 'HAW 7/Sep/2017, 6:25:37 pm (UTC)'!
+!methodProperties: {}!
 signal: aName isNotACollaboratorOn: anObject
 
 	self error: (self collaboratorNamed: aName isNotDefinedIn: anObject)! !
 
-!Collaborator class methodsFor: 'instance creation' stamp: 'HAW 9/7/2017 15:24:56'!
+!Collaborator class methodsFor: 'instance creation' stamp: 'HAW 7/Sep/2017, 6:24:56 pm (UTC)'!
+!methodProperties: {}!
 named: aName on: anObject
 
 	self assert: aName isCollaboratorOn: anObject.
 	
 	^self new initializeNamed: aName on: anObject ! !
 
-!Delegator methodsFor: 'initialization' stamp: 'HAW 9/10/2017 18:05:13'!
+!Delegator methodsFor: 'initialization' stamp: 'HAW 10/Sep/2017, 9:05:13 pm (UTC)'!
+!methodProperties: {}!
 initializeDelegate: aSelector to: aReceiver with: collaborators startingLookupOnParentOf: aDenotativeObject
 
 	selector := aSelector.
@@ -666,7 +690,8 @@ initializeDelegate: aSelector to: aReceiver with: collaborators startingLookupOn
 	arguments := collaborators.
 	currentMethodClass := aDenotativeObject.! !
 
-!Delegator methodsFor: 'evaluating' stamp: 'HAW 9/10/2017 18:11:30'!
+!Delegator methodsFor: 'evaluating' stamp: 'HAW 10/Sep/2017, 9:11:30 pm (UTC)'!
+!methodProperties: {}!
 value
 	
 	| implementor |
@@ -683,18 +708,21 @@ value
 	self error: 'No parent implements ' , selector.
 ! !
 
-!Delegator class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:03:48'!
+!Delegator class methodsFor: 'instance creation' stamp: 'HAW 10/Sep/2017, 9:03:48 pm (UTC)'!
+!methodProperties: {}!
 delegate: aSelector to: aReceiver with: collaborators startingLookupOnParentOf: aDenotativeObject
 
 	^self new initializeDelegate: aSelector to: aReceiver with: collaborators startingLookupOnParentOf: aDenotativeObject
 ! !
 
-!Delegator class methodsFor: 'instance creation' stamp: 'HAW 9/10/2017 18:19:35'!
+!Delegator class methodsFor: 'instance creation' stamp: 'HAW 10/Sep/2017, 9:19:35 pm (UTC)'!
+!methodProperties: {}!
 from: aContext
 
 	^self delegate: aContext selector to: aContext receiver with: aContext arguments startingLookupOnParentOf: aContext methodClass! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'FJG 6/4/2025 20:42:41'!
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'FJG 4/Jun/2025, 11:42:41 pm (UTC)'!
+!methodProperties: {}!
 fileOutInitializerOn: aStream
 
 	super fileOutInitializerOn: aStream.
@@ -706,18 +734,21 @@ fileOutInitializerOn: aStream
 			
 		self removeInitializeCollaboratorsFromFile ].! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:12:18'!
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 17/Apr/2018, 7:12:18 pm (UTC)'!
+!methodProperties: {}!
 initializeAfterFileIn
 
 	self initializeCollaboratorsFromFile.
 	self removeInitializeCollaboratorsFromFile! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 4/17/2018 16:23:36'!
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 17/Apr/2018, 7:23:36 pm (UTC)'!
+!methodProperties: {}!
 initializeCollaboratorsFromFile
 	
 	"It does nothing - it is here just in case there is an error an a DO does not automatically implement it, to avoid getting a MNU when sending initializeAfterFileIn - Hernan"! !
 
-!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 8/25/2021 10:48:39'!
+!DenotativeObject class methodsFor: 'file out/in' stamp: 'HAW 25/Aug/2021, 1:48:39 pm (UTC)'!
+!methodProperties: {}!
 removeInitializeCollaboratorsFromFile
 
 	"This check is to be sure not to remove DenotativeObject class>>#initializeCollaboratorsFromFile - Hernan"
@@ -725,36 +756,42 @@ removeInitializeCollaboratorsFromFile
 	(self is: #DenotativeObject) ifTrue: [ 
 		self class removeCategory: self initializeCollaboratorsFromFileMessageCategory ] ! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 8/25/2021 10:47:57'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 25/Aug/2021, 1:47:57 pm (UTC)'!
+!methodProperties: {}!
 compileInitializeCollaboratorsFromFile
 	
 	self class 
 		compile: self initializeCollaboratorsFromFileSourceCode 
 		classified: self initializeCollaboratorsFromFileMessageCategory! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:25:58'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 1/Apr/2018, 1:25:58 am (UTC)'!
+!methodProperties: {}!
 fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool
 
 	self collaboratorNames isEmpty ifFalse: [ self compileInitializeCollaboratorsFromFile ].
 	super fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool.
 	! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:25:16'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 17/Apr/2018, 7:25:16 pm (UTC)'!
+!methodProperties: {}!
 initializeAfterFileInMessageName
 	
 	^ #initializeAfterFileIn! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 8/25/2021 10:47:36'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 25/Aug/2021, 1:47:36 pm (UTC)'!
+!methodProperties: {}!
 initializeCollaboratorsFromFileMessageCategory
 	
 	^'--** private fileout/in **--'! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:24:31'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 17/Apr/2018, 7:24:31 pm (UTC)'!
+!methodProperties: {}!
 initializeCollaboratorsFromFileMessageName
 	
 	^#initializeCollaboratorsFromFile! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:13:39'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 1/Apr/2018, 1:13:39 am (UTC)'!
+!methodProperties: {}!
 initializeCollaboratorsFromFileSourceCode
 	
 	| sourceCode |
@@ -766,19 +803,22 @@ initializeCollaboratorsFromFileSourceCode
 		
 	^sourceCode! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 9/7/2017 16:44:18'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 7/Sep/2017, 7:44:18 pm (UTC)'!
+!methodProperties: {}!
 storeOn: aStream
 
 	^ self isReplicant ifTrue: [ self printString storeOn: aStream ] ifFalse: [ super storeOn: aStream ]! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/31/2018 22:14:52'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 1/Apr/2018, 1:14:52 am (UTC)'!
+!methodProperties: {}!
 writeCollaboratorsInitializationOn: sourceStream 
 	
 	self collaboratorNames do: [ :aCollaborator | self writeInitializationOf: aCollaborator on: sourceStream ].
 		
 	! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 3/26/2019 15:41:41'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 26/Mar/2019, 6:41:41 pm (UTC)'!
+!methodProperties: {}!
 writeInitializationOf: aCollaborator on: sourceStream
 	
 	| collaboratorValue |
@@ -794,7 +834,8 @@ writeInitializationOf: aCollaborator on: sourceStream
 		store: collaboratorValue;
 		nextPut: $.! !
 
-!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 4/17/2018 16:30:45'!
+!DenotativeObject class methodsFor: 'file out/in - collaborator init - private' stamp: 'HAW 17/Apr/2018, 7:30:45 pm (UTC)'!
+!methodProperties: {}!
 writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream
 
 	sourceStream 
@@ -804,7 +845,8 @@ writeInitializeCollaboratorsFromFileSourceCodeHeaderOn: sourceStream
 		nextPutAll: '"Auto generated method for loading purposes - Do not modify it"';
 		newLine.! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 2/19/2019 16:48:06'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 19/Feb/2019, 7:48:06 pm (UTC)'!
+!methodProperties: {}!
 allReplicants
 
 	"Returns a collection with all the replicants of myself"
@@ -816,43 +858,51 @@ allReplicants
 	
 	^allReplicants ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:47:27'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:47:27 pm (UTC)'!
+!methodProperties: {}!
 allReplicantsDetect: aBlock
 
 	^self allReplicants detect: aBlock ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:47:43'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:47:43 pm (UTC)'!
+!methodProperties: {}!
 allReplicantsDetect: aBlock ifNone: noneBlock
 
 	^self allReplicants detect: aBlock ifNone: noneBlock! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:46:45'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:46:45 pm (UTC)'!
+!methodProperties: {}!
 allReplicantsDo: aBlock
 
 	^self allReplicants do: aBlock ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:47:17'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:47:17 pm (UTC)'!
+!methodProperties: {}!
 allReplicantsSelect: aBlock
 
 	^self allReplicants select: aBlock ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:32:32'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 7/Sep/2017, 7:32:32 pm (UTC)'!
+!methodProperties: {}!
 isReplicant
 
 	^self isTheOriginalDenotativeObject not
 	! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 9/7/2017 16:32:50'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 7/Sep/2017, 7:32:50 pm (UTC)'!
+!methodProperties: {}!
 isTheOriginalDenotativeObject
 	
 	^ self == self theOriginalDenotativeObject ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:28:00'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:28:00 pm (UTC)'!
+!methodProperties: {}!
 replicantNamePrefix
 
 	^'a replicant of '! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'FJG 4/28/2025 17:27:14'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'FJG 28/Apr/2025, 8:27:14 pm (UTC)'!
+!methodProperties: {}!
 replicate
 	"A replicant is a copy of myself. My replicants and I have our own state but we all share the same behaviour, hence a change of behaviour in any of us will hold for all.
 	
@@ -863,58 +913,69 @@ replicate
 		yourself
 	! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/22/2017 09:58:54'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 22/Aug/2017, 12:58:54 pm (UTC)'!
+!methodProperties: {}!
 theOriginalDenotativeObject 
 	
 	^self class soleInstance ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:42:50'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:42:50 pm (UTC)'!
+!methodProperties: {}!
 withAllReplicants
 
 	^self class allRealInstances.! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:48:03'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:48:03 pm (UTC)'!
+!methodProperties: {}!
 withAllReplicantsDetect: aBlock
 
 	^self withAllReplicants detect: aBlock ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:48:16'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:48:16 pm (UTC)'!
+!methodProperties: {}!
 withAllReplicantsDetect: aBlock ifNone: noneBlock
 
 	^self withAllReplicants detect: aBlock ifNone: noneBlock ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:46:59'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:46:59 pm (UTC)'!
+!methodProperties: {}!
 withAllReplicantsDo: aBlock
 
 	^self withAllReplicants do: aBlock ! !
 
-!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 8/20/2017 10:47:55'!
+!DenotativeObject class methodsFor: 'replicants' stamp: 'HAW 20/Aug/2017, 1:47:55 pm (UTC)'!
+!methodProperties: {}!
 withAllReplicantsSelect: aBlock
 
 	^self withAllReplicants select: aBlock ! !
 
-!DenotativeObject class methodsFor: 'message handling - private' stamp: 'HAW 8/22/2017 10:16:30'!
+!DenotativeObject class methodsFor: 'message handling - private' stamp: 'HAW 22/Aug/2017, 1:16:30 pm (UTC)'!
+!methodProperties: {}!
 argumentNameSufix
 
 	^self theOriginalDenotativeObject name
 	! !
 
-!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 9/7/2017 15:30:31'!
+!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 7/Sep/2017, 6:30:31 pm (UTC)'!
+!methodProperties: {}!
 asChildOf: aParentDenotativeObject collaboratorNames: collaborators in: aCategory
 
 	^ ObjectBuilder create: self name asChildOf: aParentDenotativeObject collaboratorNames: collaborators in: aCategory withBlanksTrimmed.! !
 
-!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 9/7/2017 15:30:36'!
+!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 7/Sep/2017, 6:30:36 pm (UTC)'!
+!methodProperties: {}!
 collaboratorNames: collaborators in: aCategory
 
 	^self asChildOf: DenotativeObject collaboratorNames: collaborators in: aCategory ! !
 
-!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 3/31/2018 22:58:39'!
+!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 1/Apr/2018, 1:58:39 am (UTC)'!
+!methodProperties: {}!
 createChildNamed: aChildName
 
 	^ ObjectBuilder create: aChildName asChildOf: self collaboratorNames: '' in: self category ! !
 
-!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 9/7/2017 15:30:52'!
+!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 7/Sep/2017, 6:30:52 pm (UTC)'!
+!methodProperties: {}!
 definitionOf: aMetaclass
 
 	^ String streamContents: [ :stream | | selector collaborators |
@@ -941,7 +1002,8 @@ definitionOf: aMetaclass
 				space;
 				nextPutAll: (collaborators at: index) ]]! !
 
-!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 9/7/2017 15:19:27'!
+!DenotativeObject class methodsFor: 'creation' stamp: 'HAW 7/Sep/2017, 6:19:27 pm (UTC)'!
+!methodProperties: {}!
 template: aSystemCategoryName
 
 	^String streamContents: [ :stream | | collaborators |
@@ -962,45 +1024,53 @@ template: aSystemCategoryName
 				newLine;
 				tab ]]! !
 
-!DenotativeObject class methodsFor: 'asserting' stamp: 'HAW 7/29/2017 19:28:09'!
+!DenotativeObject class methodsFor: 'asserting' stamp: 'HAW 29/Jul/2017, 10:28:09 pm (UTC)'!
+!methodProperties: {}!
 assert: aBooleanOrBlock
 
 	aBooleanOrBlock value ifFalse: [self error: 'Assertion failed']
 			! !
 
-!DenotativeObject class methodsFor: 'asserting' stamp: 'HAW 7/29/2017 19:36:01'!
+!DenotativeObject class methodsFor: 'asserting' stamp: 'HAW 29/Jul/2017, 10:36:01 pm (UTC)'!
+!methodProperties: {}!
 deny: aBoolean
 
 	self assert: aBoolean not
 			! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 9/13/2017 16:16:32'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 13/Sep/2017, 7:16:32 pm (UTC)'!
+!methodProperties: {}!
 childResponsibility
 
 	self error: (self childResposibilityErrorDescriptionFor: thisContext sender selector)! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 9/13/2017 16:17:25'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 13/Sep/2017, 7:17:25 pm (UTC)'!
+!methodProperties: {}!
 childResposibilityErrorDescriptionFor: aSelector
 
 	^'Implementation of ', aSelector, ' is responsibility of my childs'! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 3/31/2018 23:06:32'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 1/Apr/2018, 2:06:32 am (UTC)'!
+!methodProperties: {}!
 children
 
 	^self subclasses! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:55:08'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 26/Aug/2017, 9:55:08 pm (UTC)'!
+!methodProperties: {}!
 hasNoParentErrorDescription
 
 	^self name, ' has no parent'! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 9/13/2017 18:27:46'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 13/Sep/2017, 9:27:46 pm (UTC)'!
+!methodProperties: {}!
 isChildOf: aParent
 
 	"We have to use #= instead of isEqualTo: becuase the last one can be redefined - Hernan"
 	^(self parentIfNone: [ ^false ]) = aParent! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 9/27/2018 15:04:37'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 27/Sep/2018, 6:04:37 pm (UTC)'!
+!methodProperties: {}!
 isDescendantOf: anAncestor
 
 	"We have to use #= instead of isEqualTo: becuase the last one can be redefined - Hernan"
@@ -1009,19 +1079,22 @@ isDescendantOf: anAncestor
 	parent := self parentIfNone: [ ^false ].
 	^ parent = anAncestor or: [ parent isDescendantOf: anAncestor ]! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:58:28'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 26/Aug/2017, 9:58:28 pm (UTC)'!
+!methodProperties: {}!
 parent
 
 	^self parentIfNone: [ self signalHasNoParentError ]! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:58:16'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 26/Aug/2017, 9:58:16 pm (UTC)'!
+!methodProperties: {}!
 parentIfNone: aBlock
 
 	superclass = DenotativeObject ifTrue: [ ^aBlock value ].
 	
 	^ superclass ! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:02:41'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 26/Aug/2017, 10:02:41 pm (UTC)'!
+!methodProperties: {}!
 parents
 
 	| parents |
@@ -1033,17 +1106,20 @@ parents
 	
 	! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:02:52'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 26/Aug/2017, 10:02:52 pm (UTC)'!
+!methodProperties: {}!
 parentsDo: aBlock
 
 	^self parents do: aBlock! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 18:54:54'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 26/Aug/2017, 9:54:54 pm (UTC)'!
+!methodProperties: {}!
 signalHasNoParentError 
 	
 	self error: self hasNoParentErrorDescription! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:02:02'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 26/Aug/2017, 10:02:02 pm (UTC)'!
+!methodProperties: {}!
 withParents
 
 	| withParents |
@@ -1053,17 +1129,20 @@ withParents
 	
 	^withParents ! !
 
-!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 8/26/2017 19:00:24'!
+!DenotativeObject class methodsFor: 'sharing/parent' stamp: 'HAW 26/Aug/2017, 10:00:24 pm (UTC)'!
+!methodProperties: {}!
 withParentsDo: aBlock
 
 	^self withParents do: aBlock! !
 
-!DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 7/29/2017 21:58:44'!
+!DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 30/Jul/2017, 12:58:44 am (UTC)'!
+!methodProperties: {}!
 clone
 
 	^self cloneNamed: self name, self nextCloneNumber printString! !
 
-!DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 9/7/2017 16:24:40'!
+!DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 7/Sep/2017, 7:24:40 pm (UTC)'!
+!methodProperties: {}!
 cloneNamed: copysNameString
 
 	| originalClass originalName copysName newDefinition newMetaDefinition newClass |
@@ -1091,7 +1170,8 @@ cloneNamed: copysNameString
 	DenotativeObjectBrowser allInstancesDo: [ :browser | browser changed: #classList ].
 	^newClass ! !
 
-!DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 7/29/2017 21:56:31'!
+!DenotativeObject class methodsFor: 'cloning' stamp: 'HAW 30/Jul/2017, 12:56:31 am (UTC)'!
+!methodProperties: {}!
 nextCloneNumber
 
 	CloneNumber isNil ifTrue: [ CloneNumber := 0 ].
@@ -1099,12 +1179,14 @@ nextCloneNumber
 	
 	^CloneNumber! !
 
-!DenotativeObject class methodsFor: 'collaborators' stamp: 'HAW 9/7/2017 15:15:23'!
+!DenotativeObject class methodsFor: 'collaborators' stamp: 'HAW 7/Sep/2017, 6:15:23 pm (UTC)'!
+!methodProperties: {}!
 collaboratorNamed: aName
 
 	^ Collaborator named: aName on: self.! !
 
-!DenotativeObject class methodsFor: 'collaborators' stamp: 'HAW 9/7/2017 15:15:45'!
+!DenotativeObject class methodsFor: 'collaborators' stamp: 'HAW 7/Sep/2017, 6:15:45 pm (UTC)'!
+!methodProperties: {}!
 collaboratorNames
 
 	| names |
@@ -1114,17 +1196,20 @@ collaboratorNames
 	
 	^names! !
 
-!DenotativeObject class methodsFor: 'delegation' stamp: 'HAW 9/10/2017 18:17:50'!
+!DenotativeObject class methodsFor: 'delegation' stamp: 'HAW 10/Sep/2017, 9:17:50 pm (UTC)'!
+!methodProperties: {}!
 delegate
 	
 	^ DelegatorBuilder for: self startingLookupOnParentOf: thisContext sender methodClass! !
 
-!DenotativeObject class methodsFor: 'delegation' stamp: 'HAW 9/10/2017 18:17:03'!
+!DenotativeObject class methodsFor: 'delegation' stamp: 'HAW 10/Sep/2017, 9:17:03 pm (UTC)'!
+!methodProperties: {}!
 delegateToParent
 	
 	^ (Delegator from: thisContext sender) value! !
 
-!DenotativeObject class methodsFor: 'error handling - private' stamp: 'HAW 8/20/2017 11:08:03'!
+!DenotativeObject class methodsFor: 'error handling - private' stamp: 'HAW 20/Aug/2017, 2:08:03 pm (UTC)'!
+!methodProperties: {}!
 doesNotUnderstand: aMessage
 
 	"This redefinition is just to provide a message text to the exception without the 'class' part, so when shown in the debugger title or a 
@@ -1146,34 +1231,40 @@ doesNotUnderstand: aMessage
 		ifTrue: [ aMessage sentTo: self ]
 		ifFalse: [ resumeValue ]! !
 
-!DenotativeObject class methodsFor: 'replicants-family metaphor' stamp: 'HAW 8/30/2017 11:06:13'!
+!DenotativeObject class methodsFor: 'replicants-family metaphor' stamp: 'HAW 30/Aug/2017, 2:06:13 pm (UTC)'!
+!methodProperties: {}!
 family
 
 	^self withAllReplicants ! !
 
-!DenotativeObject class methodsFor: 'replicants-family metaphor' stamp: 'HAW 8/30/2017 11:06:17'!
+!DenotativeObject class methodsFor: 'replicants-family metaphor' stamp: 'HAW 30/Aug/2017, 2:06:17 pm (UTC)'!
+!methodProperties: {}!
 isSiblingOf: aDenotativeObject
 
 	^self class = aDenotativeObject class! !
 
-!DenotativeObject class methodsFor: 'replicants-family metaphor' stamp: 'HAW 8/30/2017 11:06:22'!
+!DenotativeObject class methodsFor: 'replicants-family metaphor' stamp: 'HAW 30/Aug/2017, 2:06:22 pm (UTC)'!
+!methodProperties: {}!
 originalSibling
 
 	^self theOriginalDenotativeObject ! !
 
-!DenotativeObject class methodsFor: 'replicants-family metaphor' stamp: 'HAW 8/30/2017 11:06:26'!
+!DenotativeObject class methodsFor: 'replicants-family metaphor' stamp: 'HAW 30/Aug/2017, 2:06:26 pm (UTC)'!
+!methodProperties: {}!
 siblings
 
 	^self family reject: [ :each | each == self ]! !
 
-!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/7/2017 16:14:41'!
+!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 7/Sep/2017, 7:14:41 pm (UTC)'!
+!methodProperties: {}!
 inspect
 
 	^ self 
 		withCurrentInspectorWindowDo: [ :window | window isTopWindow ifTrue: [ window flash ] ifFalse: [ window activate ] ] 
 		ifNone: [ super inspect ]! !
 
-!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 9/10/2017 20:05:03'!
+!DenotativeObject class methodsFor: 'inspecting' stamp: 'HAW 10/Sep/2017, 11:05:03 pm (UTC)'!
+!methodProperties: {}!
 withCurrentInspectorWindowDo: foundBlock ifNone: noneBlock
 		
 	^ DenotativeObjectInspectorWindow allInstances 
@@ -1181,7 +1272,8 @@ withCurrentInspectorWindowDo: foundBlock ifNone: noneBlock
 		ifFound: foundBlock 
 		ifNone: noneBlock ! !
 
-!DenotativeObject class methodsFor: 'equality' stamp: 'HAW 8/26/2017 17:38:05'!
+!DenotativeObject class methodsFor: 'equality' stamp: 'HAW 26/Aug/2017, 8:38:05 pm (UTC)'!
+!methodProperties: {}!
 is: aSymbol
 
 	"Return true only for subclasses - Hernan"
@@ -1190,7 +1282,8 @@ is: aSymbol
 		and: [ self ~= DenotativeObject 
 		and: [ self inheritsFrom: DenotativeObject ]]! !
 
-!DenotativeObject class methodsFor: 'printing' stamp: 'HAW 7/12/2017 23:57:46'!
+!DenotativeObject class methodsFor: 'printing' stamp: 'HAW 13/Jul/2017, 2:57:46 am (UTC)'!
+!methodProperties: {}!
 longPrintOn: aStream limitedTo: sizeLimit indent: indent
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  Limit is the length limit for each inst var."
 
@@ -1205,27 +1298,32 @@ longPrintOn: aStream limitedTo: sizeLimit indent: indent
 
 ! !
 
-!DenotativeObject class methodsFor: 'methods' stamp: 'HAW 8/22/2017 17:12:27'!
+!DenotativeObject class methodsFor: 'methods' stamp: 'HAW 22/Aug/2017, 8:12:27 pm (UTC)'!
+!methodProperties: {}!
 methodNamed: aSelector
 
 	^self class compiledMethodAt: aSelector ! !
 
-!DenotativeObject class methodsFor: 'methods' stamp: 'HAW 4/10/2018 16:56:14'!
+!DenotativeObject class methodsFor: 'methods' stamp: 'HAW 10/Apr/2018, 7:56:14 pm (UTC)'!
+!methodProperties: {}!
 sourceCodeOf: aSelector
 
 	^(self methodNamed: aSelector) sourceCode ! !
 
-!DenotativeObject class methodsFor: 'test support - private' stamp: 'HAW 4/5/2018 09:48:57'!
+!DenotativeObject class methodsFor: 'test support - private' stamp: 'HAW 5/Apr/2018, 12:48:57 pm (UTC)'!
+!methodProperties: {}!
 setUp
 
 	"It is implemented because the DO test wrapper implements #setUp sending #setUp to the DO, so by default does nothing - Hernan"! !
 
-!DenotativeObject class methodsFor: 'test support - private' stamp: 'HAW 4/5/2018 09:49:06'!
+!DenotativeObject class methodsFor: 'test support - private' stamp: 'HAW 5/Apr/2018, 12:49:06 pm (UTC)'!
+!methodProperties: {}!
 tearDown
 
 	"See setUp"! !
 
-!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 4/10/2018 16:50:48'!
+!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 10/Apr/2018, 7:50:48 pm (UTC)'!
+!methodProperties: {}!
 createClassNamed: aName
 
 	superclass ~= DenotativeObject ifTrue: [ self error: 'Superclass must be supplied' ].
@@ -1233,14 +1331,16 @@ createClassNamed: aName
 	^self createClassNamed: aName subclassOf: Object
 	! !
 
-!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 4/10/2018 16:52:18'!
+!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 10/Apr/2018, 7:52:18 pm (UTC)'!
+!methodProperties: {}!
 createClassNamed: aName subclassOf: aSuperclass
 
 	^self createClassNamed: aName subclassOf: aSuperclass category: self category
 	
 	! !
 
-!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 3/4/2019 15:25:31'!
+!DenotativeObject class methodsFor: 'class creation - private' stamp: 'HAW 4/Mar/2019, 6:25:31 pm (UTC)'!
+!methodProperties: {}!
 createClassNamed: aName subclassOf: aSuperclass category: aCategory
 
 	| newClass |
@@ -1262,7 +1362,8 @@ createClassNamed: aName subclassOf: aSuperclass category: aCategory
 	
 	^newClass! !
 
-!DenotativeObject class methodsFor: 'subclass creation - private' stamp: 'HAW 1/3/2019 16:10:58'!
+!DenotativeObject class methodsFor: 'subclass creation - private' stamp: 'HAW 3/Jan/2019, 7:10:58 pm (UTC)'!
+!methodProperties: {}!
 subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat 
 	"This is the standard initialization message for creating a new class as a 
 	subclass of an existing class (the receiver)."
@@ -1282,13 +1383,15 @@ subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s c
 	^answer
 ! !
 
-!DenotativeObject class methodsFor: 'inspecting - private' stamp: 'HAW 9/7/2017 15:03:13'!
+!DenotativeObject class methodsFor: 'inspecting - private' stamp: 'HAW 7/Sep/2017, 6:03:13 pm (UTC)'!
+!methodProperties: {}!
 inspectorClass
 
 	^(self is: #DenotativeObject) ifTrue: [ DenotativeObjectInspector ] ifFalse: [ super inspectorClass ]
 	! !
 
-!DenotativeObjectMorph class methodsFor: 'message forwarding - private' stamp: 'HAW 6/18/2021 11:02:03'!
+!DenotativeObjectMorph class methodsFor: 'message forwarding - private' stamp: 'HAW 18/Jun/2021, 2:02:03 pm (UTC)'!
+!methodProperties: {}!
 doesNotUnderstand: aMessage
 
 	| deproxifiedArguments |
@@ -1301,13 +1404,15 @@ doesNotUnderstand: aMessage
 	
 	^self morph perform: aMessage selector withArguments: deproxifiedArguments! !
 
-!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'FJG 3/16/2025 14:48:36'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'FJG 16/Mar/2025, 5:48:36 pm (UTC)'!
+!methodProperties: {}!
 clearMorph
 
 	morph ifNotNil: [ morph delete ].
 	morph := nil! !
 
-!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 3/26/2019 16:26:00'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 26/Mar/2019, 7:26:00 pm (UTC)'!
+!methodProperties: {}!
 createMorph 
 
 	"Creates the morph related with this DenotativeObjectMorph. Should be redefined
@@ -1321,24 +1426,28 @@ createMorph
 		image: Theme current closeIcon;
 		yourself ! !
 
-!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 9/17/2018 15:30:30'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 17/Sep/2018, 6:30:30 pm (UTC)'!
+!methodProperties: {}!
 initializeMorph 
 
 	morph := self createMorph! !
 
-!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 9/13/2018 18:57:58'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 13/Sep/2018, 9:57:58 pm (UTC)'!
+!methodProperties: {}!
 morph
 
 	morph isNil ifTrue: [ self initializeMorph ].
 	
 	^morph ! !
 
-!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 12/30/2019 12:24:45'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'HAW 30/Dec/2019, 3:24:45 pm (UTC)'!
+!methodProperties: {}!
 morphIfDenotativeObjectMorph
 
 	^self morph! !
 
-!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'FJG 3/16/2025 16:31:45'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'FJG 16/Mar/2025, 7:31:45 pm (UTC)'!
+!methodProperties: {}!
 replicate
 	"When replicating a DenotativeObjectMorph, its associated morph should also be copied;
 	otherwise the morph will be the same for both the original denotative object and its replicant.
@@ -1351,11 +1460,13 @@ replicate
 	
 	^ replicant! !
 
-!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'FJG 3/16/2025 16:32:05'!
+!DenotativeObjectMorph class methodsFor: 'morph' stamp: 'FJG 16/Mar/2025, 7:32:05 pm (UTC)'!
+!methodProperties: {}!
 replicateMorph
 	morph := morph copy! !
 
-!Light class methodsFor: 'morph' stamp: 'FJG 3/16/2025 01:46:16'!
+!Light class methodsFor: 'morph' stamp: 'FJG 16/Mar/2025, 4:46:16 am (UTC)'!
+!methodProperties: {}!
 createMorph
 
 	^EllipseMorph new
@@ -1364,7 +1475,8 @@ createMorph
 		morphExtent: 50@50;
 		yourself! !
 
-!ThreeLightsContainer class methodsFor: 'morph' stamp: 'HAW 8/20/2025 10:04:24'!
+!ThreeLightsContainer class methodsFor: 'morph' stamp: 'HAW 20/Aug/2025, 1:04:24 pm (UTC)'!
+!methodProperties: {}!
 addLight: aLightMorph
 	| innerContainer outerContainer |
 	
@@ -1378,7 +1490,8 @@ addLight: aLightMorph
 		self addMorphUseAll: outerContainer.
 	]! !
 
-!ThreeLightsContainer class methodsFor: 'morph' stamp: 'FJG 3/16/2025 14:45:31'!
+!ThreeLightsContainer class methodsFor: 'morph' stamp: 'FJG 16/Mar/2025, 5:45:31 pm (UTC)'!
+!methodProperties: {}!
 createMorph
 
 	^LayoutMorph newColumn
@@ -1386,7 +1499,8 @@ createMorph
 		yourself
 ! !
 
-!Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:11:52'!
+!Assert class methodsFor: 'descriptions' stamp: 'HAW 30/Jul/2017, 1:11:52 pm (UTC)'!
+!methodProperties: {}!
 comparingStringBetween: actual and: expected
 
 	^ String streamContents: [:stream |
@@ -1398,69 +1512,82 @@ comparingStringBetween: actual and: expected
 			nextPutAll: '.'
 		]! !
 
-!Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 09:43:49'!
+!Assert class methodsFor: 'descriptions' stamp: 'HAW 30/Jul/2017, 12:43:49 pm (UTC)'!
+!methodProperties: {}!
 defaultAssertionFailedDescription
 	
 	^'Assertion failed'! !
 
-!Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:26:44'!
+!Assert class methodsFor: 'descriptions' stamp: 'HAW 30/Jul/2017, 1:26:44 pm (UTC)'!
+!methodProperties: {}!
 defaultIdenticalFailureDescription
 	
 	^'Objects are not identical'! !
 
-!Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:18:43'!
+!Assert class methodsFor: 'descriptions' stamp: 'HAW 30/Jul/2017, 1:18:43 pm (UTC)'!
+!methodProperties: {}!
 defaultNotEqualsFaillureDescription
 	
 	^'Expected to be different but they are equal'! !
 
-!Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:31:30'!
+!Assert class methodsFor: 'descriptions' stamp: 'HAW 30/Jul/2017, 1:31:30 pm (UTC)'!
+!methodProperties: {}!
 defaultNotIdenticalFailureDescription
 	
 	^'Expected to be not identical but they are identical'! !
 
-!Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 10:50:21'!
+!Assert class methodsFor: 'descriptions' stamp: 'HAW 30/Jul/2017, 1:50:21 pm (UTC)'!
+!methodProperties: {}!
 failDescription
 	
 	^'Failed'! !
 
-!Assert class methodsFor: 'descriptions' stamp: 'HAW 7/30/2017 11:11:36'!
+!Assert class methodsFor: 'descriptions' stamp: 'HAW 30/Jul/2017, 2:11:36 pm (UTC)'!
+!methodProperties: {}!
 shouldNotSignalFailureDescription
 	
 	^'Exception was signal when not expected to'! !
 
-!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 7/30/2017 10:49:36'!
+!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 30/Jul/2017, 1:49:36 pm (UTC)'!
+!methodProperties: {}!
 fail
 	
 	self isTrue: false description: self failDescription! !
 
-!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 7/30/2017 09:45:59'!
+!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 30/Jul/2017, 12:45:59 pm (UTC)'!
+!methodProperties: {}!
 isFalse: aBooleanOrBlock
 
 	^self isFalse: aBooleanOrBlock description: self defaultAssertionFailedDescription ! !
 
-!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 7/30/2017 09:45:28'!
+!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 30/Jul/2017, 12:45:28 pm (UTC)'!
+!methodProperties: {}!
 isFalse: aBooleanOrBlock description: aFailureDescription
 
 	self isTrue: aBooleanOrBlock value not description: aFailureDescription ! !
 
-!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 7/30/2017 09:43:41'!
+!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 30/Jul/2017, 12:43:41 pm (UTC)'!
+!methodProperties: {}!
 isTrue: aBooleanOrBlock
 
 	self isTrue: aBooleanOrBlock description: self defaultAssertionFailedDescription
 ! !
 
-!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 7/30/2017 09:42:57'!
+!Assert class methodsFor: 'boolean assertions' stamp: 'HAW 30/Jul/2017, 12:42:57 pm (UTC)'!
+!methodProperties: {}!
 isTrue: aBooleanOrBlock description: aFailureDescription
  
 	aBooleanOrBlock value ifFalse: [ self signalFailure: aFailureDescription ]
 ! !
 
-!Assert class methodsFor: 'expected exception assertions' stamp: 'HAW 7/30/2017 11:16:31'!
+!Assert class methodsFor: 'expected exception assertions' stamp: 'HAW 30/Jul/2017, 2:16:31 pm (UTC)'!
+!methodProperties: {}!
 should: aBlockClosure signal: anExceptionHandlingCondition withDescription: exceptionDescription
 
 	self should: aBlockClosure signal: anExceptionHandlingCondition withDescription: exceptionDescription asserting: [:anException | ]! !
 
-!Assert class methodsFor: 'expected exception assertions' stamp: 'HAW 7/30/2017 11:03:21'!
+!Assert class methodsFor: 'expected exception assertions' stamp: 'HAW 30/Jul/2017, 2:03:21 pm (UTC)'!
+!methodProperties: {}!
 should: aBlockClosure signal: anExceptionHandlingCondition withDescription: exceptionDescription asserting: assertionsBlock
 
 	| signaledException |
@@ -1479,7 +1606,8 @@ should: aBlockClosure signal: anExceptionHandlingCondition withDescription: exce
 			assertionsBlock value: signaledException ]
 		! !
 
-!Assert class methodsFor: 'expected exception assertions' stamp: 'HAW 7/30/2017 11:10:54'!
+!Assert class methodsFor: 'expected exception assertions' stamp: 'HAW 30/Jul/2017, 2:10:54 pm (UTC)'!
+!methodProperties: {}!
 shouldNot: aBlockClosure signal: anExceptionHandlingCondition
 
 	| handledException |
@@ -1491,54 +1619,64 @@ shouldNot: aBlockClosure signal: anExceptionHandlingCondition
 		
 	self isFalse: handledException description: self shouldNotSignalFailureDescription! !
 
-!Assert class methodsFor: 'private - signal failure' stamp: 'HAW 7/30/2017 11:18:57'!
+!Assert class methodsFor: 'private - signal failure' stamp: 'HAW 30/Jul/2017, 2:18:57 pm (UTC)'!
+!methodProperties: {}!
 signalFailure: aDescription
 
 	Error signal: aDescription! !
 
-!Assert class methodsFor: 'equality assertions' stamp: 'HAW 7/30/2017 10:39:33'!
+!Assert class methodsFor: 'equality assertions' stamp: 'HAW 30/Jul/2017, 1:39:33 pm (UTC)'!
+!methodProperties: {}!
 that: actual isEqualTo: expected
  
 	self that: actual isEqualTo: expected description: (self comparingStringBetween: actual and: expected)! !
 
-!Assert class methodsFor: 'equality assertions' stamp: 'HAW 9/7/2017 15:45:12'!
+!Assert class methodsFor: 'equality assertions' stamp: 'HAW 7/Sep/2017, 6:45:12 pm (UTC)'!
+!methodProperties: {}!
 that: actual isEqualTo: expected description: failureDescription 
 
 	self isTrue: (actual isEqualTo: expected) description: failureDescription ! !
 
-!Assert class methodsFor: 'equality assertions' stamp: 'HAW 7/30/2017 10:21:19'!
+!Assert class methodsFor: 'equality assertions' stamp: 'HAW 30/Jul/2017, 1:21:19 pm (UTC)'!
+!methodProperties: {}!
 that: actual isNotEqualTo: expected
  
 	self that: actual isNotEqualTo: expected description: self defaultNotEqualsFaillureDescription ! !
 
-!Assert class methodsFor: 'equality assertions' stamp: 'HAW 9/7/2017 16:48:27'!
+!Assert class methodsFor: 'equality assertions' stamp: 'HAW 7/Sep/2017, 7:48:27 pm (UTC)'!
+!methodProperties: {}!
 that: actual isNotEqualTo: expected description: failureDescription 
  
 	self isTrue: (actual isNotEqualTo: expected) description: failureDescription ! !
 
-!Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/30/2017 10:27:44'!
+!Assert class methodsFor: 'identity assertions' stamp: 'HAW 30/Jul/2017, 1:27:44 pm (UTC)'!
+!methodProperties: {}!
 that: actual isIdenticalTo: expected
 
 	self that: actual isIdenticalTo: expected description: self defaultIdenticalFailureDescription 
 ! !
 
-!Assert class methodsFor: 'identity assertions' stamp: 'HAW 9/7/2017 16:47:54'!
+!Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/Sep/2017, 7:47:54 pm (UTC)'!
+!methodProperties: {}!
 that: actual isIdenticalTo: expected description: failureDescription
 
 	self isTrue: (actual isIdenticalTo: expected) description: failureDescription! !
 
-!Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/30/2017 10:31:04'!
+!Assert class methodsFor: 'identity assertions' stamp: 'HAW 30/Jul/2017, 1:31:04 pm (UTC)'!
+!methodProperties: {}!
 that: actual isNotIdenticalTo: expected
  
 	self that: actual isNotIdenticalTo: expected description: self defaultNotIdenticalFailureDescription
 ! !
 
-!Assert class methodsFor: 'identity assertions' stamp: 'HAW 9/7/2017 16:48:15'!
+!Assert class methodsFor: 'identity assertions' stamp: 'HAW 7/Sep/2017, 7:48:15 pm (UTC)'!
+!methodProperties: {}!
 that: actual isNotIdenticalTo: expected description: failureDescription
 
 	self isTrue: (actual isNotIdenticalTo: expected) description: failureDescription ! !
 
-!AssertTest class methodsFor: 'support' stamp: 'HAW 7/30/2017 09:21:26'!
+!AssertTest class methodsFor: 'support' stamp: 'HAW 30/Jul/2017, 12:21:26 pm (UTC)'!
+!methodProperties: {}!
 shouldFail: aBlockClosure 
 	
 	| failed |
@@ -1550,7 +1688,8 @@ shouldFail: aBlockClosure
 		
 	failed ifFalse: [ Error signal: 'Expected to fail but did not fail' ]! !
 
-!AssertTest class methodsFor: 'support' stamp: 'HAW 7/30/2017 09:42:07'!
+!AssertTest class methodsFor: 'support' stamp: 'HAW 30/Jul/2017, 12:42:07 pm (UTC)'!
+!methodProperties: {}!
 shouldFail: aBlockClosure withDescription: aFailureDescription 
 
 	| failedAsExpected |
@@ -1562,7 +1701,8 @@ shouldFail: aBlockClosure withDescription: aFailureDescription
 		
 	failedAsExpected ifFalse: [ Error signal: 'Expected to fail but did not fail' ]! !
 
-!AssertTest class methodsFor: 'support' stamp: 'HAW 7/30/2017 09:18:45'!
+!AssertTest class methodsFor: 'support' stamp: 'HAW 30/Jul/2017, 12:18:45 pm (UTC)'!
+!methodProperties: {}!
 shouldNotFail: aBlockClosure 
 	
 	aBlockClosure 
@@ -1570,40 +1710,47 @@ shouldNotFail: aBlockClosure
 		do: [:anError | anError pass ]
 			! !
 
-!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 7/30/2017 09:15:40'!
+!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 30/Jul/2017, 12:15:40 pm (UTC)'!
+!methodProperties: {}!
 test01isTruePassWithTrue
 
 	self shouldNotFail: [ Assert isTrue: true ]! !
 
-!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 7/30/2017 09:19:08'!
+!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 30/Jul/2017, 12:19:08 pm (UTC)'!
+!methodProperties: {}!
 test02isTrueFailsWithFalse
 
 	self shouldFail: [ Assert isTrue: false ]! !
 
-!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 7/30/2017 09:30:01'!
+!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 30/Jul/2017, 12:30:01 pm (UTC)'!
+!methodProperties: {}!
 test03isTrueSupportsBlockAsCollaborator
 
 	self shouldNotFail: [ Assert isTrue: [ true ] ]! !
 
-!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 7/30/2017 09:32:21'!
+!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 30/Jul/2017, 12:32:21 pm (UTC)'!
+!methodProperties: {}!
 test04isFalseFailsWithTrue
 
 	self shouldFail: [ Assert isFalse: true ].
 	! !
 
-!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 7/30/2017 09:33:04'!
+!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 30/Jul/2017, 12:33:04 pm (UTC)'!
+!methodProperties: {}!
 test05isFalsePassWithFalse
 
 	self shouldNotFail: [ Assert isFalse: false ].
 	! !
 
-!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 7/30/2017 09:33:33'!
+!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 30/Jul/2017, 12:33:33 pm (UTC)'!
+!methodProperties: {}!
 test06isFalseSupportsBlockAsCollaborator
 
 	self shouldNotFail: [ Assert isFalse: [ false ] ].
 	! !
 
-!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 7/30/2017 09:38:57'!
+!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 30/Jul/2017, 12:38:57 pm (UTC)'!
+!methodProperties: {}!
 test07isTrueCanHaveAFailureDescription
 
 	| failureDescription |
@@ -1613,7 +1760,8 @@ test07isTrueCanHaveAFailureDescription
 	
 	! !
 
-!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 7/30/2017 09:44:48'!
+!AssertTest class methodsFor: 'tests - boolean assertions' stamp: 'HAW 30/Jul/2017, 12:44:48 pm (UTC)'!
+!methodProperties: {}!
 test08isFalseCanHaveAFailureDescription
 
 	| failureDescription |
@@ -1623,14 +1771,16 @@ test08isFalseCanHaveAFailureDescription
 	
 	! !
 
-!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:39:06'!
+!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 30/Jul/2017, 1:39:06 pm (UTC)'!
+!methodProperties: {}!
 test09AssertEqualsPassWhenCollaboratorsAreEqual
 
 	"I use {1} instead of 1 becuase 1 is identical to 1 but two { 1 } are not identical but equals - Hernan"
 	
 	self shouldNotFail: [ Assert that: { 1 } isEqualTo: { 1 } ]! !
 
-!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:39:11'!
+!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 30/Jul/2017, 1:39:11 pm (UTC)'!
+!methodProperties: {}!
 test10AssertEqualsFailsWhenCollaboratorsAreNotEqual
 
 	| actual expected |
@@ -1641,7 +1791,8 @@ test10AssertEqualsFailsWhenCollaboratorsAreNotEqual
 
 	! !
 
-!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:39:26'!
+!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 30/Jul/2017, 1:39:26 pm (UTC)'!
+!methodProperties: {}!
 test11AssertEqualsCanHaveAFailureDescription
 
 	| actual expected failureDescription |
@@ -1653,17 +1804,20 @@ test11AssertEqualsCanHaveAFailureDescription
 
 	! !
 
-!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:15:58'!
+!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 30/Jul/2017, 1:15:58 pm (UTC)'!
+!methodProperties: {}!
 test12AssertNotEqualsPassWhenCollaboratorsAreNotEqual
 	
 	self shouldNotFail: [ Assert that: { 1 } isNotEqualTo: { 2 } ]! !
 
-!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:18:17'!
+!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 30/Jul/2017, 1:18:17 pm (UTC)'!
+!methodProperties: {}!
 test13AssertNotEqualsFailsWhenCollaboratorsAreEqual
 	
 	self shouldFail: [ Assert that: { 1 } isNotEqualTo: { 1 } ] withDescription: Assert defaultNotEqualsFaillureDescription! !
 
-!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 7/30/2017 10:20:14'!
+!AssertTest class methodsFor: 'tests - equality assertions' stamp: 'HAW 30/Jul/2017, 1:20:14 pm (UTC)'!
+!methodProperties: {}!
 test14AssertNotEqualsCanHaveAFailureDescription
 
 	| failureDescription |
@@ -1672,17 +1826,20 @@ test14AssertNotEqualsCanHaveAFailureDescription
 	
 	self shouldFail: [ Assert that: { 1 } isNotEqualTo: { 1 } description: failureDescription ] withDescription: failureDescription ! !
 
-!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:24:11'!
+!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 30/Jul/2017, 1:24:11 pm (UTC)'!
+!methodProperties: {}!
 test15AssertIdenticalPassWhenCollaboratorsAreIdentical
 	
 	self shouldNotFail: [ Assert that: self isIdenticalTo: self ]! !
 
-!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:25:53'!
+!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 30/Jul/2017, 1:25:53 pm (UTC)'!
+!methodProperties: {}!
 test16AssertIdenticalFailsWhenCollaboratorsAreNotIdentical
 	
 	self shouldFail: [ Assert that: 1 isIdenticalTo: 2 ] withDescription: Assert defaultIdenticalFailureDescription! !
 
-!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:29:38'!
+!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 30/Jul/2017, 1:29:38 pm (UTC)'!
+!methodProperties: {}!
 test17AssertIdenticalCanHaveFailureDescription
 
 	| failureDescription |
@@ -1691,17 +1848,20 @@ test17AssertIdenticalCanHaveFailureDescription
 	
 	self shouldFail: [ Assert that: 1 isIdenticalTo: 2 description: failureDescription ] withDescription: failureDescription ! !
 
-!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:30:23'!
+!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 30/Jul/2017, 1:30:23 pm (UTC)'!
+!methodProperties: {}!
 test18AssertNotIdenticalPassWhenCollaboratorsAreNotIdentical
 	
 	self shouldNotFail: [ Assert that: {1} isNotIdenticalTo: {2} ] ! !
 
-!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:32:48'!
+!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 30/Jul/2017, 1:32:48 pm (UTC)'!
+!methodProperties: {}!
 test19AssertNotIdenticalFailsWhenCollaboratorsAreIdentical
 	
 	self shouldFail: [ Assert that: self isNotIdenticalTo: self ] withDescription: Assert defaultNotIdenticalFailureDescription ! !
 
-!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 7/30/2017 10:33:33'!
+!AssertTest class methodsFor: 'tests - identity assertions' stamp: 'HAW 30/Jul/2017, 1:33:33 pm (UTC)'!
+!methodProperties: {}!
 test20AssertNotIdenticalCanHaveFailureDescription
 
 	| failureDescription |
@@ -1710,7 +1870,8 @@ test20AssertNotIdenticalCanHaveFailureDescription
 	
 	self shouldFail: [ Assert that: self isNotIdenticalTo: self description: failureDescription ] withDescription: failureDescription ! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 10:40:38'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 1:40:38 pm (UTC)'!
+!methodProperties: {}!
 test21ShouldSignalPassWhenExpectedExceptionIsSignaledWithRightDescription
 
 	| errorDescription |
@@ -1718,12 +1879,14 @@ test21ShouldSignalPassWhenExpectedExceptionIsSignaledWithRightDescription
 	errorDescription := 'nice error'.
 	self shouldNotFail: [ Assert should: [ Error signal: errorDescription ] signal: Error withDescription: errorDescription ].! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 10:41:26'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 1:41:26 pm (UTC)'!
+!methodProperties: {}!
 test22ShouldSignalFailsWhenExpectedExceptionIsSignaledWithDifferentDescription
 
 	self shouldFail: [ Assert should: [ Error signal: 'error description' ] signal: Error withDescription: 'other description' ].! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 10:43:18'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 1:43:18 pm (UTC)'!
+!methodProperties: {}!
 test23ShouldSignalFailsWhenOtherExceptionIsSignaled
 
 	| errorDescription |
@@ -1731,12 +1894,14 @@ test23ShouldSignalFailsWhenOtherExceptionIsSignaled
 	errorDescription := 'nice error'.
 	self shouldFail: [ Assert should: [ Error signal: errorDescription ] signal: ZeroDivide withDescription: errorDescription ].! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 10:44:48'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 1:44:48 pm (UTC)'!
+!methodProperties: {}!
 test24ShouldSignalFailsWhenNoExceptionIsSignaled
 
 	self shouldFail: [ Assert should: [ ] signal: Error withDescription: 'some description' ].! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 10:53:28'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 1:53:28 pm (UTC)'!
+!methodProperties: {}!
 test25ShouldSignalSupportsAssertionsOnException
 
 	| errorDescription |
@@ -1748,7 +1913,8 @@ test25ShouldSignalSupportsAssertionsOnException
 		withDescription: errorDescription 
 		asserting: [ :anError | Assert isTrue: true ]].! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 10:56:46'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 1:56:46 pm (UTC)'!
+!methodProperties: {}!
 test26ShouldSignalFailsWhenAditionalAssertionsFail
 
 	| errorDescription failureDescription |
@@ -1763,7 +1929,8 @@ test26ShouldSignalFailsWhenAditionalAssertionsFail
 			asserting: [ :anError | Assert isTrue: false description: failureDescription ]]
 		withDescription: failureDescription ! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 11:02:36'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 2:02:36 pm (UTC)'!
+!methodProperties: {}!
 test27ShouldSignalDoesNotHandlesMesssageNotUnderstood
 
 	| mnuNotHandledByShouldSignal |
@@ -1779,19 +1946,22 @@ test27ShouldSignalDoesNotHandlesMesssageNotUnderstood
 	Assert isTrue: mnuNotHandledByShouldSignal 
 			! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 11:05:19'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 2:05:19 pm (UTC)'!
+!methodProperties: {}!
 test28ShouldNotSignalPassWhenNoExceptionIsSignal
 
 	self shouldNotFail: [ Assert shouldNot: [ ] signal: Error ]
 	! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 11:07:40'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 2:07:40 pm (UTC)'!
+!methodProperties: {}!
 test29ShouldNotSignalFailsWhenExceptionIsSignal
 
 	self shouldFail: [ Assert shouldNot: [ Notification signal ] signal: Notification ]
 	! !
 
-!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 7/30/2017 11:15:37'!
+!AssertTest class methodsFor: 'tests - expected exception assertions' stamp: 'HAW 30/Jul/2017, 2:15:37 pm (UTC)'!
+!methodProperties: {}!
 test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 
 	| errorDescription |
@@ -1802,7 +1972,8 @@ test30ShouldNotSignalPassWhenOtherExceptionIsSignal
 		signal: Error
 		withDescription: errorDescription ! !
 
-!DenotativeObjectPackage class methodsFor: 'class initialization' stamp: 'HAW 9/1/2025 09:45:55'!
+!DenotativeObjectPackage class methodsFor: 'class initialization' stamp: 'HAW 1/Sep/2025, 12:45:55 pm (UTC)'!
+!methodProperties: {}!
 initialize
 
 	"For some reason, DenotativeObjectMorph class>>replicate does not bind parent to super when loading.
@@ -1811,19 +1982,22 @@ initialize
 	
 	DenotativeObjectMorph class recompile: #replicate! !
 
-!ObjectBuilder class methodsFor: 'preconditions' stamp: 'HAW 3/31/2018 20:35:28'!
+!ObjectBuilder class methodsFor: 'preconditions' stamp: 'HAW 31/Mar/2018, 11:35:28 pm (UTC)'!
+!methodProperties: {}!
 assertIsValidName: anObjectName
 
 	anObjectName isEmpty ifTrue: [ self signalNameCanNotBeEmpty ].
 	(anObjectName includes: $ ) ifTrue: [ self signalNameCanNotHaveSpaces ].! !
 
-!ObjectBuilder class methodsFor: 'preconditions' stamp: 'HAW 8/26/2017 18:04:04'!
+!ObjectBuilder class methodsFor: 'preconditions' stamp: 'HAW 26/Aug/2017, 9:04:04 pm (UTC)'!
+!methodProperties: {}!
 assertIsValidParent: aParentDenotativeObject
 	
 	(self isValidParent: aParentDenotativeObject) ifFalse: [ self signalInvalidParent: aParentDenotativeObject ]
 	! !
 
-!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 4/1/2022 19:31:01'!
+!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 1/Apr/2022, 10:31:01 pm (UTC)'!
+!methodProperties: {}!
 create: anObject asChildOf: aParentDenotativeObject collaboratorNames: variablesDefinition in: aCategory
 
 	| newClass |
@@ -1849,79 +2023,93 @@ create: anObject asChildOf: aParentDenotativeObject collaboratorNames: variables
 
 	^newClass ! !
 
-!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 9/7/2017 15:19:38'!
+!ObjectBuilder class methodsFor: 'denotative object creation' stamp: 'HAW 7/Sep/2017, 6:19:38 pm (UTC)'!
+!methodProperties: {}!
 create: anObject collaboratorNames: variablesDefinition in: aCategory
 
 	^self create: anObject asChildOf: DenotativeObject collaboratorNames: variablesDefinition in: aCategory
 ! !
 
-!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:03:49'!
+!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 26/Aug/2017, 9:03:49 pm (UTC)'!
+!methodProperties: {}!
 invalidParentErrorDescriptionFor: aParentDenotativeObject
 
 	^aParentDenotativeObject name, ' is not a valid parent'
 	! !
 
-!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 3/31/2018 20:36:06'!
+!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 31/Mar/2018, 11:36:06 pm (UTC)'!
+!methodProperties: {}!
 nameCanNotBeEmptyErrorDescription
 	
 	^'Name can not be empty'! !
 
-!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 3/31/2018 20:32:17'!
+!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 31/Mar/2018, 11:32:17 pm (UTC)'!
+!methodProperties: {}!
 nameCanNotHaveSpacesErrorDescription
 	
 	^'Object name can not have spaces'! !
 
-!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:03:41'!
+!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 26/Aug/2017, 9:03:41 pm (UTC)'!
+!methodProperties: {}!
 signalInvalidParent: aParentDenotativeObject 
 
 	self error: (self invalidParentErrorDescriptionFor: aParentDenotativeObject)! !
 
-!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 3/31/2018 20:35:47'!
+!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 31/Mar/2018, 11:35:47 pm (UTC)'!
+!methodProperties: {}!
 signalNameCanNotBeEmpty
 	
 	self error: self nameCanNotBeEmptyErrorDescription! !
 
-!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 3/31/2018 20:32:03'!
+!ObjectBuilder class methodsFor: 'exceptions' stamp: 'HAW 31/Mar/2018, 11:32:03 pm (UTC)'!
+!methodProperties: {}!
 signalNameCanNotHaveSpaces
 	
 	self error: self nameCanNotHaveSpacesErrorDescription! !
 
-!ObjectBuilder class methodsFor: 'testing' stamp: 'HAW 2/19/2019 16:55:51'!
+!ObjectBuilder class methodsFor: 'testing' stamp: 'HAW 19/Feb/2019, 7:55:51 pm (UTC)'!
+!methodProperties: {}!
 isValidParent: aParentDenotativeObject
 
 	^aParentDenotativeObject includesBehavior: DenotativeObject ! !
 
-!DenotativeObjectTheme methodsFor: 'tool colors' stamp: 'HAW 8/22/2017 11:42:56'!
+!DenotativeObjectTheme methodsFor: 'tool colors' stamp: 'HAW 22/Aug/2017, 2:42:56 pm (UTC)'!
+!methodProperties: {}!
 debugger
 
 	^(TranslucentColor r: 0.750 g: 0.750 b: 0.750 alpha: 0.930)! !
 
-!DenotativeObjectTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/27/2017 22:11:47'!
+!DenotativeObjectTheme methodsFor: 'private - shout mappings' stamp: 'HAW 28/Aug/2017, 1:11:47 am (UTC)'!
+!methodProperties: {}!
 pseudoVariables
 
 	^ (OrderedCollection withAll: super pseudoVariables) 
 		add: #parent;
 		asArray! !
 
-!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'HAW 4/12/2018 15:48:17'!
+!DenotativeObjectTheme class methodsFor: 'icons by menu' stamp: 'HAW 12/Apr/2018, 6:48:17 pm (UTC)'!
+!methodProperties: {}!
 addBasicIconsTo: aCollectorCollection
 
 	aCollectorCollection add: #('denotativeobject browser') -> #morphsIcon
 ! !
 
-!DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 8/5/2018 15:13:12'!
+!DenotativeObjectDarkTheme methodsFor: 'private - shout mappings' stamp: 'HAW 5/Aug/2018, 6:13:12 pm (UTC)'!
+!methodProperties: {}!
 pseudoVariables
 
 	^ (OrderedCollection withAll: super pseudoVariables) 
 		add: #parent;
 		asArray! !
 
-!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 8/20/2025 10:13:33'!
+!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 20/Aug/2025, 1:13:33 pm (UTC)'!
+!methodProperties: {}!
 isValidDenotativeObjectName: aSymbol
 
 	^ aSymbol notEmpty and: [ aSymbol allSatisfy: [ :character | character isValidInIdentifiers ]]! !
 
-!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 8/20/2025 10:17:58'!
+!DenotativeObjectBuilder methodsFor: 'validation' stamp: 'HAW 20/Aug/2025, 1:17:58 pm (UTC)'!
+!methodProperties: {}!
 validateClassName: aSymbol
 	"Validate the new class name"
 
@@ -1932,17 +2120,20 @@ validateClassName: aSymbol
 
 	^ true! !
 
-!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:10:50'!
+!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 21/Feb/2019, 3:10:50 am (UTC)'!
+!methodProperties: {}!
 autoCompleterClass
 	
 	^DenotativeObjectCompleter ! !
 
-!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 00:11:31'!
+!DenotativeObjectWorkspace methodsFor: 'user interface support' stamp: 'HAW 21/Feb/2019, 3:11:31 am (UTC)'!
+!methodProperties: {}!
 editorClass
 
 	^DenotativeObjectWorkspaceEditor ! !
 
-!DenotativeObjectBrowser methodsFor: 'accessing' stamp: 'HAW 4/16/2024 12:41:35'!
+!DenotativeObjectBrowser methodsFor: 'accessing' stamp: 'HAW 16/Apr/2024, 3:41:35 pm (UTC)'!
+!methodProperties: {}!
 acceptedStringOrText
 	"Depending on the current selection, different information is retrieved.
 	Answer a string description of that information. This information is the
@@ -1986,7 +2177,8 @@ acceptedStringOrText
 
 	self error: 'Browser internal error: unknown edit selection.'! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:25:37'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 31/Mar/2018, 11:25:37 pm (UTC)'!
+!methodProperties: {}!
 addChildDenotativeObject
 	
 	self withSelectedCategoryNameDo: [ :systemCategoryName |
@@ -1994,7 +2186,8 @@ addChildDenotativeObject
 			self withParentNameDo: [ :parentName |
 				self addDenotativeObjectNamed: objectName asChildOf: parentName inCategory:  systemCategoryName ]]]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:55'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 26/Aug/2017, 9:15:55 pm (UTC)'!
+!methodProperties: {}!
 addChildDenotativeObjectInCategory
 	
 	self withObjectNameDo: [ :objectName |
@@ -2003,14 +2196,16 @@ addChildDenotativeObjectInCategory
 				self addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName ]]]
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:24:11'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 31/Mar/2018, 11:24:11 pm (UTC)'!
+!methodProperties: {}!
 addDenotativeObject
 	
 	self withSelectedCategoryNameDo: [ :systemCategoryName | 
 		self withObjectNameDo: [ :objectName |
 			self addDenotativeObjectNamed: objectName inCategory:  systemCategoryName ]]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:13:46'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 26/Aug/2017, 9:13:46 pm (UTC)'!
+!methodProperties: {}!
 addDenotativeObjectInCategory
 	
 	self withObjectNameDo: [ :objectName |
@@ -2018,7 +2213,8 @@ addDenotativeObjectInCategory
 			self addDenotativeObjectNamed: objectName inCategory: categoryName ]]
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/7/2017 15:30:59'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 7/Sep/2017, 6:30:59 pm (UTC)'!
+!methodProperties: {}!
 addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryName
 	
 	| definitionString collaborators |
@@ -2041,19 +2237,22 @@ addDenotativeObjectNamed: objectName asChildOf: parentName inCategory: categoryN
 	self defineClass: definitionString  notifying: nil 
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:13:21'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 26/Aug/2017, 9:13:21 pm (UTC)'!
+!methodProperties: {}!
 addDenotativeObjectNamed: objectName inCategory: categoryName
 	
 	^self addDenotativeObjectNamed: objectName asChildOf: DenotativeObject name asString inCategory: categoryName ! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 1/27/2022 17:16:21'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 27/Jan/2022, 8:16:21 pm (UTC)'!
+!methodProperties: {}!
 classDefinitionText
 	"return the text to display for the definition of the currently selected class"
 	| theClass |
 	
 	^(theClass := self selectedClassOrMetaClass theMetaClass) ifNil: [''] ifNotNil: [DenotativeObject definitionOf: theClass]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:05:55'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 13/Sep/2017, 7:05:55 pm (UTC)'!
+!methodProperties: {}!
 collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning
 	
 	^String streamContents: [:stream |
@@ -2067,7 +2266,8 @@ collaboratorWithReferencesErrorMessageFrom: anUndeclareVariableWarning
 			newLine;
 			nextPutAll: 'Do you want to continue?' ]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 7/22/2017 13:32:34'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 22/Jul/2017, 4:32:34 pm (UTC)'!
+!methodProperties: {}!
 copyClass
 
 	| originalClass originalName copysName  |
@@ -2086,7 +2286,8 @@ copyClass
 			
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/23/2020 19:08:23'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 23/Sep/2020, 10:08:23 pm (UTC)'!
+!methodProperties: {}!
 createClass
 
 	self selectedClass ifNotNil: [ :aDenotativeObject | | superclass className categoryName |	
@@ -2106,7 +2307,8 @@ createClass
 			on: Error
 			do: [ :anError | self inform: anError messageText ]]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/23/2020 19:07:23'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 23/Sep/2020, 10:07:23 pm (UTC)'!
+!methodProperties: {}!
 createSuperclassOf: aDenotativeObject onCancel: aBlock
 
 	| denotativeObjectParent categoryName superclass superclassName |
@@ -2129,7 +2331,8 @@ createSuperclassOf: aDenotativeObject onCancel: aBlock
 	
 	^denotativeObjectParent createClassNamed: superclassName asSymbol subclassOf: superclass category: categoryName! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:02:36'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 13/Sep/2017, 7:02:36 pm (UTC)'!
+!methodProperties: {}!
 defineClass: defString notifying: aRequestor
 
 	^[self defineClassWithoutHandlingWarning: defString notifying: aRequestor]		
@@ -2139,7 +2342,8 @@ defineClass: defString notifying: aRequestor
 				ifTrue: [ aWarning resume ]
 				ifFalse: [ aWarning return: false ]].! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:54'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 13/Sep/2017, 7:01:54 pm (UTC)'!
+!methodProperties: {}!
 defineClassWihoutHandlingErrors: defString notifying: aRequestor 
 		
  	| class classCreated |
@@ -2152,7 +2356,8 @@ defineClassWihoutHandlingErrors: defString notifying: aRequestor
 	
 	^classCreated! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 5/10/2019 12:34:39'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 10/May/2019, 3:34:39 pm (UTC)'!
+!methodProperties: {}!
 defineClassWithoutHandlingParseNotification: defString notifying: aRequestor 
 		
 	^[self defineClassWihoutHandlingErrors: defString notifying: aRequestor ]
@@ -2162,7 +2367,8 @@ defineClassWithoutHandlingParseNotification: defString notifying: aRequestor
 			self inform: anError messageText.
 			anError return: false ]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 15:57:26'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 13/Sep/2017, 6:57:26 pm (UTC)'!
+!methodProperties: {}!
 defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor 
 			
 	^[self defineClassWithoutHandlingParseNotification: defString notifying: aRequestor ]
@@ -2171,7 +2377,8 @@ defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequest
 			self inform: self invalidDefinitionErrorDescription.
 			parserNotification return: false ]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:04:07'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 13/Sep/2017, 7:04:07 pm (UTC)'!
+!methodProperties: {}!
 defineClassWithoutHandlingWarning: defString notifying: aRequestor
 	
 	^[self defineClassWithoutHandlingUndeclareVariableWaring: defString notifying: aRequestor ]
@@ -2181,7 +2388,8 @@ defineClassWithoutHandlingWarning: defString notifying: aRequestor
 				ifTrue: [ anUndeclareVariableWarning resume ]
 				ifFalse: [ anUndeclareVariableWarning return: false ]]! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:06:59'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 13/Sep/2017, 7:06:59 pm (UTC)'!
+!methodProperties: {}!
 filterErrorMessagesWithClassStringFrom: anError
 		
 	anError messageText = 'Class names must be capitalized' ifTrue: [ ^anError messageText: 'Object names must be capitalized' ].
@@ -2189,7 +2397,8 @@ filterErrorMessagesWithClassStringFrom: anError
 	anError messageText: (anError messageText copyReplaceAll: ' inherits from ' with: ' is child of ').
 	anError messageText: (anError messageText copyReplaceAll: ' subclass ' with: ' child ').! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/13/2017 16:01:32'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 13/Sep/2017, 7:01:32 pm (UTC)'!
+!methodProperties: {}!
 newClassCreated: aClass
 	
 	self 
@@ -2199,18 +2408,21 @@ newClassCreated: aClass
 		setClass: aClass selector: nil.
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/1/2018 17:56:48'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 1/Aug/2018, 8:56:48 pm (UTC)'!
+!methodProperties: {}!
 removeClass
 	
 	^self safelyRemoveClass ! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 12/4/2019 12:03:06'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 4/Dec/2019, 3:03:06 pm (UTC)'!
+!methodProperties: {}!
 renameClass
 
 	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
 		(DenotativeObjectRenameApplier for: aBehavior theNonMetaClass) value ].! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 9/14/2018 13:49:17'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 14/Sep/2018, 4:49:17 pm (UTC)'!
+!methodProperties: {}!
 safelyRemoveClass
 
 	self selectedClassOrMetaClass ifNotNil: [ :aBehavior |
@@ -2218,13 +2430,15 @@ safelyRemoveClass
 	
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/26/2017 18:15:10'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 26/Aug/2017, 9:15:10 pm (UTC)'!
+!methodProperties: {}!
 withObjectNameDo: aBlock
 	
 	^self withObjectNameDo: aBlock label: 'Enter object name' 
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 8/29/2020 18:08:57'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 29/Aug/2020, 9:08:57 pm (UTC)'!
+!methodProperties: {}!
 withObjectNameDo: aBlock label: aLabel
 	
 	DenotativeObjectNameRequestMorph 
@@ -2238,7 +2452,8 @@ withObjectNameDo: aBlock label: aLabel
 		 		on: Error 
 				do: [:anError | ^self inform: anError messageText ]].! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'FJG 3/16/2025 02:09:37'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'FJG 16/Mar/2025, 5:09:37 am (UTC)'!
+!methodProperties: {}!
 withParentNameDo: aBlock
 
 	self selectedClass ifNotNil: [ ^ aBlock value: self selectedClass name ].
@@ -2246,7 +2461,8 @@ withParentNameDo: aBlock
 	^self withObjectNameDo: aBlock label: 'Enter parent name' 
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 3/31/2018 20:24:57'!
+!DenotativeObjectBrowser methodsFor: 'class functions' stamp: 'HAW 31/Mar/2018, 11:24:57 pm (UTC)'!
+!methodProperties: {}!
 withSelectedCategoryNameDo: aBlock
 
 	^self selectedSystemCategoryName 
@@ -2254,41 +2470,49 @@ withSelectedCategoryNameDo: aBlock
 		ifNotNil: aBlock 
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 12/30/2024 18:01:02'!
+!DenotativeObjectBrowser methodsFor: 'class list' stamp: 'HAW 10/Aug/2026, 10:51:31 am (UTC)'!
+!methodProperties: {}!
 basicClassList
 
-	^super basicClassList select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ] ! !
+	^super basicClassList select: [ :aClass | aClass is: #DenotativeObject ] ! !
 
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:23:05'!
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:23:05 pm (UTC)'!
+!methodProperties: {}!
 debugMethodTest
 
 	^self debugDenotativeObjectMethodTest! !
 
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:26:31'!
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:26:31 pm (UTC)'!
+!methodProperties: {}!
 runClassTests
 
 	^self runDenotativeObjectTests! !
 
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:28:28'!
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:28:28 pm (UTC)'!
+!methodProperties: {}!
 runMessageCategoryTests
 
 	^self runDenotativeObjectMessageCategoryTests! !
 
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:29:35'!
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:29:35 pm (UTC)'!
+!methodProperties: {}!
 runMethodTest
 
 	^self runDenotativeObjectMethodTest! !
 
-!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:31:02'!
+!DenotativeObjectBrowser methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:31:02 pm (UTC)'!
+!methodProperties: {}!
 runSystemCategoryTests
 
 	^self runDenotativeObjectSystemCategoryTests! !
 
-!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 4/11/2018 15:30:27'!
+!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 11/Apr/2018, 6:30:27 pm (UTC)'!
+!methodProperties: {}!
 defaultBrowserTitle
 	^ 'DenotativeObject Browser'! !
 
-!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 7/9/2017 12:18:37'!
+!DenotativeObjectBrowser methodsFor: 'initialization' stamp: 'HAW 9/Jul/2017, 3:18:37 pm (UTC)'!
+!methodProperties: {}!
 systemOrganizer: aSystemOrganizer
 	"Initialize the receiver as a perspective on the system organizer,
 	aSystemOrganizer. Typically there is only one--the system variable
@@ -2303,7 +2527,8 @@ systemOrganizer: aSystemOrganizer
 	self setClassOrganizer.
 	self editSelection: #none.! !
 
-!DenotativeObjectBrowser methodsFor: 'message functions' stamp: 'FJG 3/9/2025 19:04:28'!
+!DenotativeObjectBrowser methodsFor: 'message functions' stamp: 'FJG 9/Mar/2025, 10:04:28 pm (UTC)'!
+!methodProperties: {}!
 defineMessageFrom: aString notifying: aRequestor
 
 	| selectedMessageName selector category oldMessageList |
@@ -2350,17 +2575,20 @@ Is this really what you want to do?'))
 	
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 15:32:07'!
+!DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 19/Feb/2019, 6:32:07 pm (UTC)'!
+!methodProperties: {}!
 autoCompleterClassFor: textGetter
 	
 	^DenotativeObjectCompleter! !
 
-!DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 7/14/2017 20:46:27'!
+!DenotativeObjectBrowser methodsFor: 'user interface support' stamp: 'HAW 14/Jul/2017, 11:46:27 pm (UTC)'!
+!methodProperties: {}!
 editorClassFor: textGetter
 
 	^DenotativeObjectSmalltalkEditor! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 9/23/2020 19:07:40'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 23/Sep/2020, 10:07:40 pm (UTC)'!
+!methodProperties: {}!
 fileInSystemCategory
 
 	[| fileName |
@@ -2371,17 +2599,20 @@ fileInSystemCategory
 		do: [:anError |
 			(PopUpMenu confirm: 'File ', anError messageText, ' does not exist. Try again?') ifTrue: [ anError retry ] ifFalse: [ anError return ]]! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 7/22/2017 11:45:50'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 22/Jul/2017, 2:45:50 pm (UTC)'!
+!methodProperties: {}!
 firstExperimentCategoryName
 	
 	^'First Experiment'! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'RNG 5/27/2018 01:03:53'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'RNG 27/May/2018, 4:03:53 am (UTC)'!
+!methodProperties: {}!
 potentialClassNames
 
 	^ DenotativeObject allSubclasses collect: [ :class | class name ]! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/1/2017 09:31:11'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/Aug/2017, 12:31:11 pm (UTC)'!
+!methodProperties: {}!
 removeSystemCategory
 
 	selectedSystemCategory ifNil: [^ self].
@@ -2393,7 +2624,8 @@ and all its objects?'])
 			self systemCategoryListIndex: 0.
 			self changed: #systemCategoryList ]! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 2/1/2022 18:11:15'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/Feb/2022, 9:11:15 pm (UTC)'!
+!methodProperties: {}!
 renameSystemCategory
 	
 	"I have to use the old version, the one before hierarchy list was used for categories - Hernan"
@@ -2415,19 +2647,22 @@ renameSystemCategory
 			self changed: #systemCategoryList.
 			self systemCategoryListIndex: (self systemCategoryList indexOf: newName)]! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 18:05:22'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 27/Jan/2022, 9:05:22 pm (UTC)'!
+!methodProperties: {}!
 selectCategoryForClass: theClass
 
 	self systemCategoryListIndex: (self systemCategoryList indexOf: theClass category)
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 18:00:48'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 27/Jan/2022, 9:00:48 pm (UTC)'!
+!methodProperties: {}!
 selectedSystemCategoryName
 	"Answer the name of the selected system category or nil."
 
 	^selectedSystemCategory! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 1/27/2022 17:23:32'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 27/Jan/2022, 8:23:32 pm (UTC)'!
+!methodProperties: {}!
 systemCategoryListIndex
 	"Answer the index of the selected class category."
 
@@ -2435,7 +2670,8 @@ systemCategoryListIndex
 	selectedSystemCategory ifNil: [ ^0 ].
 	^self systemCategoryList indexOf: selectedSystemCategory! !
 
-!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 8/29/2020 18:18:18'!
+!DenotativeObjectBrowser methodsFor: 'system category functions' stamp: 'HAW 29/Aug/2020, 9:18:18 pm (UTC)'!
+!methodProperties: {}!
 withCategoryNameDo: aBlock
 	
 	self 
@@ -2446,22 +2682,26 @@ withCategoryNameDo: aBlock
 				ifTrue: [ self inform: 'Category name can not be empty' ]
 				ifFalse: [ aBlock value: categoryName ]]! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/26/2017 18:35:22'!
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 26/Aug/2017, 9:35:22 pm (UTC)'!
+!methodProperties: {}!
 invalidDefinitionErrorDescription
 
 	^'Invalid definition'! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 8/6/2017 11:09:34'!
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 6/Aug/2017, 2:09:34 pm (UTC)'!
+!methodProperties: {}!
 invalidObjectErrorDescription: name
 
 	^name, ' is not a denotative object'! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 5/10/2019 11:45:38'!
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 10/May/2019, 2:45:38 pm (UTC)'!
+!methodProperties: {}!
 objectNameMustBeSymbolErrorDescription
 	
 	^'Object name must be symbol. It has to start wiht #'! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 9/13/2017 15:11:23'!
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 13/Sep/2017, 6:11:23 pm (UTC)'!
+!methodProperties: {}!
 validateDefinitionString: defString
 
 	| defTokens |
@@ -2473,7 +2713,8 @@ validateDefinitionString: defString
 		ifTrue: [ self validateObjectCreation: defTokens ]
 		ifFalse: [ self validateObjectRedefinition: defTokens ]! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 5/10/2019 12:36:46'!
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 10/May/2019, 3:36:46 pm (UTC)'!
+!methodProperties: {}!
 validateObjectCreation: defTokens 
 
 	| denotativeObjectName nameIndex |
@@ -2485,20 +2726,23 @@ validateObjectCreation: defTokens
 	(NewDenotativeObjectPrecondition for: denotativeObjectName asSymbol in: Smalltalk undeclared: Undeclared) value.
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 2/21/2019 16:41:15'!
+!DenotativeObjectBrowser methodsFor: 'exceptions' stamp: 'HAW 21/Feb/2019, 7:41:15 pm (UTC)'!
+!methodProperties: {}!
 validateObjectRedefinition: defTokens 
 
 	(Smalltalk isDenotativeObjectNamed: defTokens first asSymbol) ifFalse: [ self error: (self invalidObjectErrorDescription: defTokens first)]
 
 		! !
 
-!DenotativeObjectBrowser methodsFor: 'metaclass' stamp: 'HAW 7/9/2017 12:17:35'!
+!DenotativeObjectBrowser methodsFor: 'metaclass' stamp: 'HAW 9/Jul/2017, 3:17:35 pm (UTC)'!
+!methodProperties: {}!
 metaClassIndicated: trueOrFalse
 	"Indicate whether browsing instance or class messages."
 
 	^super metaClassIndicated: true! !
 
-!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 1/27/2022 18:03:19'!
+!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 27/Jan/2022, 9:03:19 pm (UTC)'!
+!methodProperties: {}!
 setSelectedSystemCategory: aString
 	
 	super setSelectedSystemCategory: aString.
@@ -2506,7 +2750,8 @@ setSelectedSystemCategory: aString
 	self changed: #systemCategoryListIndex.	"update my selection"
 	! !
 
-!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 7/22/2017 11:45:30'!
+!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 22/Jul/2017, 2:45:30 pm (UTC)'!
+!methodProperties: {}!
 systemCategoryList
 
 	| denotativeObjecCategories |
@@ -2518,7 +2763,8 @@ systemCategoryList
 
 ! !
 
-!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 3/31/2018 19:46:57'!
+!DenotativeObjectBrowser methodsFor: 'system category list' stamp: 'HAW 31/Mar/2018, 10:46:57 pm (UTC)'!
+!methodProperties: {}!
 systemCategoryListIndex: anInteger
 	"Set the selected system category index to be anInteger. Update all other
 	selections to be deselected."
@@ -2546,36 +2792,42 @@ systemCategoryListIndex: anInteger
 	self changed: #classMessagesIndicated.
 	self acceptedContentsChanged! !
 
-!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'HAW 9/27/2018 15:07:14'!
+!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'HAW 27/Sep/2018, 6:07:14 pm (UTC)'!
+!methodProperties: {}!
 hasMorphObjectSelected
 
 	^ self selectedClass notNil and: [ self selectedClass isDescendantOf: DenotativeObjectMorph ]! !
 
-!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 9/27/2018 11:18:46'!
+!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 27/Sep/2018, 2:18:46 pm (UTC)'!
+!methodProperties: {}!
 hideSelectedMorph
 
 	self selectedClass delete! !
 
-!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 9/27/2018 11:18:58'!
+!DenotativeObjectBrowser methodsFor: 'morph handling' stamp: 'RNG 27/Sep/2018, 2:18:58 pm (UTC)'!
+!methodProperties: {}!
 showSelectedMorph
 
 	self selectedClass openInWorld! !
 
-!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:53:49'!
+!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 21/Feb/2019, 7:53:49 pm (UTC)'!
+!methodProperties: {}!
 recentClasses
 
 	RecentDenotativeObjects ifNil: [ RecentDenotativeObjects := OrderedCollection new ].
 	
 	^RecentDenotativeObjects ! !
 
-!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 2/21/2019 16:54:14'!
+!DenotativeObjectBrowser class methodsFor: 'cached state access' stamp: 'HAW 21/Feb/2019, 7:54:14 pm (UTC)'!
+!methodProperties: {}!
 releaseClassCachedState
 	"
 	DenotativeObjectBrowser  releaseClassCachedState
 	"
 	RecentDenotativeObjects _ nil! !
 
-!DenotativeObjectMessageSet methodsFor: 'private' stamp: 'HAW 8/21/2017 21:56:59'!
+!DenotativeObjectMessageSet methodsFor: 'private' stamp: 'HAW 22/Aug/2017, 12:56:59 am (UTC)'!
+!methodProperties: {}!
 contents: aText notifying: aController
 
 	^[ super contents: aText notifying: aController ]
@@ -2583,47 +2835,56 @@ contents: aText notifying: aController
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
 ! !
 
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:24:15'!
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:24:15 pm (UTC)'!
+!methodProperties: {}!
 debugMethodTest
 
 	^self debugDenotativeObjectMethodTest! !
 
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:26:57'!
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:26:57 pm (UTC)'!
+!methodProperties: {}!
 runClassTests
 
 	^self runDenotativeObjectTests! !
 
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:28:37'!
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:28:37 pm (UTC)'!
+!methodProperties: {}!
 runMessageCategoryTests
 
 	^self runDenotativeObjectMessageCategoryTests! !
 
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:29:59'!
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:29:59 pm (UTC)'!
+!methodProperties: {}!
 runMethodTest
 
 	^self runDenotativeObjectMethodTest! !
 
-!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 8/23/2017 15:31:13'!
+!DenotativeObjectMessageSet methodsFor: 'tdd' stamp: 'HAW 23/Aug/2017, 6:31:13 pm (UTC)'!
+!methodProperties: {}!
 runSystemCategoryTests
 
 	^self runDenotativeObjectSystemCategoryTests! !
 
-!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 16:56:52'!
+!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 19/Feb/2019, 7:56:52 pm (UTC)'!
+!methodProperties: {}!
 autoCompleterClassFor: textGetter
 	
 	^DenotativeObjectCompleter! !
 
-!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 21:57:20'!
+!DenotativeObjectMessageSet methodsFor: 'user interface support' stamp: 'HAW 22/Aug/2017, 12:57:20 am (UTC)'!
+!methodProperties: {}!
 editorClassFor: textGetter
 
 	^DenotativeObjectSmalltalkEditor! !
 
-!DenotativeObjectMessageSet methodsFor: 'system category list' stamp: 'HAW 8/21/2017 22:00:50'!
+!DenotativeObjectMessageSet methodsFor: 'system category list' stamp: 'HAW 22/Aug/2017, 1:00:50 am (UTC)'!
+!methodProperties: {}!
 selectedSystemCategoryName
 
 	^selectedMessage ifNil: [ 'MessageList-Objects' ] ifNotNil: [ selectedMessage actualClass category ]! !
 
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 9/23/2020 19:12:41'!
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 23/Sep/2020, 10:12:41 pm (UTC)'!
+!methodProperties: {}!
 askForCategoryIn: aClass default: aString
 
 	| categories index category |
@@ -2640,12 +2901,14 @@ askForCategoryIn: aClass default: aString
 		
 	^ category isEmpty ifTrue: [aString] ifFalse: [category]! !
 
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 10:54:42'!
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 29/Jul/2017, 1:54:42 pm (UTC)'!
+!methodProperties: {}!
 originalSend
 
 	^super send! !
 
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/29/2017 18:18:10'!
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 29/Jul/2017, 9:18:10 pm (UTC)'!
+!methodProperties: {}!
 restart
 
 	^[ super restart ]
@@ -2653,7 +2916,8 @@ restart
 		do: [ :anError | self inform: 'Can not continue debugging' ]
 	! !
 
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 3/26/2019 16:33:14'!
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 26/Mar/2019, 7:33:14 pm (UTC)'!
+!methodProperties: {}!
 send
 
 	"Sends until receiver is a denotative object.
@@ -2673,7 +2937,8 @@ send
 
 ! !
 
-!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 7/30/2017 10:05:36'!
+!DenotativeObjectDebugger methodsFor: 'context stack menu' stamp: 'HAW 30/Jul/2017, 1:05:36 pm (UTC)'!
+!methodProperties: {}!
 stepIntoBlock
 
 	[ | toDebugContext |
@@ -2688,7 +2953,8 @@ stepIntoBlock
 	 	ifFalse: [ self resetContext: toDebugContext ]] ensure: [ inStep := false ].
 	! !
 
-!DenotativeObjectDebugger methodsFor: 'method creation' stamp: 'HAW 8/26/2017 19:17:29'!
+!DenotativeObjectDebugger methodsFor: 'method creation' stamp: 'HAW 26/Aug/2017, 10:17:29 pm (UTC)'!
+!methodProperties: {}!
 askForSuperclassOf: aClass upTo: aSuperclass toImplement: aSelector ifCancel: cancelBlock
 
 	| classes chosenClassIndex |
@@ -2705,7 +2971,8 @@ askForSuperclassOf: aClass upTo: aSuperclass toImplement: aSelector ifCancel: ca
 
 	! !
 
-!DenotativeObjectDebugger methodsFor: 'method creation' stamp: 'FJG 5/10/2025 17:07:07'!
+!DenotativeObjectDebugger methodsFor: 'method creation' stamp: 'FJG 10/May/2025, 8:07:07 pm (UTC)'!
+!methodProperties: {}!
 wasInterruptedOnSubclassResponsibility
 
 	^super wasInterruptedOnSubclassResponsibility or: [
@@ -2714,7 +2981,8 @@ wasInterruptedOnSubclassResponsibility
 			ifNotNil: [ :senderContext | senderContext selector == #childResponsibility	]
 	]! !
 
-!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 8/21/2017 19:06:38'!
+!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 21/Aug/2017, 10:06:38 pm (UTC)'!
+!methodProperties: {}!
 contents: aText notifying: aController
 
 	^[ super contents: aText notifying: aController ]
@@ -2722,33 +2990,39 @@ contents: aText notifying: aController
 		do: [ :undeclaredVariable | undeclaredVariable handleForDenotativeObjectIn: self ].
 ! !
 
-!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 7/29/2017 17:29:24'!
+!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 29/Jul/2017, 8:29:24 pm (UTC)'!
+!methodProperties: {}!
 inStep
 
 	^inStep ! !
 
-!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 8/21/2017 19:08:57'!
+!DenotativeObjectDebugger methodsFor: 'accessing' stamp: 'HAW 21/Aug/2017, 10:08:57 pm (UTC)'!
+!methodProperties: {}!
 selectedSystemCategoryName
 	
 	^self receiver ifNil: [ 'Debugger-Objects' ] ifNotNil: [ :receiver | receiver isBehavior ifTrue: [ receiver category ] ifFalse: [ receiver class category ]]! !
 
-!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 18:06:23'!
+!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 19/Feb/2019, 9:06:23 pm (UTC)'!
+!methodProperties: {}!
 autoCompleterClassFor: textGetter
 	
 	^DenotativeObjectCompleter! !
 
-!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 8/21/2017 12:43:55'!
+!DenotativeObjectDebugger methodsFor: 'user interface support' stamp: 'HAW 21/Aug/2017, 3:43:55 pm (UTC)'!
+!methodProperties: {}!
 editorClassFor: textGetter
 
 	^DenotativeObjectSmalltalkEditor ! !
 
-!DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 7/29/2017 17:29:17'!
+!DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 29/Jul/2017, 8:29:17 pm (UTC)'!
+!methodProperties: {}!
 initialize
 
 	super initialize.
 	inStep := false.! !
 
-!DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 7/29/2017 18:02:49'!
+!DenotativeObjectDebugger methodsFor: 'initialization' stamp: 'HAW 29/Jul/2017, 9:02:49 pm (UTC)'!
+!methodProperties: {}!
 openFullMorphicLabel: aLabelString
 	"Open a full morphic debugger with the given label"
 
@@ -2760,7 +3034,8 @@ openFullMorphicLabel: aLabelString
 	DenotativeObjectDebuggerWindow open: self label: aLabelString.
 	self toggleContextStackIndex: oldContextStackIndex! !
 
-!DenotativeObjectDebugger methodsFor: 'private' stamp: 'HAW 8/4/2019 21:26:31'!
+!DenotativeObjectDebugger methodsFor: 'private' stamp: 'HAW 5/Aug/2019, 12:26:31 am (UTC)'!
+!methodProperties: {}!
 newStack: stack
 
 	| denotativeObjectContexts |
@@ -2779,12 +3054,14 @@ newStack: stack
 		
 	! !
 
-!DenotativeObjectDebugger class methodsFor: 'error messages' stamp: 'HAW 3/26/2019 16:32:37'!
+!DenotativeObjectDebugger class methodsFor: 'error messages' stamp: 'HAW 26/Mar/2019, 7:32:37 pm (UTC)'!
+!methodProperties: {}!
 canNotDebugErrorMessage
 
 	^'Cannot debug a message sent to an object that is not a DenotativeObject'! !
 
-!DenotativeObjectDebugger class methodsFor: 'as yet unclassified' stamp: 'HAW 8/22/2022 12:00:27'!
+!DenotativeObjectDebugger class methodsFor: 'as yet unclassified' stamp: 'HAW 22/Aug/2022, 3:00:27 pm (UTC)'!
+!methodProperties: {}!
 openDebugging: aBlock to: aCompiledMethod label: aString
 	"Create a new process to debug aBlock, and step into it."
 
@@ -2796,39 +3073,46 @@ openDebugging: aBlock to: aCompiledMethod label: aString
 	[debugger interruptedContext method == aCompiledMethod]
 		whileFalse: [debugger originalSend]! !
 
-!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:02'!
+!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 21/Mar/2019, 5:41:02 pm (UTC)'!
+!methodProperties: {}!
 alwaysPresentFieldList
 
 	^ #('self' 'all collaborators')! !
 
-!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 3/21/2019 14:41:15'!
+!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 21/Mar/2019, 5:41:15 pm (UTC)'!
+!methodProperties: {}!
 baseFieldList
 
 	^ self alwaysPresentFieldList, object collaboratorNames ! !
 
-!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 9/29/2020 17:44:57'!
+!DenotativeObjectInspector methodsFor: 'accessing' stamp: 'HAW 29/Sep/2020, 8:44:57 pm (UTC)'!
+!methodProperties: {}!
 object
 
 	^object ! !
 
-!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 2/19/2019 18:44:01'!
+!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 19/Feb/2019, 9:44:01 pm (UTC)'!
+!methodProperties: {}!
 autoCompleterClassFor: textGetter
 	
 	^DenotativeObjectCompleter! !
 
-!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 3/21/2019 14:41:51'!
+!DenotativeObjectInspector methodsFor: 'user interface support' stamp: 'HAW 21/Mar/2019, 5:41:51 pm (UTC)'!
+!methodProperties: {}!
 editorClassFor: textGetter
 
 	^DenotativeObjectSmalltalkEditor ! !
 
-!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:41:59'!
+!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 21/Mar/2019, 5:41:59 pm (UTC)'!
+!methodProperties: {}!
 instVarBase
 
 	^DenotativeObject class instSize - self alwaysPresentFieldList size
 	
 	! !
 
-!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:42:10'!
+!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 21/Mar/2019, 5:42:10 pm (UTC)'!
+!methodProperties: {}!
 replaceSelectionValue: anObject
 	"The receiver has a list of variables of its inspected object. One of these
 	is selected. The value of the selected variable is set to the value,
@@ -2844,7 +3128,8 @@ replaceSelectionValue: anObject
 	self error: 'Cannot replace selection'.
 	! !
 
-!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 3/21/2019 14:42:26'!
+!DenotativeObjectInspector methodsFor: 'selecting' stamp: 'HAW 21/Mar/2019, 5:42:26 pm (UTC)'!
+!methodProperties: {}!
 selection
 	"The receiver has a list of variables of its inspected object.
 	One of these is selected. Answer the value of the selected variable."
@@ -2856,53 +3141,62 @@ selection
 	^ object instVarAt: selectionIndex + self instVarBase
 	! !
 
-!DenotativeObjectInspector class methodsFor: 'instance creation' stamp: 'HAW 7/13/2017 00:01:59'!
+!DenotativeObjectInspector class methodsFor: 'instance creation' stamp: 'HAW 13/Jul/2017, 3:01:59 am (UTC)'!
+!methodProperties: {}!
 openOn: anObject
 	^ self openOn: anObject withLabel: anObject name! !
 
-!DenotativeObjectInspector class methodsFor: 'instance creation' stamp: 'HAW 8/20/2017 15:12:07'!
+!DenotativeObjectInspector class methodsFor: 'instance creation' stamp: 'HAW 20/Aug/2017, 6:12:07 pm (UTC)'!
+!methodProperties: {}!
 openOn: anObject withLabel: label
 
 	DenotativeObjectInspectorWindow open: (self inspect: anObject) label: label
 	
 ! !
 
-!DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 2/21/2019 16:15:49'!
+!DenotativeObjectNameRequestMorph methodsFor: 'user interface support' stamp: 'HAW 21/Feb/2019, 7:15:49 pm (UTC)'!
+!methodProperties: {}!
 autoCompleterClassFor: textGetter
 	
 	^DenotativeObjectNameCompleter! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:47:11'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 13/Apr/2019, 4:47:11 pm (UTC)'!
+!methodProperties: {}!
 addInstVar
 
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
 		(DenotativeObjectAddCollaboratorApplier on: model for: aClass) value ].! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:29:15'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 30/Jul/2017, 2:29:15 pm (UTC)'!
+!methodProperties: {}!
 browseAllAccessesTo: aVar from: aClass
 
 	^self class browseAllAccessesTo: aVar from: aClass
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:32:41'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 13/Sep/2017, 11:32:41 pm (UTC)'!
+!methodProperties: {}!
 browseAllImplementorsOf: aSelector
 
 	^self class browseAllImplementorsOf: aSelector
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 14:40:52'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 13/Sep/2017, 5:40:52 pm (UTC)'!
+!methodProperties: {}!
 browseClassRefs
 
 	model selectedClassOrMetaClass ifNotNil: [ :selectedDenotativeObject | 
 		self class browseReferencesTo: (Smalltalk bindingOf: selectedDenotativeObject theNonMetaClass name) ]
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:33:08'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 13/Sep/2017, 11:33:08 pm (UTC)'!
+!methodProperties: {}!
 browseImplementorsOfSelectedSelector
 
 	^model selectedMessageName ifNotNil: [:selector | self browseAllImplementorsOf: selector ] ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:43:17'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/Sep/2017, 6:43:17 pm (UTC)'!
+!methodProperties: {}!
 browseInstVarRefs
 
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
@@ -2911,36 +3205,42 @@ browseInstVarRefs
 			thenDo: [:aVar | self browseAllAccessesTo: aVar from: aClass]
 			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:32:47'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 13/Sep/2017, 11:32:47 pm (UTC)'!
+!methodProperties: {}!
 browseMessages
 
 	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: self ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 22/Jul/2017, 9:22:49 am (UTC)'!
+!methodProperties: {}!
 browseMethodFull
 	"Create and schedule a full Browser and then select the current class and message."
 
 	model selectedClassOrMetaClass ifNotNil: [ :myClass |
 		self class fullOnClass: myClass selector: model selectedMessageName]! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 22/Jul/2017, 9:22:49 am (UTC)'!
+!methodProperties: {}!
 browseSendersOf: aSymbol
 
 	^self class browseSendersOf: aSymbol ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:27:46'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 13/Sep/2017, 11:27:46 pm (UTC)'!
+!methodProperties: {}!
 browseSendersOfMessages
 
 	self getSelectorAndSendQuery: #browseSendersOf: to: self class.
 
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 9/13/2017 20:31:06'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 13/Sep/2017, 11:31:06 pm (UTC)'!
+!methodProperties: {}!
 browseSendersOfSelectedSelector
 
 	^model selectedMessageName ifNotNil: [:selector | self class browseSendersOf: selector ] ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:09:03'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 14/Aug/2018, 2:09:03 pm (UTC)'!
+!methodProperties: {}!
 confirmRemovalOf: aSelector on: aClass
 
 	^ (self has: aSelector noSenderOrIsItselfOn: aClass)
@@ -2948,7 +3248,8 @@ confirmRemovalOf: aSelector on: aClass
 		ifFalse: [self confirmRemovalWhenHasSenders ].
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:09:39'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 14/Aug/2018, 2:09:39 pm (UTC)'!
+!methodProperties: {}!
 confirmRemovalWhenHasSenders
 
 	| menu |
@@ -2962,12 +3263,14 @@ Forget it -- do nothing -- sorry I asked'
 			
 	^menu startUpWithCaption: 'This message has sender(s)' ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:08:29'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 14/Aug/2018, 2:08:29 pm (UTC)'!
+!methodProperties: {}!
 confirmRemovalWhenNoSenders
 	
 	^ (self confirm: 'This message has no senders. Remove it anyway?') ifTrue: [1] ifFalse: [0]! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 11:05:30'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 14/Aug/2018, 2:05:30 pm (UTC)'!
+!methodProperties: {}!
 has: aSelector noSenderOrIsItselfOn: aClass
 
 	| count allSenders |
@@ -2978,18 +3281,21 @@ has: aSelector noSenderOrIsItselfOn: aClass
 	^count = 0 or: [ count = 1 and: [(allSenders first actualClass == aClass and: [allSenders first methodSymbol == aSelector])]]
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 07:36:04'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 22/Jul/2017, 10:36:04 am (UTC)'!
+!methodProperties: {}!
 inspectIt
 	
 	model selectedClass inspect! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:50:38'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 13/Apr/2019, 4:50:38 pm (UTC)'!
+!methodProperties: {}!
 removeInstVar
 	
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
 		(DenotativeObjectRemoveCollaboratorApplier on: model for: aClass) value ].! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 8/14/2018 10:46:42'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 14/Aug/2018, 1:46:42 pm (UTC)'!
+!methodProperties: {}!
 removeMessage
 
 	| messageName confirmation |
@@ -3003,7 +3309,8 @@ removeMessage
 
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 22/Jul/2017, 9:22:49 am (UTC)'!
+!methodProperties: {}!
 removeSelector: messageName
 
 	model selectedClassOrMetaClass removeSelector: messageName.
@@ -3013,24 +3320,28 @@ removeSelector: messageName
 		setClassOrganizer.
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 4/13/2019 13:45:38'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'RNG 13/Apr/2019, 4:45:38 pm (UTC)'!
+!methodProperties: {}!
 renameInstVar
 	
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
 		(DenotativeObjectRenameCollaboratorApplier on: model at: aClass) value ].! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 1/7/2019 15:33:15'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/Jan/2019, 6:33:15 pm (UTC)'!
+!methodProperties: {}!
 renameSelector
 
 	model selectedMessageName ifNotNil: [ :oldSelector |
 		DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [ DenotativeObjectRenameSelectorApplier on: model for: oldSelector in: model selectedClassOrMetaClass ]]! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu commands' stamp: 'HAW 22/Jul/2017, 9:22:49 am (UTC)'!
+!methodProperties: {}!
 sendersOf: aSymbol
 
 	^self class sendersOf: aSymbol ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:44:03'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 17/Jul/2019, 8:44:03 pm (UTC)'!
+!methodProperties: {}!
 buildLowerPanes
 
 	| codeAndButtons workspace separator |
@@ -3055,7 +3366,8 @@ buildLowerPanes
 
 	^codeAndButtons ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/28/2018 11:41:57'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 28/Dec/2018, 2:41:57 pm (UTC)'!
+!methodProperties: {}!
 buildMorphicClassColumnWith: aClassList
 
 	| column |
@@ -3065,18 +3377,22 @@ buildMorphicClassColumnWith: aClassList
 	
 	^column! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/30/2024 18:51:54'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 10/Aug/2026, 11:09:00 am (UTC)'!
+!methodProperties: {}!
 buildMorphicClassList
 
 	^(PluggableListMorph
 		withModel: model
-		listGetter: #classList
+		listGetter: #classItems
 		indexGetter: #classListIndex
 		indexSetter: #classListIndex:)
 			menuNshortcutsKey: #denotativeObjectClassListMenuSpec;
-			doubleClickSelector: #browseMethodFull.! !
+			doubleClickSelector: #browseMethodFull.
+			
+	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/30/2024 19:04:13'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 30/Dec/2024, 10:04:13 pm (UTC)'!
+!methodProperties: {}!
 buildMorphicMessageCatList
 
 	^(PluggableListMorph
@@ -3087,7 +3403,8 @@ buildMorphicMessageCatList
 			menuNshortcutsKey: #denotativeObjectMessageCatListMenuSpec.
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/30/2024 19:00:07'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 30/Dec/2024, 10:00:07 pm (UTC)'!
+!methodProperties: {}!
 buildMorphicMessageList
 	"Build a morphic message list, with #messageList as its list-getter"
 
@@ -3099,7 +3416,8 @@ buildMorphicMessageList
 			menuNshortcutsKey: #denotativeObjectMessageListMenuSpec;
 			doubleClickSelector: #browseMethodFull.! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 12/30/2024 18:40:31'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 30/Dec/2024, 9:40:31 pm (UTC)'!
+!methodProperties: {}!
 buildMorphicSystemCategoryList
 
 	^(PluggableListMorph
@@ -3109,13 +3427,15 @@ buildMorphicSystemCategoryList
 		indexSetter: #systemCategoryListIndex:)
 			menuNshortcutsKey: #denotativeObjectSystemCategoriesListMenuSpec.! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow methodsFor: 'GUI building' stamp: 'HAW 22/Jul/2017, 9:22:49 am (UTC)'!
+!methodProperties: {}!
 optionalButtonTuples
 
 	^self class optionalButtonTuples
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 18:52:34'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 30/Dec/2024, 9:52:34 pm (UTC)'!
+!methodProperties: {}!
 denotativeObjectClassListMenuSpec
 	"Spec for the menu and shortcut keys for the class list.
 	See coment at Morph >> #getMenu
@@ -3148,7 +3468,8 @@ denotativeObjectClassListMenuSpec
 		#(230		'create class' 									nil 	model 			createClass 										morphsIcon)
 	)! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 19:05:36'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 30/Dec/2024, 10:05:36 pm (UTC)'!
+!methodProperties: {}!
 denotativeObjectMessageCatListMenuSpec
 	"Spec for the menu and shortcut keys for the method categories list.
 	See coment at Morph >> #getMenu
@@ -3169,7 +3490,8 @@ denotativeObjectMessageCatListMenuSpec
 		#(140	'Run Tests (t)' 					$t 	model 		runMessageCategoryTests 			weatherFewCloudsIcon)
 	)! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 19:00:13'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 30/Dec/2024, 10:00:13 pm (UTC)'!
+!methodProperties: {}!
 denotativeObjectMessageListMenuSpec
 	"Spec for the menu and shortcut keys for the messages list.
 	See coment at Morph >> #getMenu
@@ -3198,7 +3520,8 @@ denotativeObjectMessageListMenuSpec
 	)
 	! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 18:42:05'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 30/Dec/2024, 9:42:05 pm (UTC)'!
+!methodProperties: {}!
 denotativeObjectSystemCategoriesListMenuSpec
 	"Spec for the menu and shortcut keys for the system categories list.
 	See coment at Morph >> #getMenu
@@ -3218,7 +3541,8 @@ denotativeObjectSystemCategoriesListMenuSpec
 		#(100		'Run tests (t)' 						$t 	model 			runSystemCategoryTests 									weatherFewCloudsIcon)
 	)! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 6/4/2024 17:35:57'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 4/Jun/2024, 8:35:57 pm (UTC)'!
+!methodProperties: {}!
 morphMenuItemsSpec
 	^(model hasMorphObjectSelected) ifTrue: [
 		| toggleDisplayOption showOption hideOption |
@@ -3233,12 +3557,14 @@ morphMenuItemsSpec
 	ifFalse: [ #() ].
 ! !
 
-!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 12/30/2024 18:40:12'!
+!DenotativeObjectBrowserWindow methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 30/Dec/2024, 9:40:12 pm (UTC)'!
+!methodProperties: {}!
 systemCatSingletonMenuSpec
 
 	^self denotativeObjectSystemCategoriesListMenuSpec! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:54:38'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 1/Aug/2018, 10:54:38 pm (UTC)'!
+!methodProperties: {}!
 browseAllAccessesTo: aVar from: aClass
 
 	| methods label |
@@ -3255,7 +3581,8 @@ browseAllAccessesTo: aVar from: aClass
 		label: label
 		autoSelect: aVar ! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:54:55'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 1/Aug/2018, 10:54:55 pm (UTC)'!
+!methodProperties: {}!
 browseAllImplementorsOf: aSymbol
 
 	| implementors label |
@@ -3272,7 +3599,8 @@ browseAllImplementorsOf: aSymbol
 		label: label
 		autoSelect: aSymbol keywords first! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 22/Jul/2017, 9:22:49 am (UTC)'!
+!methodProperties: {}!
 browseReferencesTo: anAssociation
 
 	| references label |
@@ -3289,7 +3617,8 @@ browseReferencesTo: anAssociation
 		label: label
 		autoSelect: anAssociation value name.! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 22/Jul/2017, 9:22:49 am (UTC)'!
+!methodProperties: {}!
 browseSendersOf: aSymbol
 
 	| senders label |
@@ -3306,7 +3635,8 @@ browseSendersOf: aSymbol
 		label: label
 		autoSelect: aSymbol keywords first! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/20/2017 15:34:07'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 20/Aug/2017, 6:34:07 pm (UTC)'!
+!methodProperties: {}!
 fullOnDenotativeObject: aDenotativeObject selector: aSelector 
 		
 	| browser |
@@ -3315,7 +3645,8 @@ fullOnDenotativeObject: aDenotativeObject selector: aSelector
 	browser setClass: aDenotativeObject selector: aSelector.
 	self open: browser label: browser labelString! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 8/1/2018 19:55:50'!
+!DenotativeObjectBrowserWindow class methodsFor: 'browsing' stamp: 'HAW 1/Aug/2018, 10:55:50 pm (UTC)'!
+!methodProperties: {}!
 sendersOf: aSymbol
 
 	| senders |
@@ -3324,17 +3655,20 @@ sendersOf: aSymbol
 
 	^senders ! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 6/18/2020 09:28:01'!
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 18/Jun/2020, 12:28:01 pm (UTC)'!
+!methodProperties: {}!
 classNameRequester 
 
 	^DenotativeObjectNameRequestMorph! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 6/18/2020 09:16:45'!
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 18/Jun/2020, 12:16:45 pm (UTC)'!
+!methodProperties: {}!
 findClassDialogTitle
 
 	^ 'Denotative object name or fragment?'! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 8/21/2017 12:46:32'!
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 21/Aug/2017, 3:46:32 pm (UTC)'!
+!methodProperties: {}!
 fullOnClass: aClass selector: aSelector
 
 	"This is to be sure that we are going to browse a denotative object, if not we open
@@ -3345,7 +3679,8 @@ fullOnClass: aClass selector: aSelector
 		ifTrue: [ self fullOnDenotativeObject: aClass selector: aSelector ]
 		ifFalse: [ BrowserWindow fullOnClass: aClass selector: aSelector ]! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:22:49'!
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 22/Jul/2017, 9:22:49 am (UTC)'!
+!methodProperties: {}!
 openBrowser
 
 	| browser |
@@ -3355,7 +3690,8 @@ openBrowser
 
 	^ self open: browser label: browser defaultBrowserTitle! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 9/7/2017 15:22:59'!
+!DenotativeObjectBrowserWindow class methodsFor: 'GUI building' stamp: 'HAW 7/Sep/2017, 6:22:59 pm (UTC)'!
+!methodProperties: {}!
 optionalButtonTuples
 
 	"Answer a tuple buttons, in the format:
@@ -3375,7 +3711,8 @@ optionalButtonTuples
 
 	^ aList! !
 
-!DenotativeObjectBrowserWindow class methodsFor: 'world menu options' stamp: 'HAW 3/30/2024 18:34:16'!
+!DenotativeObjectBrowserWindow class methodsFor: 'world menu options' stamp: 'HAW 30/Mar/2024, 9:34:16 pm (UTC)'!
+!methodProperties: {}!
 worldMenuOptions 
 
 	^`{
@@ -3399,14 +3736,16 @@ worldMenuOptions
 	} asDictionary. 
 	}`! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:40:24'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 10/Sep/2017, 9:40:24 pm (UTC)'!
+!methodProperties: {}!
 browseContextSelection
 	
 	model contextVariablesInspector selectionIndex = 0 ifTrue: [^ self flash].
 	^self browseMethodFullIn: model contextVariablesInspector
 	! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/7/2017 15:44:06'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/Sep/2017, 6:44:06 pm (UTC)'!
+!methodProperties: {}!
 browseInstVarRefs
 
 	model selectedClassOrMetaClass ifNotNil: [ :aClass |
@@ -3416,59 +3755,68 @@ browseInstVarRefs
 			ifNone: [ ^ self inform: 'There are no collaborators in ', aClass soleInstance name ]]			
 		! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:26:26'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 30/Jul/2017, 2:26:26 pm (UTC)'!
+!methodProperties: {}!
 browseMessages
 
 	self getSelectorAndSendQuery: #browseAllImplementorsOf: to: DenotativeObjectBrowserWindow 
 	! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:22:29'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 30/Jul/2017, 2:22:29 pm (UTC)'!
+!methodProperties: {}!
 browseMethodFull
 	"Create and schedule a full Browser and then select the current class and message."
 
 	model selectedClassOrMetaClass ifNotNil: [ :myClass |
 		DenotativeObjectBrowserWindow fullOnClass: myClass selector: model selectedMessageName]! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:38:21'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 20/Aug/2017, 6:38:21 pm (UTC)'!
+!methodProperties: {}!
 browseReceiver
 
 	self browseMethodFullIn: model receiverInspector
 
 ! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'jmv 7/30/2024 16:25:19'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'jmv 30/Jul/2024, 7:25:19 pm (UTC)'!
+!methodProperties: {}!
 browseReferences
 
 	| class |
 	(class := model selectedClassOrMetaClass) ifNil: [^ self ].
 	DenotativeObjectBrowserWindow browseReferencesTo: (Smalltalk bindingOf: class theNonMetaClass name)! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 7/30/2017 11:25:20'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 30/Jul/2017, 2:25:20 pm (UTC)'!
+!methodProperties: {}!
 browseSendersOfMessages
 
 	self getSelectorAndSendQuery: #browseSendersOf: to: DenotativeObjectBrowserWindow 
 	! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 9/10/2017 18:36:58'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 10/Sep/2017, 9:36:58 pm (UTC)'!
+!methodProperties: {}!
 inspectContextSelection
 	
 	model contextVariablesInspector selectionIndex = 0 ifTrue: [^ self flash].
 	^ model contextVariablesInspector selection inspect! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:24:44'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu commands' stamp: 'HAW 20/Aug/2017, 6:24:44 pm (UTC)'!
+!methodProperties: {}!
 inspectReceiverSelection
 
 	model receiverInspector selectionIndex = 0 ifTrue: [^ self flash].
 	^ model receiverInspector selection inspect! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 8/20/2017 15:38:47'!
+!DenotativeObjectDebuggerWindow methodsFor: 'keyboard shortcuts' stamp: 'HAW 20/Aug/2017, 6:38:47 pm (UTC)'!
+!methodProperties: {}!
 browseMethodFullIn: anInspector
 
 	anInspector selectedClassOrMetaClass ifNotNil: [ :denotativeObject |
 		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]
 	! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 7/20/2017 18:27:20'!
+!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 20/Jul/2017, 9:27:20 pm (UTC)'!
+!methodProperties: {}!
 buildLowerPanes
 
 	| codeAndButtons twoRowsOfButtons |
@@ -3488,7 +3836,8 @@ buildLowerPanes
 
 	^codeAndButtons ! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 7/20/2017 18:25:21'!
+!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 20/Jul/2017, 9:25:21 pm (UTC)'!
+!methodProperties: {}!
 customButtonSpecs
 	"Answer an array of elements of the form wording, selector, help-message, that characterize the custom button row of a debugger."
 
@@ -3499,12 +3848,14 @@ customButtonSpecs
 		('Where'		where				'select current pc range')
 		('Create'		createMethod		'create method'))! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 7/22/2017 06:23:10'!
+!DenotativeObjectDebuggerWindow methodsFor: 'GUI building' stamp: 'HAW 22/Jul/2017, 9:23:10 am (UTC)'!
+!methodProperties: {}!
 optionalButtonTuples
 
 	^DenotativeObjectBrowserWindow optionalButtonTuples reject: [ :tuple | tuple third = #offerWhatToShowMenu ]! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/19/2024 15:44:19'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 19/Jul/2024, 6:44:19 pm (UTC)'!
+!methodProperties: {}!
 contextStackMenuSpec
 	"Spec for the menu and shortcut keys for call stack list.
 	See coment at Morph >> #getMenu
@@ -3523,7 +3874,8 @@ contextStackMenuSpec
 		#(150		nil 						$v 	window 			browseVersions)
 	)! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/19/2024 15:46:40'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 19/Jul/2024, 6:46:40 pm (UTC)'!
+!methodProperties: {}!
 contextVariablesListMenuSpec
 	"Spec for the menu and shortcut keys for the list of variables in this context.
 	See coment at Morph >> #getMenu
@@ -3534,7 +3886,8 @@ contextVariablesListMenuSpec
 		#(30		'browser (b)' 						$b 	window 			browseContextSelection 							editFindReplaceIcon)
 	)! !
 
-!DenotativeObjectDebuggerWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/19/2024 15:47:22'!
+!DenotativeObjectDebuggerWindow methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 19/Jul/2024, 6:47:22 pm (UTC)'!
+!methodProperties: {}!
 receiverVariablesListMenuSpec
 	"Spec for the menu and shortcut keys for the list of instance variables in the receiver.
 	See coment at Morph >> #getMenu
@@ -3545,7 +3898,8 @@ receiverVariablesListMenuSpec
 		#(30		'browser (b)' 						$b 	window 			browseReceiver 							editFindReplaceIcon)
 	)! !
 
-!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'HAW 7/13/2017 19:10:04'!
+!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'HAW 13/Jul/2017, 10:10:04 pm (UTC)'!
+!methodProperties: {}!
 buildLowerPanes
 	| codeAndButtons |
 
@@ -3555,14 +3909,16 @@ buildLowerPanes
 	^codeAndButtons
 	! !
 
-!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'jmv 7/19/2024 15:25:04'!
+!DenotativeObjectMessageSetWindow methodsFor: 'GUI building' stamp: 'jmv 19/Jul/2024, 6:25:04 pm (UTC)'!
+!methodProperties: {}!
 messageListMenuSpec
 	"Spec for the menu and shortcut keys for the messages list.
 	See coment at Morph >> #getMenu
 	"
 	^#()! !
 
-!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 4/27/2023 18:18:30'!
+!DenotativeObjectMessageSetWindow class methodsFor: 'opening' stamp: 'HAW 27/Apr/2023, 9:18:30 pm (UTC)'!
+!methodProperties: {}!
 openMessageList: messageList label: labelString autoSelect: autoSelectString
 
 	| messageSet |
@@ -3574,7 +3930,8 @@ openMessageList: messageList label: labelString autoSelect: autoSelectString
 	
 	^self open: messageSet label: labelString ! !
 
-!DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 7/14/2017 20:19:56'!
+!DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 14/Jul/2017, 11:19:56 pm (UTC)'!
+!methodProperties: {}!
 debug
 
 	model selection ifNotNil: [ :selection | | test |
@@ -3584,7 +3941,8 @@ debug
 		model removeMessageFromBrowserKeepingLabel.
 		self setLabel: testResult printString ]! !
 
-!DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 7/14/2017 20:21:21'!
+!DenotativeObjectTestResultWindow methodsFor: 'actions' stamp: 'HAW 14/Jul/2017, 11:21:21 pm (UTC)'!
+!methodProperties: {}!
 runSuite
 
 	| suite |
@@ -3595,18 +3953,21 @@ runSuite
 	(DenotativeObjectProgessiveTestRunner for: suite) value.
 	! !
 
-!DenotativeObjectTestResultWindow class methodsFor: 'instance creation' stamp: 'HAW 7/14/2017 20:03:44'!
+!DenotativeObjectTestResultWindow class methodsFor: 'instance creation' stamp: 'HAW 14/Jul/2017, 11:03:44 pm (UTC)'!
+!methodProperties: {}!
 methodReferencesOf: tests
 
 	^tests collect: [:aTest | aTest asMethodReference]! !
 
-!DenotativeObjectInspectorWindow methodsFor: 'menu commands' stamp: 'HAW 8/20/2017 15:17:35'!
+!DenotativeObjectInspectorWindow methodsFor: 'menu commands' stamp: 'HAW 20/Aug/2017, 6:17:35 pm (UTC)'!
+!methodProperties: {}!
 browseMethodFull
 
 	model selectedClassOrMetaClass ifNotNil: [ :denotativeObject |
 		DenotativeObjectBrowserWindow fullOnClass: denotativeObject selector: nil ]! !
 
-!DenotativeObjectInspectorWindow methodsFor: 'menu building' stamp: 'jmv 7/19/2024 16:16:18'!
+!DenotativeObjectInspectorWindow methodsFor: 'menu building' stamp: 'jmv 19/Jul/2024, 7:16:18 pm (UTC)'!
+!methodProperties: {}!
 fieldListMenuSpec
 	"Spec for the menu and shortcut keys for the list of variables in our object.
 	See coment at Morph >> #getMenu
@@ -3616,32 +3977,37 @@ fieldListMenuSpec
 		#(20		'browse (b)' 						$b 	window 			browseMethodFull 							editFindReplaceIcon)
 	).! !
 
-!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:40:48'!
+!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 17/Jul/2019, 8:40:48 pm (UTC)'!
+!methodProperties: {}!
 buildContentsText
 
 	^super buildContentsText 
 		doNotShowBalloonHelp;
 		yourself ! !
 
-!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 7/17/2019 17:38:01'!
+!DenotativeObjectInspectorWindow methodsFor: 'GUI building' stamp: 'HAW 17/Jul/2019, 8:38:01 pm (UTC)'!
+!methodProperties: {}!
 buildEvaluatorText
 
 	^super buildEvaluatorText 
 		doNotShowBalloonHelp;
 		yourself ! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 8/22/2017 11:06:01'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 22/Aug/2017, 2:06:01 pm (UTC)'!
+!methodProperties: {}!
 acceptAndDebugTest
 
 	^self acceptAndDebugTestOr: [ self codeProvider debug ]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 8/22/2017 10:50:30'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 22/Aug/2017, 1:50:30 pm (UTC)'!
+!methodProperties: {}!
 acceptThenTestMethodAndSuite: aSuiteBuilder
 	
 	self acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: [:result | ]
 ! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'jmv 7/29/2024 14:56:07'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'jmv 29/Jul/2024, 5:56:07 pm (UTC)'!
+!methodProperties: {}!
 nextTestName
 	
 	| testNames |
@@ -3649,20 +4015,23 @@ nextTestName
 	testNames := self codeProvider selectedClassOrMetaClass selectors select: [ :selector | selector isTestSelector ].
 	self addString: TestCase testSelectorPrefix, ((testNames size + 1)  printStringBase: 10 length: 2 padded: true)! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:06'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 25/Oct/2022, 7:25:06 pm (UTC)'!
+!methodProperties: {}!
 runAndDebuggIfNecessary: aPotencialTestMethod
 
 	aPotencialTestMethod selector isTestSelector ifTrue: [
 		(DenotativeObjectTestCase for: aPotencialTestMethod) debug ]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 7/19/2017 21:38:55'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 20/Jul/2017, 12:38:55 am (UTC)'!
+!methodProperties: {}!
 runTestSuite: aTestSuite
 
 	(DenotativeObjectProgessiveTestRunner for: aTestSuite) value
 
 	! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:16'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 25/Oct/2022, 7:25:16 pm (UTC)'!
+!methodProperties: {}!
 testSuiteForCategoryOf: aClass
 
  	| suite classes |
@@ -3676,7 +4045,8 @@ testSuiteForCategoryOf: aClass
 
 	^suite! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 10/25/2022 16:25:27'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'tdd' stamp: 'HAW 25/Oct/2022, 7:25:27 pm (UTC)'!
+!methodProperties: {}!
 testSuiteOf: aDenotativeObject
 
  	| suite |
@@ -3687,7 +4057,8 @@ testSuiteOf: aDenotativeObject
 
 	^suite! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 5/14/2025 11:43:46'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 14/May/2025, 2:43:46 pm (UTC)'!
+!methodProperties: {}!
 acceptAndDebugTestOr: aBlock
 
 	^self acceptAndWithMethodDo: [ :aPotencialTestMethod |
@@ -3695,18 +4066,21 @@ acceptAndDebugTestOr: aBlock
 			ifTrue: [ (DenotativeObjectTestCase for: aPotencialTestMethod) debugAsFailure]
 			ifFalse: aBlock]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 11:06:19'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 22/Aug/2017, 2:06:19 pm (UTC)'!
+!methodProperties: {}!
 acceptDebugAndInspect
 
 	^self acceptAndDebugTestOr: [ self codeProvider debugAndInspect ]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 8/22/2017 10:51:34'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 22/Aug/2017, 1:51:34 pm (UTC)'!
+!methodProperties: {}!
 acceptSendAndInspect
 	
 	self acceptThenTestMethodAndSuite:  [ :aMethod | self testSuiteOf: aMethod methodClass ] orSendAndWithResultDo: [:result | result inspect ]
 ! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 10/25/2022 16:24:31'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'accept and run' stamp: 'HAW 25/Oct/2022, 7:24:31 pm (UTC)'!
+!methodProperties: {}!
 acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: aBlock
 	
 	self acceptAndWithMethodDo: [ :aPotencialTestMethod |
@@ -3716,7 +4090,8 @@ acceptThenTestMethodAndSuite: aSuiteBuilder orSendAndWithResultDo: aBlock
 				self runTestSuite: (aSuiteBuilder value: aPotencialTestMethod) ]
 			ifFalse: [ self codeProvider sendAndWithResultDo: aBlock ]]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 7/22/2017 06:23:19'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 22/Jul/2017, 9:23:19 am (UTC)'!
+!methodProperties: {}!
 browseIt
 
 	| aSymbol aClassToBrowse |
@@ -3733,7 +4108,8 @@ browseIt
 		ifFalse:
 			[DenotativeObjectBrowserWindow browseAllImplementorsOf: aSymbol]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 11/30/2021 17:01:00'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 30/Nov/2021, 8:01:00 pm (UTC)'!
+!methodProperties: {}!
 implementorsOfIt
 
 	self
@@ -3742,7 +4118,8 @@ implementorsOfIt
 		otherwise: [ self implementorsOfItWhenErrorsParsing ]
 	! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:27:07'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 24/Mar/2019, 11:27:07 pm (UTC)'!
+!methodProperties: {}!
 implementorsOfItWhenErrorsParsing
 
 	| aSelector |
@@ -3754,7 +4131,8 @@ implementorsOfItWhenErrorsParsing
 
 	DenotativeObjectBrowserWindow browseAllImplementorsOf: aSelector! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 7/22/2017 06:23:27'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 22/Jul/2017, 9:23:27 am (UTC)'!
+!methodProperties: {}!
 referencesToIt
 	"Open a references browser on the selected symbol: a variable name or class name"
 
@@ -3771,7 +4149,8 @@ referencesToIt
 
 	DenotativeObjectBrowserWindow browseReferencesTo: reference! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 11/30/2021 16:59:34'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 30/Nov/2021, 7:59:34 pm (UTC)'!
+!methodProperties: {}!
 sendersOfIt
 
 	self
@@ -3780,7 +4159,8 @@ sendersOfIt
 		otherwise: [ self sendersOfItWhenErrorsParsing ]
 	! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 3/24/2019 20:28:15'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu messages' stamp: 'HAW 24/Mar/2019, 11:28:15 pm (UTC)'!
+!methodProperties: {}!
 sendersOfItWhenErrorsParsing
 
 	| aSelector |
@@ -3792,7 +4172,8 @@ sendersOfItWhenErrorsParsing
 
 	DenotativeObjectBrowserWindow browseSendersOf: aSelector! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/22/2022 11:58:08'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 22/Aug/2022, 2:58:08 pm (UTC)'!
+!methodProperties: {}!
 debug: aCompiledMethod receiver: anObject in: evalContext
 
 	^DenotativeObjectDebugger 
@@ -3803,7 +4184,8 @@ debug: aCompiledMethod receiver: anObject in: evalContext
 		to: aCompiledMethod
 		label: 'Debug it'.! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 8/22/2022 12:31:49'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'do-its' stamp: 'HAW 22/Aug/2022, 3:31:49 pm (UTC)'!
+!methodProperties: {}!
 evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 	[[[ ^super evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile ]
 		on: UndeclaredVariable 
@@ -3817,17 +4199,20 @@ evaluateSelectionAndDo: aBlock ifFail: failBlock profiled: doProfile
 			context isNil ifTrue: [ self error: 'can not debug' ].
 			DenotativeObjectDebugger openProcess: Processor activeProcess context: context label: anError printString.]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 12/4/2019 12:03:12'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 4/Dec/2019, 3:03:12 pm (UTC)'!
+!methodProperties: {}!
 renameClassOn: aBrowser for: aClassToRefactor
 
 	(DenotativeObjectRenameApplier for: aClassToRefactor) value ! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 11/29/2018 20:20:21'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 29/Nov/2018, 11:20:21 pm (UTC)'!
+!methodProperties: {}!
 renameInstanceVariableOn: aBrowser for: anInstanceVariableName at: aClassToRefactor 
 	
 	(DenotativeObjectRenameCollaboratorApplier on: aBrowser for: anInstanceVariableName at: aClassToRefactor) value! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 9/22/2025 12:01:00'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 22/Sep/2025, 3:01:00 pm (UTC)'!
+!methodProperties: {}!
 renameSelectorFor: aSelector in: aClassToRefactor
 
 	DenotativeObjectRenameSelectorApplier createAndValueHandlingExceptions: [
@@ -3836,7 +4221,8 @@ renameSelectorFor: aSelector in: aClassToRefactor
 			for: aSelector 
 			in: aClassToRefactor ]! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 9/22/2025 11:52:11'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'rename' stamp: 'HAW 22/Sep/2025, 2:52:11 pm (UTC)'!
+!methodProperties: {}!
 renameSelectorOf: aNodeUnderCursor in: aSelectedClass at: aSelectedSelector 
 
 	DenotativeObjectRenameSelectorApplier 
@@ -3845,7 +4231,8 @@ renameSelectorOf: aNodeUnderCursor in: aSelectedClass at: aSelectedSelector
 		in: aSelectedClass 
 		at: aSelectedSelector! !
 
-!DenotativeObjectSmalltalkEditor methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 9/22/2025 11:33:20'!
+!DenotativeObjectSmalltalkEditor methodsFor: 'menu & kbd shortcuts' stamp: 'HAW 22/Sep/2025, 2:33:20 pm (UTC)'!
+!methodProperties: {}!
 defaultMenuSpec
 	"Spec for the menu and shortcut keys for the regular text editors.
 	See coment at Morph >> #getMenu
@@ -3939,12 +4326,14 @@ defaultMenuSpec
 	).
 ! !
 
-!DenotativeObjectWorkspaceEditor methodsFor: 'system category list' stamp: 'HAW 8/21/2017 18:58:29'!
+!DenotativeObjectWorkspaceEditor methodsFor: 'system category list' stamp: 'HAW 21/Aug/2017, 9:58:29 pm (UTC)'!
+!methodProperties: {}!
 selectedSystemCategoryName
 	
 	^'Workspace-Objects'! !
 
-!DenotativeObjectWorkspaceEditor methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 7/29/2024 15:04:10'!
+!DenotativeObjectWorkspaceEditor methodsFor: 'menu & kbd shortcuts' stamp: 'jmv 29/Jul/2024, 6:04:10 pm (UTC)'!
+!methodProperties: {}!
 defaultMenuSpec
 	"Spec for the menu and shortcut keys for the regular text editors.
 	See coment at Morph >> #getMenu
@@ -3965,13 +4354,15 @@ defaultMenuSpec
 	).
 ! !
 
-!DenotativeObjectNameCompleter methodsFor: 'entries' stamp: 'HAW 2/21/2019 16:58:47'!
+!DenotativeObjectNameCompleter methodsFor: 'entries' stamp: 'HAW 21/Feb/2019, 7:58:47 pm (UTC)'!
+!methodProperties: {}!
 computeEntries
 
 	super computeEntries.
 	entries := entries select: [ :aClassName | Smalltalk isDenotativeObjectNamed: aClassName ].! !
 
-!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 3/21/2019 07:16:56'!
+!DenotativeObjectCompleter methodsFor: 'entries' stamp: 'HAW 21/Mar/2019, 10:16:56 am (UTC)'!
+!methodProperties: {}!
 computeIdentifierEntries
 
 	| entriesSet addBlock instVarToExclude |
@@ -3995,7 +4386,8 @@ computeIdentifierEntries
 	
 	entries := entriesSet asArray sort! !
 
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 8/22/2025 09:14:10'!
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 22/Aug/2025, 12:14:10 pm (UTC)'!
+!methodProperties: {}!
 computeMessageEntriesForClass: aClass  
 
 	(aClass notNil and: [aClass isMeta and: [ aClass soleInstance is: #DenotativeObject]])
@@ -4003,7 +4395,8 @@ computeMessageEntriesForClass: aClass
 		ifFalse: [ super computeMessageEntriesForClass: aClass ]
 		! !
 
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:49:36'!
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 4/Dec/2019, 6:49:36 pm (UTC)'!
+!methodProperties: {}!
 computeMessageEntriesForDenotativeObject: aDenotativeObject 
 
 	self isPreviousMessageSendBinary
@@ -4019,7 +4412,8 @@ computeMessageEntriesForDenotativeObject: aDenotativeObject
 
 ! !
 
-!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 12/4/2019 15:44:04'!
+!DenotativeObjectCompleter methodsFor: 'message entries - private' stamp: 'HAW 4/Dec/2019, 6:44:04 pm (UTC)'!
+!methodProperties: {}!
 computeMessageEntriesWithoutBinaryMessageForDenotativeObject: aDenotativeObject
 
 	selectorsClasses := Array with: aDenotativeObject.
@@ -4030,22 +4424,26 @@ computeMessageEntriesWithoutBinaryMessageForDenotativeObject: aDenotativeObject
 	
 ! !
 
-!DenotativeObjectCompleter class methodsFor: 'instance creation' stamp: 'HAW 2/19/2019 15:19:16'!
+!DenotativeObjectCompleter class methodsFor: 'instance creation' stamp: 'HAW 19/Feb/2019, 6:19:16 pm (UTC)'!
+!methodProperties: {}!
 withModel: aStringHolder
 
 	^self new setModel: aStringHolder! !
 
-!DenotativeObjectAutoCompleterSelectorsCollector methodsFor: 'collecting - private' stamp: 'HAW 2/19/2019 15:46:24'!
+!DenotativeObjectAutoCompleterSelectorsCollector methodsFor: 'collecting - private' stamp: 'HAW 19/Feb/2019, 6:46:24 pm (UTC)'!
+!methodProperties: {}!
 addCategory: aCategory of: classOrganization
 
 	(aCategory includesSubString: 'private') ifFalse: [ super addCategory: aCategory of: classOrganization ]! !
 
-!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:21'!
+!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 7/Sep/2017, 6:22:21 pm (UTC)'!
+!methodProperties: {}!
 errorMessageForInvalidInstanceVariable: aName
 
 	^ '''' , aName , ''' is not a valid collaborator name'.! !
 
-!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:26'!
+!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 7/Sep/2017, 6:22:26 pm (UTC)'!
+!methodProperties: {}!
 errorMessageForNewInstanceVariable: aName alreadyDefinedInAll: classes
 
 	| denotativeObjects |
@@ -4054,12 +4452,14 @@ errorMessageForNewInstanceVariable: aName alreadyDefinedInAll: classes
 	
 	^ 'Collaborator ''' , aName , ''' is already defined in ' , denotativeObjects asCommaStringAnd.! !
 
-!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:22:30'!
+!DenotativeObjectAddCollaborator class methodsFor: 'exceptions' stamp: 'HAW 7/Sep/2017, 6:22:30 pm (UTC)'!
+!methodProperties: {}!
 newVariableCanNotBeEmptyErrorMessage
 	
 	^'New collaborator name can not be empty'! !
 
-!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 3/7/2019 23:09:55'!
+!DenotativeObjectAddCollaborator class methodsFor: 'warnings' stamp: 'HAW 8/Mar/2019, 2:09:55 am (UTC)'!
+!methodProperties: {}!
 errorMessageForNewVariable: newVariable willBeHiddenAtAll: methods
  
 	^String streamContents: [ :stream |
@@ -4068,27 +4468,32 @@ errorMessageForNewVariable: newVariable willBeHiddenAtAll: methods
 			nextPutAll: ' can not be named as temporary/collaborator in '.
 		methods asCommaSeparated: [:aMethod | aMethod printTheNonMetaClassAndSelectorOn: stream ] on: stream ]! !
 
-!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 9/7/2017 15:23:05'!
+!DenotativeObjectRemoveCollaborator class methodsFor: 'exceptions' stamp: 'HAW 7/Sep/2017, 6:23:05 pm (UTC)'!
+!methodProperties: {}!
 errorMessageForInstanceVariable: aName notDefinedIn: aClass
 
 	^ 'Collaborator ''' , aName , ''' is not defined in ' , aClass theNonMetaClass name.! !
 
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:23:18'!
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/Apr/2018, 11:23:18 pm (UTC)'!
+!methodProperties: {}!
 classToRenameCanNotBeMetaclassErrorMessage
 	
 	^'Invalid Object to rename'! !
 
-!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/4/2018 20:22:13'!
+!DenotativeObjectRename class methodsFor: 'exceptions' stamp: 'HAW 4/Apr/2018, 11:22:13 pm (UTC)'!
+!methodProperties: {}!
 newNameEqualsOldNameErrorMessage
 	
 	^'New object name equals old one'! !
 
-!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 5/10/2019 12:25:43'!
+!DenotativeObjectRename class methodsFor: 'pre-conditions' stamp: 'HAW 10/May/2019, 3:25:43 pm (UTC)'!
+!methodProperties: {}!
 newClassPreconditionClass
 
 	^NewDenotativeObjectPrecondition! !
 
-!DenotativeObjectSafelyRemove class methodsFor: 'warnings' stamp: 'HAW 8/1/2018 18:26:06'!
+!DenotativeObjectSafelyRemove class methodsFor: 'warnings' stamp: 'HAW 1/Aug/2018, 9:26:06 pm (UTC)'!
+!methodProperties: {}!
 warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
 
 	^String streamContents: [ :stream |
@@ -4102,7 +4507,8 @@ warningMessageFor: aClassToSafelyRemove hasSubclasses: allSubclasses
 		stream nextPutAll: ' that will be removed'].
 ! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:04:05'!
+!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 31/Aug/2017, 7:04:05 pm (UTC)'!
+!methodProperties: {}!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClassAndMetaOf: aPotentialClassToRefactor
 	
 	"Only do it on the class side - Hernan"
@@ -4110,7 +4516,8 @@ addImplementorsOf: anOldSelector to: implementors andSendersTo: senders forClass
 
 ! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/5/2019 15:39:54'!
+!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 5/Aug/2019, 6:39:54 pm (UTC)'!
+!methodProperties: {}!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inHierarchyOf: aClass doingPerClass: aBlock
 
 	| highestClassImplementingOldSelector |
@@ -4122,7 +4529,8 @@ addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inHierar
 			aBlock value: aPotentialClassToRefactor ]]
 	! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:15:51'!
+!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 31/Aug/2017, 7:15:51 pm (UTC)'!
+!methodProperties: {}!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inSystem: aSystem
 
 	"Denotative objects are always subclasses of DenotativeObject, so I restrict the search to those clases - Hernan"
@@ -4130,14 +4538,16 @@ addImplementorsOf: anOldSelector to: implementors andSendersTo: senders inSystem
 		self addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ].
 ! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 8/31/2017 16:20:04'!
+!DenotativeObjectRenameSelector class methodsFor: 'implementors and senders' stamp: 'HAW 31/Aug/2017, 7:20:04 pm (UTC)'!
+!methodProperties: {}!
 addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor
 	
 	"This is just to be sure that no denotative object is included to rename - Hernan"
 	^(aPotentialClassToRefactor theNonMetaClass is: #DenotativeObject) ifTrue: [ 
 		super addImplementorsOf: anOldSelector to: implementors andSendersTo: senders of: aPotentialClassToRefactor ]! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 1/7/2019 10:51:35'!
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 7/Jan/2019, 1:51:35 pm (UTC)'!
+!methodProperties: {}!
 errorMessageForInvalidImplementors: aCollectionOfInvalidImplementors
 
 	^String streamContents: [ :stream |
@@ -4146,7 +4556,8 @@ errorMessageForInvalidImplementors: aCollectionOfInvalidImplementors
 		 	nextPutAll: ' do not have same the same selector to rename: '.
 		aCollectionOfInvalidImplementors asCommaSeparated: [:anImplementor | anImplementor printTheNonMetaClassAndSelectorOn: stream ] on: stream ] ! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 1/7/2019 10:51:35'!
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 7/Jan/2019, 1:51:35 pm (UTC)'!
+!methodProperties: {}!
 errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
 
 	^String streamContents: [ :stream |
@@ -4156,7 +4567,8 @@ errorMessageForInvalidSenders: aCollectionOfInvalidSenders of: anOldSelector
 			nextPutAll: ' is not send by: '.
 		aCollectionOfInvalidSenders asCommaSeparated: [:aSender | aSender printTheNonMetaClassAndSelectorOn: stream ] on: stream ] ! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 8/31/2017 15:28:03'!
+!DenotativeObjectRenameSelector class methodsFor: 'exceptions' stamp: 'HAW 31/Aug/2017, 6:28:03 pm (UTC)'!
+!methodProperties: {}!
 errorMessageForNewSelector: aNewSelector implementedInAll: classesImplementingNewSelector
 
 	| denotativeObjectImplementingNewSelector |
@@ -4165,7 +4577,8 @@ errorMessageForNewSelector: aNewSelector implementedInAll: classesImplementingNe
 	
 	^'Can not rename because #', aNewSelector, ' is implemented in: ', denotativeObjectImplementingNewSelector asCommaStringAnd ! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 09:16:25'!
+!DenotativeObjectRenameSelector class methodsFor: 'warnings' stamp: 'HAW 30/Aug/2017, 12:16:25 pm (UTC)'!
+!methodProperties: {}!
 warnImplementionOf: aNewSelector in: aClass willOverrideImplementationIn: aSuperclass
 	
 	(DenotativeObject class includesBehavior: aSuperclass)
@@ -4174,38 +4587,45 @@ warnImplementionOf: aNewSelector in: aClass willOverrideImplementationIn: aSuper
 			"I remove the 'class' string from the object name - Hernan"
 			self refactoringWarning: (self warningMessageForImplementationOf: aNewSelector in: aClass theNonMetaClass willOverrideImplementationIn: aSuperclass theNonMetaClass) ].! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'warnings' stamp: 'HAW 8/30/2017 09:20:46'!
+!DenotativeObjectRenameSelector class methodsFor: 'warnings' stamp: 'HAW 30/Aug/2017, 12:20:46 pm (UTC)'!
+!methodProperties: {}!
 warningMessageForRedefinitionOfSystemMessageOf: aNewSelector
 
 	^aNewSelector, ' is defined in the core system. Overriding it can cause unexpected behavior.'
 	! !
 
-!DenotativeObjectRenameSelector class methodsFor: 'as yet unclassified' stamp: 'HAW 5/2/2020 00:02:39'!
+!DenotativeObjectRenameSelector class methodsFor: 'as yet unclassified' stamp: 'HAW 2/May/2020, 3:02:39 am (UTC)'!
+!methodProperties: {}!
 initialize
 
 	self addAllowedToRefactorClassCompiler: DenotativeObjectCompiler ! !
 
-!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:26:52'!
+!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 7/Sep/2017, 6:26:52 pm (UTC)'!
+!methodProperties: {}!
 createRefactoring
 
 	^ DenotativeObjectAddCollaborator named: newInstanceVariable to: classToRefactor.! !
 
-!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:22:34'!
+!DenotativeObjectAddCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 7/Sep/2017, 6:22:34 pm (UTC)'!
+!methodProperties: {}!
 newVariableNameLabel
 	
 	^'Enter new collaborator name:'! !
 
-!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 9/7/2017 15:29:01'!
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 7/Sep/2017, 6:29:01 pm (UTC)'!
+!methodProperties: {}!
 createRefactoring
 
 	^ DenotativeObjectRemoveCollaborator named: variableToRemove from: classToRefactor.! !
 
-!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:09'!
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 7/Sep/2017, 6:23:09 pm (UTC)'!
+!methodProperties: {}!
 selectVariableLabel
 	
 	^'Select collaborator to remove'! !
 
-!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 4/30/2019 17:14:00'!
+!DenotativeObjectRemoveCollaboratorApplier methodsFor: 'exception handling' stamp: 'HAW 30/Apr/2019, 8:14:00 pm (UTC)'!
+!methodProperties: {}!
 browseReferencesOn: aCanNotRefactorDueToReferencesError
 
 	DenotativeObjectMessageSetWindow
@@ -4214,29 +4634,34 @@ browseReferencesOn: aCanNotRefactorDueToReferencesError
 		autoSelect: aCanNotRefactorDueToReferencesError referencee  
 ! !
 
-!DenotativeObjectRenameApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/8/2017 19:49:48'!
+!DenotativeObjectRenameApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/Aug/2017, 10:49:48 pm (UTC)'!
+!methodProperties: {}!
 openChangedMethods
 
 	changes ifNotEmpty: [ 
 		DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newClassName ]
 ! !
 
-!DenotativeObjectRenameApplier methodsFor: 'refactoring - creation' stamp: 'HAW 4/4/2018 20:25:33'!
+!DenotativeObjectRenameApplier methodsFor: 'refactoring - creation' stamp: 'HAW 4/Apr/2018, 11:25:33 pm (UTC)'!
+!methodProperties: {}!
 createRefactoring
 
 	^ DenotativeObjectRename from: classToRename to: newClassName in: Smalltalk undeclared: Undeclared.! !
 
-!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/30/2017 17:29:44'!
+!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 30/Aug/2017, 8:29:44 pm (UTC)'!
+!methodProperties: {}!
 openChangedMethodsWhenChangesNotEmpty 
 
 	DenotativeObjectMessageSetWindow openMessageList: changes label: 'Renamed references' autoSelect: newInstanceVariable! !
 
-!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 9/7/2017 15:23:14'!
+!DenotativeObjectRenameCollaboratorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 7/Sep/2017, 6:23:14 pm (UTC)'!
+!methodProperties: {}!
 selectVariableLabel
 	
 	^'Select collaborator to rename'! !
 
-!DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 4/30/2019 17:12:36'!
+!DenotativeObjectSafelyRemoveApplier methodsFor: 'exception handling' stamp: 'HAW 30/Apr/2019, 8:12:36 pm (UTC)'!
+!methodProperties: {}!
 browseReferencesOn: aCanNotRefactorDueToReferencesError
 
 	DenotativeObjectMessageSetWindow
@@ -4245,27 +4670,32 @@ browseReferencesOn: aCanNotRefactorDueToReferencesError
 		autoSelect: aCanNotRefactorDueToReferencesError referencee name asString
 ! !
 
-!DenotativeObjectSafelyRemoveApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/1/2018 18:12:15'!
+!DenotativeObjectSafelyRemoveApplier methodsFor: 'refactoring - creation' stamp: 'HAW 1/Aug/2018, 9:12:15 pm (UTC)'!
+!methodProperties: {}!
 createRefactoring
 		
 	^DenotativeObjectSafelyRemove of: classToRemove ! !
 
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 16:24:09'!
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 31/Aug/2017, 7:24:09 pm (UTC)'!
+!methodProperties: {}!
 closeBrowser
 	
 	! !
 
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 8/31/2017 15:44:08'!
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - changes' stamp: 'HAW 31/Aug/2017, 6:44:08 pm (UTC)'!
+!methodProperties: {}!
 messageSetWindowClass
 		
 	^DenotativeObjectMessageSetWindow ! !
 
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 8/18/2018 16:56:23'!
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - creation' stamp: 'HAW 18/Aug/2018, 7:56:23 pm (UTC)'!
+!methodProperties: {}!
 refactoringClass
 
 	^DenotativeObjectRenameSelector ! !
 
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 3/12/2019 22:26:21'!
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 13/Mar/2019, 1:26:21 am (UTC)'!
+!methodProperties: {}!
 askForImplementosAndSenders
 
 	self 
@@ -4274,7 +4704,8 @@ askForImplementosAndSenders
 		calculateImplementorsAndSenders;
 		createAndApplyRefactoring! !
 
-!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 8/31/2017 15:39:08'!
+!DenotativeObjectRenameSelectorApplier methodsFor: 'refactoring - parameters request' stamp: 'HAW 31/Aug/2017, 6:39:08 pm (UTC)'!
+!methodProperties: {}!
 scopeOptionLabels
 
 	"They have to be the same number and in the same order as super. If not, a different way to redefine the scope must be implemented
@@ -4283,50 +4714,59 @@ scopeOptionLabels
 	^ {'Only in this object'. 'In its parents and childs'. 'In Object Category'. 'In its parents, childs and its Categories'. 'In System'}
 	! !
 
-!NewDenotativeObjectPrecondition methodsFor: 'evaluating - private' stamp: 'HAW 5/10/2019 12:32:56'!
+!NewDenotativeObjectPrecondition methodsFor: 'evaluating - private' stamp: 'HAW 10/May/2019, 3:32:56 pm (UTC)'!
+!methodProperties: {}!
 assertNewClassNameStartsWithRightLetter
 
 	newClassName first isLetter ifFalse: [ self signalNewNameMustStartWithRightLetter ]! !
 
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 5/10/2019 12:45:35'!
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 10/May/2019, 3:45:35 pm (UTC)'!
+!methodProperties: {}!
 errorMessageForAlreadyExistClassNamed: anObjectName
 
 	^'Object named ', anObjectName, ' already exist in the system'! !
 
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:48:06'!
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 13/Aug/2018, 9:48:06 pm (UTC)'!
+!methodProperties: {}!
 newClassNameCanNotBeEmptyErrorMessage
 	
 	^'New object name can not be empty'! !
 
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:49:09'!
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 13/Aug/2018, 9:49:09 pm (UTC)'!
+!methodProperties: {}!
 newClassNameCanNotHaveSpacesErrorMessage
 	
 	^'New object name can not have spaces'! !
 
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 8/13/2018 18:49:32'!
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 13/Aug/2018, 9:49:32 pm (UTC)'!
+!methodProperties: {}!
 newNameMustBeSymbolErrorMessage
 	
 	^'New object name must be a symbol'! !
 
-!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 5/10/2019 12:32:07'!
+!NewDenotativeObjectPrecondition class methodsFor: 'error messages' stamp: 'HAW 10/May/2019, 3:32:07 pm (UTC)'!
+!methodProperties: {}!
 newNameMustStartWithRightLetterErrorMessage
 
 	^'New object name must start with a letter'! !
 
-!DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 7/14/2017 19:58:26'!
+!DenotativeObjectProgessiveTestRunner methodsFor: 'show result - private' stamp: 'HAW 14/Jul/2017, 10:58:26 pm (UTC)'!
+!methodProperties: {}!
 openTestResultWindow
 
 	DenotativeObjectTestResultWindow openFor: testResult
 	! !
 
-!DenotativeObjectTestCase methodsFor: 'converting' stamp: 'HAW 9/10/2017 19:02:44'!
+!DenotativeObjectTestCase methodsFor: 'converting' stamp: 'HAW 10/Sep/2017, 10:02:44 pm (UTC)'!
+!methodProperties: {}!
 asMethodReference
 
 	^ (MethodReference class: denotativeObject class selector: realTestSelector)
 		recalculateStringVersionForDenotativeObject;
 		yourself.! !
 
-!DenotativeObjectTestCase methodsFor: 'running' stamp: 'HAW 8/22/2022 11:42:42'!
+!DenotativeObjectTestCase methodsFor: 'running' stamp: 'HAW 22/Aug/2022, 2:42:42 pm (UTC)'!
+!methodProperties: {}!
 debug
 
 	| debugger |
@@ -4359,39 +4799,46 @@ debug
 						] ]
 ! !
 
-!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:28'!
+!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 10/Sep/2017, 10:02:28 pm (UTC)'!
+!methodProperties: {}!
 denotativeObject
 
 	^ denotativeObject.! !
 
-!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:16'!
+!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 10/Sep/2017, 10:02:16 pm (UTC)'!
+!methodProperties: {}!
 methodForTest
 
 	^ denotativeObject class lookupSelector: realTestSelector.! !
 
-!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 9/10/2017 19:02:25'!
+!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 10/Sep/2017, 10:02:25 pm (UTC)'!
+!methodProperties: {}!
 realTest: aCompiledMethod
 
 	denotativeObject := aCompiledMethod methodClass soleInstance.
 	realTestSelector := aCompiledMethod selector.! !
 
-!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 7/14/2017 20:18:46'!
+!DenotativeObjectTestCase methodsFor: 'accessing' stamp: 'HAW 14/Jul/2017, 11:18:46 pm (UTC)'!
+!methodProperties: {}!
 realTestSelector
 
 	^realTestSelector ! !
 
-!DenotativeObjectTestCase methodsFor: 'initialization' stamp: 'HAW 9/10/2017 19:02:11'!
+!DenotativeObjectTestCase methodsFor: 'initialization' stamp: 'HAW 10/Sep/2017, 10:02:11 pm (UTC)'!
+!methodProperties: {}!
 initializeFor: aClass test: aMethod
 
 	denotativeObject := aClass.
 	testMethod := aMethod.! !
 
-!DenotativeObjectTestCase methodsFor: 'testing' stamp: 'HAW 9/10/2017 19:02:31'!
+!DenotativeObjectTestCase methodsFor: 'testing' stamp: 'HAW 10/Sep/2017, 10:02:31 pm (UTC)'!
+!methodProperties: {}!
 isSameAs: aTestCase
 
 	^ denotativeObject = aTestCase denotativeObject and: [ realTestSelector = aTestCase realTestSelector ].! !
 
-!DenotativeObjectTestCase methodsFor: 'private' stamp: 'HAW 8/22/2022 12:36:45'!
+!DenotativeObjectTestCase methodsFor: 'private' stamp: 'HAW 22/Aug/2022, 3:36:45 pm (UTC)'!
+!methodProperties: {}!
 openDebuggerOnFailingTestMethod
 
 	DenotativeObjectDebugger
@@ -4404,14 +4851,16 @@ openDebuggerOnFailingTestMethod
 		
 	! !
 
-!DenotativeObjectTestCase methodsFor: 'exceptions' stamp: 'HAW 7/29/2017 19:30:14'!
+!DenotativeObjectTestCase methodsFor: 'exceptions' stamp: 'HAW 29/Jul/2017, 10:30:14 pm (UTC)'!
+!methodProperties: {}!
 signalFailure: aString
 
 	failureString _ aString.
 	Error signal: aString 
 	! !
 
-!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/6/2018 09:53:25'!
+!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 6/Apr/2018, 12:53:25 pm (UTC)'!
+!methodProperties: {}!
 performRealTest
 
 	[ denotativeObject perform: realTestSelector ]
@@ -4421,17 +4870,20 @@ performRealTest
 				ifTrue: [ aMNU message sendTo: self ]
 				ifFalse: [ aMNU pass ]].! !
 
-!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/5/2018 09:46:38'!
+!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 5/Apr/2018, 12:46:38 pm (UTC)'!
+!methodProperties: {}!
 setUp
 
 	denotativeObject setUp! !
 
-!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 4/5/2018 09:49:42'!
+!DenotativeObjectTestCase methodsFor: 'test execution' stamp: 'HAW 5/Apr/2018, 12:49:42 pm (UTC)'!
+!methodProperties: {}!
 tearDown
 
 	denotativeObject tearDown! !
 
-!DenotativeObjectTestCase class methodsFor: 'instance creation' stamp: 'HAW 4/6/2018 09:53:14'!
+!DenotativeObjectTestCase class methodsFor: 'instance creation' stamp: 'HAW 6/Apr/2018, 12:53:14 pm (UTC)'!
+!methodProperties: {}!
 for: aCompiledMethod
 
 	| test |
@@ -4441,24 +4893,28 @@ for: aCompiledMethod
 
 	^test! !
 
-!DenotativeObjectRenameMethodApplierTest methodsFor: 'tests' stamp: 'HAW 8/15/2018 11:59:44'!
+!DenotativeObjectRenameMethodApplierTest methodsFor: 'tests' stamp: 'HAW 15/Aug/2018, 2:59:44 pm (UTC)'!
+!methodProperties: {}!
 test01ScopeOptionsAreTheSame
 
 	self
 		assert: DenotativeObjectRenameSelectorApplier new scopeOptionLabels size
 		equals: DenotativeObjectRenameSelectorApplier superclass new scopeOptionLabels size.! !
 
-!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 2/21/2019 16:36:56'!
+!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 21/Feb/2019, 7:36:56 pm (UTC)'!
+!methodProperties: {}!
 test01IsDenotativeObjectNamedReturnsTrueForADenotativeObject
 
 	self assert: (Smalltalk isDenotativeObjectNamed: Assert name) ! !
 
-!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 2/21/2019 16:37:14'!
+!DenotativeObjectTest methodsFor: 'tests' stamp: 'HAW 21/Feb/2019, 7:37:14 pm (UTC)'!
+!methodProperties: {}!
 test02IsDenotativeObjectNamedReturnsFalseForANoDenotativeObject
 
 	self deny: (Smalltalk isDenotativeObjectNamed: Object name) ! !
 
-!ZeroDivideExtentionsTest methodsFor: 'tests' stamp: 'HAW 9/29/2020 18:03:10'!
+!ZeroDivideExtentionsTest methodsFor: 'tests' stamp: 'HAW 29/Sep/2020, 9:03:10 pm (UTC)'!
+!methodProperties: {}!
 testMessageTextWithFraction
 
 	self 
@@ -4466,7 +4922,8 @@ testMessageTextWithFraction
 		raise: ZeroDivide 
 		withMessageText: (ZeroDivide canNotDivideByZeroErrorDescription: 20)! !
 
-!ZeroDivideExtentionsTest methodsFor: 'tests' stamp: 'HAW 9/29/2020 18:02:52'!
+!ZeroDivideExtentionsTest methodsFor: 'tests' stamp: 'HAW 29/Sep/2020, 9:02:52 pm (UTC)'!
+!methodProperties: {}!
 testMessageTextWithNumbers
 
 	self 
@@ -4474,56 +4931,66 @@ testMessageTextWithNumbers
 		raise: ZeroDivide 
 		withMessageText: (ZeroDivide canNotDivideByZeroErrorDescription: 10)! !
 
-!Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 15:51:46'!
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 7/Sep/2017, 6:51:46 pm (UTC)'!
+!methodProperties: {}!
 isEqualTo: aDenotativeObject
 
 	^self = aDenotativeObject ! !
 
-!Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 16:39:46'!
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 7/Sep/2017, 7:39:46 pm (UTC)'!
+!methodProperties: {}!
 isIdenticalTo: aDenotativeObject
 
 	^self == aDenotativeObject ! !
 
-!Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 16:39:34'!
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 7/Sep/2017, 7:39:34 pm (UTC)'!
+!methodProperties: {}!
 isNotEqualTo: aDenotativeObject
 
 	^ (self isEqualTo: aDenotativeObject) not! !
 
-!Object methodsFor: '*DenotativeObject' stamp: 'HAW 9/7/2017 16:40:04'!
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 7/Sep/2017, 7:40:04 pm (UTC)'!
+!methodProperties: {}!
 isNotIdenticalTo: aDenotativeObject
 
 	^ (self isIdenticalTo: aDenotativeObject) not! !
 
-!Object methodsFor: '*DenotativeObject' stamp: 'HAW 12/30/2019 12:19:39'!
+!Object methodsFor: '*DenotativeObject' stamp: 'HAW 30/Dec/2019, 3:19:39 pm (UTC)'!
+!methodProperties: {}!
 morphIfDenotativeObjectMorph
 
 	^self! !
 
-!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:12'!
+!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 27/Sep/2018, 2:23:12 pm (UTC)'!
+!methodProperties: {}!
 weatherClearIcon
 
 	^ self fetch: #( '16x16' 'status' 'weather-clear' )
 ! !
 
-!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 9/27/2018 11:23:09'!
+!Theme methodsFor: '*DenotativeObject-Morph' stamp: 'RNG 27/Sep/2018, 2:23:09 pm (UTC)'!
+!methodProperties: {}!
 weatherOvercastIcon
 
 	^ self fetch: #( '16x16' 'status' 'weather-overcast' )
 ! !
 
-!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/20/2017 10:41:58'!
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 20/Aug/2017, 1:41:58 pm (UTC)'!
+!methodProperties: {}!
 allRealInstances
 	
 	^super allInstances ! !
 
-!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 8/27/2017 22:06:25'!
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 28/Aug/2017, 1:06:25 am (UTC)'!
+!methodProperties: {}!
 compilerClass
 
 	^(thisClass is: #DenotativeObject) 
 		ifTrue: [ DenotativeObjectCompiler ]
 		ifFalse: [ super compilerClass ]! !
 
-!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 2/19/2019 17:53:31'!
+!Metaclass methodsFor: '*DenotativeObject' stamp: 'HAW 19/Feb/2019, 8:53:31 pm (UTC)'!
+!methodProperties: {}!
 typeName
 
 	"The only downside of this implementation is that when not working in a Denotative Object Browser, it will show
@@ -4533,7 +5000,8 @@ typeName
 		ifTrue: [ self soleInstance name ]
 		ifFalse: [ self name ]! !
 
-!CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 8/30/2017 18:19:32'!
+!CompiledMethod methodsFor: '*DenotativeObject' stamp: 'HAW 30/Aug/2017, 9:19:32 pm (UTC)'!
+!methodProperties: {}!
 printTheNonMetaClassAndSelectorOn: aStream 
 	
 	aStream 
@@ -4541,50 +5009,60 @@ printTheNonMetaClassAndSelectorOn: aStream
 		nextPutAll: '>>'; 
 		nextPutAll: self selector storeString! !
 
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:49'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 13/Jan/2023, 1:22:49 pm (UTC)'!
+!methodProperties: {}!
 asMessage
 
 	^self asMessageWithAll: #()! !
 
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:54'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 13/Jan/2023, 1:22:54 pm (UTC)'!
+!methodProperties: {}!
 asMessageWith: aCollaborator
 
 	^self asMessageWithAll: (Array with: aCollaborator)! !
 
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:22:59'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 13/Jan/2023, 1:22:59 pm (UTC)'!
+!methodProperties: {}!
 asMessageWithAll: aCollaborators
 
 	^Message selector: self asSymbol arguments: aCollaborators ! !
 
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:03'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 13/Jan/2023, 1:23:03 pm (UTC)'!
+!methodProperties: {}!
 sendTo: aReceiver
 
 	^self asMessage sendTo: aReceiver ! !
 
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:08'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 13/Jan/2023, 1:23:08 pm (UTC)'!
+!methodProperties: {}!
 sendTo: aReceiver with: aCollaborator
 
 	^(self asMessageWith: aCollaborator) sendTo: aReceiver ! !
 
-!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 1/13/2023 10:23:12'!
+!CharacterSequence methodsFor: '*DenotativeObject' stamp: 'HAW 13/Jan/2023, 1:23:12 pm (UTC)'!
+!methodProperties: {}!
 sendTo: aReceiver withAll: aCollaborators
 
 	^(self asMessageWithAll: aCollaborators) sendTo: aReceiver ! !
 
-!Symbol methodsFor: '*DenotativeObject' stamp: 'jmv 7/29/2024 14:55:12'!
+!Symbol methodsFor: '*DenotativeObject' stamp: 'jmv 29/Jul/2024, 5:55:12 pm (UTC)'!
+!methodProperties: {}!
 isTestSelector
 	^TestCase isTestSelector: self! !
 
-!UnicodeSymbol methodsFor: '*DenotativeObject' stamp: 'jmv 7/29/2024 14:55:23'!
+!UnicodeSymbol methodsFor: '*DenotativeObject' stamp: 'jmv 29/Jul/2024, 5:55:23 pm (UTC)'!
+!methodProperties: {}!
 isTestSelector
 	^TestCase isTestSelector: self! !
 
-!SystemDictionary methodsFor: '*DenotativeObject' stamp: 'HAW 2/21/2019 16:35:05'!
+!SystemDictionary methodsFor: '*DenotativeObject' stamp: 'HAW 21/Feb/2019, 7:35:05 pm (UTC)'!
+!methodProperties: {}!
 isDenotativeObjectNamed: aName
 
 	^(self classNamed: aName) is: #DenotativeObject! !
 
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:09:04'!
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 23/May/2019, 6:09:04 pm (UTC)'!
+!methodProperties: {}!
 addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
 
 	labels add: 'declare block-local temp'.
@@ -4602,7 +5080,8 @@ addCollaboratorLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrows
 
 ! !
 
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 16:18:06'!
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 23/Aug/2017, 7:18:06 pm (UTC)'!
+!methodProperties: {}!
 addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectBrowser 
 
 	labels add: 'define new denotative object'.
@@ -4613,7 +5092,8 @@ addDenotativeObjectLabelsTo: labels andActionsTo: actions in: aDenotativeObjectB
 
 ! !
 
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 14:42:30'!
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 23/Aug/2017, 5:42:30 pm (UTC)'!
+!methodProperties: {}!
 defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
  
 	| newClass |
@@ -4632,7 +5112,8 @@ defineDenotativeObjectNamed: anObjectName in: aDenotativeObjectBrowser
 		name: newClass name
 		! !
 
-!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 5/23/2019 15:08:55'!
+!UndeclaredVariable methodsFor: '*DenotativeObject' stamp: 'HAW 23/May/2019, 6:08:55 pm (UTC)'!
+!methodProperties: {}!
 handleForDenotativeObjectIn: aDenotativeObjectBrowser
 
 	| alternatives labels actions lines caption choice |
@@ -4661,22 +5142,26 @@ handleForDenotativeObjectIn: aDenotativeObjectBrowser
 
 ! !
 
-!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:00:03'!
+!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 29/Sep/2020, 9:00:03 pm (UTC)'!
+!methodProperties: {}!
 dividend
 
 	^ arguments size = 1 ifTrue: [ receiver ] ifFalse: [ arguments first ]! !
 
-!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:01:40'!
+!ZeroDivide methodsFor: '*DenotativeObject' stamp: 'HAW 29/Sep/2020, 9:01:40 pm (UTC)'!
+!methodProperties: {}!
 messageText
 
 	^self class canNotDivideByZeroErrorDescription: self dividend! !
 
-!ZeroDivide class methodsFor: '*DenotativeObject' stamp: 'HAW 9/29/2020 18:02:37'!
+!ZeroDivide class methodsFor: '*DenotativeObject' stamp: 'HAW 29/Sep/2020, 9:02:37 pm (UTC)'!
+!methodProperties: {}!
 canNotDivideByZeroErrorDescription: dividend
 
 	^ dividend printString, ' can not be divided by 0'! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 6/17/2019 19:56:57'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 17/Jun/2019, 10:56:57 pm (UTC)'!
+!methodProperties: {}!
 compile: aString receiver: receiver in: evalContext
 
 	| methodNode |
@@ -4695,12 +5180,14 @@ compile: aString receiver: receiver in: evalContext
 	
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:03:18'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 23/Aug/2017, 6:03:18 pm (UTC)'!
+!methodProperties: {}!
 debug
 	
 	self debugAndWithResultDo: [:result | ]! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2022 12:06:42'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 22/Aug/2022, 3:06:42 pm (UTC)'!
+!methodProperties: {}!
 debug: aCompiledMethod receiver: anObject in: evalContext withResultDo: aBlock
 
 	DenotativeObjectDebugger 
@@ -4713,12 +5200,14 @@ debug: aCompiledMethod receiver: anObject in: evalContext withResultDo: aBlock
 		label: 'Debug it'.
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:04:21'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 23/Aug/2017, 6:04:21 pm (UTC)'!
+!methodProperties: {}!
 debugAndInspect
 	
 	self debugAndWithResultDo: [:result | result inspect ]! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:04:33'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 23/Aug/2017, 6:04:33 pm (UTC)'!
+!methodProperties: {}!
 debugAndWithResultDo: aBlock
 	
 	| receiver context stringToEval method |
@@ -4732,7 +5221,8 @@ debugAndWithResultDo: aBlock
 		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
 ! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:22:53'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 25/Oct/2022, 7:22:53 pm (UTC)'!
+!methodProperties: {}!
 debugDenotativeObjectMethodTest
 
 	currentCompiledMethod selector isTestSelector
@@ -4743,7 +5233,8 @@ debugDenotativeObjectMethodTest
 		ifFalse: [ self debug ]
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:23:14'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 25/Oct/2022, 7:23:14 pm (UTC)'!
+!methodProperties: {}!
 runDenotativeObjectMessageCategoryTests
 
 	selectedMessageCategory ifNotNil: [ | classlessObject suite |
@@ -4755,7 +5246,8 @@ runDenotativeObjectMessageCategoryTests
 
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:23:42'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 25/Oct/2022, 7:23:42 pm (UTC)'!
+!methodProperties: {}!
 runDenotativeObjectMethodTest
 
 	currentCompiledMethod selector isTestSelector 
@@ -4766,7 +5258,8 @@ runDenotativeObjectMethodTest
 		ifFalse: [ self send ].
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:23:54'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 25/Oct/2022, 7:23:54 pm (UTC)'!
+!methodProperties: {}!
 runDenotativeObjectSystemCategoryTests
 
 	selectedSystemCategory ifNotNil: [ | suite classes |
@@ -4779,7 +5272,8 @@ runDenotativeObjectSystemCategoryTests
 			(DenotativeObjectProgessiveTestRunner for: suite) value ]]
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 10/25/2022 16:24:07'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 25/Oct/2022, 7:24:07 pm (UTC)'!
+!methodProperties: {}!
 runDenotativeObjectTests
 
 	self selectedClassOrMetaClass ifNotNil: [ :aDenotativeObject | | suite |
@@ -4790,17 +5284,20 @@ runDenotativeObjectTests
 
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:05:42'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 23/Aug/2017, 6:05:42 pm (UTC)'!
+!methodProperties: {}!
 send 
 
 	self sendAndWithResultDo: [ :result | ]! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/23/2017 15:06:07'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 23/Aug/2017, 6:06:07 pm (UTC)'!
+!methodProperties: {}!
 sendAndInspect
 
 	self sendAndWithResultDo: [ :result | result inspect ]! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 8/22/2022 12:22:20'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 22/Aug/2022, 3:22:20 pm (UTC)'!
+!methodProperties: {}!
 sendAndWithResultDo: aBlock
 	
 	| receiver context stringToEval method |
@@ -4830,7 +5327,8 @@ sendAndWithResultDo: aBlock
 		do: [ :aSyntaxError | self inform: aSyntaxError messageText ]
 	! !
 
-!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 9/23/2020 19:08:01'!
+!Browser methodsFor: '*DenotativeObject' stamp: 'HAW 23/Sep/2020, 10:08:01 pm (UTC)'!
+!methodProperties: {}!
 stringToEvalSending: aSymbol to: aDenotativeObject onCancel: aCancelBlock
 
 	| externalCollaborators |
@@ -4855,7 +5353,8 @@ stringToEvalSending: aSymbol to: aDenotativeObject onCancel: aCancelBlock
 					
 	! !
 
-!MethodReference methodsFor: '*DenotativeObject' stamp: 'HAW 7/28/2017 19:48:44'!
+!MethodReference methodsFor: '*DenotativeObject' stamp: 'HAW 28/Jul/2017, 10:48:44 pm (UTC)'!
+!methodProperties: {}!
 recalculateStringVersionForDenotativeObject
 	
 	stringVersion := classSymbol asString,' ', methodSymbol ! !
