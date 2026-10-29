@@ -1,6 +1,6 @@
 'From Cuis7.9 [latest update: #8134] on 10 August 2026 at 8:21:22 am'!
 'Description Update for Cuis 8134'!
-!provides: 'DenotativeObject' 1 122!
+!provides: 'DenotativeObject' '1.122.0'!
 SystemOrganization addCategory: #DenotativeObject!
 SystemOrganization addCategory: #'DenotativeObject-Compiler'!
 SystemOrganization addCategory: #'DenotativeObject-Meta'!
